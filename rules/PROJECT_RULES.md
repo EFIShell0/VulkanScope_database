@@ -1,0 +1,16 @@
+# VulkanScope Database project rules
+- The public database contains VulkanScope technical report data only; personal identifiers, account data, authentication data, private file paths and request IP addresses are not report fields.
+- Supported, unsupported, unavailable and unknown are distinct states. A missing query must never be labeled unsupported without direct runtime evidence.
+- A successfully queried scalar/property is available even when its value is zero or false unless that field is itself a support boolean.
+- Runtime feature booleans and explicit SUPPORTED / NOT SUPPORTED report tokens are support evidence and must preserve supported/unsupported semantics.
+- Runtime-enumerated extensions are supported. An absent extension is not labeled unsupported unless the report contains explicit evidence that the extension enumeration is complete and that inference is intentionally implemented.
+- Loader/instance API version, physical-device API version and driver version remain separate.
+- Vulkan names, extension tokens, format names, color spaces and profile names remain canonical and are not renamed for presentation.
+- Vendor presentation may add a human-readable vendor/GPU-family label, but the raw vendor ID remains visible and is the filter key.
+- Every technical category present in a submitted VulkanScope report must remain accessible in the database UI, either in a dedicated aggregate view, report detail tab or raw report view. Parsed summaries must never replace or discard the original report text.
+- Aggregate coverage statistics are computed only from reports actually loaded by the database and must not imply global Vulkan ecosystem coverage.
+- The frontend has no third-party JavaScript, analytics, remote fonts or advertising dependencies.
+- The production frontend and API use HTTPS. The Content Security Policy only permits the configured VulkanScope Worker API in addition to same-origin resources.
+- Submitted payloads are size-limited and schema-validated. Existing reports are normalized on read so parser fixes apply without rewriting stored payloads.
+- Frontend report fetching is concurrency-bounded to prevent avoidable memory/network spikes.
+- The canonical Vulkan registry baseline for this release is Vulkan 1.4.357.

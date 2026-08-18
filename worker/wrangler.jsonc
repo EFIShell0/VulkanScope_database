@@ -1,7 +1,7 @@
 {
   "name": "vulkanscope-database-api",
   "main": "src/index.js",
-  "compatibility_date": "2026-08-17",
+  "compatibility_date": "2026-08-18",
   "d1_databases": [{"binding":"DB","database_name":"vulkanscope-database","database_id":"8fa65ef5-701d-4110-993d-87381f9763ab","migrations_dir":"migrations"}],
   "vars": {"ALLOWED_ORIGIN":"https://efishell0.github.io"}
 }

@@ -6,10 +6,16 @@ def val(lines,prefix,default="Unknown"):
     return default
 def status(value):
     x=value.strip().lower()
-    if x in {"true","supported","available","yes"}: return "supported"
-    if x in {"false","not supported","unsupported","no"}: return "unsupported"
-    if "unavailable" in x or "not applicable" in x: return "unavailable"
-    return "unknown"
+    if x in {"true","supported","available","yes","pass"}: return "supported"
+    if x in {"false","not supported","unsupported","no","fail"}: return "unsupported"
+    if "unavailable" in x or "not available" in x or "not applicable" in x: return "unavailable"
+    if "unknown" in x or "not queried" in x or "not reported" in x: return "unknown"
+    return "available"
+def append_capability(items,seen,section,name,value,state):
+    key=(section,name)
+    if key in seen: return
+    seen.add(key)
+    items.append({"section":section,"name":name,"value":value,"status":state})
 ap=argparse.ArgumentParser()
 ap.add_argument("txt")
 ap.add_argument("--output",default=None)
@@ -26,18 +32,37 @@ manufacturer_model=android.split(",")[0] if "," in android else android
 parts=manufacturer_model.split(" ",1)
 manufacturer=parts[0] if parts else "Unknown"; model=parts[1] if len(parts)>1 else "Unknown"
 sdkm=re.search(r"SDK\s+(\d+)",android); sdk=int(sdkm.group(1)) if sdkm else 0
-extensions=[]; capabilities=[]; section=None
-for line in lines:
-    if line=="DEVICE EXTENSIONS": section="extensions"; continue
-    if line=="DETAILED QUERY RESULTS" or line.startswith("DETAILED QUERY RESULTS ("): section="details"; continue
-    if line and line==line.upper() and not line.startswith("[") and line not in {"DEVICE EXTENSIONS","DETAILED QUERY RESULTS"}: section=None
-    if section=="extensions" and line.startswith("VK_"):
-        parts=[x.strip() for x in line.split("|")]
-        spec=parts[2].removeprefix("spec ").strip() if len(parts)>2 else "Unknown"
-        extensions.append({"name":parts[0],"scope":parts[1] if len(parts)>1 else "device","specVersion":spec,"status":"supported"})
-    elif section=="details" and line.startswith("[") and "] " in line and " = " in line:
-        sec,rest=line[1:].split("] ",1); name,value=rest.split(" = ",1)
-        capabilities.append({"section":sec,"name":name,"value":value,"status":status(value)})
+extensions=[]; capabilities=[]; seen=set(); section=""
+for raw in lines:
+    line=raw.strip()
+    if not line: continue
+    if re.fullmatch(r"[A-Z][A-Z0-9 &/()._-]+(?: \([^\r\n]*\))?",line) and not line.startswith("VK_"):
+        section=re.sub(r" \([^\r\n]*\)$","",line); continue
+    prop=re.match(r"^\[([^\]]+)\] (.+?) = (.*)$",line)
+    if prop:
+        append_capability(capabilities,seen,prop.group(1),prop.group(2),prop.group(3),status(prop.group(3))); continue
+    if section=="DEVICE EXTENSIONS":
+        m=re.match(r"^(VK_[^ |]+) \| ([^|]+) \| spec (\d+)$",line)
+        if m: extensions.append({"name":m.group(1),"scope":m.group(2).strip(),"specVersion":int(m.group(3)),"status":"supported"}); continue
+    if section=="FEATURES":
+        m=re.match(r"^(.+?) = (true|false)$",line,re.I)
+        if m: append_capability(capabilities,seen,"FEATURES",m.group(1),m.group(2),"supported" if m.group(2).lower()=="true" else "unsupported"); continue
+    if section=="FORMATS":
+        m=re.match(r"^([^:]+): (SUPPORTED|NOT SUPPORTED)(?:, (.*))?$",line)
+        if m: append_capability(capabilities,seen,"FORMATS",m.group(1),m.group(3) or m.group(2),"supported" if m.group(2)=="SUPPORTED" else "unsupported"); continue
+    if section=="SURFACE":
+        m=re.match(r"^Available=(true|false), presentation=(true|false)$",line,re.I)
+        if m:
+            append_capability(capabilities,seen,"SURFACE","Available",m.group(1),"available" if m.group(1).lower()=="true" else "unavailable")
+            append_capability(capabilities,seen,"SURFACE","Presentation supported",m.group(2),"supported" if m.group(2).lower()=="true" else "unsupported")
+            continue
+        m=re.match(r"^([^|]+) \| ([^|]+) \| ([^|]+) \| (SUPPORTED|NOT SUPPORTED) \| (.*)$",line)
+        if m: append_capability(capabilities,seen,"SURFACE FORMATS",f"{m.group(1).strip()} / {m.group(2).strip()}",f"{m.group(3).strip()} · {m.group(5).strip()}","supported" if m.group(4)=="SUPPORTED" else "unsupported"); continue
+        m=re.match(r"^(.+?) = (.*)$",line)
+        if m: append_capability(capabilities,seen,"SURFACE",m.group(1),m.group(2),status(m.group(2))); continue
+    if section=="LIMITS":
+        m=re.match(r"^(.+?) = (.*)$",line)
+        if m: append_capability(capabilities,seen,"LIMITS",m.group(1),m.group(2),status(m.group(2))); continue
 base={"schemaVersion":1,"submittedAt":datetime.datetime.now(datetime.timezone.utc).isoformat(),"application":{"name":"VulkanScope","version":val(lines,"Application version: "),"versionCode":val(lines,"Application version code: ")},"device":{"manufacturer":manufacturer,"model":model,"android":android,"sdk":sdk,"applicationAbi":val(lines,"Application ABI: "),"supportedAbis":[x.strip() for x in val(lines,"Supported device ABIs: ","").split(",") if x.strip()]},"gpu":{"name":gpu_name,"vendor":"Unknown","vendorId":vendor_id,"deviceId":device_id},"driver":{"name":val(lines,"Driver mode: "),"version":driver_version,"mode":val(lines,"Driver mode: ")},"vulkan":{"loaderInstanceApiVersion":val(lines,"Loader / instance API: "),"deviceApiVersion":api,"registryBaseline":val(lines,"Baseline=","1.4.357")},"collection":{"status":"available"},"extensions":extensions,"capabilities":capabilities}
 canonical=json.dumps(base,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()
 base["id"]=hashlib.sha256(canonical).hexdigest()

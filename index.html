@@ -1,49 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="dark">
-<meta name="description" content="VulkanScope Database — searchable Vulkan capabilities reported by real Android Vulkan implementations.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'">
-<title>VulkanScope Database</title>
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-<header class="topbar">
-<div class="shell topbar-inner">
-<a class="brand" href="./" aria-label="VulkanScope Database home"><img src="assets/vulkanscope_logo_horizontal.png" alt="VulkanScope"></a>
-<nav aria-label="Primary"><button class="nav-button active" data-view="database">Database</button><button class="nav-button" data-view="gpus">GPUs</button><button class="nav-button" data-view="drivers">Drivers</button><button class="nav-button" data-view="extensions">Extensions</button><button class="nav-button" data-view="compare">Compare</button></nav>
-</div>
-</header>
-<main class="shell">
-<section class="hero">
-<div class="eyebrow">VULKAN CAPABILITY INTELLIGENCE</div>
-<h1>Vulkan Hardware Database</h1>
-<p>Explore, search and compare Vulkan capabilities reported by VulkanScope without collapsing unsupported, unavailable and unknown states.</p>
-<div class="search-row"><label class="search-box"><span>Search</span><input id="globalSearch" type="search" autocomplete="off" placeholder="GPU, device, driver, extension or property…"></label></div>
-<div class="metrics" id="metrics"></div>
-</section>
-<section id="databaseView" class="view active">
-<div class="section-heading"><div><div class="eyebrow">REPORTS</div><h2>Latest submissions</h2></div><div class="filters"><select id="vendorFilter" aria-label="Vendor filter"><option value="">All vendors</option></select><select id="apiFilter" aria-label="API filter"><option value="">All Vulkan versions</option></select></div></div>
-<div class="cards" id="reportCards"></div>
-<div class="empty" id="emptyState" hidden>No reports match the current filters.</div>
-</section>
-<section id="gpusView" class="view"><div class="section-heading"><div><div class="eyebrow">GPU INDEX</div><h2>GPUs</h2></div></div><div class="cards" id="gpuCards"></div></section>
-<section id="driversView" class="view"><div class="section-heading"><div><div class="eyebrow">DRIVER INDEX</div><h2>Drivers</h2></div></div><div class="cards" id="driverCards"></div></section>
-<section id="extensionsView" class="view"><div class="section-heading"><div><div class="eyebrow">EXTENSION INDEX</div><h2>Extensions</h2></div></div><div class="table-wrap"><table><thead><tr><th>Extension</th><th>Reports</th><th>Supported</th></tr></thead><tbody id="extensionRows"></tbody></table></div></section>
-<section id="compareView" class="view">
-<div class="section-heading"><div><div class="eyebrow">SIDE BY SIDE</div><h2>Compare reports</h2></div></div>
-<div class="compare-picker"><select id="compareA" aria-label="First report"></select><select id="compareB" aria-label="Second report"></select><label class="toggle"><input id="differencesOnly" type="checkbox" checked><span>Differences only</span></label></div>
-<div id="compareSummary" class="metrics"></div>
-<div class="table-wrap"><table><thead><tr><th>Capability</th><th id="compareAHead">A</th><th id="compareBHead">B</th></tr></thead><tbody id="compareRows"></tbody></table></div>
-</section>
-<section id="detailView" class="view">
-<button id="detailBack" class="back-button">← Back to database</button>
-<div id="detailContent"></div>
-</section>
-</main>
-<footer><div class="shell footer-inner"><span>VulkanScope Database</span><span id="schemaFooter"></span></div></footer>
-<script src="config.js"></script><script src="assets/app.js" defer></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><meta name="description" content="VulkanScope Database — detailed Vulkan hardware, driver, feature, property, format, memory, queue, surface, extension and profile data."><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"><title>VulkanScope Database</title><link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png"><link rel="icon" href="assets/favicon.ico" sizes="any"><link rel="stylesheet" href="assets/site.css"></head><body>
+<header class="topbar"><div class="shell topbar-inner"><a class="brand" href="./" aria-label="VulkanScope Database home"><img src="assets/vulkanscope_logo_horizontal.png" alt="VulkanScope"></a><button id="menuButton" class="menu-button" aria-label="Toggle navigation">☰</button><nav id="mainNav" aria-label="Primary"></nav></div></header>
+<main class="shell"><section class="hero"><div class="eyebrow">VULKAN CAPABILITY INTELLIGENCE</div><h1>Vulkan Hardware Database</h1><p>Deep, report-backed Vulkan implementation data with support, availability and query state kept distinct.</p><div class="search-row"><label class="search-box"><span>Search</span><input id="globalSearch" type="search" autocomplete="off" placeholder="GPU, device, driver, extension, property, feature, format…"></label></div><div class="metrics" id="metrics"></div></section>
+<section id="contentView" class="view active"><div class="section-heading"><div><div id="viewEyebrow" class="eyebrow"></div><h2 id="viewTitle"></h2><p id="viewDescription" class="section-description"></p></div><div class="filters" id="filters"><select id="vendorFilter" aria-label="Vendor filter"><option value="">All vendors</option></select><select id="apiFilter" aria-label="API filter"><option value="">All Vulkan versions</option></select><select id="statusFilter" aria-label="Status filter"><option value="">All states</option><option value="supported">Supported</option><option value="unsupported">Unsupported</option><option value="available">Available</option><option value="unavailable">Unavailable</option><option value="unknown">Unknown</option></select></div></div><div id="content"></div><div class="empty" id="emptyState" hidden>No data matches the current filters.</div></section>
+<section id="detailView" class="view"><button id="detailBack" class="back-button">← Back</button><div id="detailContent"></div></section></main><footer><div class="shell footer-inner"><span>VulkanScope Database</span><span id="schemaFooter"></span></div></footer><script src="config.js"></script><script src="assets/app.js" defer></script></body></html>

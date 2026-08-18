@@ -1,1 +1,1 @@
-{"name":"vulkanscope-database-worker","private":true,"version":"0.30.0","scripts":{"dev":"wrangler dev","deploy":"wrangler deploy","migrate":"wrangler d1 migrations apply vulkanscope-database --remote"},"devDependencies":{"wrangler":"^4.33.1"}}
+{"name":"vulkanscope-database-worker","private":true,"version":"0.31.0","scripts":{"dev":"wrangler dev","deploy":"wrangler deploy","migrate":"wrangler d1 migrations apply vulkanscope-database --remote"},"devDependencies":{"wrangler":"^4.33.1"},"type":"module"}
