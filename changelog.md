@@ -1,3 +1,12 @@
+# VulkanScope Database 0.32.1
+
+- Memory aggregate view now mirrors the useful part of Vulkan Hardware Database memory coverage: exact VkMemoryPropertyFlags combinations with availability and non-availability percentages across loaded reports.
+- Memory heaps and per-report memory type-to-heap mappings remain separately accessible.
+- Added state-semantic percentage colors; unavailable percentages are amber, never green.
+- State filters now cover all applicable aggregate sections without conflating unsupported, unavailable and unknown.
+- Surface state filtering now includes capability/presentation states, present-mode availability and presentation queues where explicit state exists.
+- Device/instance extension absence is kept Unknown/not listed unless direct unsupported evidence exists.
+
 # VulkanScope Database 0.32.0
 
 - CapsViewer-detail parity navigation for core properties/features, limits, formats, WSI and instance data.
