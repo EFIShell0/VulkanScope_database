@@ -1,0 +1,1 @@
+window.VULKANSCOPE_DATABASE_API="";
