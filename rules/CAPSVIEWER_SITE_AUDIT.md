@@ -46,4 +46,4 @@ Reference comparison target: the public `vulkan.gpuinfo.org` frontend source tre
 - Unavailable: amber
 - Unknown: neutral gray
 
-The active `site.v0330.css` assigns these colors consistently to badges, state counts and percentage bars. Unavailable never uses the Supported green path.
+The active `site.v0331.css` assigns these colors consistently to badges, state counts and percentage bars. Unavailable never uses the Supported green path.

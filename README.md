@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.0
+# VulkanScope Database 0.33.1
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -25,3 +25,7 @@ The vendor UI keeps the raw Vulkan vendor ID visible while adding a readable ven
 ## Reports view
 
 The Reports view exposes exact submission timestamps down to seconds with timezone, GPU/device identity, driver mode and decoded/raw driver versions, physical-device API version, loader/instance API version, vendor/family/raw vendor ID, Vulkan device type, Android release/SDK/security patch, VulkanScope version/versionCode, application ABI and report ID. Reports can be ordered newest/oldest, ascending/descending by driver, API, GPU, vendor, Android version or application version. Pagination is capped at 50 reports per page.
+
+
+## 0.33.1 compatibility
+VulkanScope 0.32.2 schema-v3 `technicalReport` data is consumed losslessly when present. Memory type and heap masks are decoded to canonical Vulkan names while raw masks remain visible. The UI labels Vulkan-Headers 1.4.360 compilation separately from the validated 1.4.357 / VulkanCapsViewer 4.12 query catalog.
