@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "vulkanRegistryBaseline": "Vulkan-Headers 1.4.360 / validated queries 1.4.357",
+  "vulkanRegistryBaseline": "Vulkan-Headers 1.4.360 / validated queries 1.4.360",
   "generatedAt": "2026-08-18T12:41:54.298799+00:00",
   "reports": []
 }

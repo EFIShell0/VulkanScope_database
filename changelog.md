@@ -1,12 +1,12 @@
-# VulkanScope Database 0.33.3
+# VulkanScope Database 0.33.4
 
-- Decode and display canonical VkMemoryPropertyFlags/VkMemoryHeapFlags names while retaining raw masks.
-- Prefer VulkanScope 0.32.2 schema-v3 technicalReport structured data when present.
-- Distinguish Vulkan-Headers 1.4.360 compile baseline from validated Vulkan 1.4.357/CapsViewer 4.12 query coverage.
-- Compact top navigation, add controlled logo-to-nav spacing, and collapse earlier to prevent the final tab clipping.
-- Tighten portrait/mobile header geometry and preserve horizontal scrolling inside wide technical tables.
+- Synchronize browser titles with active main and report-detail sections.
+- Update VulkanScope application compatibility to 0.32.4 and validated query baseline to Vulkan 1.4.360.
+- Prefer schema-v3 structured features, detailed properties, limits, profiles and exact-width U64 fields while preserving TXT/raw fallback.
+- Audit Worker/frontend for IPv6 safety: no client-IP parsing, persistence, report identity or IPv4-only address assumptions.
+- Bump Worker normalizer version to 6.
 
-# VulkanScope Database 0.33.3
+# VulkanScope Database 0.33.4
 
 - Decode and display canonical VkMemoryPropertyFlags/VkMemoryHeapFlags names while retaining raw masks.
 - Prefer VulkanScope 0.32.2 schema-v3 technicalReport structured data when present.
@@ -71,7 +71,7 @@
 - Added Registry detail tab and per-tab counts.
 
 
-## 0.33.3
+## 0.33.4
 - Fixed report-detail tab active-state regression where Overview remained visually selected after changing tabs.
 - Centralized detail-tab UI synchronization from `state.detailTab`.
 - Added `aria-selected`/tab focus semantics and automatic visibility scrolling for the active tab on narrow layouts.
