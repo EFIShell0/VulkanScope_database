@@ -1,3 +1,8 @@
+# VulkanScope Database 0.32.0
+
+- CapsViewer-detail parity navigation for core properties/features, limits, formats, WSI and instance data.
+- No report fields are synthesized; missing query state stays distinct from unsupported.
+
 # Changelog
 ## 0.31.2
 - Reworked Reports into a dense, CapsViewer-style technical table without discarding VulkanScope design language.
