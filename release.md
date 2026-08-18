@@ -1,9 +1,12 @@
-# VulkanScope Database 0.32.1
+# VulkanScope Database 0.33.0
 
-- Expanded Memory to CapsViewer-style aggregate memory-type flag coverage, while preserving per-report heaps and memory-type mappings.
-- Added Available, Unavailable and Unknown counts and percentages for exact memory type flag combinations.
-- Unavailable is derived only when a report actually enumerated memory types and that exact combination is absent; reports without memory data remain Unknown.
-- Added state-aware coverage colors: Supported green, Unsupported red, Available blue, Unavailable amber, Unknown gray.
-- Extended the state filter to every aggregate view where the stored data supports a meaningful state distinction, including Memory, Extensions and Instance; Surface filtering now also applies beyond only surface formats.
-- Extension absence remains Unknown/not listed rather than being silently reclassified as Unsupported.
-- Preserved the existing VulkanScope Database visual language, raw report access and Vulkan 1.4.357 registry baseline.
+- Full UI parity audit against the public Vulkan Hardware Database navigation and listing structure, while preserving VulkanScope state semantics and design language.
+- Added local inline SVG icons to every primary navigation tab.
+- Added Portability view for explicit VK_KHR_portability_subset reports without inferring unsupported from absence.
+- Queue families now expose every normalized boolean capability as an explicit Supported/Unsupported/Unknown state instead of hiding false values.
+- Surface/WSI now has dedicated Capabilities, Formats/Color spaces, Present modes, Transform modes, Composite alpha modes, Usage flags and Presentation queues subviews.
+- Properties, limits, features, formats, memory, extensions, instance data and profiles use state-semantic counts/percentages consistently; Unavailable is amber everywhere and Unknown is gray.
+- Report-detail Surface and Instance views now preserve state colors and expose parsed device layers.
+- Core/extension property and feature aggregates now expose value distributions and per-capability report drill-downs, matching the useful device-coverage detail of the reference site without copying its unsupported inference.
+- Instance aggregate view now exposes parsed device layers separately instead of leaving them only in raw report text.
+- No third-party UI assets or runtime dependencies were added.
