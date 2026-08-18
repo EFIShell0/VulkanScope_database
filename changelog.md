@@ -1,4 +1,12 @@
-# VulkanScope Database 0.33.4
+## 0.33.5
+
+- Added design-integrated custom filter/listbox controls with keyboard, mouse and touch support.
+- Replaced the visible primary-navigation scrollbar with left/right arrow controls, edge fades and direct gesture/trackpad/wheel scrolling.
+- Added an official VulkanScope GitHub repository action to the database hero.
+- Expanded report comparison to Devices, normalized capabilities, Extensions, Formats, Queue families, Memory, Surface/WSI and Profiles for closer Vulkan Hardware Database parity.
+- Re-audited overflow, active-state, canonical value, status-color and structured-report behavior.
+
+# VulkanScope Database 0.33.5
 
 - Synchronize browser titles with active main and report-detail sections.
 - Update VulkanScope application compatibility to 0.32.4 and validated query baseline to Vulkan 1.4.360.
