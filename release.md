@@ -1,5 +1,2 @@
-# VulkanScope Database 0.31.1
-Expanded database navigation and report normalization to expose report, device, version, property, feature, format, memory, queue, surface/WSI, extension, instance, Vulkan Profile, comparison and raw-report data while preserving VulkanScope state semantics.
-
-
-0.31.1 forces new static asset URLs, adds client-side normalization fallback, canonical vendor/family filtering, exact GPU-model filtering, visible detail counts and profile parser repair.
+# VulkanScope Database 0.31.2
+Reports now expose exact submission time, driver/API/platform metadata and bounded 50-item pagination with deterministic ascending/descending and newest/oldest ordering. Device API and loader/instance API remain separate, and all existing support/availability semantics are unchanged.

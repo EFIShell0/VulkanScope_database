@@ -1,4 +1,4 @@
-# VulkanScope Database 0.31.1
+# VulkanScope Database 0.31.2
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -21,3 +21,7 @@ Submission is explicit and user initiated from VulkanScope. There is no per-capa
 Supported, unsupported, unavailable and unknown are kept distinct. Runtime feature booleans and explicit SUPPORTED / NOT SUPPORTED report tokens are support evidence. Query failures and unavailable values are never converted to supported merely because the field exists. Enumerated extensions are supported; absence alone is not fabricated as unsupported.
 
 The vendor UI keeps the raw Vulkan vendor ID visible while adding a readable vendor and GPU-family label, for example `Qualcomm / Adreno (0x5143)`.
+
+## Reports view
+
+The Reports view exposes exact submission timestamps down to seconds with timezone, GPU/device identity, driver mode and decoded/raw driver versions, physical-device API version, loader/instance API version, vendor/family/raw vendor ID, Vulkan device type, Android release/SDK/security patch, VulkanScope version/versionCode, application ABI and report ID. Reports can be ordered newest/oldest, ascending/descending by driver, API, GPU, vendor, Android version or application version. Pagination is capped at 50 reports per page.
