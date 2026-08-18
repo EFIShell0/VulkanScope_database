@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.2
+# VulkanScope Database 0.33.3
 
 - Decode and display canonical VkMemoryPropertyFlags/VkMemoryHeapFlags names while retaining raw masks.
 - Prefer VulkanScope 0.32.2 schema-v3 technicalReport structured data when present.
@@ -6,7 +6,7 @@
 - Compact top navigation, add controlled logo-to-nav spacing, and collapse earlier to prevent the final tab clipping.
 - Tighten portrait/mobile header geometry and preserve horizontal scrolling inside wide technical tables.
 
-# VulkanScope Database 0.33.2
+# VulkanScope Database 0.33.3
 
 - Decode and display canonical VkMemoryPropertyFlags/VkMemoryHeapFlags names while retaining raw masks.
 - Prefer VulkanScope 0.32.2 schema-v3 technicalReport structured data when present.
@@ -69,3 +69,10 @@
 - Added frontend report-text normalization fallback so detailed views remain populated even when the Worker normalizer has not yet been redeployed.
 - Fixed profile parsing so Device # lines inside VULKAN PROFILE EVALUATION no longer terminate the profile section.
 - Added Registry detail tab and per-tab counts.
+
+
+## 0.33.3
+- Fixed report-detail tab active-state regression where Overview remained visually selected after changing tabs.
+- Centralized detail-tab UI synchronization from `state.detailTab`.
+- Added `aria-selected`/tab focus semantics and automatic visibility scrolling for the active tab on narrow layouts.
+- Audited similar stale-active-state paths without changing Vulkan data semantics.

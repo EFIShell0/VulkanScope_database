@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.2
+# VulkanScope Database 0.33.3
 
 Memory detail, VulkanScope 0.32.2 structured-report compatibility, navigation fit and portrait usability release.
 

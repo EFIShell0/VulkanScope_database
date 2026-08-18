@@ -13,7 +13,7 @@
 - The production frontend and API use HTTPS. The Content Security Policy only permits the configured VulkanScope Worker API in addition to same-origin resources.
 - Submitted payloads are size-limited and schema-validated. Existing reports are normalized on read so parser fixes apply without rewriting stored payloads.
 - Frontend report fetching is concurrency-bounded to prevent avoidable memory/network spikes.
-- Database release 0.33.2 is compatible with VulkanScope 0.32.2: native compile headers are Vulkan-Headers 1.4.360 while the application's independently validated exhaustive runtime query catalog remains Vulkan 1.4.357 / CapsViewer 4.12; the UI must preserve that distinction and must not claim wider validated query coverage.
+- Database release 0.33.3 is compatible with VulkanScope 0.32.2: native compile headers are Vulkan-Headers 1.4.360 while the application's independently validated exhaustive runtime query catalog remains Vulkan 1.4.357 / CapsViewer 4.12; the UI must preserve that distinction and must not claim wider validated query coverage.
 - Browser-visible static assets that materially change must use versioned filenames or an equivalent cache-busting strategy so GitHub Pages/browser caches cannot silently retain an older UI release.
 - The vendor filter must show a human-readable GPU family derived from authoritative vendor identity when that family is unambiguous, while retaining the canonical raw vendor ID as the filter key. A separate GPU-model filter must expose the actual reported device name.
 - Report detail navigation must remain visible even when a normalized category is empty; an empty category is shown as not reported rather than silently removing the tab.
