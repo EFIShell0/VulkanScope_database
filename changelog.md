@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.1
+# VulkanScope Database 0.33.2
 
 - Decode and display canonical VkMemoryPropertyFlags/VkMemoryHeapFlags names while retaining raw masks.
 - Prefer VulkanScope 0.32.2 schema-v3 technicalReport structured data when present.
@@ -6,7 +6,7 @@
 - Compact top navigation, add controlled logo-to-nav spacing, and collapse earlier to prevent the final tab clipping.
 - Tighten portrait/mobile header geometry and preserve horizontal scrolling inside wide technical tables.
 
-# VulkanScope Database 0.33.1
+# VulkanScope Database 0.33.2
 
 - Decode and display canonical VkMemoryPropertyFlags/VkMemoryHeapFlags names while retaining raw masks.
 - Prefer VulkanScope 0.32.2 schema-v3 technicalReport structured data when present.
