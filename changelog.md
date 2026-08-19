@@ -1,4 +1,13 @@
-## 0.33.5
+# 0.33.6
+
+- Replaced visible native table scrollbars with VulkanScope-styled horizontal scroll controls: arrows, draggable/clickable track, edge fades, touch panning and keyboard support.
+- Smoothed custom filter opening animation so chevron and listbox animate symmetrically on open and close.
+- Fixed long Surface present-mode tokens overflowing their cards.
+- Added polished static error pages for common HTTP errors and a styled frontend API-load failure state with Reports/GitHub/retry actions.
+- Improved Worker HTTP method semantics (405 + Allow) and added defensive response headers.
+- Full UI/usability/security regression audit; Vulkan 1.4.360 data semantics remain unchanged.
+
+## 0.33.6
 
 - Added design-integrated custom filter/listbox controls with keyboard, mouse and touch support.
 - Replaced the visible primary-navigation scrollbar with left/right arrow controls, edge fades and direct gesture/trackpad/wheel scrolling.
@@ -6,7 +15,7 @@
 - Expanded report comparison to Devices, normalized capabilities, Extensions, Formats, Queue families, Memory, Surface/WSI and Profiles for closer Vulkan Hardware Database parity.
 - Re-audited overflow, active-state, canonical value, status-color and structured-report behavior.
 
-# VulkanScope Database 0.33.5
+# VulkanScope Database 0.33.6
 
 - Synchronize browser titles with active main and report-detail sections.
 - Update VulkanScope application compatibility to 0.32.4 and validated query baseline to Vulkan 1.4.360.
