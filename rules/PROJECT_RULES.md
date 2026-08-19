@@ -91,3 +91,10 @@
 - Database 0.34.5 Display/HDR aggregate identifies the Android device/model, not the GPU. GPU names, GPU-vendor labels and GPU logo assets must not appear in the Display/HDR aggregate view or its hidden filter state.
 - Empty reported HDR type lists are presented as Unavailable in Display/HDR, not Unknown or Unsupported. Logos are presentation-only and may be shown only for HDR types explicitly reported by the submission; logo presence never implies support.
 - Recognized HDR type artwork may use local assets for Dolby Vision, Dolby Vision 2, HDR10, HDR10+, HDR10+ Advanced and HDR Vivid. Unknown/unmapped HDR type strings remain escaped raw text and are never renamed or dropped.
+
+- Database 0.34.6 uses a dedicated HDR10 asset for HDR10. HDR10 must never be synthesized by cropping, masking or relabeling the HDR10+ artwork. The supplied black HDR10 artwork is rendered on an opaque white background for dark-theme legibility.
+- HDR brand artwork is presentation-only. A logo asset never creates support evidence; it may render only when the submitted report explicitly reports the corresponding HDR type.
+- When the Worker receives an HTTP Origin header and ALLOWED_ORIGIN is configured to a concrete origin, mismatched browser origins are rejected. Requests without Origin remain valid so the native VulkanScope Android client and command-line diagnostics are not broken.
+- Database 0.34.6 is schema-compatible with VulkanScope 0.32.7; the app's Turnip SAF picker fix does not change structured report semantics.
+
+- Database 0.34.7 Display/HDR must not expose or apply vendor, GPU-model, or Vulkan API-version filters. Display/HDR is Android device/display metadata; only filters with direct semantic relevance to that view may affect its rows. Hidden stale filter state must never suppress Display/HDR results.

@@ -54,6 +54,14 @@ Overflowing technical tables use local design-consistent horizontal controls ins
 Report-detail tabs and value-distribution accordions use symmetric, accessibility-aware transitions. Queue detail includes presentation support when reported, and Surface detail includes presentation queues/query diagnostics from schema-v3 submissions.
 
 
+
+### 0.34.7
+
+- Uses the dedicated HDR10 artwork supplied for VulkanScope Database. HDR10 is no longer synthesized by cropping the HDR10+ logo.
+- The HDR10 asset has an opaque white background so the original black wordmark remains legible on the dark UI.
+- Browser-origin API requests are restricted to the configured VulkanScope Database origin when an Origin header is present; native Android submissions without an Origin header remain supported.
+- Confirmed compatibility with VulkanScope 0.32.7; the SAF-only app change does not alter schema-v3 report semantics.
+
 ### 0.34.5
 - Restored smooth compositor-only transitions between primary navigation sections.
 - Fixed numeric Vulkan API-version ordering in filters, Devices and Versions.

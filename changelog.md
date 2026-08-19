@@ -1,3 +1,16 @@
+# 0.34.7
+
+- Removed the Vulkan API-version filter from the Android Display / HDR view because that view describes Android display capability rather than Vulkan API capability.
+- Display / HDR now ignores any previously selected Vulkan API filter state, matching the existing device/GPU filter isolation for this view.
+- Preserved all 0.34.6 HDR artwork, security, VulkanScope 0.32.7 schema compatibility and data-state semantics.
+
+# 0.34.6
+
+- Replaced the synthetic/cropped HDR10 presentation with the dedicated HDR10 SVG supplied by the project owner.
+- Added an opaque white background to the HDR10 asset for dark-theme legibility while preserving the original black logo artwork.
+- Added conditional browser Origin validation to the Worker without blocking native VulkanScope submissions that do not send Origin.
+- Updated Worker package metadata to 0.34.6 and re-audited frontend/Worker security, data semantics and VulkanScope 0.32.7 compatibility.
+
 # 0.34.5
 - Restored smooth primary-section navigation transitions.
 - Fixed Vulkan API-version numeric sorting.
