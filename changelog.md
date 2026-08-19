@@ -1,3 +1,19 @@
+# 0.33.8
+
+- Added local GPU vendor logo assets sourced from the VulkanScope Android application and an explicit **Logo** column beside GPU names in device/report-backed technical tables.
+- Added canonical vendor-logo fallback logic; unknown/unmapped vendors use the bundled unknown GPU mark instead of a guessed identity.
+- Styled only explicit **Turnip / third-party driver** labels with the VulkanScope red accent while preserving all raw driver text and report data.
+- Web-optimized the local vendor logo assets to 128×128 PNGs for lower transfer/decode cost without introducing any third-party requests.
+- Preserved Vulkan 1.4.360 canonical/raw decoding, schema-v3 structured-report precedence, exact U64 handling, report-state semantics, IPv4/IPv6 transport neutrality and the 0.33.7 interaction fixes.
+- Re-audited CapsViewer/Vulkan Hardware Database category parity, frontend CSP/CORS assumptions, table overflow usability, parser boundaries and Worker request handling.
+
+# 0.33.7
+
+- Added smooth, race-safe report-detail tab transitions with reduced-motion support and keyboard tab navigation.
+- Replaced abrupt native distinct-value/coverage details with touch/mouse/keyboard-friendly animated accordions and synchronized chevrons.
+- Added per-queue presentation support to report Queue detail and presentation queue/query diagnostics to Surface detail.
+- Re-audited Vulkan Hardware Database report/category parity; no state is inferred when data is absent.
+
 # 0.33.6
 
 - Replaced visible native table scrollbars with VulkanScope-styled horizontal scroll controls: arrows, draggable/clickable track, edge fades, touch panning and keyboard support.

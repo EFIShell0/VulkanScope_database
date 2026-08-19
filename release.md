@@ -1,15 +1,31 @@
-# VulkanScope Database 0.33.6
+# VulkanScope Database 0.33.8
 
-Scrollbar, filter-animation, Surface-layout, error-state and full regression-audit release.
+## GPU vendor identity polish
 
-- Replaced browser-native horizontal table scrollbars with VulkanScope-styled controls on every overflowing technical table: left/right actions, edge fades, a clickable/draggable position track, touch panning and keyboard support.
-- Fixed the custom filter opening transition. The listbox and chevron now animate symmetrically when opening and closing instead of the chevron appearing instantly in its final state.
-- Added automatic drop-up placement for filter menus when there is not enough viewport space below the control.
-- Fixed long canonical Surface present-mode tokens overflowing their cards. Tokens wrap without abbreviation or information loss.
-- Added a polished VulkanScope-styled `404.html`, reusable common 4xx/5xx static error pages, and a matching live frontend API-load error state with Reports, GitHub and Retry actions.
-- Improved Worker HTTP semantics: known routes called with an unsupported method return `405 Method Not Allowed` with an accurate `Allow` header instead of a misleading 404. API responses remain JSON.
-- Added defensive Worker response headers while preserving the existing CORS contract, parameterized D1 access, 2 MiB submission bound and no-IP-storage policy.
-- Fixed a portrait/mobile sticky-detail-tab offset that could overlap the two-row header.
-- Reduced repeated global-search CPU work by caching each report's normalized search text and applying a short input debounce.
-- Re-audited CapsViewer / Vulkan Hardware Database category parity. Properties/features Core 1.0–1.4 and extension views, formats, memory, queues, Surface, instance, profiles, portability and full report comparison remain represented without changing VulkanScope's stricter Unknown/Unsupported semantics.
-- VulkanScope 0.32.4/0.32.5 schema-v3 compatibility, Vulkan 1.4.360 baseline, exact-width flag handling and canonical/raw Vulkan presentation are preserved.
+- Added the GPU vendor artwork already bundled with VulkanScope Android as local Database assets.
+- Added a compact **Logo** column immediately beside report-backed GPU/device-name columns in Reports, Devices, Memory heaps/types, Queues, Surface formats/presentation queues and Portability tables.
+- Vendor ID remains authoritative; GPU-name family matching is only a presentation fallback and unknown identities use the bundled unknown mark.
+- Web copies are optimized 128x128 PNGs, loaded locally with lazy loading/async decoding.
+
+## Third-party driver presentation
+
+- Explicit **Turnip / third-party driver** labels now use a restrained VulkanScope red accent in report lists, report detail, overview values, compare values, custom select presentation and raw-report presentation.
+- System Vulkan driver text and unrelated statuses are unchanged.
+- Underlying driver strings are not rewritten.
+
+## Security and correctness audit
+
+- `/v1/reports` POST now requires `application/json` (HTTP 415 otherwise).
+- Submission identity must match VulkanScope / `com.efishell.vulkanscope`.
+- Incomplete collection submissions are rejected; only `collection.status=available` is accepted.
+- Added a matching 415 error page.
+- Tightened Permissions-Policy while preserving existing CSP/CORS, 2 MiB body limit, parameterized D1 SQL, SHA-256 report IDs and no request-IP persistence.
+- Rechecked VulkanScope 0.32.5 structured-report compatibility and the validated Vulkan 1.4.360 baseline.
+- Rechecked current Vulkan Hardware Database/CapsViewer category coverage; no new category-level gap was found beyond the presentation-queue detail already fixed in 0.33.7.
+
+## Preserved behavior
+
+- Supported / Unsupported / Available / Unavailable / Unknown remain distinct.
+- Exact U64 masks and canonical/raw Vulkan values remain lossless.
+- Missing report data is never inferred as Unsupported.
+- Existing touch/mouse/keyboard table scrolling, custom filters, responsive navigation and report-detail animations remain intact.

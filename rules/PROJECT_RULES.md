@@ -57,3 +57,13 @@
 - Custom listbox opening and closing transitions must be symmetrical; DOM refresh must not recreate animated controls in their final state and bypass the opening animation.
 - Frontend fatal/API-load errors and static error documents use the VulkanScope Database design language and always provide a Reports-home action plus the official VulkanScope GitHub link. API endpoints themselves remain machine-readable JSON.
 - Known Worker API paths called with unsupported HTTP methods return 405 and an accurate Allow header rather than 404.
+
+- Report-detail tab and disclosure transitions are presentation-only and must not delay, mutate, or reinterpret normalized Vulkan data. Rapid interaction must not permit stale animation completion to restore an older tab.
+- Disclosure controls that replace native details use semantic buttons, `aria-expanded`, keyboard focus and reduced-motion handling; touch and mouse must share the same state path.
+- Queue-family presentation support is shown only from explicit submitted Surface presentation-queue evidence. Missing queue presentation evidence is Unknown, not Unsupported.
+- Surface query diagnostics are displayed only when supplied by the report and remain raw/authoritative; UI never fabricates query results.
+
+- Database release 0.33.8 may reuse the local GPU vendor artwork bundled with the VulkanScope Android application. Vendor artwork remains a presentation aid only: vendor IDs and reported GPU names remain authoritative, unknown vendors use the bundled unknown mark, and a logo must never be used to infer unsupported technical data.
+- Tables that expose a report/device GPU name include a compact **Logo** column immediately adjacent to the GPU/device-name column when a report object is available. Logo cells are fixed-width, lazy-decoded local assets and must not cause horizontal text truncation or third-party network requests.
+- Only explicit Turnip / third-party driver presentation text uses the red accent. The underlying driver mode/name/version remains unchanged and copyable; System Vulkan driver text and unrelated status values must not inherit this treatment.
+- Public report POSTs accept `application/json` only, require the VulkanScope application identity fields expected by schema 2, and reject collection states other than complete/available. These checks supplement, not replace, payload-size, forbidden-field and schema validation.

@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.6
+# VulkanScope Database 0.33.8
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -33,3 +33,15 @@ VulkanScope 0.32.4 schema-v3 `technicalReport` data is consumed losslessly when 
 ## 0.33.6 UI and reliability notes
 
 Overflowing technical tables use local design-consistent horizontal controls instead of browser-native scrollbar chrome while keeping direct touch panning and keyboard access. Filter listboxes animate in both directions and may open upward when needed. Long canonical Vulkan tokens wrap without truncation. Frontend load failures and the GitHub Pages 404 experience use the same VulkanScope visual language and link back to Reports and the official VulkanScope repository.
+
+
+
+## 0.33.8 highlights
+
+- Local GPU vendor artwork from the VulkanScope Android app is shown in a fixed-width **Logo** column beside report-backed GPU/device names.
+- Explicit Turnip / third-party driver labels use a dedicated red accent without changing raw driver values.
+- Worker submissions now require JSON, VulkanScope application identity and a complete/available collection state.
+- VulkanScope 0.32.5 / Vulkan 1.4.360 structured-report compatibility and current CapsViewer/Vulkan Hardware Database category parity were re-audited.
+
+## 0.33.7 interaction notes
+Report-detail tabs and value-distribution accordions use symmetric, accessibility-aware transitions. Queue detail includes presentation support when reported, and Surface detail includes presentation queues/query diagnostics from schema-v3 submissions.
