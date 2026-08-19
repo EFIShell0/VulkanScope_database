@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.8
+# VulkanScope Database 0.33.9
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -35,6 +35,13 @@ VulkanScope 0.32.4 schema-v3 `technicalReport` data is consumed losslessly when 
 Overflowing technical tables use local design-consistent horizontal controls instead of browser-native scrollbar chrome while keeping direct touch panning and keyboard access. Filter listboxes animate in both directions and may open upward when needed. Long canonical Vulkan tokens wrap without truncation. Frontend load failures and the GitHub Pages 404 experience use the same VulkanScope visual language and link back to Reports and the official VulkanScope repository.
 
 
+
+
+## 0.33.9 highlights
+
+- Consistent bold GPU model emphasis across report-backed lists.
+- Lightweight, reduced-motion-aware primary navigation transitions using compositor-friendly opacity/transform only.
+- Re-audited CapsViewer category parity, canonical/raw Vulkan data handling, security and mobile sticky-tab behavior.
 
 ## 0.33.8 highlights
 

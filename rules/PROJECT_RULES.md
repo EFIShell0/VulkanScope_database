@@ -67,3 +67,7 @@
 - Tables that expose a report/device GPU name include a compact **Logo** column immediately adjacent to the GPU/device-name column when a report object is available. Logo cells are fixed-width, lazy-decoded local assets and must not cause horizontal text truncation or third-party network requests.
 - Only explicit Turnip / third-party driver presentation text uses the red accent. The underlying driver mode/name/version remains unchanged and copyable; System Vulkan driver text and unrelated status values must not inherit this treatment.
 - Public report POSTs accept `application/json` only, require the VulkanScope application identity fields expected by schema 2, and reject collection states other than complete/available. These checks supplement, not replace, payload-size, forbidden-field and schema validation.
+
+- Database release 0.33.9 renders reported GPU model names with consistent strong emphasis in all report-backed list/table contexts; presentation styling must not alter the raw GPU name.
+- Primary navigation view changes use short compositor-friendly opacity/transform transitions only. They must not animate table dimensions, delay Vulkan normalization, or allow stale transition completion to restore an older view; prefers-reduced-motion disables the transition.
+- On portrait/mobile layouts with the two-row header, report-detail sticky tabs must clear the full header height and never be hidden beneath the top bar.

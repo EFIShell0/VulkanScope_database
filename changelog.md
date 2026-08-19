@@ -1,3 +1,9 @@
+# 0.33.9
+
+- Bold GPU model presentation across report-backed lists.
+- Smooth, reduced-motion-aware main navigation view transitions.
+- Re-ran Vulkan/CapsViewer parity, security, performance and data-integrity audits.
+
 # 0.33.8
 
 - Added local GPU vendor logo assets sourced from the VulkanScope Android application and an explicit **Logo** column beside GPU names in device/report-backed technical tables.

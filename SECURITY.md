@@ -11,3 +11,7 @@ Unknown, unsupported and unavailable capability states remain distinct. Missing 
 ## 0.33.8 submission hardening
 
 The Worker accepts report submissions only as `application/json`. The outer schema must identify the producer as VulkanScope (`com.efishell.vulkanscope`) and `collection.status` must be `available`; incomplete collection submissions are rejected. Existing payload-size, forbidden-field, D1 parameter binding and no-request-IP-storage controls remain in force.
+
+## 0.33.9 audit
+
+No new network permission or third-party dependency was added. The UI-only transition and GPU-name styling changes retain the existing CSP, JSON submission validation, D1 parameterization, payload limits and no-IP-storage rules.
