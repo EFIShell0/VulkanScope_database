@@ -80,10 +80,14 @@
 
 - Database release 0.34.3 presents physical-device API, loader/instance API and equivalent Vulkan API version values with the shared `api-version-chip` presentation in every applicable aggregate/report/compare view. The underlying version string remains authoritative and must not be renamed, rounded, promoted, or inferred for styling.
 
-- Database 0.34.4 primary-section navigation uses short compositor-only opacity/translate transitions driven by Web Animations API. Rapid navigation is token-gated so stale transitions cannot commit an older view; `prefers-reduced-motion` disables decorative motion.
+- Database 0.34.5 primary-section navigation uses short compositor-only opacity/translate transitions driven by Web Animations API. Rapid navigation is token-gated so stale transitions cannot commit an older view; `prefers-reduced-motion` disables decorative motion.
 - Vulkan API-version lists and maxima use numeric-aware version ordering. Lexicographic string ordering must not be used for Vulkan versions because it can misorder values such as 1.4.9 and 1.4.10.
-- Database 0.34.4 is regression-audited against VulkanScope 0.32.6 schema-v3 structured reports. Queue video decode/encode/optical-flow/data-graph fields and Surface completeness/query diagnostics remain representable without inventing unsupported state.
+- Database 0.34.5 is regression-audited against VulkanScope 0.32.6 schema-v3 structured reports. Queue video decode/encode/optical-flow/data-graph fields and Surface completeness/query diagnostics remain representable without inventing unsupported state.
 
 - Android Display/HDR data present in schema-v3 `technicalReport.display` is a first-class technical category and must be accessible in both aggregate and per-report Database UI; raw report access alone is not sufficient.
 - Instance/device layer extension lists carried by schema-v3 reports must remain visible and must not be discarded when normalizing layers.
 - A Database-global baseline label describes the VulkanScope producer/query catalog, not an assertion about the Khronos Registry's current published release. Per-report raw registry/header metadata remains authoritative for that report.
+
+- Database 0.34.5 Display/HDR aggregate identifies the Android device/model, not the GPU. GPU names, GPU-vendor labels and GPU logo assets must not appear in the Display/HDR aggregate view or its hidden filter state.
+- Empty reported HDR type lists are presented as Unavailable in Display/HDR, not Unknown or Unsupported. Logos are presentation-only and may be shown only for HDR types explicitly reported by the submission; logo presence never implies support.
+- Recognized HDR type artwork may use local assets for Dolby Vision, Dolby Vision 2, HDR10, HDR10+, HDR10+ Advanced and HDR Vivid. Unknown/unmapped HDR type strings remain escaped raw text and are never renamed or dropped.

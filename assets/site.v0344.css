@@ -34,6 +34,6 @@ tr:hover .api-version-chip{border-color:#444650;background:linear-gradient(180de
 .kv .api-version-chip{min-width:0;padding:6px 9px}
 @media(max-width:760px){.api-version-chip{min-width:68px;padding:6px 9px;font-size:12.5px;border-radius:10px}}
 
-/* 0.34.4: compositor-only main-view transitions are driven by WAAPI. */
+/* 0.34.5: compositor-only main-view transitions are driven by WAAPI. */
 #contentView[aria-busy="true"],#detailView[aria-busy="true"]{will-change:opacity,transform;pointer-events:none}
 @media (prefers-reduced-motion:reduce){#contentView,#detailView{scroll-behavior:auto!important}}

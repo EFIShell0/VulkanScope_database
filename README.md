@@ -54,9 +54,9 @@ Overflowing technical tables use local design-consistent horizontal controls ins
 Report-detail tabs and value-distribution accordions use symmetric, accessibility-aware transitions. Queue detail includes presentation support when reported, and Surface detail includes presentation queues/query diagnostics from schema-v3 submissions.
 
 
-### 0.34.4
+### 0.34.5
 - Restored smooth compositor-only transitions between primary navigation sections.
 - Fixed numeric Vulkan API-version ordering in filters, Devices and Versions.
 - Re-audited VulkanScope 0.32.6 structured-report compatibility, CapsViewer category parity, security and performance.
 
-- 0.34.4 also exposes schema-v3 Android Display/HDR data and nested layer extension lists that were previously retained but not fully surfaced in the UI.
+- 0.34.5 also exposes schema-v3 Android Display/HDR data and nested layer extension lists that were previously retained but not fully surfaced in the UI.

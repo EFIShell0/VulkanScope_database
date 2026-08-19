@@ -1,4 +1,4 @@
-# 0.34.4
+# 0.34.5
 - Restored smooth primary-section navigation transitions.
 - Fixed Vulkan API-version numeric sorting.
 - Re-audited app 0.32.6 compatibility, CapsViewer parity, security and performance.
@@ -144,3 +144,8 @@
 - Custom selector System-driver choices now bold only the GPU model name for consistency with report/device tables.
 - Preserved Turnip / third-party red emphasis and native-select accessibility/state semantics.
 - Re-ran frontend, Worker, security, performance and Vulkan-data regression audits.
+
+## 0.34.5
+- Display/HDR now identifies Android device models instead of GPUs and never renders GPU logos in that view.
+- Empty HDR capability lists render as Unavailable.
+- Added local HDR logo chips for explicitly reported Dolby Vision, Dolby Vision 2, HDR10, HDR10+, HDR10+ Advanced and HDR Vivid types.
