@@ -73,3 +73,5 @@
 - On portrait/mobile layouts with the two-row header, report-detail sticky tabs must clear the full header height and never be hidden beneath the top bar.
 
 - Database release 0.34.0 custom listboxes render System Vulkan driver choices with strong emphasis on the reported GPU model only; system driver mode/version text stays normal weight. Turnip / third-party choices keep their explicit red-accent presentation. This is presentation-only and must not alter native select state or raw report values.
+
+- Database release 0.34.1 requires explicit custom-listbox contrast: in System Vulkan driver choices, the reported GPU model is strong white text while the driver suffix remains muted normal-weight text in normal, hover, focus and selected states; inherited row color must not erase this distinction.

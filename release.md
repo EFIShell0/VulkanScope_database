@@ -1,3 +1,12 @@
+# VulkanScope Database 0.34.1
+
+## Fixed
+
+- Custom selection menus now render System Vulkan driver GPU model names in explicit strong white text.
+- Driver mode/version suffixes remain muted and normal-weight.
+- Hover, focus and selected row styles no longer flatten the GPU-name emphasis.
+- Turnip / third-party styling is unchanged.
+
 # VulkanScope Database 0.34.0
 
 ## UI consistency

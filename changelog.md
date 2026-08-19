@@ -1,3 +1,8 @@
+# 0.34.1
+
+- Fixed System Vulkan driver custom-listbox contrast: GPU model is now explicitly white and bold, while the driver suffix remains muted and normal-weight in all interaction states.
+- Preserved Turnip / third-party red-accent styling and native select state semantics.
+
 # 0.34.0
 
 - Bold GPU model presentation across report-backed lists.
