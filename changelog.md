@@ -1,4 +1,4 @@
-# 0.33.9
+# 0.34.0
 
 - Bold GPU model presentation across report-backed lists.
 - Smooth, reduced-motion-aware main navigation view transitions.
@@ -115,3 +115,9 @@
 - Centralized detail-tab UI synchronization from `state.detailTab`.
 - Added `aria-selected`/tab focus semantics and automatic visibility scrolling for the active tab on narrow layouts.
 - Audited similar stale-active-state paths without changing Vulkan data semantics.
+
+
+## 0.34.0
+- Custom selector System-driver choices now bold only the GPU model name for consistency with report/device tables.
+- Preserved Turnip / third-party red emphasis and native-select accessibility/state semantics.
+- Re-ran frontend, Worker, security, performance and Vulkan-data regression audits.

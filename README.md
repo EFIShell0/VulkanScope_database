@@ -1,4 +1,4 @@
-# VulkanScope Database 0.33.9
+# VulkanScope Database 0.34.0
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -37,7 +37,7 @@ Overflowing technical tables use local design-consistent horizontal controls ins
 
 
 
-## 0.33.9 highlights
+## 0.34.0 highlights
 
 - Consistent bold GPU model emphasis across report-backed lists.
 - Lightweight, reduced-motion-aware primary navigation transitions using compositor-friendly opacity/transform only.
