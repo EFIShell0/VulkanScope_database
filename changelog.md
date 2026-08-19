@@ -1,4 +1,10 @@
-# 0.34.1
+# 0.34.2
+
+- Refined the Compare `Differences only` control into a touch/mouse/keyboard-friendly VulkanScope-styled checkbox.
+- Preserved the existing Compare filter state and data semantics.
+- Added focus-visible and reduced-motion behavior.
+
+# 0.34.2
 
 - Fixed System Vulkan driver custom-listbox contrast: GPU model is now explicitly white and bold, while the driver suffix remains muted and normal-weight in all interaction states.
 - Preserved Turnip / third-party red-accent styling and native select state semantics.
