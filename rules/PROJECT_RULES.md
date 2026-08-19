@@ -77,3 +77,5 @@
 - Database release 0.34.2 requires explicit custom-listbox contrast: in System Vulkan driver choices, the reported GPU model is strong white text while the driver suffix remains muted normal-weight text in normal, hover, focus and selected states; inherited row color must not erase this distinction.
 
 - Database release 0.34.2 presents the Compare “Differences only” option as a custom VulkanScope-styled checkbox while retaining the native checkbox as the authoritative state. The control must preserve mouse, touch, label-click and keyboard operation, expose a visible focus state, use a minimum ~44 px touch target, and honor prefers-reduced-motion.
+
+- Database release 0.34.3 presents physical-device API, loader/instance API and equivalent Vulkan API version values with the shared `api-version-chip` presentation in every applicable aggregate/report/compare view. The underlying version string remains authoritative and must not be renamed, rounded, promoted, or inferred for styling.

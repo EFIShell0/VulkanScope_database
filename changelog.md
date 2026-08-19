@@ -1,3 +1,8 @@
+# 0.34.3
+
+- Styled Device API, Loader API, Vulkan API and Max API values as consistent high-contrast VulkanScope version chips across aggregate tables, report overview and Compare.
+- Raw version strings remain unchanged; presentation-only update.
+
 # 0.34.2
 
 - Refined the Compare `Differences only` control into a touch/mouse/keyboard-friendly VulkanScope-styled checkbox.
