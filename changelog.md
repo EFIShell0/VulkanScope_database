@@ -1,3 +1,10 @@
+# 0.34.4
+- Restored smooth primary-section navigation transitions.
+- Fixed Vulkan API-version numeric sorting.
+- Re-audited app 0.32.6 compatibility, CapsViewer parity, security and performance.
+- Added Display/HDR aggregate/detail views and layer-extension visibility.
+- Clarified producer/query baseline metadata.
+
 # 0.34.3
 
 - Styled Device API, Loader API, Vulkan API and Max API values as consistent high-contrast VulkanScope version chips across aggregate tables, report overview and Compare.

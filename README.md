@@ -28,7 +28,7 @@ The Reports view exposes exact submission timestamps down to seconds with timezo
 
 
 ## 0.33.6 compatibility
-VulkanScope 0.32.4 schema-v3 `technicalReport` data is consumed losslessly when present. Memory type and heap masks are decoded to canonical Vulkan names while raw masks remain visible. The UI labels Vulkan-Headers 1.4.360 compilation separately from the validated Vulkan 1.4.360 query catalog.
+VulkanScope 0.32.6 schema-v3 `technicalReport` data is consumed losslessly when present. Memory type and heap masks are decoded to canonical Vulkan names while raw masks remain visible. The UI labels Vulkan-Headers 1.4.360 compilation separately from the validated Vulkan 1.4.360 query catalog.
 
 ## 0.33.6 UI and reliability notes
 
@@ -48,7 +48,15 @@ Overflowing technical tables use local design-consistent horizontal controls ins
 - Local GPU vendor artwork from the VulkanScope Android app is shown in a fixed-width **Logo** column beside report-backed GPU/device names.
 - Explicit Turnip / third-party driver labels use a dedicated red accent without changing raw driver values.
 - Worker submissions now require JSON, VulkanScope application identity and a complete/available collection state.
-- VulkanScope 0.32.5 / Vulkan 1.4.360 structured-report compatibility and current CapsViewer/Vulkan Hardware Database category parity were re-audited.
+- VulkanScope 0.32.6 / Vulkan 1.4.360 structured-report compatibility and current CapsViewer/Vulkan Hardware Database category parity were re-audited.
 
 ## 0.33.7 interaction notes
 Report-detail tabs and value-distribution accordions use symmetric, accessibility-aware transitions. Queue detail includes presentation support when reported, and Surface detail includes presentation queues/query diagnostics from schema-v3 submissions.
+
+
+### 0.34.4
+- Restored smooth compositor-only transitions between primary navigation sections.
+- Fixed numeric Vulkan API-version ordering in filters, Devices and Versions.
+- Re-audited VulkanScope 0.32.6 structured-report compatibility, CapsViewer category parity, security and performance.
+
+- 0.34.4 also exposes schema-v3 Android Display/HDR data and nested layer extension lists that were previously retained but not fully surfaced in the UI.
