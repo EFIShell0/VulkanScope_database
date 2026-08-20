@@ -1,11 +1,6 @@
-# VulkanScope Database 0.34.8
+# VulkanScope Database 0.34.9
 
-## Filter UI
-- Filter selectors are more compact on desktop and mobile while preserving the existing VulkanScope Database design language.
-- Custom listbox buttons and options now include local semantic SVG icons.
-- Native select elements remain the authoritative state and keyboard/mouse/touch behavior is preserved.
-
-## Display / HDR
-- Added a submission-order selector with **Newest first** and **Oldest first**.
-- Display/HDR continues to exclude Vendor, GPU-model and Vulkan API filters because they are not semantically relevant to Android display metadata.
-
+## Compare / Portability density
+- Reduced the visual footprint of Compare report selectors, the Differences-only control, summary metrics and section headers without changing comparison coverage or state semantics.
+- Reduced Portability summary/coverage metric-card size and table row density while preserving explicit Supported vs Unknown/not-listed semantics.
+- Mobile layouts retain touch-friendly controls, responsive wrapping and existing horizontal-table navigation.

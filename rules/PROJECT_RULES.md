@@ -102,3 +102,10 @@
 
 - Database 0.34.8 top-level filter custom listboxes use a compact responsive presentation and local semantic SVG iconography. The hidden native select remains authoritative; keyboard, mouse and touch behavior and supported/unsupported/available/unavailable/unknown semantics must not change for styling.
 - Database 0.34.8 Display/HDR may expose submission-time ordering (Newest first / Oldest first) because it orders report rows without inferring display capability. Vendor, GPU-model and Vulkan API-version filters remain forbidden in Display/HDR, and ordering must use the server-provided `submittedAt` value with deterministic report-ID tie-breaking.
+
+
+## Release 0.34.9 Compare / Portability density
+- Compare and Portability may use denser presentation than general aggregate pages, but no compared capability, raw value, canonical Vulkan token, status state or portability evidence may be omitted or collapsed away solely to save space.
+- Compare selector/listbox native select state remains authoritative and Differences-only remains keyboard, mouse and touch operable.
+- Portability continues to treat absence of VK_KHR_portability_subset as Unknown/not listed unless direct runtime evidence justifies another state.
+- Density changes are presentation-only and must be scoped to Compare/Portability so unrelated views do not regress.

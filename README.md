@@ -1,4 +1,4 @@
-# VulkanScope Database 0.34.0
+# VulkanScope Database 0.34.9
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -72,3 +72,7 @@ Report-detail tabs and value-distribution accordions use symmetric, accessibilit
 - Re-audited VulkanScope 0.32.6 structured-report compatibility, CapsViewer category parity, security and performance.
 
 - 0.34.5 also exposes schema-v3 Android Display/HDR data and nested layer extension lists that were previously retained but not fully surfaced in the UI.
+
+
+### 0.34.9
+- Compare and Portability controls/summary surfaces use a denser responsive layout while preserving all data and status semantics.

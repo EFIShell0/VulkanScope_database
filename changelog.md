@@ -1,3 +1,8 @@
+# 0.34.9
+- Made Compare controls, summary metrics and section framing more compact on desktop and mobile.
+- Made Portability summary/coverage metrics and table density more compact without changing data semantics.
+- Added main-view scoping for these presentation-only density rules so other database sections remain unchanged.
+
 # 0.34.8
 - Reduced filter selector footprint across desktop and mobile without changing native select state or keyboard behavior.
 - Added semantic local SVG icons to filter controls and options.
