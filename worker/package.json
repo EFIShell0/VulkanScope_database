@@ -1,14 +1,25 @@
 {
   "name": "vulkanscope-database-worker",
   "private": true,
-  "version": "0.35.3",
+  "version": "0.35.5",
   "scripts": {
-    "dev": "wrangler dev",
+    "auth:create": "wrangler auth create vulkanscope",
+    "auth:activate": "wrangler auth activate vulkanscope .",
+    "auth:list": "wrangler auth list",
+    "auth:status": "wrangler whoami",
+    "verify:account": "node scripts/verify-cloudflare-account.mjs",
+    "predeploy": "npm run verify:account",
     "deploy": "wrangler deploy",
-    "migrate": "wrangler d1 migrations apply vulkanscope-database --remote"
+    "premigrate": "npm run verify:account",
+    "migrate": "wrangler d1 migrations apply vulkanscope-database --remote",
+    "premigrations:list": "npm run verify:account",
+    "migrations:list": "wrangler d1 migrations list vulkanscope-database --remote",
+    "pred1:count": "npm run verify:account",
+    "d1:count": "wrangler d1 execute vulkanscope-database --remote --command \"SELECT COUNT(*) AS report_count FROM reports;\"",
+    "dev": "wrangler dev"
   },
   "devDependencies": {
-    "wrangler": "^4.33.1"
+    "wrangler": "4.124.0"
   },
   "type": "module"
 }

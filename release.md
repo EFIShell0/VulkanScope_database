@@ -1,3 +1,11 @@
+# VulkanScope Database 0.35.5
+
+Windows reliability fix for the fail-closed Cloudflare account guard introduced in 0.35.4. Correctly activated `vulkanscope` auth profiles now verify through the project-local Wrangler CLI, while wrong or unreadable accounts remain blocked. No database migration, report-schema or frontend-data change is required.
+
+# VulkanScope Database 0.35.4
+
+Cloudflare account-isolation hardening release. Production account and D1 bindings are pinned, project-local auth-profile commands are provided, and npm production operations verify the active Cloudflare account before execution. No database migration or report-schema change is required.
+
 # VulkanScope Database 0.35.3
 
 Coverage emphasis correction based on 0.35.2.

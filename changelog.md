@@ -1,3 +1,21 @@
+# 0.35.5
+
+- Fixed Windows false-negative Cloudflare account verification after a valid project-local `vulkanscope` profile was activated.
+- The verifier now executes the pinned local Wrangler CLI through Node when available, avoiding unreliable direct `npx.cmd` execution from `child_process`.
+- `wrangler whoami --json` remains the primary check; a plain-text fallback is accepted only when the pinned VulkanScope account ID is present.
+- Wrangler debug-log environment variables are stripped from verifier subprocesses so JSON output remains parseable.
+- Fail-closed behavior is preserved: unreadable, missing or mismatched account identity still blocks deploy, migrations and D1 diagnostics.
+- No report schema, D1 migration, frontend behavior or production binding changed.
+
+# 0.35.4
+
+- Added project-local Wrangler auth-profile commands for the `vulkanscope` profile.
+- Pinned `account_id` to the production VulkanScope Cloudflare account and preserved the existing production D1 UUID.
+- Added fail-closed active-account verification before npm deploy, migration, migration-list and D1 count operations.
+- Added a root `.gitignore` for dependencies, Wrangler local state, environment/secret files, logs, caches and build outputs.
+- Pinned Wrangler to 4.124.0 for reproducible project-local CLI behavior.
+- No report schema, D1 migration, frontend capability semantics or API endpoint behavior changed.
+
 # 0.35.3
 
 - Fixed coverage status backgrounds leaking across the full percentage cell for non-dominant states.

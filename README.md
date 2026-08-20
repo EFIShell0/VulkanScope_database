@@ -1,9 +1,17 @@
-# VulkanScope Database 0.35.3
+# VulkanScope Database 0.35.5
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
 
+
+## 0.35.5 Windows account-verifier reliability
+
+The fail-closed Cloudflare account verifier now invokes the project-local Wrangler CLI directly through Node instead of relying on Windows `npx.cmd` child-process execution. JSON `whoami` remains preferred and a plain-text `whoami` fallback is accepted only when it contains the pinned VulkanScope account ID. Debug logging environment variables are removed from the child process so machine-readable verification cannot be polluted by Wrangler debug output. Wrong, unreadable or unverified accounts remain blocked.
+
+## 0.35.4 Cloudflare account isolation
+
+This release pins the production Worker to the VulkanScope Cloudflare account and D1 database, adds a project-local `vulkanscope` Wrangler auth-profile workflow, and blocks npm deploy/migration tasks when the active account does not match. Local credentials, Wrangler state, dependencies, logs, environment files, caches, and build artifacts are excluded by the root `.gitignore`.
 
 ## 0.35.3 coverage background dominance fix
 

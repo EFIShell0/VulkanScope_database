@@ -148,3 +148,18 @@
 - If the top percentage is tied, no tied state is dominant and all tied coverage containers/percentage labels remain neutral outside their progress fills.
 - State-count badges/pills are independent of coverage dominance and must remain unchanged.
 - This is presentation-only; counts, percentages, denominators, filters and capability-state semantics must not change.
+
+## Release 0.35.4 Cloudflare account isolation
+- Production Wrangler configuration is pinned to VulkanScope Cloudflare account `ccf3de9d3f2a4394af2fb7be7fd5bbf4`; it must not silently deploy to a different Cloudflare account.
+- Production D1 binding remains `DB` and is pinned to database `vulkanscope-database` with UUID `8fa65ef5-701d-4110-993d-87381f9763ab`.
+- The project-local Wrangler auth profile is named `vulkanscope`. Authentication state itself remains local and must never be committed to the repository.
+- npm production deploy, migration, migration-list and D1 diagnostic commands fail closed when the active Wrangler account cannot be verified as the pinned VulkanScope account.
+- Local dependencies, Wrangler state, environment/secret files, logs, caches and generated build output must remain excluded from Git through the repository `.gitignore`.
+- Account-isolation hardening must not change report schema semantics, stored report contents, public frontend capability-state semantics or D1 report data.
+
+
+## Release 0.35.5 Windows account-verifier reliability
+- The fail-closed account guard must work on Windows without treating a valid activated `vulkanscope` profile as unverifiable solely because `.cmd` execution through Node child-process APIs fails.
+- Project-local pinned Wrangler is the preferred verifier executable; JSON `whoami` is preferred and exact account-ID text fallback is allowed only as a compatibility path.
+- Debug logging must not contaminate machine-readable identity verification.
+- Any missing, unreadable or mismatched account identity still blocks production deploy, migrations, migration listing and D1 diagnostics.
