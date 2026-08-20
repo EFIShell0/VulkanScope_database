@@ -1,8 +1,15 @@
-# VulkanScope Database 0.34.9
+# VulkanScope Database 0.35.0
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
+
+
+## 0.35.0 audit notes
+
+Database 0.35.0 fixes current-schema Compare field mapping, property/limit state normalization, TXT fallback queue/registry parsing, fallback memory-flag rendering, and Worker input hardening. Worker normalizer version is 8. The Android Display preferred wide-gamut field is an Android-reported preferred composition color space and is not presented as measured physical-panel gamut coverage.
+
+The public Khronos specification version and VulkanScope's producer/query catalog baseline are intentionally separate labels. The database does not claim that its VulkanScope 1.4.360 producer/query baseline is the current published Khronos Registry version.
 
 ## Deploy the API
 
@@ -74,5 +81,5 @@ Report-detail tabs and value-distribution accordions use symmetric, accessibilit
 - 0.34.5 also exposes schema-v3 Android Display/HDR data and nested layer extension lists that were previously retained but not fully surfaced in the UI.
 
 
-### 0.34.9
+### 0.35.0
 - Compare and Portability controls/summary surfaces use a denser responsive layout while preserving all data and status semantics.

@@ -1,6 +1,13 @@
-# VulkanScope Database 0.34.9
+# VulkanScope Database 0.35.0
 
-## Compare / Portability density
-- Reduced the visual footprint of Compare report selectors, the Differences-only control, summary metrics and section headers without changing comparison coverage or state semantics.
-- Reduced Portability summary/coverage metric-card size and table row density while preserving explicit Supported vs Unknown/not-listed semantics.
-- Mobile layouts retain touch-friendly controls, responsive wrapping and existing horizontal-table navigation.
+## Full database audit
+- Corrected Compare field mapping for VulkanScope schema-v2 GPU device type and loader/instance API version.
+- Corrected property/limit state normalization so queried scalar values such as `false` and `0` remain Available instead of being mislabeled Unsupported. Feature booleans keep Supported/Unsupported semantics.
+- Expanded TXT fallback normalization for queue video codec operations and registry coverage.
+- Corrected fallback memory flag rendering.
+- Added streaming 2 MiB Worker request-body enforcement and stronger nested schema checks; Worker normalizer is version 8.
+- Made report de-duplication stable across JSON object key ordering and bounded canonicalization depth.
+- Added a visible report-load-failure metric when individual report detail fetches fail.
+- Clarified Android Display preferred wide-gamut color-space labeling.
+- Re-checked canonical Vulkan color-space/queue/memory/format flag presentation against the current published Khronos specification while keeping VulkanScope's independent producer/query baseline labeled separately.
+- Preserved all 0.34.9 Compare/Portability density and 0.34.8 filter/HDR ordering behavior.

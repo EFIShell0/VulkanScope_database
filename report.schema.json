@@ -17,26 +17,150 @@
       "const": 2
     },
     "application": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "name",
+        "packageName"
+      ],
+      "properties": {
+        "name": {
+          "const": "VulkanScope"
+        },
+        "packageName": {
+          "const": "com.efishell.vulkanscope"
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "versionCode": {
+          "type": [
+            "integer",
+            "number"
+          ]
+        },
+        "applicationAbi": {
+          "type": "string",
+          "maxLength": 64
+        }
+      }
     },
     "device": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "manufacturer",
+        "model"
+      ],
+      "properties": {
+        "manufacturer": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "model": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "androidRelease": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "sdk": {
+          "type": [
+            "integer",
+            "number"
+          ]
+        }
+      }
     },
     "gpu": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "name",
+        "vendorId",
+        "deviceId"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "vendorId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "deviceId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "deviceType": {
+          "type": "string",
+          "maxLength": 128
+        }
+      }
     },
     "driver": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "mode",
+        "version"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "version": {
+          "type": "string",
+          "maxLength": 512
+        }
+      }
     },
     "vulkan": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "deviceApiVersion"
+      ],
+      "properties": {
+        "loaderInstanceApiVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "deviceApiVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "registryBaseline": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "headerBaseline": {
+          "type": "string",
+          "maxLength": 128
+        }
+      }
     },
     "collection": {
-      "type": "object"
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "const": "available"
+        },
+        "deviceCount": {
+          "type": [
+            "integer",
+            "number"
+          ],
+          "minimum": 1
+        }
+      }
     },
     "reportText": {
       "type": "string",
-      "minLength": 1000
+      "minLength": 1000,
+      "maxLength": 2097152
     },
     "technicalReport": {
       "type": "object",

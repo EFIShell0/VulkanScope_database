@@ -1,3 +1,15 @@
+# 0.35.0
+- Full rules/security/data-semantics/specification audit.
+- Fixed Compare to use current VulkanScope schema fields `gpu.deviceType` and `vulkan.loaderInstanceApiVersion`.
+- Fixed scalar property/limit false or zero values being misclassified as Unsupported in compatibility/structured normalization; queried properties remain Available while feature booleans retain Supported/Unsupported semantics.
+- Extended TXT compatibility parsing for current queue `videoCodecOperations` and Vulkan Registry Coverage data.
+- Fixed fallback memory flag text rendering in detail/Compare paths.
+- Hardened Worker POST body handling with a streaming 2 MiB byte limit and stronger nested submission-shape validation; normalizer version is now 8.
+- Clarified Android Display preferred wide-gamut labeling so it is not presented as measured physical-panel gamut.
+- Corrected active release/footer asset/version metadata.
+- Made submission de-duplication key-order independent with bounded stable JSON canonicalization.
+- Surfaced individual report-detail fetch failures so incomplete loaded sets are never silently presented as complete.
+
 # 0.34.9
 - Made Compare controls, summary metrics and section framing more compact on desktop and mobile.
 - Made Portability summary/coverage metrics and table density more compact without changing data semantics.

@@ -109,3 +109,14 @@
 - Compare selector/listbox native select state remains authoritative and Differences-only remains keyboard, mouse and touch operable.
 - Portability continues to treat absence of VK_KHR_portability_subset as Unknown/not listed unless direct runtime evidence justifies another state.
 - Density changes are presentation-only and must be scoped to Compare/Portability so unrelated views do not regress.
+
+## Release 0.35.0 full database audit
+- Generic Vulkan scalar/property values are availability data: zero/false values remain Available unless the field is explicitly a feature/support boolean. Feature booleans retain Supported/Unsupported semantics.
+- Compare reads the canonical VulkanScope schema-v2 field names `gpu.deviceType` and `vulkan.loaderInstanceApiVersion`; legacy aliases must not replace current producer fields.
+- TXT compatibility normalization parses the current queue `videoCodecOperations` field and registry-coverage section instead of silently folding or dropping them.
+- Worker POST body processing is byte-bounded while streaming; requests over 2 MiB are rejected before an unbounded body string is materialized.
+- Worker schema checks validate required object shapes, bounded index metadata strings, application/package identity, and technicalReport schema 3 when present.
+- Android Display `preferredWideGamut` is presented as the preferred wide-gamut color space reported by Android, never as measured physical-panel gamut coverage. Display/HDR remains separate from Vulkan Surface color-space support.
+- The published Khronos Registry version and the VulkanScope producer/query baseline are distinct. As of this audit the public Khronos latest specification is 1.4.358 (2026-07-31); the database keeps VulkanScope's independently pinned producer/query baseline 1.4.360 labeled as such and does not call it Khronos latest.
+- Frontend report-detail fetch failures must be surfaced as a visible loaded-set warning/metric; silently dropping failed reports while presenting the loaded set as complete is forbidden.
+- Submission deduplication hashes a stable key-sorted JSON representation so equivalent payload objects cannot bypass deduplication merely by reordering object keys; nesting is bounded before canonicalization.
