@@ -1,3 +1,10 @@
+# 0.35.3
+
+- Fixed coverage status backgrounds leaking across the full percentage cell for non-dominant states.
+- Non-dominant states now retain semantic color only in the progress-bar fill; percentage text and surrounding coverage area remain neutral.
+- The unique dominant state may retain the wider semantic emphasis introduced by 0.35.1.
+- Equal top percentages remain neutral and state-count badges are unchanged.
+
 # 0.35.2
 
 - Full rules/security/specification regression audit of 0.35.1.

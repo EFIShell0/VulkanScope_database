@@ -1,9 +1,13 @@
-# VulkanScope Database 0.35.2
+# VulkanScope Database 0.35.3
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
 
+
+## 0.35.3 coverage background dominance fix
+
+Coverage rows now allow semantic background emphasis to extend beyond the progress fill only for the unique dominant percentage. Non-dominant coverage cells keep only their progress-bar fill in the state color; their surrounding coverage area is transparent and their percentage text remains neutral. State-count badges are unchanged.
 
 ## 0.35.2 full-audit hardening
 

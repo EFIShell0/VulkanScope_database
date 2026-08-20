@@ -139,3 +139,12 @@
 - Submission privacy validation operates on parsed JSON field names, recursively rejects sensitive personal/account/authentication identifiers, and does not reject harmless technical report text merely because it mentions a sensitive-looking phrase. GPU `deviceId` remains the Vulkan device identifier field and is not treated as a personal device identifier.
 - Malformed stored JSON must fail as an explicit server error without leaking stack details or corrupting neighboring report responses.
 - Worker normalizer version 9 corresponds to the 0.35.2 TXT compatibility behavior.
+
+
+## Release 0.35.3 dominant coverage background containment
+- Coverage progress fills always retain their semantic state color.
+- A non-dominant coverage state must not paint its semantic background outside the progress-bar fill; its surrounding coverage container remains transparent/neutral and its percentage label remains neutral white.
+- Only the unique dominant percentage in the same distribution may extend semantic emphasis to the percentage text and the surrounding coverage container.
+- If the top percentage is tied, no tied state is dominant and all tied coverage containers/percentage labels remain neutral outside their progress fills.
+- State-count badges/pills are independent of coverage dominance and must remain unchanged.
+- This is presentation-only; counts, percentages, denominators, filters and capability-state semantics must not change.

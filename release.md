@@ -1,16 +1,10 @@
-# VulkanScope Database 0.35.2
+# VulkanScope Database 0.35.3
 
-Full audit and correctness hardening release based on 0.35.1.
+Coverage emphasis correction based on 0.35.2.
 
-## Fixes
+## Fix
 
-- Complete report-index pagination beyond 500 submissions.
-- Surface TXT fallback diagnostics parity.
-- Compare memory-flag rendering correctness.
-- Display/HDR Compare empty-HDR state parity.
-- Surface scalar availability semantics.
-- Recursive sensitive-field privacy validation.
-- Stored-payload parse hardening.
-- Worker normalizer 9.
-
-The public Khronos specification checked during this audit is Vulkan 1.4.358 (2026-07-31). VulkanScope's 1.4.360 value remains labeled only as the producer/query baseline and is not presented as the published Khronos latest version.
+- Non-dominant coverage percentages no longer inherit the global Supported / Unsupported / Available / Unavailable / Unknown background across the full coverage cell.
+- Their semantic color is confined to the progress-bar fill and their percentage text stays neutral.
+- Only the unique dominant percentage may use the wider semantic background/text emphasis.
+- Count badges are intentionally unchanged.
