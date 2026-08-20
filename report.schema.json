@@ -42,6 +42,14 @@
         "applicationAbi": {
           "type": "string",
           "maxLength": 64
+        },
+        "supportedDeviceAbis": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "maxItems": 32
         }
       }
     },
@@ -69,6 +77,22 @@
             "integer",
             "number"
           ]
+        },
+        "brand": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "device": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "product": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "securityPatch": {
+          "type": "string",
+          "maxLength": 64
         }
       }
     },
@@ -112,6 +136,13 @@
         "version": {
           "type": "string",
           "maxLength": 512
+        },
+        "rawVersion": {
+          "type": [
+            "string",
+            "integer",
+            "number"
+          ]
         }
       }
     },
@@ -136,6 +167,10 @@
         "headerBaseline": {
           "type": "string",
           "maxLength": 128
+        },
+        "reportSchema": {
+          "type": "string",
+          "maxLength": 128
         }
       }
     },
@@ -154,6 +189,13 @@
             "number"
           ],
           "minimum": 1
+        },
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2048
         }
       }
     },

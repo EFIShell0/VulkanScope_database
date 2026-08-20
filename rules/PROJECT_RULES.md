@@ -120,3 +120,22 @@
 - The published Khronos Registry version and the VulkanScope producer/query baseline are distinct. As of this audit the public Khronos latest specification is 1.4.358 (2026-07-31); the database keeps VulkanScope's independently pinned producer/query baseline 1.4.360 labeled as such and does not call it Khronos latest.
 - Frontend report-detail fetch failures must be surfaced as a visible loaded-set warning/metric; silently dropping failed reports while presenting the loaded set as complete is forbidden.
 - Submission deduplication hashes a stable key-sorted JSON representation so equivalent payload objects cannot bypass deduplication merely by reordering object keys; nesting is bounded before canonicalization.
+
+
+## Release 0.35.1 dominant coverage emphasis
+- In coverage distributions, progress-bar fills always retain the semantic state palette for every state.
+- Percentage text uses a semantic state color only when that state is the unique largest percentage within the same compared distribution.
+- Non-dominant percentage text is neutral white. If the highest percentages are tied, all tied percentage labels remain neutral because no state dominates.
+- State-count badges/pills are not changed by dominance styling and retain their existing semantic colors.
+- Dominance styling is presentation-only; counts, denominators, percentages, filters and supported/unsupported/available/unavailable/unknown semantics are unchanged.
+
+
+## Release 0.35.2 full-audit hardening
+- The report index is cursor-paginated by the server-authored `(submitted_at, id)` ordering. The frontend must follow all returned index pages; an API page-size limit must never silently make older stored reports disappear from the public UI.
+- TXT compatibility normalization preserves current Surface `Color-space extension` and `Format query` diagnostic lines. Structured schema-v3 remains preferred, but fallback parsing must not silently discard these diagnostics.
+- Generic Surface capability/property values are availability data unless the field itself is an explicit support state. A false/zero scalar must not be reinterpreted as Unsupported. Query-diagnostic booleans are diagnostic values, not feature-support booleans.
+- Compare uses plain canonical memory flag text as data. HTML presentation fragments must never be stored as Compare values or rendered as escaped technical values.
+- An explicitly reported empty `display.hdrTypes` list is Unavailable in Compare as it is in Display/HDR; it is not Unknown and never implies Unsupported.
+- Submission privacy validation operates on parsed JSON field names, recursively rejects sensitive personal/account/authentication identifiers, and does not reject harmless technical report text merely because it mentions a sensitive-looking phrase. GPU `deviceId` remains the Vulkan device identifier field and is not treated as a personal device identifier.
+- Malformed stored JSON must fail as an explicit server error without leaking stack details or corrupting neighboring report responses.
+- Worker normalizer version 9 corresponds to the 0.35.2 TXT compatibility behavior.

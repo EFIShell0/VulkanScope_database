@@ -1,9 +1,22 @@
-# VulkanScope Database 0.35.0
+# VulkanScope Database 0.35.2
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
 
+
+## 0.35.2 full-audit hardening
+
+- Added stable cursor pagination so the frontend is no longer limited to the newest 500 report index rows.
+- Preserved Surface color-space/query diagnostics in TXT compatibility normalization.
+- Corrected Compare memory flag rendering and empty HDR-type semantics.
+- Hardened submission privacy validation to reject sensitive identifier keys recursively without scanning harmless report text.
+- Hardened stored-payload parsing and kept generic Surface scalar values as availability data rather than support booleans.
+- Worker normalizer version: 9.
+
+## 0.35.1 coverage emphasis
+
+Coverage percentage labels now use semantic color only for the unique dominant state in each compared distribution. Non-dominant percentage labels remain neutral white while their progress-bar fills retain their state colors; count badges are unchanged. Ties remain neutral.
 
 ## 0.35.0 audit notes
 

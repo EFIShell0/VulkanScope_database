@@ -1,3 +1,22 @@
+# 0.35.2
+
+- Full rules/security/specification regression audit of 0.35.1.
+- Added stable `(submitted_at,id)` cursor pagination for `/v1/reports`; the frontend now walks every index page instead of silently stopping at 500 reports.
+- Fixed TXT fallback loss of Surface color-space extension and format-query diagnostics.
+- Fixed Compare memory heap/type flags showing escaped HTML presentation markup instead of canonical flag text.
+- Fixed Compare empty `hdrTypes` state to Unavailable, matching Display/HDR rules.
+- Generic Surface capability scalars now remain Available even when their value is false/zero; query diagnostic booleans are displayed as reported values rather than reinterpreted as unsupported.
+- Replaced raw-text sensitive-token scanning with recursive sensitive-key validation, preventing personal/account identifier fields while avoiding false rejection of harmless technical report text.
+- Stored malformed payload JSON now returns an explicit 500 JSON error instead of throwing through the request path.
+- Worker normalizer bumped to 9.
+
+# 0.35.1
+
+- Coverage percentage labels now color only the unique dominant state in each distribution.
+- Non-dominant percentage labels remain neutral while progress-bar fills keep their semantic state colors.
+- Equal top percentages remain neutral; state-count badges are unchanged.
+- The rule applies consistently to feature, format, memory, extension, instance/layer, profile and generic aggregate coverage rows.
+
 # 0.35.0
 - Full rules/security/data-semantics/specification audit.
 - Fixed Compare to use current VulkanScope schema fields `gpu.deviceType` and `vulkan.loaderInstanceApiVersion`.

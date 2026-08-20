@@ -15,3 +15,14 @@ The Worker accepts report submissions only as `application/json`. The outer sche
 ## 0.34.0 audit
 
 No new network permission or third-party dependency was added. The UI-only transition and GPU-name styling changes retain the existing CSP, JSON submission validation, D1 parameterization, payload limits and no-IP-storage rules.
+
+## 0.35.2 audit hardening
+
+- POST media type is matched exactly as `application/json` (parameters such as `charset` are allowed); prefix lookalikes such as `application/jsonp` are rejected.
+- Request bodies remain byte-bounded while streaming before JSON materialization.
+- Sensitive personal/account/authentication field names are rejected recursively from parsed JSON. The validator deliberately operates on field names rather than scanning harmless technical report prose.
+- Stored malformed JSON is converted to a generic JSON 500 response; stack details are not exposed.
+- Report-list cursor parameters are validated and D1 queries remain parameter-bound.
+- A composite `(submitted_at, id)` index supports stable report cursor pagination.
+
+The submission endpoint intentionally remains unauthenticated so the VulkanScope Android application can submit reports without user accounts. Schema checks, size limits and Cloudflare deployment controls reduce abuse, but they are not a cryptographic proof that a caller is the official APK. Production operators should additionally use Cloudflare edge/rate-limiting controls appropriate to their deployment if public-write abuse becomes a concern; request IP addresses remain outside stored report data.
