@@ -1,9 +1,13 @@
-# VulkanScope Database 0.35.5
+# VulkanScope Database 0.35.6
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
 
+
+## 0.35.6 Vulkan brand-surface parity
+
+The public database shell now uses the same chromatic dark-surface treatment as OpenGLESScope Database, translated to Vulkan’s official `#A41E22` red. Background glow, hero, primary navigation and detail tabs, filter controls, search focus, cards, table-scroll controls, pagination, repository/error actions and other interactive chrome use Vulkan-red-derived surfaces while capability-state colors remain semantic and unchanged.
 
 ## 0.35.5 Windows account-verifier reliability
 

@@ -1,26 +1,18 @@
-# VulkanScope Database 0.35.5 build audit
+# VulkanScope Database 0.35.6 build audit
 
 ## Scope
-Windows reliability correction for the Cloudflare account-isolation guard introduced in 0.35.4. No report schema, D1 migration, public frontend technical semantics, Worker route or production binding changes.
-
-## Production identity
-- Cloudflare account ID: `ccf3de9d3f2a4394af2fb7be7fd5bbf4`
-- Worker: `vulkanscope-database-api`
-- D1 binding: `DB`
-- D1 database: `vulkanscope-database`
-- D1 UUID: `8fa65ef5-701d-4110-993d-87381f9763ab`
-- Wrangler auth profile: `vulkanscope`
-
-## Fix
-The 0.35.4 verifier used direct `npx.cmd` execution through `execFileSync` on Windows. A valid active profile could therefore fail before Wrangler returned identity data. 0.35.5 executes the project-local pinned Wrangler JavaScript CLI via `process.execPath` when installed, with a Windows-safe `npx` fallback. JSON `whoami` is preferred; exact account-ID text verification is fallback-only. Debug log variables are removed from the verifier subprocess.
+Presentation-only Vulkan brand-surface parity update based on the existing 0.35.5 database and the OpenGLESScope Database chromatic-shell treatment. No report schema, D1 schema, normalizer, capability-state inference, Cloudflare account isolation or stored report behavior was changed.
 
 ## Checks
-- Account pin unchanged: PASS.
-- D1 UUID/binding unchanged: PASS.
-- Verifier JavaScript syntax: PASS.
-- Local-Wrangler direct execution path present: PASS.
-- Windows-safe fallback path present: PASS.
-- Exact pinned-account comparison remains fail closed: PASS.
-- No D1 migration added: PASS.
-- No report schema change: PASS.
-- Frontend release identity updated to 0.35.5: PASS.
+- Official Vulkan primary brand color in frontend theme: `#A41E22`: PASS.
+- Page ambient background uses Vulkan-red radial treatment: PASS.
+- Hero, navigation/detail tabs, filters, search focus, cards and control chrome receive Vulkan-red-derived surfaces: PASS.
+- Semantic state palette preserved (supported green / unsupported red / available blue / unavailable amber / unknown gray): PASS.
+- 0.35.3 dominant coverage rules unchanged: PASS.
+- Versioned CSS and JS references use v0356: PASS.
+- Error pages reference v0356 CSS: PASS.
+- Worker account pin and D1 pin unchanged: PASS.
+- Worker JavaScript syntax check: PASS.
+- Frontend JavaScript syntax check: PASS.
+- JSON parse checks: PASS.
+- ZIP integrity: PASS.

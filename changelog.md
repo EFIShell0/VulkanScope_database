@@ -1,3 +1,10 @@
+# 0.35.6
+
+- Reworked the database background and interactive chrome to the OpenGLESScope-quality chromatic shell using Vulkan official red `#A41E22`.
+- Vulkan-red-derived styling now covers the page glow, hero, navigation/detail tabs, filters, search focus, cards, scroll controls, pagination and action surfaces.
+- Preserved supported/unsupported/available/unavailable/unknown semantic colors and 0.35.3 dominant-coverage rules unchanged.
+- Versioned frontend assets to `site.v0356.css` and `app.v0356.js` for cache-safe GitHub Pages deployment.
+
 # 0.35.5
 
 - Fixed Windows false-negative Cloudflare account verification after a valid project-local `vulkanscope` profile was activated.

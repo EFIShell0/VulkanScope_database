@@ -163,3 +163,11 @@
 - Project-local pinned Wrangler is the preferred verifier executable; JSON `whoami` is preferred and exact account-ID text fallback is allowed only as a compatibility path.
 - Debug logging must not contaminate machine-readable identity verification.
 - Any missing, unreadable or mismatched account identity still blocks production deploy, migrations, migration listing and D1 diagnostics.
+
+
+## Release 0.35.6 Vulkan brand-surface parity
+- The database shell follows the same chromatic dark-surface quality model as OpenGLESScope Database, but all product-brand accents and interactive chrome are derived from Vulkan official red `#A41E22`; OpenGL ES magenta must not be copied into VulkanScope.
+- Background ambient glow, hero surfaces, active/hovered navigation and detail tabs, search focus, filter controls, scroll controls, pagination and action surfaces use restrained Vulkan-red-derived tones rather than neutral gray-only chrome.
+- Product-brand theming must never overwrite technical state semantics: supported stays green, unsupported stays red, available stays blue, unavailable stays amber and unknown stays neutral gray.
+- Release 0.35.3 dominant-coverage containment remains authoritative; brand theming must not alter coverage denominators, dominance, state colors or percentage meaning.
+- Browser-visible changed CSS/JS uses versioned filenames so GitHub Pages and browser caches cannot retain the previous neutral theme.
