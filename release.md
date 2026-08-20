@@ -1,7 +1,11 @@
-# VulkanScope Database 0.34.7
+# VulkanScope Database 0.34.8
 
-## Display / HDR filter correction
+## Filter UI
+- Filter selectors are more compact on desktop and mobile while preserving the existing VulkanScope Database design language.
+- Custom listbox buttons and options now include local semantic SVG icons.
+- Native select elements remain the authoritative state and keyboard/mouse/touch behavior is preserved.
 
-The Display / HDR view no longer exposes or applies the Vulkan API-version filter. Android display/HDR capability is device/display metadata and must not be hidden by an unrelated Vulkan physical-device API filter. Vendor and GPU filters remain disabled there as before; the meaningful state filter remains available/unavailable.
+## Display / HDR
+- Added a submission-order selector with **Newest first** and **Oldest first**.
+- Display/HDR continues to exclude Vendor, GPU-model and Vulkan API filters because they are not semantically relevant to Android display metadata.
 
-All 0.34.6 HDR logo, security and schema-compatibility behavior is preserved.

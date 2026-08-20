@@ -55,6 +55,10 @@ Report-detail tabs and value-distribution accordions use symmetric, accessibilit
 
 
 
+### 0.34.8
+- Compact filter controls on desktop and mobile; custom listbox buttons/options now include local semantic SVG icons.
+- Display/HDR adds a submission-order control for newest/oldest reports while keeping Vendor/GPU/Vulkan filters excluded.
+
 ### 0.34.7
 
 - Uses the dedicated HDR10 artwork supplied for VulkanScope Database. HDR10 is no longer synthesized by cropping the HDR10+ logo.

@@ -98,3 +98,7 @@
 - Database 0.34.6 is schema-compatible with VulkanScope 0.32.7; the app's Turnip SAF picker fix does not change structured report semantics.
 
 - Database 0.34.7 Display/HDR must not expose or apply vendor, GPU-model, or Vulkan API-version filters. Display/HDR is Android device/display metadata; only filters with direct semantic relevance to that view may affect its rows. Hidden stale filter state must never suppress Display/HDR results.
+
+
+- Database 0.34.8 top-level filter custom listboxes use a compact responsive presentation and local semantic SVG iconography. The hidden native select remains authoritative; keyboard, mouse and touch behavior and supported/unsupported/available/unavailable/unknown semantics must not change for styling.
+- Database 0.34.8 Display/HDR may expose submission-time ordering (Newest first / Oldest first) because it orders report rows without inferring display capability. Vendor, GPU-model and Vulkan API-version filters remain forbidden in Display/HDR, and ordering must use the server-provided `submittedAt` value with deterministic report-ID tie-breaking.

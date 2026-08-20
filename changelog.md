@@ -1,3 +1,8 @@
+# 0.34.8
+- Reduced filter selector footprint across desktop and mobile without changing native select state or keyboard behavior.
+- Added semantic local SVG icons to filter controls and options.
+- Added Display/HDR newest-first / oldest-first submission ordering; Vendor/GPU/Vulkan filters remain excluded from Display/HDR.
+
 # 0.34.7
 
 - Removed the Vulkan API-version filter from the Android Display / HDR view because that view describes Android display capability rather than Vulkan API capability.
