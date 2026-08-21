@@ -1,3 +1,12 @@
+# VulkanScope Database 0.36.0
+
+- Matched Display & HDR luminance unit typography to OpenGLESScope Database.
+- `cd/m²` is now rendered through the dedicated `luminance-unit` presentation span, using muted text and 0.92em sizing while preserving the numeric luminance value as the primary text.
+- The same presentation is used in the aggregate Display & HDR table and report-detail Display & HDR values.
+- Existing `cd/m2`, `cd/m^2`, and `cd/m²` input forms are display-normalized to `cd/m²` without changing stored report evidence.
+- Active frontend assets are cache-busted as `app.v0360.js` and `site.v0360.css`.
+- No D1 migration or stored-payload rewrite is required.
+
 # VulkanScope Database 0.35.9
 
 Display/HDR, ABI and home-metric presentation parity release aligned with the existing VulkanScope schema-v3 contract.

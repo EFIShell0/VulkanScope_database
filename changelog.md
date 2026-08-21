@@ -1,3 +1,9 @@
+# 0.36.0
+
+- Matched luminance unit typography to OpenGLESScope: `cd/m²` now uses muted 0.92em presentation while the numeric value remains primary.
+- Applied the same luminance presentation in Display & HDR aggregate and report-detail views.
+- Added cache-busted `app.v0360.js` and `site.v0360.css`; no D1 migration.
+
 # 0.35.9
 
 - Renamed Display / HDR presentation to Display & HDR.

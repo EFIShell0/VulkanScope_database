@@ -208,3 +208,13 @@
 - No logo, ABI string, HDR value, or presentation label may be used to infer Vulkan feature support.
 - Release assets that change JavaScript behavior use cache-busted `app.v0359.js`; the unchanged stylesheet remains `site.v0357.css`.
 - No D1 migration or stored-payload rewrite is required for 0.35.9.
+
+
+## Release 0.36.0 luminance-unit typography parity
+
+- Display & HDR luminance evidence must preserve the producer-reported numeric/text value and must not infer or alter capability state.
+- When a luminance value is numeric or already carries a recognized `cd/m2`, `cd/m^2`, or `cd/m²` suffix, presentation normalizes the visible unit to `cd/m²`.
+- The `cd/m²` unit must use the same visual hierarchy as OpenGLESScope Database: dedicated `.luminance-unit`, `white-space: nowrap`, `color: var(--muted)`, and `font-size: .92em`; the numeric value remains normal primary table/detail text.
+- Aggregate Display & HDR and report-detail Display & HDR must use the same luminance typography.
+- Release assets that change JavaScript and CSS use cache-busted `app.v0360.js` and `site.v0360.css`.
+- No D1 migration or stored-payload rewrite is required for 0.36.0.
