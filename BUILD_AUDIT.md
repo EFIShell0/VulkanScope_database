@@ -1,18 +1,33 @@
-# VulkanScope Database 0.35.6 build audit
+# VulkanScope Database 0.35.7 build audit
 
 ## Scope
-Presentation-only Vulkan brand-surface parity update based on the existing 0.35.5 database and the OpenGLESScope Database chromatic-shell treatment. No report schema, D1 schema, normalizer, capability-state inference, Cloudflare account isolation or stored report behavior was changed.
+Full application/database compatibility, data correctness, specification provenance, frontend reliability and Worker security audit against VulkanScope 0.33.7.
 
-## Checks
-- Official Vulkan primary brand color in frontend theme: `#A41E22`: PASS.
-- Page ambient background uses Vulkan-red radial treatment: PASS.
-- Hero, navigation/detail tabs, filters, search focus, cards and control chrome receive Vulkan-red-derived surfaces: PASS.
-- Semantic state palette preserved (supported green / unsupported red / available blue / unavailable amber / unknown gray): PASS.
-- 0.35.3 dominant coverage rules unchanged: PASS.
-- Versioned CSS and JS references use v0356: PASS.
-- Error pages reference v0356 CSS: PASS.
-- Worker account pin and D1 pin unchanged: PASS.
-- Worker JavaScript syntax check: PASS.
-- Frontend JavaScript syntax check: PASS.
-- JSON parse checks: PASS.
+## Key findings fixed
+- Missing aggregate fields could disappear from property/limit/feature denominators instead of remaining Unknown.
+- Missing format rows likewise had no Unknown representation.
+- Display/HDR inferred state only from `hdrTypes`, so truly missing evidence could be mislabeled Unavailable and explicit producer status was ignored.
+- Browser API reads had no timeout or response-size ceiling and did not detect a repeated cursor.
+- Worker accepted structurally shallow schema-v2 submissions without cross-checking current schema-v3 primary-device metadata or current report-text identity.
+- Public specification notes still referenced Vulkan 1.4.358; current published Vulkan specification is 1.4.359 (2026-08-07). The VulkanScope 1.4.360 producer/query staging baseline remains separate.
+
+## Preserved invariants
+- Supported / Unsupported / Available / Unavailable / Unknown remain distinct.
+- Enumerated extension absence is not fabricated as Unsupported.
+- Exact-width U64 strings remain preferred for unsafe-width masks.
+- Raw report text remains accessible.
+- Request IP data is not stored.
+- Production Worker/D1 account pins remain unchanged.
+- No D1 migration or stored report rewrite is required.
+
+## Validation
+- Frontend JavaScript syntax: PASS.
+- Worker JavaScript syntax: PASS.
+- JSON schema parse: PASS.
+- Current VulkanScope 0.33.7 submission contract fixture: PASS.
+- Cross-field mismatch rejection: PASS.
+- Sensitive-key rejection: PASS.
+- Wrong Content-Type rejection: PASS.
+- 2 MiB request bound: PASS.
+- Version/cache references: PASS.
 - ZIP integrity: PASS.

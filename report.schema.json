@@ -20,7 +20,11 @@
       "type": "object",
       "required": [
         "name",
-        "packageName"
+        "packageName",
+        "version",
+        "versionCode",
+        "applicationAbi",
+        "supportedDeviceAbis"
       ],
       "properties": {
         "name": {
@@ -51,7 +55,8 @@
           },
           "maxItems": 32
         }
-      }
+      },
+      "additionalProperties": false
     },
     "device": {
       "type": "object",
@@ -94,7 +99,8 @@
           "type": "string",
           "maxLength": 64
         }
-      }
+      },
+      "additionalProperties": false
     },
     "gpu": {
       "type": "object",
@@ -120,7 +126,8 @@
           "type": "string",
           "maxLength": 128
         }
-      }
+      },
+      "additionalProperties": false
     },
     "driver": {
       "type": "object",
@@ -144,12 +151,17 @@
             "number"
           ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "vulkan": {
       "type": "object",
       "required": [
-        "deviceApiVersion"
+        "loaderInstanceApiVersion",
+        "deviceApiVersion",
+        "registryBaseline",
+        "headerBaseline",
+        "reportSchema"
       ],
       "properties": {
         "loaderInstanceApiVersion": {
@@ -172,12 +184,15 @@
           "type": "string",
           "maxLength": 128
         }
-      }
+      },
+      "additionalProperties": false
     },
     "collection": {
       "type": "object",
       "required": [
-        "status"
+        "status",
+        "deviceCount",
+        "error"
       ],
       "properties": {
         "status": {
@@ -188,7 +203,8 @@
             "integer",
             "number"
           ],
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 32
         },
         "error": {
           "type": [
@@ -197,7 +213,8 @@
           ],
           "maxLength": 2048
         }
-      }
+      },
+      "additionalProperties": false
     },
     "reportText": {
       "type": "string",
@@ -213,7 +230,9 @@
       },
       "required": [
         "schemaVersion"
-      ]
+      ],
+      "additionalProperties": true
     }
-  }
+  },
+  "additionalProperties": false
 }

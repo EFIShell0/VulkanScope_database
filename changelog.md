@@ -1,9 +1,22 @@
+# 0.35.7
+
+- Audited VulkanScope 0.33.7 producer compatibility end-to-end.
+- Added schema-v3/top-level cross-validation for primary GPU, driver, API and registry metadata.
+- Added current TXT report identity/section validation.
+- Added 20 s / 4 MiB bounded frontend API reads, repeated-cursor protection and four-way detail-fetch concurrency.
+- Fixed property, limit and feature coverage denominators so absent fields count as Unknown.
+- Fixed format coverage to retain Unknown for loaded reports missing a format row.
+- Fixed Display/HDR missing-vs-empty semantics and expanded semantic state filtering.
+- Added CORP/COOP and restrictive API CSP headers.
+- Updated published Khronos specification reference to Vulkan 1.4.359 (2026-08-07), separate from the 1.4.360 producer/query baseline.
+- Worker normalizer bumped to 10. No D1 migration.
+
 # 0.35.6
 
 - Reworked the database background and interactive chrome to the OpenGLESScope-quality chromatic shell using Vulkan official red `#A41E22`.
 - Vulkan-red-derived styling now covers the page glow, hero, navigation/detail tabs, filters, search focus, cards, scroll controls, pagination and action surfaces.
 - Preserved supported/unsupported/available/unavailable/unknown semantic colors and 0.35.3 dominant-coverage rules unchanged.
-- Versioned frontend assets to `site.v0356.css` and `app.v0356.js` for cache-safe GitHub Pages deployment.
+- Versioned frontend assets to `site.v0357.css` and `app.v0357.js` for cache-safe GitHub Pages deployment.
 
 # 0.35.5
 

@@ -117,7 +117,7 @@
 - Worker POST body processing is byte-bounded while streaming; requests over 2 MiB are rejected before an unbounded body string is materialized.
 - Worker schema checks validate required object shapes, bounded index metadata strings, application/package identity, and technicalReport schema 3 when present.
 - Android Display `preferredWideGamut` is presented as the preferred wide-gamut color space reported by Android, never as measured physical-panel gamut coverage. Display/HDR remains separate from Vulkan Surface color-space support.
-- The published Khronos Registry version and the VulkanScope producer/query baseline are distinct. As of this audit the public Khronos latest specification is 1.4.358 (2026-07-31); the database keeps VulkanScope's independently pinned producer/query baseline 1.4.360 labeled as such and does not call it Khronos latest.
+- The published Khronos Registry version and the VulkanScope producer/query baseline are distinct. As of this audit the public Khronos latest specification is 1.4.359 (2026-08-07); the database keeps VulkanScope's independently pinned producer/query baseline 1.4.360 labeled as such and does not call it Khronos latest.
 - Frontend report-detail fetch failures must be surfaced as a visible loaded-set warning/metric; silently dropping failed reports while presenting the loaded set as complete is forbidden.
 - Submission deduplication hashes a stable key-sorted JSON representation so equivalent payload objects cannot bypass deduplication merely by reordering object keys; nesting is bounded before canonicalization.
 
@@ -171,3 +171,17 @@
 - Product-brand theming must never overwrite technical state semantics: supported stays green, unsupported stays red, available stays blue, unavailable stays amber and unknown stays neutral gray.
 - Release 0.35.3 dominant-coverage containment remains authoritative; brand theming must not alter coverage denominators, dominance, state colors or percentage meaning.
 - Browser-visible changed CSS/JS uses versioned filenames so GitHub Pages and browser caches cannot retain the previous neutral theme.
+
+
+## Release 0.35.7 producer/database full audit
+- VulkanScope 0.33.7 schema-v2 + schema-v3 submissions are the current producer contract. New submissions with schema-v3 data are cross-checked so primary GPU name/vendor/device ID, device API, driver mode/version, loader/instance API and registry/header/report-baseline metadata cannot disagree with the top-level index metadata.
+- Current VulkanScope report text must identify the VulkanScope application/version/versionCode/package and contain the core registry, instance, profile, device, feature, limit, format and Surface sections. Report text remains authoritative raw evidence and is never discarded.
+- The current published Khronos specification and VulkanScope staging/query baseline are separate facts. As of this audit, the published Registry specification is Vulkan 1.4.359 dated 2026-08-07; VulkanScope's independently pinned producer/query staging baseline remains 1.4.360 and must not be labeled as the published latest specification.
+- Frontend API reads are bounded to 4 MiB and 20 seconds. Cursor pagination rejects repeated cursors and report-detail fetching remains concurrency-bounded to four workers.
+- Aggregate property, limit and feature coverage uses every loaded report in the denominator. If a capability exists in the loaded universe but is absent from a particular loaded report, that report contributes Unknown, never Unsupported and never disappears from the denominator.
+- Format aggregate coverage likewise includes Unknown for a loaded report that does not contain a format row in the selected format set.
+- Display/HDR prefers the producer's explicit `hdrCapabilityStatus`. A genuinely missing HDR field is Unknown; an explicitly reported empty `hdrTypes` list is Unavailable. Unsupported is never inferred from an empty HDR list.
+- Display/HDR state filtering may expose Supported/Unsupported for explicit wide-gamut support evidence and Available/Unavailable/Unknown for display/HDR availability evidence, but vendor, GPU-model and Vulkan API filters remain inapplicable to the Display/HDR view.
+- API responses retain CORS/nosniff/no-referrer/permissions protections and additionally send CORP/COOP plus a restrictive API CSP. Native Android submissions without an Origin header remain supported.
+- Worker normalizer version 10 corresponds to the 0.35.7 validation and TXT/structured compatibility behavior.
+- No D1 migration is required for 0.35.7; existing payloads remain normalized on read.

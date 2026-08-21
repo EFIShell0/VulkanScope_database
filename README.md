@@ -1,8 +1,22 @@
-# VulkanScope Database 0.35.6
+# VulkanScope Database 0.35.7
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
+
+## 0.35.7 producer/database correctness and hardening
+
+VulkanScope Database 0.35.7 is audited against VulkanScope 0.33.7 and the current published Khronos Vulkan 1.4.359 specification (2026-08-07), while retaining VulkanScope's separately pinned 1.4.360 producer/query staging baseline.
+
+- Schema-v3 data is cross-checked against top-level GPU, driver, loader/device API and registry metadata before new submissions are accepted.
+- Current report text must carry the expected VulkanScope application/version/package and core technical sections; arbitrary long JSON/text payloads are not accepted as valid reports.
+- Browser API reads now have a 20-second timeout and 4 MiB response ceiling, with repeated cursor detection and four-way bounded detail fetching.
+- Aggregate property/limit/feature coverage counts a missing field in an otherwise loaded report as Unknown instead of silently dropping that report from the denominator.
+- Format coverage likewise exposes Unknown when a loaded report does not contain a format row.
+- Display/HDR uses the producer's explicit `hdrCapabilityStatus` when present; a missing HDR field is Unknown, while an explicitly reported empty list is Unavailable.
+- Display/HDR state filtering covers supported, unsupported, available, unavailable and unknown evidence without re-enabling irrelevant GPU/vendor/API filters.
+- API responses add CORP/COOP and restrictive CSP headers in addition to existing CORS, nosniff, no-referrer and permissions policy protections.
+- Worker normalizer version is 10. No D1 migration or stored-payload rewrite is required.
 
 
 ## 0.35.6 Vulkan brand-surface parity
