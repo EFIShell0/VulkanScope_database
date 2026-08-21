@@ -1,4 +1,4 @@
-import worker from '../src/index.js';
+import worker, { normalizeReport } from '../src/index.js';
 import assert from 'node:assert/strict';
 
 class DB {
@@ -51,7 +51,7 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,10);assert.match(j.publishedVulkanSpec,/1\.4\.359/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,11);assert.match(j.publishedVulkanSpec,/1\.4\.359/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
 let p=fixture();p.technicalReport.devices[0].apiVersion='1.3.0';r=await call('/v1/reports',{method:'POST',body:p});assert.equal(r.status,400);
 p=fixture();p['account_id']='x';r=await call('/v1/reports',{method:'POST',body:p});assert.equal(r.status,400);
@@ -60,4 +60,16 @@ r=await call('/v1/reports',{method:'POST',body:fixture(),origin:'https://evil.ex
 r=await call('/v1/reports',{method:'PUT'});assert.equal(r.status,405);
 r=await call('/nope');assert.equal(r.status,404);
 const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';r=await call('/v1/reports',{method:'POST',body:huge});assert.equal(r.status,413);
+
+const metricFixture=fixture();
+metricFixture.technicalReport.devices[0].detailedProperties=[
+  {section:'VkPhysicalDeviceProperties',name:'apiVersion',value:'1.4.0'},
+  {section:'VkPhysicalDeviceVulkan14Properties',name:'lineRasterizationMode',value:'1'}
+];
+metricFixture.technicalReport.devices[0].limits=[{name:'maxImageDimension2D',value:'16384'}];
+const normalized=normalizeReport(metricFixture);
+assert.equal(normalized.detailedProperties.length,2,'structured detailedProperties must be authoritative');
+assert.equal(normalized.limits.length,1,'structured limits must be authoritative');
+assert.equal(normalized.detailedProperties.some(x=>x.section==='DEVICE'||x.section==='SURFACE'),false,'metadata must not contaminate properties');
+assert.equal(normalized.limits.some(x=>/Sparse Properties/i.test(x.section)),false,'detailed properties must not be reclassified as limits');
 console.log('VulkanScope Database worker contract tests: ALL PASS');

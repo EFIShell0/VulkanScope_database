@@ -1,3 +1,14 @@
+# 0.35.8
+
+- Fixed Properties count/classification to use schema-v3 `detailedProperties` instead of the broad normalized capability collection.
+- Fixed Limits count/classification to use schema-v3 `limits` instead of section-name heuristics.
+- Prevented DEVICE/SURFACE metadata from inflating Properties and prevented `Sparse Properties` from being counted as Limits.
+- Added separate legacy TXT fallback arrays for bracketed non-feature properties and the literal LIMITS section.
+- Updated aggregate and report-detail views to use the exact separated datasets.
+- Added regression tests for structured-array authority and metadata contamination.
+- Worker normalizer bumped to 11; no D1 migration.
+- Active frontend JavaScript bumped to `app.v0358.js`.
+
 # 0.35.7
 
 - Audited VulkanScope 0.33.7 producer compatibility end-to-end.

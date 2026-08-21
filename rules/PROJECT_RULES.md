@@ -185,3 +185,15 @@
 - API responses retain CORS/nosniff/no-referrer/permissions protections and additionally send CORP/COOP plus a restrictive API CSP. Native Android submissions without an Origin header remain supported.
 - Worker normalizer version 10 corresponds to the 0.35.7 validation and TXT/structured compatibility behavior.
 - No D1 migration is required for 0.35.7; existing payloads remain normalized on read.
+
+## Release 0.35.8 exact Properties / Limits semantics
+- For schema-v3 reports, the selected device's `technicalReport.devices[].detailedProperties` is the authoritative Properties dataset and `technicalReport.devices[].limits` is the authoritative Limits dataset.
+- DEVICE metadata, Surface metadata, formats, profiles, features, extensions and other compatibility-normalizer rows must never inflate the Properties count.
+- A detailed-property section must not become a Limit merely because its section label contains `Limits` or `Sparse Properties`; only the producer's structured `limits` array is authoritative for schema-v3.
+- TXT compatibility fallback keeps bracketed non-feature query-result rows as Properties and rows under the literal `LIMITS` heading as Limits.
+- Report-detail Properties and Limits tab counts must equal the lengths of their corresponding authoritative per-report arrays when schema-v3 data is present.
+- Aggregate Properties and Limits views consume those same separated arrays. Loaded reports missing a property/limit contribute Unknown to that capability's denominator; they are never silently dropped or labeled Unsupported.
+- Raw report text and the broader compatibility capability collection remain available for raw/Compare compatibility, but neither is allowed to redefine Properties/Limit counts when structured schema-v3 arrays exist.
+- Worker normalizer version 11 corresponds to the 0.35.8 separated Properties/Limits semantics.
+- No D1 migration is required for 0.35.8; existing payloads are corrected on read without rewriting stored reports.
+

@@ -1,8 +1,21 @@
-# VulkanScope Database 0.35.7
+# VulkanScope Database 0.35.8
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
+
+
+## 0.35.8 exact Properties / Limits semantics
+
+VulkanScope Database 0.35.8 fixes a report-metric classification bug found while comparing VulkanScope 0.33.10 Turnip reports. Schema-v3 structured report arrays are now authoritative for report Properties and Limits presentation.
+
+- **Properties** comes only from the selected device's `technicalReport.devices[].detailedProperties`. DEVICE metadata, Surface metadata, feature rows, formats, profiles and limits cannot inflate the Properties count.
+- **Limits** comes only from `technicalReport.devices[].limits`. A detailed-property section whose name contains `Limits` or `Sparse Properties` is no longer reclassified as a limit.
+- Report-detail tab counts now match the producer arrays directly. For the same structured payload, Database Properties count therefore matches VulkanScope's property-query-result count rather than the broader TXT-normalized capability count.
+- Aggregate Properties and Limits views use their own authoritative per-report arrays and keep a missing entry in a loaded report as Unknown.
+- TXT parsing remains the legacy compatibility fallback. Bracketed non-feature query-result rows feed fallback Properties; the literal `LIMITS` section feeds fallback Limits.
+- Worker normalizer version is **11**. Existing D1 payloads are normalized on read; no migration or stored-report rewrite is required.
+- Active frontend JavaScript is `app.v0358.js`; the unchanged 0.35.7 stylesheet remains cache-safe as `site.v0357.css`.
 
 ## 0.35.7 producer/database correctness and hardening
 

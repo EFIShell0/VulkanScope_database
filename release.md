@@ -1,3 +1,22 @@
+# VulkanScope Database 0.35.8
+
+Properties/Limits semantic-correctness release aligned with VulkanScope 0.33.10 structured reports.
+
+## Changes
+
+- Fixes the Database report-detail **Properties** count being inflated by TXT-normalized DEVICE/SURFACE and other non-property capability rows.
+- Uses schema-v3 `technicalReport.devices[].detailedProperties` as the authoritative Properties dataset.
+- Uses schema-v3 `technicalReport.devices[].limits` as the authoritative Limits dataset.
+- Stops treating section names such as `Sparse Properties` as Limits merely because their label matched a heuristic.
+- Keeps TXT parsing as a compatibility fallback: bracketed non-feature query-result rows are Properties and the literal `LIMITS` section is Limits.
+- Updates aggregate Properties/Limits views and report-detail tabs to consume the separated datasets.
+- Preserves Unknown denominators for loaded reports that do not contain a given property or limit.
+- Bumps Worker normalizer to `11`.
+- Versioned active frontend JavaScript to `app.v0358.js`; `site.v0357.css` is unchanged.
+- No D1 migration and no stored-payload rewrite required.
+
+---
+
 # VulkanScope Database 0.35.7
 
 Full producer-compatibility, data-semantics, specification, security and usability audit against VulkanScope 0.33.7.
