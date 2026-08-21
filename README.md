@@ -1,9 +1,13 @@
-# VulkanScope Database 0.35.8
+# VulkanScope Database 0.35.9
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
 
+
+## 0.35.9 Display & HDR / ABI / home parity
+
+Database 0.35.9 aligns Display & HDR naming, supported-device ABI presentation, luminance units and home compatibility metrics with the established OpenGLESScope Database information hierarchy while preserving VulkanScope evidence semantics.
 
 ## 0.35.8 exact Properties / Limits semantics
 

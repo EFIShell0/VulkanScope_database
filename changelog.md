@@ -1,3 +1,12 @@
+# 0.35.9
+
+- Renamed Display / HDR presentation to Display & HDR.
+- Added supported-device ABI listing beneath Platform / ABI in Reports.
+- Added cd/m² presentation for numeric Android minimum/average/maximum luminance values.
+- Added separate Producer/query baseline and Compatible producers home metrics.
+- Preserved report schema, evidence semantics, raw report data and D1 storage.
+- Active frontend JavaScript bumped to `app.v0359.js`; no D1 migration.
+
 # 0.35.8
 
 - Fixed Properties count/classification to use schema-v3 `detailedProperties` instead of the broad normalized capability collection.

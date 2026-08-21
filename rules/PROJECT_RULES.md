@@ -197,3 +197,14 @@
 - Worker normalizer version 11 corresponds to the 0.35.8 separated Properties/Limits semantics.
 - No D1 migration is required for 0.35.8; existing payloads are corrected on read without rewriting stored reports.
 
+
+
+## Release 0.35.9 Display & HDR / ABI / home-metric parity
+- The primary and report-detail navigation label is **Display & HDR**. Internal normalized field names remain unchanged; presentation naming must not alter Vulkan evidence semantics.
+- Reports show the installed application ABI as the primary Platform / ABI value and list every producer-reported `supportedDeviceAbis` value beneath it. Missing ABI evidence is shown as Unknown and is never inferred from GPU identity.
+- Android luminance values (`minLuminance`, `averageLuminance`, `maxLuminance`) are displayed with `cd/m²` when the reported value is numeric. Existing `cd/m2`, `cd/m^2`, or `cd/m²` text is normalized for presentation without changing stored report evidence.
+- The home metrics expose the current VulkanScope producer/query baseline and the compatible producer contract as separate cards, matching the information hierarchy used by OpenGLESScope Database.
+- VulkanScope 0.33.10 remains the current producer reference for Database 0.35.9. Compatibility presentation begins at VulkanScope 0.32.4 for the schema-2 / technical-report-3 contract already preserved by the Database compatibility path.
+- No logo, ABI string, HDR value, or presentation label may be used to infer Vulkan feature support.
+- Release assets that change JavaScript behavior use cache-busted `app.v0359.js`; the unchanged stylesheet remains `site.v0357.css`.
+- No D1 migration or stored-payload rewrite is required for 0.35.9.

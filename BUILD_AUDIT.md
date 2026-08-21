@@ -1,4 +1,4 @@
-# VulkanScope Database 0.35.8 build audit
+# VulkanScope Database 0.35.9 build audit
 
 ## Scope
 Properties/Limits semantic parity audit against VulkanScope 0.33.10, with regression checks for Worker normalization and frontend classification.

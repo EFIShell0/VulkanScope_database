@@ -1,3 +1,18 @@
+# VulkanScope Database 0.35.9
+
+Display/HDR, ABI and home-metric presentation parity release aligned with the existing VulkanScope schema-v3 contract.
+
+## Changes
+- Renames the user-facing `Display / HDR` section to `Display & HDR` across primary/detail presentation.
+- Lists producer-reported supported device ABIs beneath the installed application ABI in Reports.
+- Displays numeric minimum, average and maximum Android luminance values with `cd/m²` in aggregate and detail views.
+- Adds separate home cards for the current producer/query baseline and compatible producer contract.
+- Keeps Vulkan support-state semantics, schema-v3 authority, raw report access and D1 storage unchanged.
+- Active frontend JavaScript is cache-busted as `app.v0359.js`; `site.v0357.css` is unchanged.
+- No D1 migration is required.
+
+---
+
 # VulkanScope Database 0.35.8
 
 Properties/Limits semantic-correctness release aligned with VulkanScope 0.33.10 structured reports.
