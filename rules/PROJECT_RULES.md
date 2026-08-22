@@ -219,12 +219,19 @@
 - Release assets that change JavaScript and CSS use cache-busted `app.v0360.js` and `site.v0360.css`.
 - No D1 migration or stored-payload rewrite is required for 0.36.0.
 
-## Release 0.36.1 VulkanScope 0.34.1 complete-report parity
-- Database version is 0.36.1.
-- Current producer/query baseline is VulkanScope 0.34.1 with Vulkan 1.4.360.
+## Release 0.36.2 VulkanScope 0.34.2 complete-report parity
+- Database version is 0.36.2.
+- Current producer/query baseline is VulkanScope 0.34.2 with Vulkan 1.4.360.
 - Current published Khronos Vulkan specification metadata is Vulkan 1.4.360 dated 2026-08-14.
-- Schema 2 / technical report 3 remains the accepted complete-report contract; VulkanScope 0.34.1 must not be rejected because of its application version.
+- Schema 2 / technical report 3 remains the accepted complete-report contract; VulkanScope 0.34.2 must not be rejected because of its application version.
 - Structured technicalReport `devices[].detailedProperties` is authoritative for generic extension/property values, including Host Image Copy source/destination layout arrays.
 - The frontend must expose structured detailed properties in report Properties, relevant aggregate/compare paths and Raw report without extension-specific field whitelists that could silently drop new validated fields.
 - Features, limits, memory, queues, formats, Surface/WSI, Display & HDR, device/instance extensions, layers, profiles, registry provenance and raw report text remain independently accessible.
 - Database normalization must preserve Unknown, Unsupported, Unavailable and Not applicable distinctions and must not infer missing capability evidence from GPU/device/vendor identity.
+
+## Release 0.36.2 Host Image Copy promoted-core comparison parity
+- Compare normalization treats the Vulkan 1.4 Host Image Copy property family as the promoted equivalent of VkPhysicalDeviceHostImageCopyPropertiesEXT without rewriting stored raw report provenance.
+- Core 1.4 copySrcLayoutCount, pCopySrcLayouts or legacy copySrcLayouts, copyDstLayoutCount, pCopyDstLayouts or legacy copyDstLayouts, optimalTilingLayoutUUID and identicalMemoryTypeRequirements compare against the corresponding extension-structure fields under one canonical compare identity.
+- Existing 0.34.1 reports using copySrcLayouts/copyDstLayouts and 0.34.2+ reports using canonical pCopySrcLayouts/pCopyDstLayouts must compare against older VK_EXT_host_image_copy reports as reported values, not as Not reported.
+- The compare alias is presentation/normalization only; raw TXT, stored payloads, detail provenance and source sections remain unchanged.
+- Unavailable legacy pointer placeholders remain unavailable evidence and must not be converted into supported or available values.

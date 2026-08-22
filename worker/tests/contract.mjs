@@ -51,7 +51,7 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,11);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.34\.1/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,12);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.34\.2/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
 let p=fixture();p.technicalReport.devices[0].apiVersion='1.3.0';r=await call('/v1/reports',{method:'POST',body:p});assert.equal(r.status,400);
 p=fixture();p['account_id']='x';r=await call('/v1/reports',{method:'POST',body:p});assert.equal(r.status,400);

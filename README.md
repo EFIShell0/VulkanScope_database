@@ -1,4 +1,4 @@
-# VulkanScope Database 0.36.1
+# VulkanScope Database 0.36.2
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 

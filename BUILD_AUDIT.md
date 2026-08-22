@@ -1,11 +1,11 @@
-# VulkanScope Database 0.36.1 Build Audit
+# VulkanScope Database 0.36.2 Build Audit
 
 - Static database audit: PASS
 - Frontend JavaScript syntax: PASS
 - Worker JavaScript syntax: PASS
 - Worker contract tests: ALL PASS
 - Structured detailedProperties authority: verified
-- VulkanScope 0.34.1 producer metadata: verified
+- VulkanScope 0.34.2 producer metadata: verified
 - Vulkan 1.4.360 published-spec metadata: verified
 - Host Image Copy layout-array normalization retention: contract-tested
 - Index build: PASS

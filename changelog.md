@@ -1,6 +1,6 @@
-# 0.36.1
+# 0.36.2
 
-- Updated current producer/query baseline to VulkanScope 0.34.1.
+- Updated current producer/query baseline to VulkanScope 0.34.2.
 - Updated published Vulkan metadata to 1.4.360 (2026-08-14).
 - Re-audited structured detailedProperties consumption for VulkanScope 0.34.x Host Image Copy and prior query data.
 - Preserved all existing report detail tabs, compare paths and raw report display.
