@@ -1,43 +1,17 @@
-# VulkanScope Database 0.36.2 Build Audit
+# VulkanScope Database 0.36.3 Build Audit
 
-- Static database audit: PASS
-- Frontend JavaScript syntax: PASS
-- Worker JavaScript syntax: PASS
-- Worker contract tests: ALL PASS
-- Structured detailedProperties authority: verified
-- VulkanScope 0.34.2 producer metadata: verified
-- Vulkan 1.4.360 published-spec metadata: verified
-- Host Image Copy layout-array normalization retention: contract-tested
-- Index build: PASS
+Release focus: Compare metadata-noise filtering without changing technical capability evidence.
 
-# VulkanScope Database 0.35.9 build audit
+Release gates:
+- Static database audit
+- Frontend JavaScript syntax
+- Worker JavaScript syntax
+- Worker contract tests
+- Technical compare filter regression checks
+- Static index build
+- ZIP integrity
 
-## Scope
-Properties/Limits semantic parity audit against VulkanScope 0.33.10, with regression checks for Worker normalization and frontend classification.
-
-## Fixed
-- Properties no longer uses the broad TXT-normalized capability collection.
-- DEVICE and Surface metadata cannot inflate Properties.
-- Limits no longer relies on `Limits|Sparse Properties` section-name heuristics.
-- Schema-v3 structured `detailedProperties` and `limits` arrays are authoritative.
-- TXT compatibility fallback builds dedicated property/limit arrays without merging their semantics.
-- Detail-tab counts and aggregate views consume the same authoritative datasets.
-
-## Preserved
-- Raw TXT remains available.
-- Compare retains the broader compatibility capability collection.
-- Supported / Unsupported / Available / Unavailable / Unknown semantics are unchanged.
-- Missing aggregate evidence remains Unknown.
-- Cloudflare account/D1 pins, CORS/CSP/privacy/body bounds and cursor/detail-fetch limits are unchanged.
-- No D1 migration or stored-payload rewrite.
-
-## Validation
-- Frontend JavaScript syntax: PASS.
-- Worker JavaScript syntax: PASS.
-- Worker contract tests: PASS.
-- Structured Properties authority regression: PASS.
-- Structured Limits authority regression: PASS.
-- DEVICE/SURFACE contamination regression: PASS.
-- JSON schema parse: PASS.
-- Static database audit: PASS.
-- ZIP integrity: PASS.
+Expected semantics:
+- applicationVersion/applicationVersionCode/submittedAt are non-technical Compare metadata
+- Vulkan/driver/Android/ABI/device/memory/queue/Surface/format/extension/capability/Display-HDR/profile data remain technical
+- no stored report mutation or D1 migration

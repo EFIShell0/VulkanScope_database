@@ -1,6 +1,10 @@
-# VulkanScope Database 0.36.2
+# VulkanScope Database 0.36.3
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
+
+## 0.36.3 technical Compare filtering
+
+Compare now includes a design-consistent `Technical differences only` toggle beside `Differences only`. It is enabled by default and removes application-version/versionCode and submission-time noise while retaining driver, Vulkan API, Android/ABI/device, memory, queue, Surface, format, extension, capability, Display/HDR and profile differences. The filter is presentation-only and does not rewrite stored reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
 

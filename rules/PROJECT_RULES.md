@@ -235,3 +235,12 @@
 - Existing 0.34.1 reports using copySrcLayouts/copyDstLayouts and 0.34.2+ reports using canonical pCopySrcLayouts/pCopyDstLayouts must compare against older VK_EXT_host_image_copy reports as reported values, not as Not reported.
 - The compare alias is presentation/normalization only; raw TXT, stored payloads, detail provenance and source sections remain unchanged.
 - Unavailable legacy pointer placeholders remain unavailable evidence and must not be converted into supported or available values.
+
+
+## Release 0.36.3 technical-differences compare filter
+- Compare keeps `Differences only` and adds a second, independently toggleable `Technical differences only` control using the existing compare-toggle visual language.
+- `Technical differences only` is enabled by default and removes report-generation metadata differences that do not describe Vulkan, Android platform, device, driver, Surface, memory, queue, format, extension, feature/property, Display/HDR or profile capability state.
+- VulkanScope application version/versionCode and server-authored submission timestamp are metadata and are excluded only from the technical Compare view; their stored/raw report values remain unchanged and remain visible when the technical filter is disabled.
+- Driver version/mode, Vulkan API versions, Android/ABI/device identity, memory budget, Surface extent and all capability/query evidence remain technical and must never be hidden by this filter.
+- Filtering is presentation-only. It must not mutate normalized reports, D1 payloads, support/availability semantics, promoted aliases, raw report text or submission hashes.
+- Compare summary field, difference and section counts must reflect the active technical filter so the displayed metrics describe the same visible universe as the tables.

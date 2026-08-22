@@ -1,3 +1,12 @@
+# 0.36.3
+
+- Added a design-consistent `Technical differences only` Compare toggle beside `Differences only`.
+- Enabled the technical filter by default to suppress application-version/versionCode and submission-time noise.
+- Kept driver, Vulkan/Android/ABI/device, memory, Surface and all capability/query differences in the technical comparison universe.
+- Compare A/B field counts, difference count and section count now follow the active technical filter.
+- Preserved stored reports, raw evidence, promoted aliases, normalizer 12 and D1 schema without migration.
+- Cache-busted frontend JavaScript to `app.v0363.js`.
+
 # 0.36.2
 
 - Updated current producer/query baseline to VulkanScope 0.34.2.
