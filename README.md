@@ -1,4 +1,4 @@
-# VulkanScope Database 0.36.0
+# VulkanScope Database 0.36.1
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
@@ -7,7 +7,7 @@ The production frontend is configured for `https://vulkanscope-database-api.vulk
 
 ## 0.36.0 luminance typography parity
 
-Database 0.36.0 matches OpenGLESScope luminance-unit typography: the numeric luminance value remains primary text while `cd/m²` is rendered as a muted, lighter-weight visual unit at 0.92em without changing the underlying evidence value.
+Database 0.36.0 matched OpenGLESScope luminance-unit typography: the numeric luminance value remains primary text while `cd/m²` is rendered as a muted, lighter-weight visual unit at 0.92em without changing the underlying evidence value.
 
 ## 0.35.9 Display & HDR / ABI / home parity
 

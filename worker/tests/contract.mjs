@@ -37,7 +37,7 @@ const reportText=(p)=>{
 function fixture(){
  const p={
   schemaVersion:2,
-  application:{name:'VulkanScope',version:'0.33.7',versionCode:337,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
+  application:{name:'VulkanScope',version:'0.34.1',versionCode:342,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
   device:{manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
   gpu:{name:'Adreno Fixture',vendorId:'0x5143',deviceId:'0x0001',deviceType:'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU'},
   driver:{mode:'System Vulkan driver',version:'512.1',rawVersion:'1'},
@@ -51,7 +51,7 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,11);assert.match(j.publishedVulkanSpec,/1\.4\.359/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,11);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.34\.1/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
 let p=fixture();p.technicalReport.devices[0].apiVersion='1.3.0';r=await call('/v1/reports',{method:'POST',body:p});assert.equal(r.status,400);
 p=fixture();p['account_id']='x';r=await call('/v1/reports',{method:'POST',body:p});assert.equal(r.status,400);
@@ -67,8 +67,14 @@ metricFixture.technicalReport.devices[0].detailedProperties=[
   {section:'VkPhysicalDeviceVulkan14Properties',name:'lineRasterizationMode',value:'1'}
 ];
 metricFixture.technicalReport.devices[0].limits=[{name:'maxImageDimension2D',value:'16384'}];
+
+metricFixture.technicalReport.devices[0].detailedProperties.push(
+  {section:'CapsViewer 4.12 parity · VkPhysicalDeviceHostImageCopyPropertiesEXT',name:'pCopySrcLayouts',value:'VK_IMAGE_LAYOUT_GENERAL (raw=1), VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL (raw=6)'},
+  {section:'CapsViewer 4.12 parity · VkPhysicalDeviceHostImageCopyPropertiesEXT',name:'pCopyDstLayouts',value:'VK_IMAGE_LAYOUT_GENERAL (raw=1), VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL (raw=7)'}
+);
 const normalized=normalizeReport(metricFixture);
-assert.equal(normalized.detailedProperties.length,2,'structured detailedProperties must be authoritative');
+assert.equal(normalized.detailedProperties.length,4,'structured detailedProperties must be authoritative');
+assert.equal(normalized.detailedProperties.filter(x=>x.name==='pCopySrcLayouts'||x.name==='pCopyDstLayouts').length,2,'Host Image Copy layout arrays must survive normalization');
 assert.equal(normalized.limits.length,1,'structured limits must be authoritative');
 assert.equal(normalized.detailedProperties.some(x=>x.section==='DEVICE'||x.section==='SURFACE'),false,'metadata must not contaminate properties');
 assert.equal(normalized.limits.some(x=>/Sparse Properties/i.test(x.section)),false,'detailed properties must not be reclassified as limits');

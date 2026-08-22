@@ -218,3 +218,13 @@
 - Aggregate Display & HDR and report-detail Display & HDR must use the same luminance typography.
 - Release assets that change JavaScript and CSS use cache-busted `app.v0360.js` and `site.v0360.css`.
 - No D1 migration or stored-payload rewrite is required for 0.36.0.
+
+## Release 0.36.1 VulkanScope 0.34.1 complete-report parity
+- Database version is 0.36.1.
+- Current producer/query baseline is VulkanScope 0.34.1 with Vulkan 1.4.360.
+- Current published Khronos Vulkan specification metadata is Vulkan 1.4.360 dated 2026-08-14.
+- Schema 2 / technical report 3 remains the accepted complete-report contract; VulkanScope 0.34.1 must not be rejected because of its application version.
+- Structured technicalReport `devices[].detailedProperties` is authoritative for generic extension/property values, including Host Image Copy source/destination layout arrays.
+- The frontend must expose structured detailed properties in report Properties, relevant aggregate/compare paths and Raw report without extension-specific field whitelists that could silently drop new validated fields.
+- Features, limits, memory, queues, formats, Surface/WSI, Display & HDR, device/instance extensions, layers, profiles, registry provenance and raw report text remain independently accessible.
+- Database normalization must preserve Unknown, Unsupported, Unavailable and Not applicable distinctions and must not infer missing capability evidence from GPU/device/vendor identity.

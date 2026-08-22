@@ -1,3 +1,11 @@
+# 0.36.1
+
+- Updated current producer/query baseline to VulkanScope 0.34.1.
+- Updated published Vulkan metadata to 1.4.360 (2026-08-14).
+- Re-audited structured detailedProperties consumption for VulkanScope 0.34.x Host Image Copy and prior query data.
+- Preserved all existing report detail tabs, compare paths and raw report display.
+- Cache-busted frontend to app.v0361.js.
+
 # 0.36.0
 
 - Matched luminance unit typography to OpenGLESScope: `cd/m²` now uses muted 0.92em presentation while the numeric value remains primary.
