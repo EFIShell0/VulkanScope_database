@@ -1,7 +1,7 @@
 {
   "name": "vulkanscope-database-api",
   "main": "src/index.js",
-  "compatibility_date": "2026-08-18",
+  "compatibility_date": "2026-08-23",
   "account_id": "ccf3de9d3f2a4394af2fb7be7fd5bbf4",
   "d1_databases": [
     {

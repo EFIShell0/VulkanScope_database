@@ -11,6 +11,6 @@ for p in sorted((root/"data"/"reports").glob("*.json")):
     if rid in seen: raise SystemExit(f"{p}: duplicate report id")
     seen.add(rid)
     reports.append({"id":rid,"submittedAt":d.get("submittedAt",""),"gpu":d.get("gpu",{}),"device":d.get("device",{}),"driver":d.get("driver",{}),"vulkan":d.get("vulkan",{}),"collection":d.get("collection",{}),"capabilityCount":len(d.get("capabilities",[])),"extensionCount":len(d.get("extensions",[]))})
-idx={"schemaVersion":1,"databaseVersion":"0.36.3","normalizerVersion":12,"publishedVulkanSpec":"Vulkan 1.4.360 (2026-08-14)","vulkanRegistryBaseline":"VulkanScope producer/query baseline 1.4.360","producerQueryBaseline":"VulkanScope 0.34.2 · Vulkan 1.4.360","compatibleProducer":"VulkanScope 0.32.4+ · schema 2 / technical report 3","generatedAt":datetime.datetime.now(datetime.timezone.utc).isoformat(),"reports":reports}
+idx={"schemaVersion":1,"databaseVersion":"0.36.5","normalizerVersion":13,"publishedVulkanSpec":"Vulkan 1.4.360 (2026-08-14)","vulkanRegistryBaseline":"VulkanScope producer/query baseline 1.4.360","producerQueryBaseline":"VulkanScope 0.35.1 · Vulkan 1.4.360","compatibleProducer":"VulkanScope 0.32.4+ · schema 2 / technical report 3","generatedAt":datetime.datetime.now(datetime.timezone.utc).isoformat(),"reports":reports}
 (root/"data"/"index.json").write_text(json.dumps(idx,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 print(f"Indexed {len(reports)} report(s)")

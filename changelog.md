@@ -1,3 +1,20 @@
+# 0.36.5
+
+- Fixed Cloudflare Worker deployment failure caused by a future compatibility date.
+- Set compatibility_date to 2026-08-23 for the observed deploy window.
+- Added release-rule protection against local-timezone future-date regressions.
+- Producer/schema/D1 contracts are unchanged.
+
+# 0.36.5
+
+- Updated the current producer/query baseline to VulkanScope 0.35.1 / versionCode 352.
+- Added canonical producer-version parsing and the existing compatible producer floor to Worker validation.
+- Bound the current 0.35.1 producer to versionCode 352 and added rejection coverage for mismatches.
+- Added canonical Android security-patch validation and top-level/technicalReport ABI consistency checks.
+- Bumped Worker normalizer metadata to 13 and Cloudflare compatibility date to 2026-08-24.
+- Cache-busted frontend JavaScript to `app.v0364.js` for updated producer/database metadata.
+- Preserved schema 2 / technicalReport 3, stored reports and D1 schema without migration.
+
 # 0.36.3
 
 - Added a design-consistent `Technical differences only` Compare toggle beside `Differences only`.

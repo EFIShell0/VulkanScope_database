@@ -244,3 +244,23 @@
 - Driver version/mode, Vulkan API versions, Android/ABI/device identity, memory budget, Surface extent and all capability/query evidence remain technical and must never be hidden by this filter.
 - Filtering is presentation-only. It must not mutate normalized reports, D1 payloads, support/availability semantics, promoted aliases, raw report text or submission hashes.
 - Compare summary field, difference and section counts must reflect the active technical filter so the displayed metrics describe the same visible universe as the tables.
+
+
+## Release 0.36.5 VulkanScope 0.35.1 complete-report contract
+- Database version is 0.36.5 and remains independent from VulkanScope application versioning.
+- Current producer/query baseline is VulkanScope 0.35.1 / versionCode 352 with Vulkan 1.4.360.
+- Compatible producer versions must use canonical VulkanScope 0.x semantic version form and remain at or above the declared VulkanScope 0.32.4 schema-2 / technical-report-3 floor.
+- VulkanScope 0.35.1 must carry versionCode 352. A mismatched current producer identity is rejected fail-closed.
+- Android security-patch evidence must use canonical `YYYY-MM-DD` form.
+- Top-level application ABI and supported-device ABI evidence must exactly agree with technicalReport ABI evidence; contradictory duplicate evidence is invalid and must not be silently normalized.
+- Submission schema 2 and technicalReport schema 3 remain unchanged; detailed properties, limits, formats, memory, queues, Surface/WSI, Display/HDR, extensions, features, profiles, registry provenance and raw report evidence remain accessible.
+- Published Vulkan specification metadata remains Vulkan 1.4.360 dated 2026-08-14.
+- Production Worker compatibility date is 2026-08-24.
+- Browser-visible JavaScript metadata changes use cache-busted `app.v0364.js`; unchanged CSS remains `site.v0362.css`.
+- No D1 migration, stored-payload rewrite, report-hash rewrite or capability inference is permitted for this release.
+## Release 0.36.5 Cloudflare compatibility-date deploy correctness
+- Database version is 0.36.5.
+- `worker/wrangler.jsonc` compatibility_date must never be later than the date accepted by the Cloudflare Workers API at deployment time.
+- Local timezone rollover must not be used to advance compatibility_date before Cloudflare accepts that date.
+- When the local calendar is ahead of Cloudflare/API UTC acceptance, use the latest non-future accepted compatibility date and update it later only after deployment validation.
+- Release verification must fail if compatibility_date is the known rejected future date for the audited deployment window.

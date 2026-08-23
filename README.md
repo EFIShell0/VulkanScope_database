@@ -1,13 +1,14 @@
-# VulkanScope Database 0.36.3
+# VulkanScope Database 0.36.5
 
 GitHub Pages frontend plus a Cloudflare Worker + D1 submission API for VulkanScope reports.
 
-## 0.36.3 technical Compare filtering
+## 0.36.5 VulkanScope 0.35.1 producer-contract audit
 
-Compare now includes a design-consistent `Technical differences only` toggle beside `Differences only`. It is enabled by default and removes application-version/versionCode and submission-time noise while retaining driver, Vulkan API, Android/ABI/device, memory, queue, Surface, format, extension, capability, Display/HDR and profile differences. The filter is presentation-only and does not rewrite stored reports.
+VulkanScope Database 0.36.5 validates the current VulkanScope 0.35.1 / versionCode 352 complete-report contract, canonical producer floor, Android security-patch form and duplicate ABI evidence while preserving schema 2 / technicalReport 3 and the existing D1 corpus. The published Vulkan metadata remains Vulkan 1.4.360 (2026-08-14).
+
+The 0.36.3 `Technical differences only` Compare behavior is preserved unchanged. It remains presentation-only and never rewrites stored reports.
 
 The production frontend is configured for `https://vulkanscope-database-api.vulkanscope.workers.dev` and the Worker CORS origin is `https://efishell0.github.io`. The D1 binding remains `DB`.
-
 
 ## 0.36.0 luminance typography parity
 

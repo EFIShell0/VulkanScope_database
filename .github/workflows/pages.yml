@@ -20,7 +20,7 @@ jobs:
           python-version: "3.13"
       - run: python tools/build_index.py
       - run: python tools/audit_database.py
-      - run: node --check assets/app.v0363.js
+      - run: node --check assets/app.v0364.js
       - run: node --check worker/src/index.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
