@@ -264,3 +264,21 @@
 - Local timezone rollover must not be used to advance compatibility_date before Cloudflare accepts that date.
 - When the local calendar is ahead of Cloudflare/API UTC acceptance, use the latest non-future accepted compatibility date and update it later only after deployment validation.
 - Release verification must fail if compatibility_date is the known rejected future date for the audited deployment window.
+
+## Release 0.37.0 VulkanScope 0.41.0 trends and permalink requirements
+- Database version is 0.37.0 and remains independent from VulkanScope application versioning.
+- Current producer/query baseline is VulkanScope 0.41.0 / versionCode 410 with Vulkan 1.4.360. Compatible producer floor remains VulkanScope 0.32.4+ with schema 2 / technicalReport 3.
+- VulkanScope 0.41.0 must carry versionCode 410. Existing 0.35.1 / 352 identity validation remains enforced for that historical release.
+- Submission schema 2, technicalReport schema 3, stable canonical hashing and existing D1 stored payloads remain unchanged. No D1 migration or stored-report rewrite is required.
+- Trends are computed from the bounded set of reports successfully loaded by the frontend. Percentages are labeled loaded-submission share and never market/device/vendor share.
+- Extension trend counts mean an exact extension token was enumerated in a loaded report. Absence from a report must never be labeled Unsupported.
+- Trend UI bounds high-cardinality presentation: at most 25 rows per GPU/vendor/driver/API table and the top 50 exact enumerated extension tokens. This is a derived summary and never truncates canonical report data.
+- Report permalinks accept only lowercase 64-hex report ids that already exist in the loaded report map. Detail-tab names are allow-listed.
+- Compare permalinks accept exactly two valid loaded report ids. URL parameters never become HTML without existing escaping/safe value handling.
+- Browser sharing uses the Web Share API when available and clipboard fallback otherwise. No third-party share, analytics or QR service is loaded.
+- Frontend compare remains the existing normalized all-category comparison and URL sharing must not alter compare semantics or report payloads.
+- Production API remains HTTPS-only with the existing same-origin allow-list, bounded 2 MiB request body, prepared/bound D1 statements and privacy-key rejection.
+- Cloudflare observability is enabled with bounded sampling; no report payload or sensitive identifier is intentionally emitted to custom application logs.
+- Worker compatibility date remains 2026-08-23 because it is the last deployment-verified non-future date in this project history; it may advance only after Cloudflare accepts a newer date.
+- Browser-visible JavaScript is cache-busted as app.v0370.js. Existing site.v0362.css remains unchanged.
+- Wrangler is pinned to 4.125.0 for the 0.37.0 release.
