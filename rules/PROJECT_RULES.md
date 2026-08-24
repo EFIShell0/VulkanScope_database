@@ -282,3 +282,15 @@
 - Worker compatibility date remains 2026-08-23 because it is the last deployment-verified non-future date in this project history; it may advance only after Cloudflare accepts a newer date.
 - Browser-visible JavaScript is cache-busted as app.v0370.js. Existing site.v0362.css remains unchanged.
 - Wrangler is pinned to 4.125.0 for the 0.37.0 release.
+
+## Release 0.37.1 queue, Vulkan Video and query-state semantics
+- Database version is 0.37.1 and remains independent from VulkanScope application versioning.
+- Current producer/query baseline is VulkanScope 0.41.3 / versionCode 413 with Vulkan 1.4.360. Compatible producer floor remains VulkanScope 0.32.4+ with schema 2 / technicalReport 3.
+- `VkQueueFlags == 0` must not be rendered as a fabricated generic `VK_NONE`; it is displayed as zero with an explicit no-queue-capability-bits description.
+- Queue capability booleans such as Graphics, Compute, Transfer, Sparse, Protected, Video Decode, Video Encode, Optical Flow and Data Graph are direct queue-flag evidence and may be rendered Supported/Unsupported when their runtime boolean evidence is present.
+- `VkQueueFamilyVideoPropertiesKHR::videoCodecOperations` requires separate query state. Successfully queried zero is `VK_VIDEO_CODEC_OPERATION_NONE_KHR`; absent `VK_KHR_video_queue` is Not applicable; failed/missing query evidence is Unavailable or Unknown.
+- Missing video-codec query evidence must never be converted into zero, `VK_VIDEO_CODEC_OPERATION_NONE_KHR`, or Unsupported.
+- Generic Properties and Limits availability is query availability, not feature support. A reported boolean property value of false may have Query available state and must not be visually presented as Supported/Unsupported unless that field is explicitly a capability-support boolean.
+- Structured technicalReport queue evidence is authoritative for schema-v3 queue query-state fields. Compatibility fallbacks for older reports must preserve uncertainty rather than infer support.
+- Worker normalizer version 14 corresponds to the 0.37.1 queue/video/query-state semantics.
+- No D1 migration, stored-payload rewrite, report-hash rewrite or schema change is required.
