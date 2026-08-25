@@ -294,3 +294,52 @@
 - Structured technicalReport queue evidence is authoritative for schema-v3 queue query-state fields. Compatibility fallbacks for older reports must preserve uncertainty rather than infer support.
 - Worker normalizer version 14 corresponds to the 0.37.1 queue/video/query-state semantics.
 - No D1 migration, stored-payload rewrite, report-hash rewrite or schema change is required.
+
+## Release 0.38.0 statistics / hash routing / VulkanScope 0.41.4 requirements
+- Database version is 0.38.0 and remains independent from VulkanScope application versioning.
+- Current producer/query baseline is VulkanScope 0.41.4 / versionCode 414 with Vulkan 1.4.360. Compatible producer floor remains VulkanScope 0.32.4+ with submission schema 2 / technicalReport 3. Existing fail-closed identity rules for historical current-producer releases remain preserved.
+- Submission schema 2, technicalReport schema 3, canonical report hashing and the existing D1 stored payloads remain unchanged. No D1 migration, stored-payload rewrite or report-hash rewrite is required.
+- `report.schema.json` must describe the same complete-report contract enforced by the Worker: schema-2 submissions require a `technicalReport` object with technicalReport schemaVersion 3. A payload that the published JSON Schema accepts must not be rejected merely because the schema omitted this already-required complete-report member.
+- Worker normalizer version 15 corresponds to the 0.38.0 VulkanScope 0.41.4 queue/video validation and presentation contract.
+- VulkanScope 0.41.4 queue-family Vulkan Video query states are fail-closed: `available` may carry a numeric mask including genuine zero; `unavailable`, `not_applicable` and `unknown` must carry null numeric operation fields and must never be normalized into zero or Unsupported.
+- VulkanScope 0.41.4 device-extension enumeration, extended feature/property query and Vulkan 1.4 query status/reason evidence must be preserved as first-class report diagnostics. Current-producer status tokens are fail-closed to `available`, `incomplete`, `unavailable`, `not_applicable` or `unknown`; reasons remain bounded text. These diagnostics must be visible in report detail and comparable without being reclassified as feature support.
+- Every primary frontend view must have a canonical hash route. `trends` is presented canonically as `#statistics`; internal implementation names must not leak into new public URLs.
+- Report-detail canonical routes use `#reports/<lowercase-64-hex-id>/<allow-listed-section>`. Report ids must already exist in the loaded report map. User-controlled route segments never become unescaped HTML.
+- Two-report comparison canonical routes use exactly `#compare/<loaded-id-1>/<loaded-id-2>`. Browser back/forward and manual valid hash navigation must restore the corresponding view.
+- Legacy `?view=`, `?report=&tab=` and `?compare=` links may be accepted only as compatibility inputs and must canonicalize to the hash form; newly generated links must use the canonical hash form.
+- Statistics are computed only from successfully loaded reports matching the active frontend filters. Percentages must be labeled loaded-submission share and must never be described as global Vulkan, hardware, GPU, vendor, driver or market share.
+- Donut/pie distribution charts are permitted only for mutually exclusive dimensions. Overlapping extension membership must remain a frequency/ranking table and must not be shown as slices of one whole.
+- High-cardinality donut presentation is bounded by retaining leading categories and combining the remaining loaded-report counts into an explicit `Other` slice. This is presentation-only and must not truncate canonical reports or alter aggregate totals.
+- Distribution graphics must use local first-party SVG/CSS only. No third-party JavaScript chart library, remote font, analytics, ad or chart-generation service is permitted.
+- Static HTTP error pages must reference an asset that exists in the same release package; release verification must fail on broken local stylesheet/script references.
+- Browser-visible JS/CSS/config changes use cache-busted `app.v0380.js`, `site.v0380.css` and `config.js?v=0380`.
+- Worker compatibility date remains 2026-08-23 because it is the last project deployment-verified date; advance it only after a real Cloudflare deploy/test accepts and validates a newer date.
+- Wrangler remains pinned to 4.125.0 for 0.38.0 unless a newer version is separately verified before release.
+
+
+## Release 0.39.0 filter architecture and interactive statistics requirements
+- Database version is 0.39.0 and remains independent from VulkanScope application versioning. Current producer/query baseline remains VulkanScope 0.41.4 / versionCode 414 with Vulkan 1.4.360; submission schema 2, technicalReport schema 3 and Worker normalizer 15 remain unchanged.
+- Filtering is presentation-only. It must not mutate stored payloads, canonical report hashing, D1 rows, normalized evidence, support/availability semantics or raw reports.
+- Cohort filters are view-scoped. A hidden filter must not continue suppressing rows in a view where that filter is not applicable.
+- Global report-cohort filters may include exact GPU vendor, GPU model, device Vulkan API, loader/instance API where relevant, driver mode, driver version, exact enumerated device-extension cohort, physical-device type, Android version/device model, application ABI/version and bounded submission-age ranges.
+- The exact device-extension cohort filter means that token was enumerated in the report. Absence remains Unknown/not listed and must never be rewritten as Unsupported.
+- Display & HDR must never apply GPU vendor, GPU model, device/loader Vulkan API, driver, extension, Vulkan device type, ABI, application version or generic Vulkan capability-state filters. Display & HDR may filter only directly reported display/device evidence such as Android version/device model, submission age/order, HDR availability/type, wide-gamut state, preferred wide-gamut color space, resolution, refresh rate and display mode. Global search on this view is likewise restricted to Android device/display evidence and must not match hidden GPU/driver/Vulkan fields.
+- Properties and Limits expose query-state filtering only: Query available, Query unavailable and Unknown/not reported. They must not expose generic Supported/Unsupported filters or columns because boolean false/zero property values are valid queried values, not feature-support conclusions.
+- Queue generic Supported/Unsupported/Unknown filtering is enabled only after a concrete queue capability is selected. The unscoped All-capabilities view must not use an “any field matches” state filter.
+- Surface generic state filtering is enabled only for a concrete Surface subgroup. Each subgroup uses its own meaningful state vocabulary and may expose an exact subgroup value/token filter; the unscoped All-surface view must not apply one mixed generic state filter.
+- Properties and Limits may filter by value behavior: varying, uniform where reported, or missing from at least one loaded report. Missing evidence remains Unknown.
+- Features, Formats, Extensions and Profiles may filter by coverage computed over every filtered loaded report. Coverage filters must use the same denominator and Unknown accounting as the visible aggregate rows.
+- Format feature-bit filtering must use canonical VkFormatFeatureFlags2 tokens without converting 64-bit masks through unsafe JavaScript Number precision.
+- Format subgroup filtering must preserve an explicitly reported zero feature mask as direct evidence: zero means no bits in that queried mask, not Missing/Unknown. When a required format-feature bit is selected, Supported/Unsupported counts describe that exact bit; absent or unavailable masks remain Unknown and must not be converted to zero.
+- Memory flag filtering must use exact canonical memory-property or memory-heap flag evidence. Memory-type combination absence is Unavailable only when that report successfully enumerated memory types; reports without memory data remain Unknown.
+- Queue filters may include exact queue-family index, canonical VkQueueFlagBits, presentation support state, Vulkan Video query state, exact successfully queried Vulkan Video codec-operation bits and minimum queue count. Missing/unavailable/not-applicable video query evidence must never match a codec-operation token filter.
+- Extension and instance-extension namespace filters distinguish KHR, EXT and vendor/other namespaces without inferring support from prefixes.
+- Compare may filter visible normalized differences by exact section and text without modifying either report or the underlying comparison universe used outside the filter.
+- A visible Clear filters action clears both applicable cohort filters and view-local filters and restores default sorting/grouping for the active view. Non-default subgroup selections themselves count as active view-local filtering and must make Clear filters available.
+- Statistics donut charts are limited to mutually exclusive per-report dimensions and use only the currently filtered loaded submissions. Extension membership remains an overlapping frequency ranking, never a donut/pie whole.
+- Statistics donuts are locally rendered SVG/CSS, keyboard accessible, expose exact counts and filtered-submission percentages, support exact slice-to-filter interaction, and group high-cardinality trailing categories into an explicit Other slice without changing totals.
+- Interactive donut slices and equivalent legend controls expose active filter state accessibly (for example `aria-pressed`) and selecting the already-active exact slice clears that cohort filter without changing report data.
+- Statistics must clearly state that all percentages are filtered/loaded-submission shares, not Vulkan ecosystem, market, hardware, GPU, vendor or driver share.
+- Extension statistics may be filtered independently by device/instance/both scope, namespace, minimum filtered-submission enumeration coverage and exact text search; absence from a report remains Unknown/not listed.
+- Browser-visible JS/CSS/config changes use cache-busted `app.v0390.js`, `site.v0390.css` and `config.js?v=0390`.
+- Worker compatibility date remains the last deployment-verified project date, 2026-08-23. No compatibility-date advance, Wrangler upgrade, schema migration, D1 migration or normalizer bump is implied by this frontend/filter release.

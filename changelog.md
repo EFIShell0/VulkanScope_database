@@ -1,11 +1,11 @@
-# VulkanScope Database 0.37.1
+# VulkanScope Database 0.39.0
 
-## Queue and Vulkan Video semantics
-- Corrected zero `VkQueueFlags` presentation.
-- Added explicit `videoCodecQueryStatus` / `videoCodecQueryReason` handling from VulkanScope 0.41.3 technical reports.
-- Uses `VK_VIDEO_CODEC_OPERATION_NONE_KHR` only for a successfully queried zero codec-operation mask.
-- Old reports without explicit query state are conservatively derived from `VK_KHR_video_queue` and Queue Family Properties 2 query evidence; missing evidence stays Unknown.
-
-## Property availability clarity
-- Property and limit tables label Available/Unavailable as query availability rather than capability support.
-- A property value of `false` can therefore be shown as `QUERY AVAILABLE` without implying feature support.
+- View-scoped cohort filter architecture.
+- Exact driver-version and device-extension cohort filters.
+- Semantic Properties/Limits query-state cleanup.
+- Expanded page-specific technical filters.
+- Interactive accessible Statistics donuts with exact slice filtering.
+- Extension ranking filters and explicit overlapping-membership semantics.
+- Versions Device API / Loader API / pair distributions.
+- Clear-filters workflow with default subgroup/sort reset and responsive filter controls.
+- Current producer remains VulkanScope 0.41.4 / 414; schema 2 / technicalReport 3 / normalizer 15 unchanged.

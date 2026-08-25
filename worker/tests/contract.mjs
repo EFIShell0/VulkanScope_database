@@ -37,7 +37,7 @@ const reportText=(p)=>{
 function fixture(){
  const p={
   schemaVersion:2,
-  application:{name:'VulkanScope',version:'0.41.3',versionCode:413,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
+  application:{name:'VulkanScope',version:'0.41.4',versionCode:414,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
   device:{manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
   gpu:{name:'Adreno Fixture',vendorId:'0x5143',deviceId:'0x0001',deviceType:'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU'},
   driver:{mode:'System Vulkan driver',version:'512.1',rawVersion:'1'},
@@ -51,10 +51,26 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,14);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.3/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,15);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.4/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
+
+let unavailableVideo=fixture();
+unavailableVideo.technicalReport.devices[0].queues[0].videoCodecOperations=null;
+unavailableVideo.technicalReport.devices[0].queues[0].videoCodecOperationsU64=null;
+unavailableVideo.technicalReport.devices[0].queues[0].videoCodecOperationsCanonical='Unknown';
+unavailableVideo.technicalReport.devices[0].queues[0].videoCodecQueryStatus='unavailable';
+unavailableVideo.technicalReport.devices[0].queues[0].videoCodecQueryReason='VkQueueFamilyVideoPropertiesKHR evidence was not returned for this queue family.';
+r=await call('/v1/reports',{method:'POST',body:unavailableVideo});assert.equal(r.status,201,'0.41.4 unavailable video query must preserve null mask semantics');
+let invalidUnavailableVideo=fixture();
+invalidUnavailableVideo.technicalReport.devices[0].queues[0].videoCodecQueryStatus='unavailable';
+invalidUnavailableVideo.technicalReport.devices[0].queues[0].videoCodecOperations=0;
+invalidUnavailableVideo.technicalReport.devices[0].queues[0].videoCodecOperationsU64='0';
+r=await call('/v1/reports',{method:'POST',body:invalidUnavailableVideo});assert.equal(r.status,400,'0.41.4 unavailable video query must not carry a fabricated zero mask');
+let partialExtensions=fixture();partialExtensions.technicalReport.devices[0].deviceExtensionStatus='incomplete';partialExtensions.technicalReport.devices[0].deviceExtensionReason='Device-extension enumeration remained VK_INCOMPLETE; returned entries are partial positive evidence.';r=await call('/v1/reports',{method:'POST',body:partialExtensions});assert.equal(r.status,201,'0.41.4 incomplete device-extension enumeration must remain valid partial evidence');
+let invalidQueryDiagnostics=fixture();invalidQueryDiagnostics.technicalReport.devices[0].deviceExtensionStatus='complete-ish';r=await call('/v1/reports',{method:'POST',body:invalidQueryDiagnostics});assert.equal(r.status,400,'0.41.4 runtime query status must use an allow-listed evidence state');
+let previousCurrent=fixture();previousCurrent.application.version='0.41.3';previousCurrent.application.versionCode=413;previousCurrent.reportText=reportText(previousCurrent);r=await call('/v1/reports',{method:'POST',body:previousCurrent});assert.equal(r.status,201,'0.41.3 schema-compatible producer must remain accepted');
 let previousProducer=fixture();previousProducer.application.version='0.41.2';previousProducer.application.versionCode=412;previousProducer.reportText=reportText(previousProducer);r=await call('/v1/reports',{method:'POST',body:previousProducer});assert.equal(r.status,201,'0.41.2 schema-compatible producer must remain accepted');
-let currentMismatch=fixture();currentMismatch.application.versionCode=353;currentMismatch.reportText=reportText(currentMismatch);r=await call('/v1/reports',{method:'POST',body:currentMismatch});assert.equal(r.status,400);
+let currentMismatch=fixture();currentMismatch.application.versionCode=413;currentMismatch.reportText=reportText(currentMismatch);r=await call('/v1/reports',{method:'POST',body:currentMismatch});assert.equal(r.status,400);
 let badProducer=fixture();badProducer.application.version='1.0.0';badProducer.application.versionCode=1000;badProducer.reportText=reportText(badProducer);r=await call('/v1/reports',{method:'POST',body:badProducer});assert.equal(r.status,400);
 let belowFloor=fixture();belowFloor.application.version='0.32.3';belowFloor.application.versionCode=323;belowFloor.reportText=reportText(belowFloor);r=await call('/v1/reports',{method:'POST',body:belowFloor});assert.equal(r.status,400);
 let badPatch=fixture();badPatch.device.securityPatch='August 2026';badPatch.reportText=reportText(badPatch);r=await call('/v1/reports',{method:'POST',body:badPatch});assert.equal(r.status,400);
@@ -87,6 +103,9 @@ assert.equal(normalized.detailedProperties.some(x=>x.section==='DEVICE'||x.secti
 assert.equal(normalized.limits.some(x=>/Sparse Properties/i.test(x.section)),false,'detailed properties must not be reclassified as limits');
 assert.equal(normalized.queues.length,1,'structured queues must be authoritative');
 assert.equal(normalized.detailedProperties.find(x=>x.name==='booleanPropertyFalse')?.status,'available','false property value must retain query-available semantics');
+assert.equal(normalized.queryDiagnostics.deviceExtensionStatus,'available','device extension enumeration status must survive normalization');
+assert.equal(normalized.queryDiagnostics.extendedQueryStatus,'available','extended query status must survive normalization');
+assert.equal(normalized.queryDiagnostics.vulkan14Status,'available','Vulkan 1.4 query status must survive normalization');
 assert.equal(normalized.queues[0].videoCodecQueryStatus,'available','video codec query state must survive normalization');
 assert.equal(String(normalized.queues[0].videoCodecOperations),'0','queried zero video codec mask must survive normalization');
 console.log('VulkanScope Database worker contract tests: ALL PASS');

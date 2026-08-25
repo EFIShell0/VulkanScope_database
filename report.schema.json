@@ -10,6 +10,7 @@
     "driver",
     "vulkan",
     "collection",
+    "technicalReport",
     "reportText"
   ],
   "properties": {

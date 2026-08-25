@@ -30,3 +30,22 @@ The submission endpoint intentionally remains unauthenticated so the VulkanScope
 ## Structured property/limit authority
 
 For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties` and `technicalReport.devices[].limits` are separate authoritative datasets. Human-readable TXT normalization is a legacy compatibility fallback and must not cause DEVICE, Surface, feature or other metadata to be presented as a Vulkan property or limit. Existing stored payloads are interpreted on read; the correction does not mutate D1 rows.
+
+## 0.38.0 routing, statistics and current-producer hardening
+
+- Canonical public navigation is hash-based. Report routes accept only already-loaded lowercase 64-hex report IDs and allow-listed section names; compare routes require exactly two valid loaded IDs.
+- Legacy query-string routes are accepted only for migration and are canonicalized to the validated hash representation.
+- Distribution charts are rendered locally with first-party SVG/CSS. No chart CDN, remote script, analytics endpoint, remote font, ad service or chart-generation service is introduced.
+- Statistics describe loaded submissions only and are not represented as market or global Vulkan ecosystem share.
+- VulkanScope 0.41.4 current-producer validation is fail-closed for queue/video null-vs-zero semantics and for device-extension, extended-query and Vulkan 1.4 query status tokens.
+- Static HTTP error pages use the current cache-busted local stylesheet and their local resource references are release-audited.
+- The public write endpoint remains intentionally unauthenticated; deployment-level Cloudflare abuse/rate-limiting policy remains an operator control and must not store request IP addresses in report data.
+
+## 0.39.0 filter/statistics integrity
+
+- Filtering is client-side presentation only and does not modify canonical payloads, report hashes or D1 rows.
+- Exact extension filters match only enumerated extension evidence; missing tokens are not inferred unsupported.
+- Statistics slice actions assign only option values generated from already-normalized loaded reports.
+- Donut labels and filter values continue through existing HTML escaping; route/report identifiers remain separately validated by the canonical router.
+- No third-party chart JavaScript, analytics, remote font, ad or chart-generation endpoint was added.
+- Worker request, CORS, bounded-body, privacy-key and prepared D1 protections are unchanged.
