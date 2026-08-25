@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v0395.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v0396.js',import.meta.url),'utf8');
 function extractFunction(name){
   const start=source.indexOf(`function ${name}(`);
   if(start<0)throw new Error(`missing ${name}`);
@@ -23,7 +23,11 @@ const context={
   boolState:v=>v===true?'supported':v===false?'unsupported':'unknown',canonicalSurfaceValue:(_k,v)=>String(v??''),semanticStatus:()=> 'available',
   vendorId:r=>r.gpu?.vendorId||'Unknown',reportOs:()=> 'Android',reportPlatform:()=> 'arm64-v8a',formatSubmitted:v=>String(v??'')
 };
-vm.createContext(context);vm.runInContext(`${extractFunction('compareMap')};this.compareMap=compareMap`,context);
+vm.createContext(context);
+const helperStart=source.indexOf('const compareEvidenceStatus=');
+const helperEnd=source.indexOf(';const boolState=',helperStart);
+if(helperStart<0||helperEnd<0)throw new Error('missing compareEvidenceStatus');
+vm.runInContext(`${source.slice(helperStart,helperEnd)};${extractFunction('compareMap')};this.compareMap=compareMap`,context);
 const base={capabilities:[{section:'VULKAN PROFILES',name:'VP_KHR_roadmap_2026 r.1',value:'FAIL old',status:'unsupported'}],profiles:[{name:'VP_KHR_roadmap_2026',revision:'r.2',summary:'UNKNOWN · partial evaluator',status:'unknown'}],extensions:[],instanceExtensions:[],formats:[],memoryHeaps:[],memoryTypes:[],queues:[],surface:{},instanceLayers:[],deviceLayers:[],queryDiagnostics:{},display:{},gpu:{vendorId:'0x5143'},driver:{},vulkan:{},application:{}};
 let map=context.compareMap(base);
 assert.equal([...map.keys()].some(k=>k.startsWith('VULKAN PROFILES /')),false,'normalized profiles must suppress duplicate legacy compare rows');
@@ -34,4 +38,19 @@ assert.equal(map.get('PROFILES / VP_KHR_roadmap_2026')?.value,'rev r.1 · FAIL o
 assert.equal(source.includes('Common evidence only'),true);
 assert.equal(source.includes('Cross-producer comparison:'),true);
 assert.equal(source.includes('Profile definition revisions differ:'),true);
+
+const imageOld={capabilities:[{section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',value:'tiling=LINEAR, extent=1 × 1 × 1',status:'available'}],profiles:[]};
+const imageNew={capabilities:[{section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',value:'Unsupported: VK_ERROR_FORMAT_NOT_SUPPORTED',status:'available'}],profiles:[]};
+const oldImage=context.compareMap(imageOld).get('Image Format Properties2 / VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER');
+const newImage=context.compareMap(imageNew).get('Image Format Properties2 / VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER');
+assert.equal(oldImage.status,'available');
+assert.equal(newImage.status,'unsupported');
+assert.equal(newImage.value,'Unsupported: VK_ERROR_FORMAT_NOT_SUPPORTED');
+
+
+const imageUnavailable={capabilities:[{section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER',value:'Unavailable: VkResult=-1',status:'available'}],profiles:[]};
+const unavailableImage=context.compareMap(imageUnavailable).get('Image Format Properties2 / VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER');
+assert.equal(unavailableImage.status,'unavailable');
+assert.equal(unavailableImage.value,'Unavailable: VkResult=-1');
+
 console.log('VulkanScope Database compare contract tests: ALL PASS');

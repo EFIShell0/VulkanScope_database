@@ -400,3 +400,14 @@
 - `Unknown`, `Unavailable`, `Unsupported`, `Supported` and query-availability semantics remain distinct. Compare filtering must never convert one-sided or missing evidence into unsupported capability.
 - Browser-visible JavaScript changes require a new cache-busted `app.v0395.js`; Pages staging remains explicit allow-list only.
 - VulkanScope 0.41.7 reports remain schema-compatible and 0.41.4+ strict query/queue fail-closed validation continues to apply to all future compatible producers.
+
+
+## Release 0.39.6 Image Format Properties2 tuple-state / VulkanScope 0.41.8 requirements
+- Database release identity is 0.39.6 and the current producer/query baseline is VulkanScope 0.41.8 / versionCode 418 with Vulkan 1.4.360; schema 2, technicalReport 3, normalizer 15, compatibility floor 0.32.4+ and D1 storage remain unchanged.
+- Image Format Properties2 tuple values reported as `Unsupported: VK_ERROR_FORMAT_NOT_SUPPORTED` are direct Unsupported capability evidence in Compare while remaining a successfully completed query for aggregate Properties query-coverage accounting.
+- Image Format Properties2 tuple values beginning `Unavailable: VkResult=` remain Unavailable. They must never be converted to Unsupported.
+- `Unknown / Not reported` is reserved for a tuple not present in that submission; a concrete negative tuple result must not collapse into missing evidence.
+- Historical successful Image Format Properties2 rows compare under the same canonical tuple key against 0.41.8 negative rows, so AVAILABLE -> UNSUPPORTED/UNAVAILABLE is visible without rewriting stored payloads.
+- Worker validation for 0.41.8+ rejects fabricated Image Format Properties2 `Unsupported:` text that is not the exact `VK_ERROR_FORMAT_NOT_SUPPORTED` result form and rejects malformed tuple-level `Unavailable:` result strings.
+- Browser-visible JavaScript changes use cache-busted `app.v0396.js`. Pages staging remains explicit allow-list only.
+- No D1 migration, stored-report rewrite, report-hash rewrite or capability inference is permitted.

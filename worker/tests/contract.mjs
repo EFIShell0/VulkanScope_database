@@ -37,7 +37,7 @@ const reportText=(p)=>{
 function fixture(){
  const p={
   schemaVersion:2,
-  application:{name:'VulkanScope',version:'0.41.7',versionCode:417,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
+  application:{name:'VulkanScope',version:'0.41.8',versionCode:418,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
   device:{manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
   gpu:{name:'Adreno Fixture',vendorId:'0x5143',deviceId:'0x0001',deviceType:'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU'},
   driver:{mode:'System Vulkan driver',version:'512.1',rawVersion:'1'},
@@ -51,7 +51,7 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,15);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.7/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,15);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.8/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
 
 let unavailableVideo=fixture();
@@ -112,4 +112,13 @@ assert.equal(normalized.queryDiagnostics.extendedQueryStatus,'available','extend
 assert.equal(normalized.queryDiagnostics.vulkan14Status,'available','Vulkan 1.4 query status must survive normalization');
 assert.equal(normalized.queues[0].videoCodecQueryStatus,'available','video codec query state must survive normalization');
 assert.equal(String(normalized.queues[0].videoCodecOperations),'0','queried zero video codec mask must survive normalization');
+
+let badTuple=fixture();badTuple.technicalReport.devices[0].detailedProperties.push({section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',value:'Unsupported: guessed'});r=await call('/v1/reports',{method:'POST',body:badTuple});assert.equal(r.status,400,'0.41.8 Image Format Properties2 unsupported tuples must carry the exact VK_ERROR_FORMAT_NOT_SUPPORTED evidence');
+let goodTuple=fixture();goodTuple.technicalReport.devices[0].detailedProperties.push({section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',value:'Unsupported: VK_ERROR_FORMAT_NOT_SUPPORTED'});goodTuple.reportText+='\n[Image Format Properties2] VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER = Unsupported: VK_ERROR_FORMAT_NOT_SUPPORTED\n';r=await call('/v1/reports',{method:'POST',body:goodTuple});assert.equal(r.status,201,'0.41.8 explicit Image Format Properties2 unsupported tuple evidence must be accepted');
+
+
+let badUnavailableTuple=fixture();badUnavailableTuple.technicalReport.devices[0].detailedProperties.push({section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER',value:'Unavailable: driver failed'});r=await call('/v1/reports',{method:'POST',body:badUnavailableTuple});assert.equal(r.status,400,'0.41.8 malformed Image Format Properties2 unavailable tuples must be rejected');
+let goodUnavailableTuple=fixture();goodUnavailableTuple.technicalReport.devices[0].detailedProperties.push({section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER',value:'Unavailable: VkResult=-1'});goodUnavailableTuple.reportText+='\n[Image Format Properties2] VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER = Unavailable: VkResult=-1\n';r=await call('/v1/reports',{method:'POST',body:goodUnavailableTuple});assert.equal(r.status,201,'0.41.8 numeric Image Format Properties2 unavailable tuple evidence must be accepted');
+let badUnknownTuple=fixture();badUnknownTuple.technicalReport.devices[0].detailedProperties.push({section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · LINEAR',value:'Unknown: Not reported'});r=await call('/v1/reports',{method:'POST',body:badUnknownTuple});assert.equal(r.status,400,'0.41.8 present Image Format Properties2 tuple rows must carry success, exact unsupported, or numeric unavailable evidence');
+
 console.log('VulkanScope Database worker contract tests: ALL PASS');
