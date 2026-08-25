@@ -356,3 +356,13 @@
 - Browser-visible producer metadata changes use cache-busted `app.v0391.js` and `config.js?v=0391`; unchanged CSS may remain `site.v0390.css`.
 - Worker compatibility date remains the last deployment-verified project date until a real deployment validates a newer date.
 
+
+
+## Release 0.39.2 CI checkout and Pages artifact hygiene requirements
+
+- A normal Git source checkout may contain repository-owned top-level `.git` metadata; source verification must not misclassify that checkout metadata as a shipped release artifact.
+- The deployable GitHub Pages artifact must be staged from an explicit public allow-list and must never contain `.git`, `.github`, `worker`, `tools`, `rules`, build caches, local dependencies, native binaries, or other repository-only material.
+- Source-tree auditing and staged Pages-artifact auditing are separate release gates. The staged artifact audit remains fail-closed for forbidden VCS/build/development material.
+- GitHub Pages deployment must upload the staged `_site` tree, not the repository root.
+- Every local stylesheet/script/image reference in staged HTML must resolve inside that staged artifact.
+- Database schema, D1 data, report IDs, normalizer semantics, producer validation, filter/statistics semantics, and VulkanScope 0.41.5 compatibility are unchanged by this CI/deployment-hygiene patch.

@@ -33,3 +33,5 @@ build/
 tmp/
 
 worker/package-lock.json
+
+_site/

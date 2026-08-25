@@ -1,20 +1,24 @@
-# VulkanScope Database 0.39.1
+# VulkanScope Database 0.39.2
 
-VulkanScope Database 0.39.1 is a producer-compatibility and validation-hardening release for VulkanScope 0.41.5. It preserves the complete 0.39.0 filter/statistics/hash-routing frontend and remains compatible with VulkanScope 0.32.4+ schema-2 / technicalReport-3 submissions.
+VulkanScope Database 0.39.2 is a CI and GitHub Pages artifact-hygiene patch built on the 0.39.1 VulkanScope 0.41.5 compatibility contract.
 
-## 0.39.1 highlights
+## 0.39.2 highlights
 
-- Current producer/query baseline: **VulkanScope 0.41.5 / versionCode 415 · Vulkan 1.4.360**.
-- Fixed the 0.39.0 validator gap where strict query-diagnostic and queue/Vulkan Video semantics applied only to the exact string `0.41.4`.
-- The strict 0.41.4 semantics now apply to every schema-compatible VulkanScope producer at **0.41.4 or newer**, including 0.41.5 and future 0.x producers.
-- 0.41.5 must therefore preserve allow-listed device-extension/extended-query/Vulkan-1.4 states and the Vulkan Video null-vs-genuine-zero contract.
-- Historical compatible submissions remain accepted; no D1 migration, report rewrite, schema migration or normalizer bump is introduced.
-- Frontend filters, donut statistics, canonical hash routes and loaded-submission denominator semantics remain unchanged from 0.39.0.
+- Fixes GitHub Actions builds failing because `tools/audit_database.py` confused checkout-owned top-level `.git/` metadata with shipped release files.
+- Source verification now tolerates only the repository-owned top-level `.git` checkout metadata; nested `.git` content remains forbidden.
+- GitHub Pages deployment is staged into an explicit allow-listed `_site` tree rather than uploading the repository root.
+- The staged Pages tree receives its own fail-closed artifact audit before upload.
+- Repository-only content such as `.git`, `.github`, `worker`, `tools`, `rules`, dependencies, caches and native/build outputs cannot enter the Pages artifact.
+- Local HTML assets are revalidated against the staged tree before deployment.
 
 ## Canonical contract
 
-- Database submission schema: 2.
-- technicalReport schema: 3.
-- Normalizer: 15.
+- Current producer: **VulkanScope 0.41.5 / versionCode 415**.
 - Compatible producer floor: VulkanScope 0.32.4+.
-- Published/query baseline: Vulkan 1.4.360.
+- Vulkan producer/query baseline: **1.4.360**.
+- Database submission schema: **2**.
+- `technicalReport` schema: **3**.
+- Normalizer: **15**.
+- D1 migration: none.
+
+The 0.39.1 fail-closed validation for VulkanScope 0.41.4+ query diagnostics and queue/Vulkan Video semantics remains unchanged. The 0.39.0 filter, donut/statistics and canonical hash-routing frontend also remains unchanged.

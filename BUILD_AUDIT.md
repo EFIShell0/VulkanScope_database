@@ -1,8 +1,8 @@
-# VulkanScope Database 0.39.1 Build / Contract Audit
+# VulkanScope Database 0.39.2 Build / Contract Audit
 
 ## Release identity
 
-- Database: `0.39.1`
+- Database: `0.39.2`
 - Current producer: VulkanScope `0.41.5` / versionCode `415`
 - Compatible producer floor: VulkanScope `0.32.4+`
 - Vulkan baseline: `1.4.360`
@@ -11,25 +11,31 @@
 - Worker normalizer: `15`
 - D1 migration: none
 
-## 0.41.5 compatibility hardening
+## CI failure fixed
 
-The 0.39.0 Worker applied strict query-diagnostic and queue/Vulkan Video semantic checks only to the exact `0.41.4` producer string. 0.39.1 makes that contract version-range aware: every schema-compatible VulkanScope producer at `0.41.4` or newer is subject to the same fail-closed evidence semantics.
+0.39.1 recursively scanned the source checkout and reported GitHub Actions' normal `.git/` metadata as `forbidden release artifact`. That was a layer-boundary error: repository metadata is expected in a source checkout but must never be present in the deployable Pages artifact.
 
-- Non-available Vulkan Video query states require null numeric masks.
-- A genuinely queried zero mask remains valid zero evidence.
-- Device-extension, extended-query and Vulkan 1.4 query states remain allow-listed.
-- VulkanScope 0.41.5/415 is the current producer identity.
-- Historical supported producer versions remain accepted.
-- Future compatible versions cannot bypass the 0.41.4+ semantic gate merely by changing the version string.
+0.39.2 separates those concerns:
+
+1. `tools/audit_database.py` audits the source checkout while ignoring only repository-owned top-level `.git` metadata.
+2. `tools/build_pages_artifact.py _site` stages only explicitly public files/directories.
+3. `tools/audit_database.py --artifact-tree _site` performs a strict deployable-artifact audit.
+4. `actions/upload-pages-artifact` uploads `_site`, not `.`.
+
+The artifact audit rejects VCS/development directories, unexpected top-level entries, symlinks, build/cache artifacts and broken local HTML resources.
 
 ## Verification performed
 
+- `python tools/build_index.py`: PASS
+- Source `python tools/audit_database.py`: PASS
 - Frontend JavaScript syntax: PASS
+- Canonical hash-route contract suite: PASS
 - Worker JavaScript syntax: PASS
 - Worker contract suite: PASS
-- Canonical hash-route contract suite: PASS
-- `tools/audit_database.py`: PASS
-- JSON parsing and source hygiene: PASS
-- Structural responsive smoke with current HTML/CSS at 360 px / 412 px / 1920 px: PASS
+- `_site` staging: PASS
+- `_site` artifact audit: PASS
+- Simulated GitHub checkout with top-level `.git`: source audit PASS
+- Injected `_site/.git`: artifact audit FAIL as required
+- Clean `_site` after negative test: artifact audit PASS
 
-The 0.39.0 filter/statistics frontend behavior is retained; 0.39.1 changes producer metadata and Worker validation semantics rather than the filter engine. Stale unreferenced pre-0.39.0 JavaScript/CSS assets were removed from the release source package.
+No report schema, normalizer, D1 data, report ID/hash, filter/statistics semantics or VulkanScope 0.41.5 producer semantics changed in this patch.

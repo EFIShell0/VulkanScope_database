@@ -1,6 +1,55 @@
 from pathlib import Path
-import json, subprocess, shutil, sys, re
+import argparse, json, subprocess, shutil, sys, re
 from urllib.parse import urlsplit
+
+
+parser=argparse.ArgumentParser(description="Audit VulkanScope Database source or staged Pages artifact")
+parser.add_argument("--artifact-tree", type=Path, help="Audit only a staged/deployable Pages artifact tree")
+args=parser.parse_args()
+
+def audit_artifact_tree(artifact_root: Path):
+    artifact_root=artifact_root.resolve()
+    artifact_errors=[]
+    def acheck(cond,msg):
+        if not cond: artifact_errors.append(msg)
+    acheck(artifact_root.is_dir(), f'artifact tree missing: {artifact_root}')
+    if not artifact_root.is_dir():
+        print("\n".join(artifact_errors)); sys.exit(1)
+    allowed_top={'.nojekyll','index.html','config.js','report.schema.json','assets','data','400.html','401.html','403.html','404.html','405.html','408.html','409.html','413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html'}
+    actual_top={x.name for x in artifact_root.iterdir()}
+    for extra in sorted(actual_top-allowed_top): artifact_errors.append(f'forbidden Pages artifact top-level entry {extra}')
+    for required in ['index.html','config.js','report.schema.json','assets','data','.nojekyll']:
+        acheck((artifact_root/required).exists(), f'missing Pages artifact entry {required}')
+    forbidden_dirs={'.git','.github','worker','tools','rules','.gradle','build','__pycache__','.idea','node_modules','.wrangler'}
+    bad_names={'.DS_Store','Thumbs.db','local.properties'}
+    for f in artifact_root.rglob('*'):
+        rel=f.relative_to(artifact_root)
+        if any(part in forbidden_dirs for part in rel.parts): artifact_errors.append(f'forbidden Pages artifact {rel}')
+        if f.is_symlink(): artifact_errors.append(f'symlink not permitted in Pages artifact {rel}')
+        if f.is_file() and (f.name in bad_names or f.suffix in {'.pyc','.pyo','.o','.so','.class'}): artifact_errors.append(f'forbidden Pages artifact file {rel}')
+    idx=artifact_root/'index.html'
+    if idx.is_file():
+        body=idx.read_text(encoding='utf-8')
+        acheck('app.v0392.js' in body and 'config.js?v=0392' in body and 'site.v0390.css' in body,'Pages artifact current asset references')
+    attr=re.compile(r"(?:href|src)=[\"']([^\"']+)[\"']",re.I)
+    for html in artifact_root.glob('*.html'):
+        body=html.read_text(encoding='utf-8')
+        for ref in attr.findall(body):
+            if ref.startswith(('http://','https://','data:','#','mailto:','javascript:')): continue
+            clean=urlsplit(ref).path
+            if not clean or clean in {'.','./','/','/VulkanScope_database/'} or clean.endswith('/'): continue
+            if clean.startswith('/VulkanScope_database/'):
+                target=artifact_root/clean[len('/VulkanScope_database/'):]
+            else:
+                target=(html.parent/clean).resolve()
+            acheck(target.is_file(),f'broken Pages artifact local asset {html.name}: {ref}')
+    if artifact_errors:
+        print("\n".join(artifact_errors)); sys.exit(1)
+    print('VulkanScope Database 0.39.2 Pages artifact audit: PASS')
+    sys.exit(0)
+
+if args.artifact_tree:
+    audit_artifact_tree(args.artifact_tree)
 
 root=Path(__file__).resolve().parents[1]
 errors=[]
@@ -9,19 +58,22 @@ def check(cond,msg):
 def text(path): return path.read_text(encoding='utf-8')
 
 index=text(root/'index.html')
-app=text(root/'assets/app.v0391.js')
+app=text(root/'assets/app.v0392.js')
 css=text(root/'assets/site.v0390.css')
 worker=text(root/'worker/src/index.js')
 rules=text(root/'rules/PROJECT_RULES.md')
 workflow=text(root/'.github/workflows/pages.yml')
 
 # Release identity / cache busting
-check('VulkanScope Database <strong>0.39.1</strong>' in index,'index version')
-check('site.v0390.css' in index and 'app.v0391.js' in index and 'config.js?v=0391' in index,'0.39.1 cache-busted asset refs')
-check('Database 0.39.1' in app,'frontend database version')
+check('VulkanScope Database <strong>0.39.2</strong>' in index,'index version')
+check('site.v0390.css' in index and 'app.v0392.js' in index and 'config.js?v=0392' in index,'0.39.2 cache-busted asset refs')
+check('Database 0.39.2' in app,'frontend database version')
 check('VulkanScope 0.41.5 · Vulkan 1.4.360' in app,'frontend producer baseline')
 check("connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev" in index,'CSP API pin')
-check('node --check assets/app.v0391.js' in workflow,'workflow frontend syntax check')
+check('node --check assets/app.v0392.js' in workflow,'workflow frontend syntax check')
+check('python tools/build_pages_artifact.py _site' in workflow,'workflow stages allow-listed Pages artifact')
+check('python tools/audit_database.py --artifact-tree _site' in workflow,'workflow audits staged Pages artifact')
+check('path: _site' in workflow,'workflow uploads staged Pages artifact only')
 
 # Existing end-to-end data semantics
 check('fetchJsonBounded' in app and '20000' in app and '4194304' in app,'bounded frontend API reads')
@@ -142,9 +194,10 @@ required_rules=[
 'Release 0.37.1 queue, Vulkan Video and query-state semantics',
 'Release 0.38.0 statistics / hash routing / VulkanScope 0.41.4 requirements',
 'Release 0.39.0 filter architecture and interactive statistics requirements',
-'Release 0.39.1 VulkanScope 0.41.5 compatibility hardening requirements']
+'Release 0.39.1 VulkanScope 0.41.5 compatibility hardening requirements',
+'Release 0.39.2 CI checkout and Pages artifact hygiene requirements']
 for token in required_rules: check(token in rules,f'release rule {token}')
-for rel in ['rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md','rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md','rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md','rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md','rules/0.39.1_VULKANSCOPE_0.41.5_COMPATIBILITY_HARDENING.md']:
+for rel in ['rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md','rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md','rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md','rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md','rules/0.39.1_VULKANSCOPE_0.41.5_COMPATIBILITY_HARDENING.md','rules/0.39.2_CI_PAGES_ARTIFACT_HYGIENE.md']:
     check((root/rel).is_file(),f'audit document {rel}')
 
 # Static metadata / toolchain
@@ -152,7 +205,7 @@ schema=json.loads(text(root/'report.schema.json'))
 check('technicalReport' in schema.get('required',[]),'published schema requires technicalReport')
 check(schema.get('properties',{}).get('technicalReport',{}).get('properties',{}).get('schemaVersion',{}).get('const')==3,'published schema technicalReport v3')
 static=json.loads(text(root/'data/index.json'))
-check(static.get('databaseVersion')=='0.39.1','static database version')
+check(static.get('databaseVersion')=='0.39.2','static database version')
 check(static.get('normalizerVersion')==15,'static normalizer')
 check(static.get('producerQueryBaseline')=='VulkanScope 0.41.5 · Vulkan 1.4.360','static producer baseline')
 wr=json.loads(text(root/'worker/wrangler.jsonc'))
@@ -164,7 +217,7 @@ check(wr.get('observability',{}).get('enabled') is True,'Cloudflare observabilit
 check(wr.get('observability',{}).get('logs',{}).get('head_sampling_rate')==0.1,'Cloudflare log sampling')
 check(wr.get('observability',{}).get('traces',{}).get('head_sampling_rate')==0.01,'Cloudflare trace sampling')
 pkg=json.loads(text(root/'worker/package.json'))
-check(pkg.get('version')=='0.39.1','worker package version')
+check(pkg.get('version')=='0.39.2','worker package version')
 check(pkg.get('devDependencies',{}).get('wrangler')=='4.125.0','Wrangler pin')
 for key in ['predeploy','premigrate','premigrations:list','pred1:count']:
     check('verify:account' in pkg.get('scripts',{}).get(key,''),f'account guard {key}')
@@ -189,13 +242,17 @@ for name in ['400.html','401.html','403.html','404.html','405.html','408.html','
 bad_names={'.DS_Store','Thumbs.db','local.properties'}
 for f in root.rglob('*'):
     rel=f.relative_to(root)
-    if any(part in {'.gradle','build','__pycache__','.idea','.git'} for part in rel.parts): errors.append(f'forbidden release artifact {rel}')
-    if f.is_file() and (f.name in bad_names or f.suffix in {'.pyc','.pyo','.o','.so','.class'}): errors.append(f'forbidden release file {rel}')
+    # GitHub Actions and normal source checkouts own root/.git metadata.
+    # Staged/deployable artifacts are checked separately with --artifact-tree and must never contain it.
+    if rel.parts and rel.parts[0]=='.git':
+        continue
+    if any(part in {'.gradle','build','__pycache__','.idea','.git','node_modules','.wrangler'} for part in rel.parts): errors.append(f'forbidden source/release artifact {rel}')
+    if f.is_file() and (f.name in bad_names or f.suffix in {'.pyc','.pyo','.o','.so','.class'}): errors.append(f'forbidden source/release file {rel}')
 
 # Syntax / contract tests
 node=shutil.which('node')
 if node:
-    for f in [root/'assets/app.v0391.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
+    for f in [root/'assets/app.v0392.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
         r=subprocess.run([node,'--check',str(f)],capture_output=True,text=True)
         if r.returncode: errors.append(f'node-check {f.relative_to(root)}: {r.stderr.strip()}')
     r=subprocess.run([node,str(root/'tools/test_routes.mjs')],capture_output=True,text=True,cwd=root)
@@ -205,4 +262,4 @@ if node:
 
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print('VulkanScope Database 0.39.1 audit: PASS')
+print('VulkanScope Database 0.39.2 audit: PASS')

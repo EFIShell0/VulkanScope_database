@@ -20,13 +20,15 @@ jobs:
           python-version: "3.13"
       - run: python tools/build_index.py
       - run: python tools/audit_database.py
-      - run: node --check assets/app.v0391.js
+      - run: node --check assets/app.v0392.js
       - run: node tools/test_routes.mjs
       - run: node --check worker/src/index.js
+      - run: python tools/build_pages_artifact.py _site
+      - run: python tools/audit_database.py --artifact-tree _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
-          path: .
+          path: _site
   deploy:
     environment:
       name: github-pages
