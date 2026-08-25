@@ -1,11 +1,8 @@
-# VulkanScope Database 0.39.0
+# VulkanScope Database 0.39.1
 
-- View-scoped cohort filter architecture.
-- Exact driver-version and device-extension cohort filters.
-- Semantic Properties/Limits query-state cleanup.
-- Expanded page-specific technical filters.
-- Interactive accessible Statistics donuts with exact slice filtering.
-- Extension ranking filters and explicit overlapping-membership semantics.
-- Versions Device API / Loader API / pair distributions.
-- Clear-filters workflow with default subgroup/sort reset and responsive filter controls.
-- Current producer remains VulkanScope 0.41.4 / 414; schema 2 / technicalReport 3 / normalizer 15 unchanged.
+- Updated the current producer identity to VulkanScope 0.41.5 / versionCode 415.
+- Made the strict 0.41.4 query-diagnostic and queue/Vulkan Video validation contract version-range aware so it also applies to 0.41.5 and future compatible producers.
+- Kept unavailable/not-applicable/unknown Vulkan Video numeric masks fail-closed as null while preserving genuine queried zero masks.
+- Kept device-extension, extended-query and Vulkan 1.4 diagnostic states fail-closed to the existing allow-listed evidence vocabulary.
+- Preserved VulkanScope 0.32.4+ compatibility, schema 2, technicalReport 3, normalizer 15, report hashes and existing D1 rows.
+- Preserved the 0.39.0 filter/statistics/hash-routing frontend; only producer metadata was cache-busted to `app.v0391.js` / `config.js?v=0391`.

@@ -9,19 +9,19 @@ def check(cond,msg):
 def text(path): return path.read_text(encoding='utf-8')
 
 index=text(root/'index.html')
-app=text(root/'assets/app.v0390.js')
+app=text(root/'assets/app.v0391.js')
 css=text(root/'assets/site.v0390.css')
 worker=text(root/'worker/src/index.js')
 rules=text(root/'rules/PROJECT_RULES.md')
 workflow=text(root/'.github/workflows/pages.yml')
 
 # Release identity / cache busting
-check('VulkanScope Database <strong>0.39.0</strong>' in index,'index version')
-check('site.v0390.css' in index and 'app.v0390.js' in index and 'config.js?v=0390' in index,'0.39.0 cache-busted asset refs')
-check('Database 0.39.0' in app,'frontend database version')
-check('VulkanScope 0.41.4 · Vulkan 1.4.360' in app,'frontend producer baseline')
+check('VulkanScope Database <strong>0.39.1</strong>' in index,'index version')
+check('site.v0390.css' in index and 'app.v0391.js' in index and 'config.js?v=0391' in index,'0.39.1 cache-busted asset refs')
+check('Database 0.39.1' in app,'frontend database version')
+check('VulkanScope 0.41.5 · Vulkan 1.4.360' in app,'frontend producer baseline')
 check("connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev" in index,'CSP API pin')
-check('node --check assets/app.v0390.js' in workflow,'workflow frontend syntax check')
+check('node --check assets/app.v0391.js' in workflow,'workflow frontend syntax check')
 
 # Existing end-to-end data semantics
 check('fetchJsonBounded' in app and '20000' in app and '4194304' in app,'bounded frontend API reads')
@@ -120,9 +120,11 @@ check('detailedProperties=[],limits=[]' in worker,'worker separate fallback arra
 check('tr?.schemaVersion===3&&d' in worker,'worker structured override')
 check("publishedVulkanSpec:'Vulkan 1.4.360 (2026-08-14)'" in worker,'published spec metadata')
 check('VulkanScope producer/query baseline 1.4.360' in worker,'producer registry metadata')
-check('VulkanScope 0.41.4 · Vulkan 1.4.360' in worker,'current producer metadata')
-for token in ['producerVersion=p=>','supportedProducer=p=>','currentProducerIdentity=p=>','validSecurityPatch=p=>','applicationAbiConsistent=p=>',"p.application.version!=='0.41.4'||p.application.versionCode===414",'validCurrentQueueSemantics=p=>','validCurrentQueryDiagnostics=p=>']:
+check('VulkanScope 0.41.5 · Vulkan 1.4.360' in worker,'current producer metadata')
+for token in ['producerVersion=p=>','supportedProducer=p=>','producerAtLeast0414=p=>','currentProducerIdentity=p=>','validSecurityPatch=p=>','applicationAbiConsistent=p=>',"p.application.version!=='0.41.5'||p.application.versionCode===415",'validCurrentQueueSemantics=p=>','validCurrentQueryDiagnostics=p=>']:
     check(token in worker,f'producer contract {token}')
+check('producerAtLeast0414(p)' in worker,'0.41.4+ semantics range helper is used')
+check("if(!producerAtLeast0414(p))return true" in worker,'strict query/queue semantics apply to 0.41.4+ producers')
 check("['available','unavailable','not_applicable','unknown']" in worker,'current queue status allow-list')
 check("['available','incomplete','unavailable','not_applicable','unknown']" in worker,'current runtime-query status allow-list')
 check('q.videoCodecOperations!==null||q.videoCodecOperationsU64!==null' in worker,'non-available queue numeric fields fail closed')
@@ -139,9 +141,10 @@ required_rules=[
 'Release 0.37.0 VulkanScope 0.41.0 trends and permalink requirements',
 'Release 0.37.1 queue, Vulkan Video and query-state semantics',
 'Release 0.38.0 statistics / hash routing / VulkanScope 0.41.4 requirements',
-'Release 0.39.0 filter architecture and interactive statistics requirements']
+'Release 0.39.0 filter architecture and interactive statistics requirements',
+'Release 0.39.1 VulkanScope 0.41.5 compatibility hardening requirements']
 for token in required_rules: check(token in rules,f'release rule {token}')
-for rel in ['rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md','rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md','rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md','rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md']:
+for rel in ['rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md','rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md','rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md','rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md','rules/0.39.1_VULKANSCOPE_0.41.5_COMPATIBILITY_HARDENING.md']:
     check((root/rel).is_file(),f'audit document {rel}')
 
 # Static metadata / toolchain
@@ -149,9 +152,9 @@ schema=json.loads(text(root/'report.schema.json'))
 check('technicalReport' in schema.get('required',[]),'published schema requires technicalReport')
 check(schema.get('properties',{}).get('technicalReport',{}).get('properties',{}).get('schemaVersion',{}).get('const')==3,'published schema technicalReport v3')
 static=json.loads(text(root/'data/index.json'))
-check(static.get('databaseVersion')=='0.39.0','static database version')
+check(static.get('databaseVersion')=='0.39.1','static database version')
 check(static.get('normalizerVersion')==15,'static normalizer')
-check(static.get('producerQueryBaseline')=='VulkanScope 0.41.4 · Vulkan 1.4.360','static producer baseline')
+check(static.get('producerQueryBaseline')=='VulkanScope 0.41.5 · Vulkan 1.4.360','static producer baseline')
 wr=json.loads(text(root/'worker/wrangler.jsonc'))
 check(wr.get('compatibility_date')=='2026-08-23','worker deployment-verified compatibility date')
 check(wr.get('account_id')=='ccf3de9d3f2a4394af2fb7be7fd5bbf4','Cloudflare account pin')
@@ -161,7 +164,7 @@ check(wr.get('observability',{}).get('enabled') is True,'Cloudflare observabilit
 check(wr.get('observability',{}).get('logs',{}).get('head_sampling_rate')==0.1,'Cloudflare log sampling')
 check(wr.get('observability',{}).get('traces',{}).get('head_sampling_rate')==0.01,'Cloudflare trace sampling')
 pkg=json.loads(text(root/'worker/package.json'))
-check(pkg.get('version')=='0.39.0','worker package version')
+check(pkg.get('version')=='0.39.1','worker package version')
 check(pkg.get('devDependencies',{}).get('wrangler')=='4.125.0','Wrangler pin')
 for key in ['predeploy','premigrate','premigrations:list','pred1:count']:
     check('verify:account' in pkg.get('scripts',{}).get(key,''),f'account guard {key}')
@@ -192,7 +195,7 @@ for f in root.rglob('*'):
 # Syntax / contract tests
 node=shutil.which('node')
 if node:
-    for f in [root/'assets/app.v0390.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
+    for f in [root/'assets/app.v0391.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
         r=subprocess.run([node,'--check',str(f)],capture_output=True,text=True)
         if r.returncode: errors.append(f'node-check {f.relative_to(root)}: {r.stderr.strip()}')
     r=subprocess.run([node,str(root/'tools/test_routes.mjs')],capture_output=True,text=True,cwd=root)
@@ -202,4 +205,4 @@ if node:
 
 if errors:
     print('\n'.join(errors)); sys.exit(1)
-print('VulkanScope Database 0.39.0 audit: PASS')
+print('VulkanScope Database 0.39.1 audit: PASS')

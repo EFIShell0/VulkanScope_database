@@ -343,3 +343,16 @@
 - Extension statistics may be filtered independently by device/instance/both scope, namespace, minimum filtered-submission enumeration coverage and exact text search; absence from a report remains Unknown/not listed.
 - Browser-visible JS/CSS/config changes use cache-busted `app.v0390.js`, `site.v0390.css` and `config.js?v=0390`.
 - Worker compatibility date remains the last deployment-verified project date, 2026-08-23. No compatibility-date advance, Wrangler upgrade, schema migration, D1 migration or normalizer bump is implied by this frontend/filter release.
+
+## Release 0.39.1 VulkanScope 0.41.5 compatibility hardening requirements
+- Database version is 0.39.1 and remains independent from VulkanScope application versioning. Current producer/query baseline is VulkanScope 0.41.5 / versionCode 415 with Vulkan 1.4.360.
+- Compatible producer floor remains VulkanScope 0.32.4+ with submission schema 2 / technicalReport 3. Normalizer remains 15 because this release changes validation range/metadata, not normalized output semantics.
+- The strict query-diagnostic and queue/Vulkan Video contract introduced for VulkanScope 0.41.4 applies to every compatible producer version at 0.41.4 or newer. It must never be guarded by equality to one exact current version string.
+- For 0.41.4+ producers, deviceExtensionStatus, extendedQueryStatus and vulkan14Status remain fail-closed to available/incomplete/unavailable/not_applicable/unknown with bounded reasons.
+- For 0.41.4+ producers, queue videoCodecQueryStatus remains fail-closed to available/unavailable/not_applicable/unknown. Available may contain a genuine numeric zero mask; every non-available state requires null numeric mask fields.
+- Current producer identity requires VulkanScope 0.41.5 to use versionCode 415. Historical 0.41.4/414, 0.41.3/413 and other schema-compatible supported producers remain accepted under their existing identity rules.
+- No D1 migration, report-id/hash rewrite, stored-payload rewrite, schema migration, automatic upload, analytics or capability inference is introduced.
+- The complete 0.39.0 view-scoped filters, interactive statistics, canonical hash routes, accessibility and responsive-design contracts remain unchanged.
+- Browser-visible producer metadata changes use cache-busted `app.v0391.js` and `config.js?v=0391`; unchanged CSS may remain `site.v0390.css`.
+- Worker compatibility date remains the last deployment-verified project date until a real deployment validates a newer date.
+

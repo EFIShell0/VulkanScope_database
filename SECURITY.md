@@ -37,7 +37,7 @@ For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties
 - Legacy query-string routes are accepted only for migration and are canonicalized to the validated hash representation.
 - Distribution charts are rendered locally with first-party SVG/CSS. No chart CDN, remote script, analytics endpoint, remote font, ad service or chart-generation service is introduced.
 - Statistics describe loaded submissions only and are not represented as market or global Vulkan ecosystem share.
-- VulkanScope 0.41.4 current-producer validation is fail-closed for queue/video null-vs-zero semantics and for device-extension, extended-query and Vulkan 1.4 query status tokens.
+- VulkanScope 0.41.4+ producer validation is fail-closed for queue/video null-vs-zero semantics and for device-extension, extended-query and Vulkan 1.4 query status tokens; 0.41.5 cannot bypass these checks by using a newer compatible version string.
 - Static HTTP error pages use the current cache-busted local stylesheet and their local resource references are release-audited.
 - The public write endpoint remains intentionally unauthenticated; deployment-level Cloudflare abuse/rate-limiting policy remains an operator control and must not store request IP addresses in report data.
 
