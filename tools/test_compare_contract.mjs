@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v0396.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v0397.js',import.meta.url),'utf8');
 function extractFunction(name){
   const start=source.indexOf(`function ${name}(`);
   if(start<0)throw new Error(`missing ${name}`);
@@ -53,4 +53,14 @@ const unavailableImage=context.compareMap(imageUnavailable).get('Image Format Pr
 assert.equal(unavailableImage.status,'unavailable');
 assert.equal(unavailableImage.value,'Unavailable: VkResult=-1');
 
+
+const imageSeparated={capabilities:[],imageFormatQueryResults:[{name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',status:'unsupported',vkResult:-11}],profiles:[]};
+const separatedImage=context.compareMap(imageSeparated).get('Image Format Properties2 / VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER');
+assert.equal(separatedImage.status,'unsupported');
+assert.equal(separatedImage.value,'VK_ERROR_FORMAT_NOT_SUPPORTED');
+const imageSeparatedUnavailable={capabilities:[],imageFormatQueryResults:[{name:'VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER',status:'unavailable',vkResult:-1}],profiles:[]};
+const separatedUnavailable=context.compareMap(imageSeparatedUnavailable).get('Image Format Properties2 / VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER');
+assert.equal(separatedUnavailable.status,'unavailable');
+assert.equal(separatedUnavailable.value,'VkResult=-1');
+assert.equal(source.includes('excluded from Properties & Limits property/query totals'),true,'Formats detail must explain separated outcome accounting');
 console.log('VulkanScope Database compare contract tests: ALL PASS');

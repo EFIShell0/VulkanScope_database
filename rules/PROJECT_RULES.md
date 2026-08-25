@@ -411,3 +411,13 @@
 - Worker validation for 0.41.8+ rejects fabricated Image Format Properties2 `Unsupported:` text that is not the exact `VK_ERROR_FORMAT_NOT_SUPPORTED` result form and rejects malformed tuple-level `Unavailable:` result strings.
 - Browser-visible JavaScript changes use cache-busted `app.v0396.js`. Pages staging remains explicit allow-list only.
 - No D1 migration, stored-report rewrite, report-hash rewrite or capability inference is permitted.
+
+
+## Release 0.39.7 Image Format Properties2 query-outcome separation / VulkanScope 0.41.9 requirements
+- Database release identity is 0.39.7 and current producer/query baseline is VulkanScope 0.41.9 / versionCode 419 with Vulkan 1.4.360.
+- VulkanScope 0.41.9 successful Image Format Properties2 property payloads remain normal detailed-property evidence. Its non-success tuple outcomes are consumed from the dedicated bounded `technicalReport.devices[].imageFormatQueryResults` dataset and must not be inserted into Properties/Limit property counts.
+- Dedicated tuple results preserve canonical tuple identity, semantic state and exact numeric VkResult. `unsupported` is valid only for `VK_ERROR_FORMAT_NOT_SUPPORTED` (-11); other non-zero results are `unavailable`; duplicate tuple names, success code 0 or fabricated statuses are rejected for 0.41.9+ producers.
+- Compare merges historical successful Image Format Properties2 rows and the separate 0.41.9 non-success tuple dataset under the same canonical tuple identity, so AVAILABLE ↔ UNSUPPORTED/UNAVAILABLE remains directly comparable without rewriting stored reports.
+- Report detail Formats exposes non-success tuple outcomes separately and explicitly states that they are excluded from Properties & Limits totals.
+- Historical 0.41.8 embedded negative tuple rows remain readable and valid under their historical producer contract.
+- Filtering, report hashing, D1 storage, normalizer version 15, schema 2 / technicalReport 3, compatibility floor 0.32.4+, privacy/security and Vulkan 1.4.360 semantics remain unchanged.
