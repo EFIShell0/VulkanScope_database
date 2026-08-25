@@ -421,3 +421,15 @@
 - Report detail Formats exposes non-success tuple outcomes separately and explicitly states that they are excluded from Properties & Limits totals.
 - Historical 0.41.8 embedded negative tuple rows remain readable and valid under their historical producer contract.
 - Filtering, report hashing, D1 storage, normalizer version 15, schema 2 / technicalReport 3, compatibility floor 0.32.4+, privacy/security and Vulkan 1.4.360 semantics remain unchanged.
+
+## Release 0.39.8 Image Format Properties2 complete tuple-state / VulkanScope 0.41.10 requirements
+- Database release identity is 0.39.8 and the current producer/query baseline is VulkanScope 0.41.10 / versionCode 420 with Vulkan 1.4.360; schema 2, technicalReport 3, normalizer 15, compatibility floor 0.32.4+ and D1 storage remain unchanged.
+- VulkanScope 0.41.10 `technicalReport.devices[].imageFormatQueryResults` is a bounded complete state ledger for every scheduled Image Format Properties2 format/tiling tuple and its base, OPAQUE_FD and ANDROID_HARDWARE_BUFFER variants. The ledger remains separate from Properties & Limits totals.
+- `available` requires `VkResult=0` and a matching successful full `detailedProperties` Image Format Properties2 payload. `unsupported` is valid only for `VK_ERROR_FORMAT_NOT_SUPPORTED` (-11). Another non-zero `VkResult` is `unavailable`.
+- An external-handle variant may be `not_applicable` only when its prerequisite device extension was not enumerated. Its `VkResult` is null and its exact prerequisite reason is retained. Base image-format queries are never Not applicable.
+- For 0.41.10+ producers, every scheduled format group has exactly six canonical ledger slots: LINEAR/OPTIMAL × base/OPAQUE_FD/ANDROID_HARDWARE_BUFFER. Missing, duplicated, malformed or contradictory tuple identities fail closed.
+- Worker validation cross-checks the complete ledger against the fixed query recipe and aggregate attempted/success/format-not-supported/other-error diagnostics, so a scheduled AHB or OPAQUE_FD tuple cannot silently collapse to Unknown / Not reported.
+- Compare ignores `available` ledger rows when a successful detailed-property payload exists, preserving the full successful value. Non-available ledger states overlay the same canonical tuple identity as historical successful/negative evidence.
+- Formats detail may summarize all tuple states but must not add the ledger to Properties & Limits counts. Not applicable remains distinct from Unsupported, Unavailable and Unknown.
+- Historical VulkanScope 0.41.9 separated non-success datasets and 0.41.8 embedded negative tuple rows remain accepted under their historical producer contracts.
+- No D1 migration, stored-report rewrite, report-hash rewrite, capability inference, automatic upload or normalizer/schema bump is permitted.

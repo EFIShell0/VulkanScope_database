@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v0397.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v0398.js',import.meta.url),'utf8');
 function extractFunction(name){
   const start=source.indexOf(`function ${name}(`);
   if(start<0)throw new Error(`missing ${name}`);
@@ -62,5 +62,14 @@ const imageSeparatedUnavailable={capabilities:[],imageFormatQueryResults:[{name:
 const separatedUnavailable=context.compareMap(imageSeparatedUnavailable).get('Image Format Properties2 / VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER');
 assert.equal(separatedUnavailable.status,'unavailable');
 assert.equal(separatedUnavailable.value,'VkResult=-1');
-assert.equal(source.includes('excluded from Properties & Limits property/query totals'),true,'Formats detail must explain separated outcome accounting');
+
+const imageCompleteAvailable={capabilities:[{section:'Image Format Properties2',name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',value:'tiling=LINEAR, extent=16384 × 16384 × 1, externalHandle=ANDROID_HARDWARE_BUFFER',status:'available'}],imageFormatQueryResults:[{name:'VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER',status:'available',vkResult:0,reason:''}],profiles:[]};
+const completeAvailable=context.compareMap(imageCompleteAvailable).get('Image Format Properties2 / VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER');
+assert.equal(completeAvailable.status,'available');
+assert.match(completeAvailable.value,/extent=16384/,'0.41.10 Available ledger row must not overwrite the full successful property payload');
+const imageNotApplicable={capabilities:[],imageFormatQueryResults:[{name:'VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER',status:'not_applicable',vkResult:null,reason:'VK_ANDROID_external_memory_android_hardware_buffer was not enumerated for this device.'}],profiles:[]};
+const notApplicableImage=context.compareMap(imageNotApplicable).get('Image Format Properties2 / VK_FORMAT_S8_UINT · OPTIMAL · ANDROID_HARDWARE_BUFFER');
+assert.equal(notApplicableImage.status,'not_applicable');
+assert.equal(notApplicableImage.value,'VK_ANDROID_external_memory_android_hardware_buffer was not enumerated for this device.');
+assert.equal(source.includes('complete tuple-state ledger is excluded from Properties & Limits totals'),true,'Formats detail must explain separated outcome accounting');
 console.log('VulkanScope Database compare contract tests: ALL PASS');

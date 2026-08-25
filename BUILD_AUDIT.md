@@ -1,27 +1,37 @@
-# VulkanScope Database 0.39.7 Build / Release Audit
+# VulkanScope Database 0.39.8 Build / Release Audit
 
-- Database: `0.39.7`
-- Current VulkanScope producer baseline: `0.41.9` / `419`
-- Published/query Vulkan baseline: `1.4.360`
+- Database: `0.39.8`
+- Current VulkanScope producer baseline: `0.41.10` / `420`
+- Vulkan producer/query baseline: `1.4.360`
 - Submission schema: `2`
-- `technicalReport`: `3`
+- technicalReport schema: `3`
 - Normalizer: `15`
 - D1 migration: none
+- Stored payload/hash rewrite: none
 
-## Image Format Properties2 outcome separation
+## Image Format Properties2 correctness
+0.39.8 consumes VulkanScope 0.41.10's complete bounded tuple-state ledger separately from normal detailed properties. Current-producer validation requires six canonical states per scheduled format and cross-checks them against the fixed query recipe and aggregate query counters. Available rows retain their full property payload; Unsupported, Unavailable and Not applicable remain distinct and never inflate Properties & Limits totals.
 
-Database 0.39.7 consumes VulkanScope 0.41.9's bounded `imageFormatQueryResults` dataset separately from normal detailed properties. Exact tuple-level Unsupported/Unavailable evidence remains comparable under the same canonical Image Format Properties2 key, but Properties & Limits aggregation does not count these non-success tuple outcomes as property/query rows. Historical 0.41.8 embedded tuple-state reports remain readable and accepted under their older producer contract.
+## Verification
+Release verification is performed from both the source tree and the final packaged ZIP. The final results are recorded before packaging is published.
 
-## Final source-tree gates
+## Final source-tree gate execution — 2026-08-25
 
-- `python tools/audit_database.py --source-tree .`: PASS.
-- `node --check assets/app.v0397.js`: PASS.
-- `node tools/test_routes.mjs`: ALL PASS.
-- `node tools/test_compare_contract.mjs`: ALL PASS.
-- `node --check worker/src/index.js`: PASS.
-- `node worker/tests/contract.mjs`: ALL PASS.
-- `python tools/test_audit_hygiene.py`: ALL PASS.
-- `python tools/repair_repository.py --check`: PASS.
-- Canonical Pages staging plus `--artifact-tree` audit: PASS.
+The 0.39.8 working source was rebuilt/indexed and verified after the final changes:
 
-Worker validation is fail-closed for 0.41.9+ tuple names, uniqueness, semantic state and numeric `VkResult`, while schema 2 / technicalReport 3 / normalizer 15 and existing D1 storage remain unchanged.
+- repository canonical-state check: **PASS**
+- source-tree audit: **PASS**
+- audit-hygiene regression suite: **PASS**
+- frontend JavaScript syntax: **PASS**
+- hash-route contract suite: **PASS**
+- Compare contract suite, including the Image Format Properties2 canonical tuple identity: **PASS**
+- Worker JavaScript syntax: **PASS**
+- Worker contract suite, including the explicit `VK_FORMAT_S8_UINT · LINEAR · ANDROID_HARDWARE_BUFFER` missing-ledger rejection: **PASS**
+- allow-listed Pages staging and staged-artifact audit: **PASS**
+- supplemental Python/JSON syntax checks: **PASS**
+
+The staged `_site` directory is an audit product only and is removed before the source release ZIP is created.
+
+## Candidate source-ZIP extraction gate
+
+A root-layout candidate 0.39.8 source ZIP was created from the clean release tree and extracted into a new empty directory. From that extracted candidate, source audit, repository-state check, audit-hygiene suite, frontend syntax, hash-route tests, Compare contract tests, Worker syntax/contracts, Pages staging and staged Pages-artifact audit all returned **PASS**. The published ZIP is rebuilt from this same audited source after this record is added and is rechecked once more after creation.
