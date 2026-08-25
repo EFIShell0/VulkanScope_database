@@ -1,26 +1,17 @@
-# VulkanScope Database 0.39.3 Build / Contract Audit
+# VulkanScope Database 0.39.4 Build / Contract Audit
 
 ## Release identity
-- Database: `0.39.3`
-- VulkanScope producer baseline: `0.41.5 / 415`
+- Database: `0.39.4`
+- VulkanScope producer: `0.41.5 / 415`
 - Vulkan baseline: `1.4.360`
 - Submission schema: `2`
 - technicalReport schema: `3`
 - Normalizer: `15`
 
-## 0.39.3 CI correction
-The source audit prunes the checkout-owned root `.git` directory before recursion. Artifact auditing is separate and still rejects every `.git` occurrence. CI prints the audit-tool version, uses explicit source/artifact modes, stages only `_site`, preserves `.nojekyll`, and uses least-privilege GitHub Actions permissions.
+## 0.39.4 CI correction
 
-## Release gates
-- Source audit with a real Git repository checkout
-- Nested `.git` negative test
-- Pages staging and artifact audit
-- Pages `.git` negative test
-- Frontend and Worker JavaScript syntax
-- Hash-route and Worker contract tests
-- JSON/HTML/local-resource/package-hygiene checks
+The source checkout audit no longer derives release-file hygiene by recursively walking the working directory when `.git` is present. A real Git checkout is audited from `git ls-files`, which contains repository content but not `.git` implementation metadata. This removes the `.git/objects`, `.git/refs`, `.git/logs`, hooks and pack false-positive class without weakening the deploy-artifact audit.
 
-- Automated audit hygiene regression tests verify root checkout metadata acceptance and nested/artifact `.git` rejection.
+The release also checks the hidden workflow against a canonical visible template and provides an in-place repair tool for updates where a copy/extraction method left the old `.github/workflows/pages.yml` behind.
 
-- Source verification rejects extra `.github/workflows/*.yml`/`.yaml` files so an obsolete workflow cannot continue running independently.
-- The distributed ZIP is laid out at repository root (not inside an extra version directory) so extraction directly over the repository replaces `tools/` and hidden `.github/` paths instead of creating a nested project.
+Pages staging now copies exact public assets rather than the complete source assets directory, preventing stale versioned JavaScript from being deployed after in-place archive extraction.

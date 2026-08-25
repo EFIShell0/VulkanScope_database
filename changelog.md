@@ -1,5 +1,12 @@
 # VulkanScope Database changelog
 
+## 0.39.4
+
+- Replaced recursive Git-checkout hygiene scanning with a tracked-file manifest.
+- Added canonical workflow verification and an in-place repository repair tool.
+- Rejects stale workflows and stale versioned frontend app JavaScript.
+- Pages staging now copies an exact public asset allow-list.
+
 ## 0.39.3
 
 - Hardened source checkout audit by pruning root `.git` before recursion.

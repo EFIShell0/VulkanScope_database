@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "databaseVersion": "0.39.3",
+  "databaseVersion": "0.39.4",
   "normalizerVersion": 15,
   "publishedVulkanSpec": "Vulkan 1.4.360 (2026-08-14)",
   "vulkanRegistryBaseline": "VulkanScope producer/query baseline 1.4.360",
   "producerQueryBaseline": "VulkanScope 0.41.5 · Vulkan 1.4.360",
   "compatibleProducer": "VulkanScope 0.32.4+ · schema 2 / technical report 3",
-  "generatedAt": "2026-08-25T07:07:06.091824+00:00",
+  "generatedAt": "2026-08-25T07:17:16.675839+00:00",
   "reports": []
 }

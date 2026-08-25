@@ -35,3 +35,19 @@ tmp/
 worker/package-lock.json
 
 _site/
+
+# Node dependencies
+node_modules/
+worker/node_modules/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Common local/cache artifacts
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

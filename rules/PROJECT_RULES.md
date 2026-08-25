@@ -378,3 +378,15 @@
 - `.nojekyll` is intentionally included through upload-pages-artifact v5 `include-hidden-files: true`; no other source dotfiles are staged.
 - Source audit requires `pages.yml` to be the only workflow YAML under `.github/workflows`; stale deployment workflows are forbidden.
 - 0.39.3 distribution archive entries start at repository root so an in-place extraction replaces current `.github` and `tools` files rather than creating a nested version directory.
+
+## Release 0.39.4 tracked-source audit / repository repair requirements
+- Database version is 0.39.4; data/schema/normalizer/producer semantics remain unchanged from 0.39.3.
+- In a Git checkout, source packaging hygiene is derived from Git-tracked paths (`git ls-files`) rather than recursive traversal of repository-owned `.git` internals.
+- Root `.git` metadata is never release content. Nested `.git` entries, `.git` symlinks and tracked VCS metadata remain invalid.
+- Every normal audit invocation identifies itself as VulkanScope Database audit tool 0.39.4 in CI logs.
+- `.github/workflows/pages.yml` must exactly match `tools/pages.workflow.yml`; additional workflow files are stale and invalid.
+- `tools/repair_repository.py --apply` must be able to replace the hidden workflow directory and remove stale `assets/app.v*.js` versions left by in-place ZIP extraction while preserving `.git`.
+- Exactly one current versioned frontend app JavaScript asset is allowed in the source tree.
+- GitHub Pages staging copies an explicit public-asset allow-list and generated JSON only; it never copies the entire source assets directory blindly.
+- Pages artifact validation rejects stale/unexpected assets even when their extension would otherwise be allowed.
+- Existing VulkanScope 0.41.5 / Vulkan 1.4.360, schema 2 / technicalReport 3, normalizer 15 and D1/report identity semantics remain unchanged.
