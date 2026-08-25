@@ -1,30 +1,29 @@
-# VulkanScope Database 0.39.2
+# VulkanScope Database 0.39.3
 
-VulkanScope Database 0.39.2 fixes the GitHub Pages CI/release-artifact boundary without changing report data semantics.
+VulkanScope Database 0.39.3 hardens the GitHub Actions/source-audit boundary and updates the Pages workflow to the current verified GitHub action majors without changing report semantics.
 
-## Fixed
+## Changes
 
-- Fixed `tools/audit_database.py` falsely treating GitHub Actions' repository-owned top-level `.git/` checkout metadata as shipped release content.
-- Split source-tree verification from deployable Pages-artifact verification.
-- Added `tools/build_pages_artifact.py` to build an explicit allow-listed `_site` tree.
-- GitHub Pages now uploads `_site` instead of the repository root.
-- Added fail-closed Pages-artifact checks for unexpected top-level files, `.git`, `.github`, `worker`, `tools`, `rules`, caches, local dependencies, binaries, symlinks and broken local HTML asset references.
-- Kept nested/embedded `.git` material forbidden; only the repository-owned top-level checkout metadata is ignored by source verification.
+- Source audit now prunes repository-owned top-level `.git` before recursive traversal.
+- Nested `.git` remains fail-closed.
+- Added explicit `--source-tree` and `--version` audit modes.
+- CI logs the audit tool version before running checks.
+- Updated GitHub Actions to checkout v7, setup-python v7, configure-pages v6, upload-pages-artifact v5 and deploy-pages v5.
+- Disabled persisted checkout credentials and restricted Pages/id-token write permissions to deploy only.
+- Preserved `_site/.nojekyll` explicitly with upload-pages-artifact v5 `include-hidden-files: true`.
+- Pages still uploads only the allow-listed `_site` tree and separately audits it.
+- No D1 migration, schema change, report rewrite/hash change, normalizer change, frontend filter/statistics change or producer-semantics change.
 
-## Preserved
+## Baseline
 
-- VulkanScope 0.41.5 / versionCode 415 current-producer identity.
-- Vulkan 1.4.360 producer/query baseline.
-- Schema 2 / `technicalReport` 3 / normalizer 15.
-- 0.41.4+ strict query-diagnostic and queue/Vulkan Video validation introduced in 0.39.1.
-- Existing report IDs, report hashes and D1 rows.
-- 0.39.0 filter/statistics/hash-routing behavior.
-- No D1 migration, report rewrite, capability inference or schema migration.
+- Database: 0.39.3
+- Current producer: VulkanScope 0.41.5 / versionCode 415
+- Vulkan published/query baseline: 1.4.360
+- Submission schema: 2
+- technicalReport schema: 3
+- Normalizer: 15
 
-## CI verification
+- Automated audit hygiene regression tests verify root checkout metadata acceptance and nested/artifact `.git` rejection.
 
-The release gate explicitly verifies both sides of the boundary:
-
-- source checkout with a top-level `.git/` directory: **PASS**;
-- staged `_site` without repository/development content: **PASS**;
-- staged `_site` with an injected `.git/` directory: **FAIL**, as required.
+- Source verification rejects extra `.github/workflows/*.yml`/`.yaml` files so an obsolete workflow cannot continue running independently.
+- The distributed ZIP is laid out at repository root (not inside an extra version directory) so extraction directly over the repository replaces `tools/` and hidden `.github/` paths instead of creating a nested project.

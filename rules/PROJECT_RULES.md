@@ -366,3 +366,15 @@
 - GitHub Pages deployment must upload the staged `_site` tree, not the repository root.
 - Every local stylesheet/script/image reference in staged HTML must resolve inside that staged artifact.
 - Database schema, D1 data, report IDs, normalizer semantics, producer validation, filter/statistics semantics, and VulkanScope 0.41.5 compatibility are unchanged by this CI/deployment-hygiene patch.
+
+
+## Release 0.39.3 GitHub Actions / source-audit hardening requirements
+- Database version is 0.39.3; data/schema/normalizer/producer semantics remain unchanged from 0.39.2.
+- Source auditing prunes repository-owned top-level `.git` before traversal and must never emit artifact errors for normal checkout metadata. Nested `.git` remains forbidden.
+- CI invokes the audit with explicit `--source-tree .` and logs `--version` before the audit so stale scripts are diagnosable.
+- Pages deployment remains allow-list staged to `_site`, and artifact audit remains fail-closed for VCS/development/build content.
+- GitHub Actions use current verified major releases for August 2026: checkout v7, setup-python v7, configure-pages v6, upload-pages-artifact v5 and deploy-pages v5.
+- `persist-credentials: false` is used for checkout; Pages/id-token write permission is restricted to the deploy job.
+- `.nojekyll` is intentionally included through upload-pages-artifact v5 `include-hidden-files: true`; no other source dotfiles are staged.
+- Source audit requires `pages.yml` to be the only workflow YAML under `.github/workflows`; stale deployment workflows are forbidden.
+- 0.39.3 distribution archive entries start at repository root so an in-place extraction replaces current `.github` and `tools` files rather than creating a nested version directory.

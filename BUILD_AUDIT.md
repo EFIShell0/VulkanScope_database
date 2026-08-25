@@ -1,41 +1,26 @@
-# VulkanScope Database 0.39.2 Build / Contract Audit
+# VulkanScope Database 0.39.3 Build / Contract Audit
 
 ## Release identity
-
-- Database: `0.39.2`
-- Current producer: VulkanScope `0.41.5` / versionCode `415`
-- Compatible producer floor: VulkanScope `0.32.4+`
+- Database: `0.39.3`
+- VulkanScope producer baseline: `0.41.5 / 415`
 - Vulkan baseline: `1.4.360`
 - Submission schema: `2`
-- `technicalReport` schema: `3`
-- Worker normalizer: `15`
-- D1 migration: none
+- technicalReport schema: `3`
+- Normalizer: `15`
 
-## CI failure fixed
+## 0.39.3 CI correction
+The source audit prunes the checkout-owned root `.git` directory before recursion. Artifact auditing is separate and still rejects every `.git` occurrence. CI prints the audit-tool version, uses explicit source/artifact modes, stages only `_site`, preserves `.nojekyll`, and uses least-privilege GitHub Actions permissions.
 
-0.39.1 recursively scanned the source checkout and reported GitHub Actions' normal `.git/` metadata as `forbidden release artifact`. That was a layer-boundary error: repository metadata is expected in a source checkout but must never be present in the deployable Pages artifact.
+## Release gates
+- Source audit with a real Git repository checkout
+- Nested `.git` negative test
+- Pages staging and artifact audit
+- Pages `.git` negative test
+- Frontend and Worker JavaScript syntax
+- Hash-route and Worker contract tests
+- JSON/HTML/local-resource/package-hygiene checks
 
-0.39.2 separates those concerns:
+- Automated audit hygiene regression tests verify root checkout metadata acceptance and nested/artifact `.git` rejection.
 
-1. `tools/audit_database.py` audits the source checkout while ignoring only repository-owned top-level `.git` metadata.
-2. `tools/build_pages_artifact.py _site` stages only explicitly public files/directories.
-3. `tools/audit_database.py --artifact-tree _site` performs a strict deployable-artifact audit.
-4. `actions/upload-pages-artifact` uploads `_site`, not `.`.
-
-The artifact audit rejects VCS/development directories, unexpected top-level entries, symlinks, build/cache artifacts and broken local HTML resources.
-
-## Verification performed
-
-- `python tools/build_index.py`: PASS
-- Source `python tools/audit_database.py`: PASS
-- Frontend JavaScript syntax: PASS
-- Canonical hash-route contract suite: PASS
-- Worker JavaScript syntax: PASS
-- Worker contract suite: PASS
-- `_site` staging: PASS
-- `_site` artifact audit: PASS
-- Simulated GitHub checkout with top-level `.git`: source audit PASS
-- Injected `_site/.git`: artifact audit FAIL as required
-- Clean `_site` after negative test: artifact audit PASS
-
-No report schema, normalizer, D1 data, report ID/hash, filter/statistics semantics or VulkanScope 0.41.5 producer semantics changed in this patch.
+- Source verification rejects extra `.github/workflows/*.yml`/`.yaml` files so an obsolete workflow cannot continue running independently.
+- The distributed ZIP is laid out at repository root (not inside an extra version directory) so extraction directly over the repository replaces `tools/` and hidden `.github/` paths instead of creating a nested project.

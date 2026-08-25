@@ -1,5 +1,13 @@
 # VulkanScope Database changelog
 
+## 0.39.3
+
+- Hardened source checkout audit by pruning root `.git` before recursion.
+- Added explicit audit version/source modes and CI diagnostics.
+- Updated GitHub Pages actions and least-privilege workflow permissions.
+- Preserved `.nojekyll` through the current Pages artifact uploader.
+- No report/data/schema/normalizer/filter semantic changes.
+
 ## 0.39.2
 
 - Fixed GitHub Actions audit failures caused by treating checkout-owned top-level `.git/` metadata as shipped release content.
