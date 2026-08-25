@@ -390,3 +390,13 @@
 - GitHub Pages staging copies an explicit public-asset allow-list and generated JSON only; it never copies the entire source assets directory blindly.
 - Pages artifact validation rejects stale/unexpected assets even when their extension would otherwise be allowed.
 - Existing VulkanScope 0.41.5 / Vulkan 1.4.360, schema 2 / technicalReport 3, normalizer 15 and D1/report identity semantics remain unchanged.
+
+## Release 0.39.5 cross-producer comparison / VulkanScope 0.41.7 requirements
+- Database release identity is 0.39.5 and the current producer/query baseline is VulkanScope 0.41.7 / versionCode 417 with Vulkan 1.4.360; schema 2, technicalReport 3, normalizer 15, compatibility floor 0.32.4+ and D1 storage remain unchanged.
+- Compare must expose cross-producer comparisons when VulkanScope version or versionCode differs. One-sided fields must not be presented as direct driver-regression evidence because collector/query coverage and evaluator behavior may differ between producers.
+- Compare must provide a presentation-only `Common evidence only` filter that restricts visible rows to keys present in both reports without rewriting, deleting or reclassifying stored evidence.
+- Canonical profile comparison uses the normalized `profiles` collection when available. Legacy `VULKAN PROFILES` capability rows are fallback input only and must not create a second duplicate compare section.
+- Profile identity is the canonical profile name; revision belongs to the compared value. Different profile revisions must be called out because results evaluated against different profile definitions are not direct driver-regression evidence.
+- `Unknown`, `Unavailable`, `Unsupported`, `Supported` and query-availability semantics remain distinct. Compare filtering must never convert one-sided or missing evidence into unsupported capability.
+- Browser-visible JavaScript changes require a new cache-busted `app.v0395.js`; Pages staging remains explicit allow-list only.
+- VulkanScope 0.41.7 reports remain schema-compatible and 0.41.4+ strict query/queue fail-closed validation continues to apply to all future compatible producers.

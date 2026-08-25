@@ -1,17 +1,17 @@
-# VulkanScope Database 0.39.4 Build / Contract Audit
+# VulkanScope Database 0.39.5 build audit
 
-## Release identity
-- Database: `0.39.4`
-- VulkanScope producer: `0.41.5 / 415`
-- Vulkan baseline: `1.4.360`
-- Submission schema: `2`
-- technicalReport schema: `3`
-- Normalizer: `15`
+0.39.5 is a compare-correctness and VulkanScope 0.41.7 compatibility release. The release gate checks cache-busted frontend assets, canonical profile comparison, cross-producer/common-evidence UI, Worker producer validation, route contracts, Worker contracts, Pages artifact allow-listing and package hygiene.
 
-## 0.39.4 CI correction
 
-The source checkout audit no longer derives release-file hygiene by recursively walking the working directory when `.git` is present. A real Git checkout is audited from `git ls-files`, which contains repository content but not `.git` implementation metadata. This removes the `.git/objects`, `.git/refs`, `.git/logs`, hooks and pack false-positive class without weakening the deploy-artifact audit.
+## Release gates executed
 
-The release also checks the hidden workflow against a canonical visible template and provides an in-place repair tool for updates where a copy/extraction method left the old `.github/workflows/pages.yml` behind.
+- Source audit: PASS
+- Frontend JavaScript syntax: PASS
+- Hash-route contract: PASS
+- Cross-producer/profile compare contract: PASS
+- Worker syntax and contract: PASS
+- Audit-hygiene regression test: PASS
+- Allow-listed Pages staging and artifact audit: PASS
+- Repository repair/canonical workflow check: PASS
 
-Pages staging now copies exact public assets rather than the complete source assets directory, preventing stale versioned JavaScript from being deployed after in-place archive extraction.
+No D1 migration is required. A source audit is not a substitute for a production Cloudflare deployment or production-load test.
