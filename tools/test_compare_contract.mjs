@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v0398.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v0399.js',import.meta.url),'utf8');
 function extractFunction(name){
   const start=source.indexOf(`function ${name}(`);
   if(start<0)throw new Error(`missing ${name}`);
@@ -20,7 +20,7 @@ const context={
   hostImageCopyCompareIdentity:(section,name)=>({section,name}),canonicalPropertyValue:(_n,v)=>v,
   formatFlags:v=>String(v??''),bytesLabel:v=>String(v??''),memoryHeapFlags:v=>String(v??''),memoryFlags:v=>String(v??''),
   canonicalQueueFlags:v=>String(v??''),canonicalVideoCodecOperations:v=>String(v??''),queueVideoCodecState:q=>q.videoCodecQueryStatus||'unknown',
-  boolState:v=>v===true?'supported':v===false?'unsupported':'unknown',canonicalSurfaceValue:(_k,v)=>String(v??''),semanticStatus:()=> 'available',
+  boolState:v=>v===true?'supported':v===false?'unsupported':'unknown',canonicalSurfaceValue:(_k,v)=>String(v??''),semanticStatus:()=> 'available',hasFormatEvidence:v=>v!==undefined&&v!==null&&String(v).trim()!=='',
   vendorId:r=>r.gpu?.vendorId||'Unknown',reportOs:()=> 'Android',reportPlatform:()=> 'arm64-v8a',formatSubmitted:v=>String(v??'')
 };
 vm.createContext(context);
@@ -72,4 +72,13 @@ const notApplicableImage=context.compareMap(imageNotApplicable).get('Image Forma
 assert.equal(notApplicableImage.status,'not_applicable');
 assert.equal(notApplicableImage.value,'VK_ANDROID_external_memory_android_hardware_buffer was not enumerated for this device.');
 assert.equal(source.includes('complete tuple-state ledger is excluded from Properties & Limits totals'),true,'Formats detail must explain separated outcome accounting');
+
+const zeroMaskFormat={capabilities:[],profiles:[],formats:[{name:'VK_FORMAT_D24_UNORM_S8_UINT',status:'supported',linear:'0',optimal:'1',buffer:'0'}]};
+const zeroMaskMap=context.compareMap(zeroMaskFormat);
+assert.equal(zeroMaskMap.get('FORMATS / VK_FORMAT_D24_UNORM_S8_UINT / format support')?.status,'supported','whole-format support is separate from individual masks');
+assert.equal(zeroMaskMap.get('FORMATS / VK_FORMAT_D24_UNORM_S8_UINT / buffer')?.status,'available','zero buffer mask is an available queried value, not Supported');
+assert.equal(zeroMaskMap.get('FORMATS / VK_FORMAT_D24_UNORM_S8_UINT / buffer')?.value,'0','generic zero mask must not fabricate VK_NONE');
+const queueNA={capabilities:[],profiles:[],queues:[{index:0,count:1,flags:0,timestampBits:0,granularity:'1 × 1 × 1',videoCodecQueryStatus:'not_applicable',videoCodecQueryReason:'VK_KHR_video_queue not enumerated',graphics:false,compute:false,transfer:false,sparse:false,protected:false,videoDecode:false,videoEncode:false,opticalFlow:false,dataGraph:false}]};
+assert.equal(context.compareMap(queueNA).get('QUEUES / Family 0 / videoCodecQueryStatus')?.status,'not_applicable','queue Not applicable must remain distinct from Unavailable');
+assert.equal(source.includes("decodeBigMask(v,bits,'VK_NONE')"),false,'generic canonical mask must not synthesize VK_NONE');
 console.log('VulkanScope Database compare contract tests: ALL PASS');

@@ -40,7 +40,7 @@ const reportText=(p)=>{
 function fixture(){
  const p={
   schemaVersion:2,
-  application:{name:'VulkanScope',version:'0.41.10',versionCode:420,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
+  application:{name:'VulkanScope',version:'0.41.11',versionCode:421,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
   device:{manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
   gpu:{name:'Adreno Fixture',vendorId:'0x5143',deviceId:'0x0001',deviceType:'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU'},
   driver:{mode:'System Vulkan driver',version:'512.1',rawVersion:'1'},
@@ -54,8 +54,12 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,15);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.10/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,16);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.11/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
+
+let historical04110=fixture();historical04110.application.version='0.41.10';historical04110.application.versionCode=420;historical04110.reportText=reportText(historical04110);r=await call('/v1/reports',{method:'POST',body:historical04110});assert.equal(r.status,201,'historical 0.41.10 producer remains accepted');
+let badCurrentIdentity=fixture();badCurrentIdentity.application.versionCode=420;badCurrentIdentity.reportText=reportText(badCurrentIdentity);r=await call('/v1/reports',{method:'POST',body:badCurrentIdentity});assert.equal(r.status,400,'0.41.11 current producer requires versionCode 421');
+
 
 let unavailableVideo=fixture();
 unavailableVideo.technicalReport.devices[0].queues[0].videoCodecOperations=null;

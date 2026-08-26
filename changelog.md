@@ -1,3 +1,8 @@
+# VulkanScope Database 0.39.9
+
+- Corrected zero-mask, format-mask, Not applicable and Compare state semantics for VulkanScope 0.41.11.
+- Advanced normalizer to 16 and current producer baseline to VulkanScope 0.41.11 / 421 without a D1 migration.
+
 # VulkanScope Database 0.39.8
 
 - Adds native support for VulkanScope 0.41.10's complete bounded Image Format Properties2 tuple-state ledger.

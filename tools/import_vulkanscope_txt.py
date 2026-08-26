@@ -8,7 +8,8 @@ def status(value):
     x=value.strip().lower()
     if x in {"true","supported","available","yes","pass"}: return "supported"
     if x in {"false","not supported","unsupported","no","fail"}: return "unsupported"
-    if "unavailable" in x or "not available" in x or "not applicable" in x: return "unavailable"
+    if "not applicable" in x or x == "not_applicable": return "not_applicable"
+    if "unavailable" in x or "not available" in x: return "unavailable"
     if "unknown" in x or "not queried" in x or "not reported" in x: return "unknown"
     return "available"
 def append_capability(items,seen,section,name,value,state):

@@ -433,3 +433,13 @@
 - Formats detail may summarize all tuple states but must not add the ledger to Properties & Limits counts. Not applicable remains distinct from Unsupported, Unavailable and Unknown.
 - Historical VulkanScope 0.41.9 separated non-success datasets and 0.41.8 embedded negative tuple rows remain accepted under their historical producer contracts.
 - No D1 migration, stored-report rewrite, report-hash rewrite, capability inference, automatic upload or normalizer/schema bump is permitted.
+
+## Release 0.39.9 / VulkanScope 0.41.11 reporting-state requirements
+
+- The normalizer preserves `Available`, `Unsupported`, `Unavailable`, `Not applicable`, and `Unknown / not reported` as distinct evidence states.
+- Generic zero Vulkan masks are rendered as numeric `0`; the Database must not invent an unqualified `VK_NONE`.
+- Format support is a whole-format statement derived from the submitted format record. Linear/optimal/buffer feature masks are separately queried values and must not inherit the whole-format Supported/Unsupported badge.
+- A zero format feature mask is valid available query evidence and remains `0`; it does not by itself prove that the entire format is unsupported.
+- Image Format Properties2 keeps exact tuple semantics: Available only for `VkResult=0` with matching full property payload, Unsupported only for `VK_ERROR_FORMAT_NOT_SUPPORTED` (-11), other non-zero results Unavailable, and absent external-memory prerequisites Not applicable.
+- One-sided historical evidence remains Unknown / Not reported. Current explicit Unknown profile rows are retained rather than treated as Unsupported.
+- Source release ZIPs exclude root `README.md`, root `release.md`, packaged Fastlane/store metadata, dependency caches, generated Pages staging, and transient build artifacts.
