@@ -6,6 +6,6 @@
   "vulkanRegistryBaseline": "VulkanScope producer/query baseline 1.4.360",
   "producerQueryBaseline": "VulkanScope 0.41.11 · Vulkan 1.4.360",
   "compatibleProducer": "VulkanScope 0.32.4+ · schema 2 / technical report 3",
-  "generatedAt": "2026-08-26T19:10:54.517862+00:00",
+  "generatedAt": "2026-08-26T19:15:04.017325+00:00",
   "reports": []
 }
