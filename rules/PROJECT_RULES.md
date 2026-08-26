@@ -453,3 +453,15 @@
 - Existing complete-ledger semantics remain mandatory: Available requires `VkResult=0` and matching full property evidence, Unsupported requires `VK_ERROR_FORMAT_NOT_SUPPORTED` (-11), other non-zero results are Unavailable, and absent external-memory prerequisites are Not applicable.
 - No D1 migration, stored-report rewrite, report-hash rewrite, schema bump, normalizer bump, capability inference, or client-side evidence mutation is permitted for this fix.
 
+
+## Release 0.39.11 / VulkanScope 0.41.12 query-group unavailable submission requirements
+
+- Database release identity is 0.39.11. The current producer/query baseline is VulkanScope 0.41.13 / versionCode 423 with Vulkan 1.4.360; submission schema 2, technicalReport 3, normalizer 16, compatibility floor 0.32.4+ and D1 storage remain unchanged.
+- The Database complete-report contract must remain consistent with VulkanScope's global complete-collection rule: a scheduled advanced query that completed with an explicit query-group `Unavailable` or `Not applicable` result is valid complete-report evidence and must not be rejected merely because tuple-level evidence was never produced.
+- For VulkanScope 0.41.12+ the Worker resolves the Image Format Properties2 group result from the exact `Vulkan Query Status` / `Image Format Properties 2 query` row. The row is mandatory and may represent `Available`, explicit `Unavailable: <reason>`, or explicit `Not applicable: <reason>`.
+- When the Image Format Properties2 group is `Available`, all 0.41.10+ complete-ledger invariants remain mandatory: exact six-slot format/tiling/external-handle coverage, successful property/available-ledger cross-consistency, exact VkResult semantics, external prerequisite Not applicable rules, fixed query parameters and aggregate diagnostic cross-checks.
+- When the entire Image Format Properties2 group is explicitly `Unavailable` or `Not applicable`, the producer must not fabricate tuple results, successful Image Format Properties2 property rows or aggregate query diagnostics. The Worker accepts that explicit query-level state only when those contradictory datasets are absent.
+- An empty Image Format Properties2 ledger without the mandatory explicit query-group state remains invalid. Explicit group-level Unavailable/Not applicable combined with tuple/property/diagnostic evidence also remains invalid. Validation is fail-closed and does not normalize contradictory evidence.
+- HTTP 400 validation rejection returns a bounded validation-class suffix so the current client can expose which contract family rejected the complete report without echoing report contents or weakening validation.
+- No report data may be truncated, omitted, renamed, uppercased, inferred, reclassified or rewritten to obtain acceptance. The 2 MiB limit, fixed official endpoint, redirect prohibition, privacy-field rejection and explicit opt-in submission remain unchanged.
+- No D1 migration, stored-payload rewrite, report-hash rewrite, schema bump, normalizer bump or historical-report mutation is permitted for this fix.

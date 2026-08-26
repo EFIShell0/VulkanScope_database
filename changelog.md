@@ -1,3 +1,12 @@
+# VulkanScope Database 0.39.11
+
+- Fixed HTTP 400 rejection of complete VulkanScope 0.41.12 reports when the isolated Image Format Properties2 query group explicitly finishes as Unavailable or Not applicable before tuple evidence can be produced.
+- Keeps the complete six-slot Image Format Properties2 tuple ledger mandatory whenever that query group is Available.
+- Rejects contradictory unavailable-group reports that also contain tuple, successful property or aggregate diagnostic evidence.
+- Adds bounded validation-class text to HTTP 400 schema rejections for deterministic producer/Worker diagnosis.
+- Advances the current producer baseline to VulkanScope 0.41.13 / 423 while keeping VulkanScope 0.41.12 / 422 compatible with the corrected query-group contract.
+- Preserves schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.360, existing D1 records and the 0.39.10 canonical ASTC format-token fix; no migration is required.
+
 # VulkanScope Database 0.39.10
 
 - Fixed valid Vulkan Image Format Properties2 submissions being rejected when canonical `VK_FORMAT_ASTC_*` names contain the registry-defined lowercase `x` dimension separator.

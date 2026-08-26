@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v03910.js', import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v03911.js', import.meta.url),'utf8');
 const prefix=source.slice(0,source.indexOf('async function shareUrl'));
 const location={origin:'https://efishell0.github.io',pathname:'/VulkanScope_database/',hash:'',search:''};
 const history={

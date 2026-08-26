@@ -1,38 +1,30 @@
-# VulkanScope Database 0.39.10 Build / Release Audit
+# VulkanScope Database 0.39.11 Build / Release Audit
 
-- Database: `0.39.10`
-- Current producer: VulkanScope `0.41.12` / versionCode `422`
-- Vulkan producer/query baseline: `1.4.360`
-- Submission schema: `2`
-- technicalReport schema: `3`
-- Normalizer: `16`
-- D1 migration: none
-- Stored payload/hash rewrite: none
+- Database: 0.39.11.
+- Current VulkanScope producer baseline: 0.41.13 / 423.
+- Vulkan producer/query baseline: 1.4.360.
+- Submission schema: 2; technicalReport: 3; normalizer: 16.
+- Compatibility floor: VulkanScope 0.32.4+.
+- D1 migration: none.
+- Stored payload/hash rewrite: none.
 
-## HTTP 400 root cause
+## HTTP 400 root cause and correction
 
-Database 0.39.9 validated Image Format Properties2 tuple names with a format-token grammar equivalent to `VK_FORMAT_[A-Z0-9_]+`. That grammar is not valid for the complete Vulkan format namespace: canonical ASTC format tokens contain lowercase `x` dimension separators, for example `VK_FORMAT_ASTC_10x8_SRGB_BLOCK` and `VK_FORMAT_ASTC_4x4x3_UNORM_BLOCK_EXT`.
+Database 0.39.10 unconditionally required the 0.41.10+ complete Image Format Properties2 tuple ledger even when VulkanScope had explicitly completed the entire isolated Image Format Properties2 query group as Unavailable/Not applicable. That contradicted the producer's global complete-report rule and rejected a valid complete report with HTTP 400.
 
-VulkanScope 0.41.12 correctly preserves those canonical Vulkan names. The 0.39.9 Worker therefore rejected otherwise valid complete reports with HTTP 400 (`Incomplete or invalid VulkanScope submission schema`). The earlier synthetic submission fixture used `VK_FORMAT_S8_UINT`, so it did not exercise the broken name class.
+0.39.11 makes the tuple-ledger requirement conditional on an Available query-group result. Available retains all exact six-slot ledger, VkResult, prerequisite, property and aggregate-diagnostic checks. Explicit Unavailable/Not applicable is accepted only with no fabricated tuple/property/diagnostic evidence. Missing or contradictory state remains fail-closed.
 
-## Correction
+For VulkanScope 0.41.13 the Worker additionally cross-checks structured `imageFormatQueryStatus` / `imageFormatQueryReason` against the existing query-status row. VulkanScope 0.41.12 remains compatible without these additive fields.
 
-- Worker tuple validation now accepts registry-style lowercase `x` numeric dimension separators inside canonical `VK_FORMAT_*` tokens.
-- Arbitrary lowercase text and punctuation remain rejected.
-- Producer evidence is not rewritten, uppercased, filtered or omitted.
-- Existing complete tuple-ledger result/diagnostic cross-checks remain unchanged and fail closed.
-- Worker tests cover both `VK_FORMAT_ASTC_10x8_SRGB_BLOCK` and `VK_FORMAT_ASTC_4x4x3_UNORM_BLOCK_EXT`, plus a malformed lowercase-separator rejection case.
-- Cross-check against VulkanScope 0.41.12's checked-in format-name table found 298 format tokens; the previous grammar rejected 72 canonical ASTC names, while the corrected grammar accepts all 298.
+## Final gates
 
-## Final source-tree gates
-
-- canonical repository-state check: **PASS**
-- source-tree audit: **PASS**
-- audit-hygiene regression suite: **PASS**
-- frontend JavaScript syntax: **PASS**
-- hash-route contract suite: **PASS**
-- Compare contract suite: **PASS**
-- Worker JavaScript syntax: **PASS**
-- Worker contract suite, including canonical ASTC 2D/3D submission fixtures: **PASS**
-- allow-listed Pages staging and staged-artifact audit: **PASS**
-- supplemental Python/JSON syntax checks: **PASS**
+- canonical repository repair/check: PASS.
+- source-tree audit: PASS.
+- audit-hygiene regression: PASS.
+- frontend JavaScript syntax: PASS.
+- hash-route contract: PASS.
+- Compare contract: PASS.
+- Worker JavaScript syntax: PASS.
+- Worker contract suite: PASS, including application-shaped available, group-Unavailable, group-Not-applicable, contradiction rejection and bounded validation-class cases.
+- allow-listed Pages staging + artifact audit: PASS.
+- no D1 migration required.
