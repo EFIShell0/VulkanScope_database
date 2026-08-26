@@ -443,3 +443,13 @@
 - Image Format Properties2 keeps exact tuple semantics: Available only for `VkResult=0` with matching full property payload, Unsupported only for `VK_ERROR_FORMAT_NOT_SUPPORTED` (-11), other non-zero results Unavailable, and absent external-memory prerequisites Not applicable.
 - One-sided historical evidence remains Unknown / Not reported. Current explicit Unknown profile rows are retained rather than treated as Unsupported.
 - Source release ZIPs exclude root `README.md`, root `release.md`, packaged Fastlane/store metadata, dependency caches, generated Pages staging, and transient build artifacts.
+
+## Release 0.39.10 / VulkanScope 0.41.12 canonical format-token submission requirements
+
+- Database release identity is 0.39.10 and current producer/query baseline is VulkanScope 0.41.12 / versionCode 422 with Vulkan 1.4.360; schema 2, technicalReport 3, normalizer 16, compatibility floor 0.32.4+ and D1 storage remain unchanged.
+- Worker Image Format Properties2 tuple validation must accept exact canonical Vulkan `VK_FORMAT_*` tokens emitted by the producer, including ASTC 2D/3D format names whose registry spelling contains lowercase `x` dimension separators such as `VK_FORMAT_ASTC_10x8_SRGB_BLOCK` and `VK_FORMAT_ASTC_4x4x3_UNORM_BLOCK_EXT`.
+- Canonical Vulkan format names must not be rewritten, uppercased, normalized to a non-registry spelling, omitted, or filtered merely to satisfy transport validation. Exact producer evidence remains lossless through Database submission.
+- Tuple validation remains fail-closed for malformed names: only `VK_FORMAT_` tokens made from uppercase Vulkan token characters plus registry-style lowercase `x` numeric dimension separators are accepted; arbitrary punctuation or free-form names remain rejected.
+- Existing complete-ledger semantics remain mandatory: Available requires `VkResult=0` and matching full property evidence, Unsupported requires `VK_ERROR_FORMAT_NOT_SUPPORTED` (-11), other non-zero results are Unavailable, and absent external-memory prerequisites are Not applicable.
+- No D1 migration, stored-report rewrite, report-hash rewrite, schema bump, normalizer bump, capability inference, or client-side evidence mutation is permitted for this fix.
+

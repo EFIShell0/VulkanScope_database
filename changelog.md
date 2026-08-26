@@ -1,3 +1,8 @@
+# VulkanScope Database 0.39.10
+
+- Fixed valid Vulkan Image Format Properties2 submissions being rejected when canonical `VK_FORMAT_ASTC_*` names contain the registry-defined lowercase `x` dimension separator.
+- Advanced the current producer baseline to VulkanScope 0.41.12 / 422 while preserving schema 2, technicalReport 3, normalizer 16 and existing D1 data without migration.
+
 # VulkanScope Database 0.39.9
 
 - Corrected zero-mask, format-mask, Not applicable and Compare state semantics for VulkanScope 0.41.11.

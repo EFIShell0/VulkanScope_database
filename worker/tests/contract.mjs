@@ -40,7 +40,7 @@ const reportText=(p)=>{
 function fixture(){
  const p={
   schemaVersion:2,
-  application:{name:'VulkanScope',version:'0.41.11',versionCode:421,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
+  application:{name:'VulkanScope',version:'0.41.12',versionCode:422,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
   device:{manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
   gpu:{name:'Adreno Fixture',vendorId:'0x5143',deviceId:'0x0001',deviceType:'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU'},
   driver:{mode:'System Vulkan driver',version:'512.1',rawVersion:'1'},
@@ -54,11 +54,28 @@ async function call(path,{method='GET',body,origin,contentType='application/json
  const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
-let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,16);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.11/);
+let r=await call('/v1/health');assert.equal(r.status,200);let j=await r.json();assert.equal(j.normalizerVersion,16);assert.match(j.publishedVulkanSpec,/1\.4\.360/);assert.match(j.producerQueryBaseline,/0\.41\.12/);
 r=await call('/v1/reports',{method:'POST',body:fixture()});assert.equal(r.status,201,await r.text());
 
+let astcCanonical=fixture();
+for(const row of astcCanonical.technicalReport.devices[0].detailedProperties){if(row.section==='Image Format Properties2')row.name=row.name.replace('VK_FORMAT_S8_UINT','VK_FORMAT_ASTC_10x8_SRGB_BLOCK');}
+for(const row of astcCanonical.technicalReport.devices[0].imageFormatQueryResults)row.name=row.name.replace('VK_FORMAT_S8_UINT','VK_FORMAT_ASTC_10x8_SRGB_BLOCK');
+astcCanonical.reportText=reportText(astcCanonical);
+r=await call('/v1/reports',{method:'POST',body:astcCanonical});assert.equal(r.status,201,'canonical ASTC Vulkan format names with lowercase x must be accepted');
+let astc3dCanonical=fixture();
+for(const row of astc3dCanonical.technicalReport.devices[0].detailedProperties){if(row.section==='Image Format Properties2')row.name=row.name.replace('VK_FORMAT_S8_UINT','VK_FORMAT_ASTC_4x4x3_UNORM_BLOCK_EXT');}
+for(const row of astc3dCanonical.technicalReport.devices[0].imageFormatQueryResults)row.name=row.name.replace('VK_FORMAT_S8_UINT','VK_FORMAT_ASTC_4x4x3_UNORM_BLOCK_EXT');
+astc3dCanonical.reportText=reportText(astc3dCanonical);
+r=await call('/v1/reports',{method:'POST',body:astc3dCanonical});assert.equal(r.status,201,'canonical ASTC 3D Vulkan format names with multiple lowercase x separators must be accepted');
+let malformedLowercase=fixture();
+for(const row of malformedLowercase.technicalReport.devices[0].detailedProperties){if(row.section==='Image Format Properties2')row.name=row.name.replace('VK_FORMAT_S8_UINT','VK_FORMAT_ASTC_10y8_SRGB_BLOCK');}
+for(const row of malformedLowercase.technicalReport.devices[0].imageFormatQueryResults)row.name=row.name.replace('VK_FORMAT_S8_UINT','VK_FORMAT_ASTC_10y8_SRGB_BLOCK');
+malformedLowercase.reportText=reportText(malformedLowercase);
+r=await call('/v1/reports',{method:'POST',body:malformedLowercase});assert.equal(r.status,400,'non-registry lowercase separators must remain rejected');
+
 let historical04110=fixture();historical04110.application.version='0.41.10';historical04110.application.versionCode=420;historical04110.reportText=reportText(historical04110);r=await call('/v1/reports',{method:'POST',body:historical04110});assert.equal(r.status,201,'historical 0.41.10 producer remains accepted');
-let badCurrentIdentity=fixture();badCurrentIdentity.application.versionCode=420;badCurrentIdentity.reportText=reportText(badCurrentIdentity);r=await call('/v1/reports',{method:'POST',body:badCurrentIdentity});assert.equal(r.status,400,'0.41.11 current producer requires versionCode 421');
+let historical04111=fixture();historical04111.application.version='0.41.11';historical04111.application.versionCode=421;historical04111.reportText=reportText(historical04111);r=await call('/v1/reports',{method:'POST',body:historical04111});assert.equal(r.status,201,'historical 0.41.11 producer remains accepted');
+let badCurrentIdentity=fixture();badCurrentIdentity.application.versionCode=421;badCurrentIdentity.reportText=reportText(badCurrentIdentity);r=await call('/v1/reports',{method:'POST',body:badCurrentIdentity});assert.equal(r.status,400,'0.41.12 current producer requires versionCode 422');
 
 
 let unavailableVideo=fixture();
