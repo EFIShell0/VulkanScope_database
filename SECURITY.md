@@ -49,3 +49,29 @@ For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties
 - Donut labels and filter values continue through existing HTML escaping; route/report identifiers remain separately validated by the canonical router.
 - No third-party chart JavaScript, analytics, remote font, ad or chart-generation endpoint was added.
 - Worker request, CORS, bounded-body, privacy-key and prepared D1 protections are unchanged.
+
+## 0.39.12 VulkanScope 0.41.32 / resource hardening
+
+- The current producer baseline is VulkanScope 0.41.32 and the packaged canonical registry snapshot is Vulkan 1.4.361. Current-producer summary provenance and complete-report markers are cross-checked rather than trusted independently.
+- Request bodies remain capped at 2,097,152 bytes and are never truncated. Incremental `TextDecoder(..., { fatal: true })` processing bounds raw-body memory and rejects malformed UTF-8.
+- D1's documented 2,000,000-byte single string/BLOB/row ceiling is below the producer transport ceiling. Migration `0003_payload_chunks.sql` therefore stores larger canonical payloads in bounded child rows while preserving one canonical SHA-256 report identity. D1 batch writes are transactional; partial parent/chunk commits are not accepted as a successful write.
+- Compact detail reads avoid Worker-side creation of a second normalized representation of the complete technical report. Legacy expanded detail remains an explicit compatibility path.
+- Request-scoped payloads are not stored in module-level mutable state. Reused Worker isolates therefore do not intentionally retain prior report objects.
+- Concurrent identical submissions remain idempotent through canonical SHA-256 IDs, `INSERT OR IGNORE`, and `(report_id, chunk_index)` primary keys.
+- The public write API remains intentionally unauthenticated. Cloudflare rate limiting / WAF remains an operator-level abuse control and must not be represented as application authentication.
+
+## 0.39.13 Windows/locale deterministic release tooling
+
+- Release verification no longer depends on the Windows active code page or Python's default locale encoding. Repository JSON, JavaScript and SQL inputs used by Python gates are decoded explicitly as UTF-8.
+- The exact frontend byte stream that triggered CP1252 failure is retained as a regression fixture; a future implicit `Path.read_text()` / `Path.write_text()` call causes the quality gate to fail.
+- This is a release-tooling hardening change only. Worker request validation, D1 storage, report identity, submission privacy controls, payload limits, CORS and public-write policy are unchanged from 0.39.12.
+
+
+## 0.39.14 release-tree / repository-overlay separation
+
+- Regression checks distinguish a long-lived source checkout from a distributable release tree. Historical source files that predate the packaged predecessor are not treated as newly introduced release content in source-overlay mode.
+- Predecessor-owned paths remain SHA-256 protected. This tolerance cannot hide a modification to an immutable predecessor file.
+- Release ZIP validation uses strict-package mode, where unexpected files remain fatal. Pages staging remains separately allow-listed and audited.
+- Stale versioned frontend app JavaScript is removed only through the explicit repository-repair command; the quality gate checks but does not silently mutate the checkout.
+- Generated `data/index.json` is semantic state, not a fixed release hash. Its schema/version/Vulkan producer metadata and structural types are validated after regeneration.
+- No Worker runtime, D1, request-body, privacy, CORS, report-hash or authentication policy changes are made in this release.

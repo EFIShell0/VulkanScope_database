@@ -1,30 +1,20 @@
-# VulkanScope Database 0.39.11 Build / Release Audit
+# VulkanScope Database 0.39.14 Build / Release Audit
 
-- Database: 0.39.11.
-- Current VulkanScope producer baseline: 0.41.13 / 423.
-- Vulkan producer/query baseline: 1.4.360.
+- Database release: 0.39.14.
+- Immutable predecessor: 0.39.13.
+- Producer/query baseline: VulkanScope 0.41.32 / versionCode 442.
+- Canonical Vulkan registry baseline: Vulkan 1.4.361 / VK_HEADER_VERSION 361.
 - Submission schema: 2; technicalReport: 3; normalizer: 16.
-- Compatibility floor: VulkanScope 0.32.4+.
-- D1 migration: none.
-- Stored payload/hash rewrite: none.
+- Worker/D1 runtime semantics: unchanged from 0.39.13; no new migration.
 
-## HTTP 400 root cause and correction
+## Proven regression
+A real long-lived Git checkout can contain historical source files that are intentionally absent from the compact predecessor release ZIP. 0.39.13 recursively classified every such file as an `unallowlisted new file`, so its quality gate passed on the clean ZIP but failed in the actual repository. Separately, `build_index.py` legitimately regenerates `data/index.json`; 0.39.13 pinned that generated file to one SHA-256 and therefore failed after normal index generation.
 
-Database 0.39.10 unconditionally required the 0.41.10+ complete Image Format Properties2 tuple ledger even when VulkanScope had explicitly completed the entire isolated Image Format Properties2 query group as Unavailable/Not applicable. That contradicted the producer's global complete-report rule and rejected a valid complete report with HTTP 400.
+## Fix
+- `verify_regression_contract.py` now defaults to source-overlay mode: every predecessor-owned path remains SHA-256 protected, but unrelated pre-existing repository/history files are not attributed to this release.
+- `--strict-tree` remains fail-closed for source ZIP/package verification and rejects every unexpected package file.
+- `data/index.json` is semantically verified (release/schema/Vulkan metadata and structural types) rather than fixed-hash verified.
+- `quality_gate.py` performs `repair_repository.py --check` before regression checks so stale versioned app/workflow state produces an actionable failure rather than misleading regression noise.
+- `test_existing_repo_overlay.py` permanently reproduces the real repository scenario and checks source-overlay tolerance, stale-app repair, generated-index regeneration, strict-package rejection and immutable predecessor mutation detection.
 
-0.39.11 makes the tuple-ledger requirement conditional on an Available query-group result. Available retains all exact six-slot ledger, VkResult, prerequisite, property and aggregate-diagnostic checks. Explicit Unavailable/Not applicable is accepted only with no fabricated tuple/property/diagnostic evidence. Missing or contradictory state remains fail-closed.
-
-For VulkanScope 0.41.13 the Worker additionally cross-checks structured `imageFormatQueryStatus` / `imageFormatQueryReason` against the existing query-status row. VulkanScope 0.41.12 remains compatible without these additive fields.
-
-## Final gates
-
-- canonical repository repair/check: PASS.
-- source-tree audit: PASS.
-- audit-hygiene regression: PASS.
-- frontend JavaScript syntax: PASS.
-- hash-route contract: PASS.
-- Compare contract: PASS.
-- Worker JavaScript syntax: PASS.
-- Worker contract suite: PASS, including application-shaped available, group-Unavailable, group-Not-applicable, contradiction rejection and bounded validation-class cases.
-- allow-listed Pages staging + artifact audit: PASS.
-- no D1 migration required.
+The repository repair is explicit and never silently run by the quality gate. Existing checkouts updated by extracting a release on top should run `python tools/repair_repository.py --apply` once before the gate.

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "api": "Vulkan",
+  "apiVersion": "1.4.361",
+  "headerVersion": 361,
+  "snapshotSha256": "3ff4984b841932e04eebeb4ce2a6613ebd37c00ffb2e96549785b2c5d7da9e1d",
+  "snapshotPath": "registry/upstream/vk.xml",
+  "registeredVulkanExtensionCount": 474,
+  "requiredCurrentExtension": "VK_NV_private_data_base_handle",
+  "requiredCurrentFeatureStruct": "VkPhysicalDevicePrivateDataBaseHandleFeaturesNV"
+}

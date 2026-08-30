@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "baseline": "0.39.13",
+  "successor": "0.39.14",
+  "baselineManifest": "regression/0.39.13_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "SECURITY.md",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_audit_hygiene.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json"
+  ],
+  "allowedRemoved": [
+    "assets/app.v03913.js"
+  ],
+  "allowedNew": [
+    "assets/app.v03914.js",
+    "regression/0.39.13_files.json",
+    "regression/0.39.13_to_0.39.14_contract.json",
+    "rules/0.39.14_EXISTING_REPOSITORY_OVERLAY_REGRESSION_AUDIT.md",
+    "tools/test_existing_repo_overlay.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    "node_modules",
+    ".wrangler",
+    "_site",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "build",
+    "dist",
+    ".tmp",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "bc58a0a93f6d4227e27e134cf560f6d4e6a4c9d8ea4f4b97923c38994243bff3",
+    "BUILD_AUDIT.md": "fd74648497edbcfbc00663082cb7dcbbb410aa35eb758610522ba5103c5f22e2",
+    "SECURITY.md": "dc0749adaff203ca0befd11bff27d977077457758886e6c42953f8540aa683bd",
+    "assets/app.v03914.js": "70ede174bc5df556231484d40f03658de2f4e0ebc02d4c0ab92acc0e58e0b0f1",
+    "changelog.md": "cf51b6ad8331b0ca5963c0d8a4aa0432aa0099ab07ea259089857d02a996cbd5",
+    "index.html": "75f3f996ae478ab632c0f3f9529ae1386a57c41c63bae6aa22e393442d1816b0",
+    "regression/0.39.13_files.json": "858a8f5ecf363d1d54f7ee96902c3d307bfe3ee80262869e9ac6556d0badc3ab",
+    "rules/0.39.14_EXISTING_REPOSITORY_OVERLAY_REGRESSION_AUDIT.md": "ebcfb1deecbbfc74187fb9e5af62118b777b3416386cec54ee74832a2108f88e",
+    "rules/PROJECT_RULES.md": "4fc6136a7b7983ca1b0db0d7ad7df0e5d6682c1031ab19d7696d66e072c981e0",
+    "tools/audit_database.py": "548d06c69ea31b134b170795a8928e78a6526cab1ec4c008ddb8766fa1a50a2a",
+    "tools/build_index.py": "d57ee778f2317f75adf52e40051e460c4e629a689d3f2b1b8ce05f23525ed09b",
+    "tools/build_pages_artifact.py": "807f226bb07f5ceb532090a67ad709e105539e6b90b91cc8a2c7fb484b092599",
+    "tools/pages.workflow.yml": "bc58a0a93f6d4227e27e134cf560f6d4e6a4c9d8ea4f4b97923c38994243bff3",
+    "tools/quality_gate.py": "021deab766ff305e1c5779b7b756a39d9cd19aaa0ee4f6a2ed3f4232d49556e2",
+    "tools/repair_repository.py": "e071bff0282c4ca8f48cdf444f36bbe275f1751208b074e424395344c70c035e",
+    "tools/test_audit_hygiene.py": "ec9fb0964d78a704007c9ef50dbfd6307d2c6a6aa1d9286e5e0aa5d78694f09c",
+    "tools/test_compare_contract.mjs": "d524219537467040acebd5e39ebe4bc797cc61287bc1f6d8a69ceb19bc1954fe",
+    "tools/test_existing_repo_overlay.py": "c6aa039a94a8e26e6fc6f8a695d2ad2c17dcf2169890a2fd1790f9f72c453528",
+    "tools/test_routes.mjs": "f6939e2bde2113930852d6b5b15df6880b5cdb41467497d5f4d9f9d72c10fe59",
+    "tools/test_utf8_text_io.py": "1882d0fe8b61a15dd6971d1e2603abc5e99175876007527e2765dfe4b7ac1413",
+    "tools/verify_regression_contract.py": "15543bc2a132b04fe1dda413a80f572df2c09196e7ef63ccd01ce2f060e1fccf",
+    "tools/verify_vulkanscope_04132.py": "6723ce9b83d94c94fe822fc1af3ea7bec811256fe76a8ea118e3fc731615d2c7",
+    "worker/package.json": "623909fae69887f013e161745f209c723d085d04b11d0b114e7e240b52dd4ade"
+  },
+  "selfHashExcluded": [
+    "regression/0.39.13_to_0.39.14_contract.json"
+  ]
+}

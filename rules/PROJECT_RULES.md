@@ -465,3 +465,38 @@
 - HTTP 400 validation rejection returns a bounded validation-class suffix so the current client can expose which contract family rejected the complete report without echoing report contents or weakening validation.
 - No report data may be truncated, omitted, renamed, uppercased, inferred, reclassified or rewritten to obtain acceptance. The 2 MiB limit, fixed official endpoint, redirect prohibition, privacy-field rejection and explicit opt-in submission remain unchanged.
 - No D1 migration, stored-payload rewrite, report-hash rewrite, schema bump, normalizer bump or historical-report mutation is permitted for this fix.
+
+## Release 0.39.12 / VulkanScope 0.41.32 / Vulkan 1.4.361 compatibility requirements
+- Treat VulkanScope Database 0.39.11 as the immutable predecessor; every changed or new file must be explicitly allow-listed by the regression contract.
+- Pin the canonical Vulkan API Registry at 1.4.361 and verify its `VK_HEADER_VERSION` before release.
+- Accept the additive schema-2 VulkanScope 0.41.24+ multi-device provenance envelope and cross-check it against technicalReport device evidence.
+- Reject a current report if complete-report, physical-device enumeration, or 0.41.32 registry-coverage evidence contradicts the top-level submission.
+- Preserve the 2 MiB transport limit as a byte limit; never truncate a complete report to make it fit.
+- Bound request memory and reject malformed UTF-8 rather than replacement-decoding it.
+- Keep D1 writes idempotent by canonical-payload SHA-256 and `INSERT OR IGNORE`; concurrency tests must preserve one logical report per canonical payload.
+- Prefer compact stored-payload detail responses for the web UI to avoid duplicating large normalized report structures in the Worker response.
+
+## Release 0.39.13 Windows UTF-8 deterministic tooling requirements
+- Treat VulkanScope Database 0.39.12 as the immutable predecessor; this release is a tooling/release-metadata fix and must not alter Worker report-validation, D1 payload, hashing, migration, privacy, timeout or API semantics without a separately proven defect.
+- Every Python `Path.read_text` / `Path.write_text` operation in release tooling must specify an explicit encoding. UTF-8 repository assets must never depend on the Windows active code page, locale, console language or Python default text encoding.
+- The exact frontend asset that fails CP1252 decoding but succeeds UTF-8 decoding is a permanent regression fixture; the VulkanScope 0.41.32 verifier must succeed on that UTF-8 asset.
+- The quality gate and Pages workflow must run the deterministic UTF-8 regression test before release.
+- VulkanScope 0.41.32, Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 chunking, 2 MiB transport and existing report IDs/data remain unchanged.
+
+## Release 0.39.13 Windows UTF-8 deterministic tooling requirements
+- Treat VulkanScope Database 0.39.12 as the immutable predecessor; this release is a tooling/release-metadata fix and must not alter Worker report-validation, D1 payload, hashing, migration, privacy, timeout or API semantics without a separately proven defect.
+- Every Python `Path.read_text` / `Path.write_text` operation in release tooling must specify an explicit encoding. UTF-8 repository assets must never depend on the Windows active code page, locale, console language or Python default text encoding.
+- The exact frontend asset that fails CP1252 decoding but succeeds UTF-8 decoding is a permanent regression fixture; the VulkanScope 0.41.32 verifier must succeed on that UTF-8 asset.
+- The quality gate and Pages workflow must run the deterministic UTF-8 regression test before release.
+- VulkanScope 0.41.32, Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 chunking, 2 MiB transport and existing report IDs/data remain unchanged.
+- Regression verification must ignore only explicitly declared local/generated workspace paths (for example `.git`, `node_modules`, `.wrangler`, `_site`, caches) rather than treating dependency installation output as release-source regressions. An optional local `worker/package-lock.json` may be excluded from release-file hashing only if a separate verifier checks the pinned Wrangler version and package integrity metadata when the lock is present.
+
+
+## Release 0.39.14 existing-repository / generated-index regression-gate requirements
+- Treat VulkanScope Database 0.39.13 as the immutable predecessor. Worker report-validation, D1 payload/chunk storage, report hashing, migrations, privacy, CORS, timeout and API semantics remain unchanged unless a separately proven runtime defect exists.
+- Regression verification has two explicit modes: source-overlay mode protects every predecessor-owned path while tolerating unrelated pre-existing repository/history files; strict-package mode additionally rejects every non-allow-listed release-package file.
+- A stale versioned frontend app asset is not tolerated. Existing repositories updated by overlay must run the canonical repository repair before the quality gate; only `assets/app.v03914.js` may remain as a versioned frontend app asset.
+- `data/index.json` is generated state and must be validated semantically rather than by a fixed SHA-256. Regenerating the index must not invalidate the immutable predecessor contract solely because `generatedAt` or report inventory changed.
+- Source-overlay tolerance must never weaken predecessor-file hashing: modifying an unchanged predecessor-owned file still fails. Strict release-package verification must still reject unexpected files.
+- The aggregate quality gate must exercise an existing-repository fixture containing legitimate historical source files, generated index regeneration, stale app repair, strict-package rejection and immutable predecessor mutation detection.
+- VulkanScope 0.41.32, Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 chunking and 2 MiB transport remain unchanged. No D1 migration is required.

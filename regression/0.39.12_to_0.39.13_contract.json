@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "baseline": "0.39.12",
+  "successor": "0.39.13",
+  "baselineManifest": "regression/0.39.12_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "SECURITY.md",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_audit_hygiene.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkan_registry.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json"
+  ],
+  "allowedRemoved": [
+    "assets/app.v03912.js"
+  ],
+  "allowedNew": [
+    "assets/app.v03913.js",
+    "regression/0.39.12_files.json",
+    "regression/0.39.12_to_0.39.13_contract.json",
+    "rules/0.39.13_WINDOWS_UTF8_QUALITY_GATE_AUDIT.md",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_optional_npm_lock.py"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    "node_modules",
+    ".wrangler",
+    "_site",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "build",
+    "dist",
+    ".tmp",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "80d1ef79b7b89645375e0788d69af13522f6647fdc7ce36ed5002b5785da6675",
+    "BUILD_AUDIT.md": "1f3e3144493b408100bf2877126cbb3a58e7c0e23b3f02684540c694b24011d5",
+    "SECURITY.md": "6de0266f258627ee40fe56800575fc01b6c71e3ff17616db12aca4ba747df2bb",
+    "changelog.md": "fa1e5bf3adf094bb38ada89b78426d7a95565c77c38d55301b39c4062819bcdb",
+    "data/index.json": "8bfbb203aa89a14c391c7336249bcbccca8b10e2638aaf38f46bb83b45947fcc",
+    "index.html": "20f6754e58d89fa820e70171079fccaf2a7cb6d98821d2d190c70157a81f5cd6",
+    "rules/PROJECT_RULES.md": "1ec923a58e4f42618a80c99614f8048af7853a7fba79161f41d0c3a558017e73",
+    "tools/audit_database.py": "3af0dbdeac7b0292fd91fd32fc86ce0f22919c8ff2697aef7c96bcf8c678f350",
+    "tools/build_index.py": "f4b1431068e5719f0e04eb3d20be8172ac4748a18d199e1ca642ac4dcc6838be",
+    "tools/build_pages_artifact.py": "578e24d3942595b2f0337c6e90337d423e49a6ef401fe7ee12577eebe8ff1131",
+    "tools/pages.workflow.yml": "80d1ef79b7b89645375e0788d69af13522f6647fdc7ce36ed5002b5785da6675",
+    "tools/quality_gate.py": "fcac112ac779122e449300f8ea1cffa9d0a99be421d0bacfdee8059809b4cdd6",
+    "tools/repair_repository.py": "6baf4ece452f2a1a5d9b2134a3fe2b3735d24f18ca59b2700cc5e167cff5063e",
+    "tools/test_audit_hygiene.py": "9a47efa336d63320d996ffab15ee523a9e81ae2f08e8856bbc6a3c1945a6a731",
+    "tools/test_compare_contract.mjs": "4e235c41d71699d87dfcfdc7d5afe2629cf321a5bed99d7ba5c2badbdfa64855",
+    "tools/test_routes.mjs": "3561c3379bce77ce3cc59a3642fed9ec470a6f7dc88deb3e19d1363eae589496",
+    "tools/verify_regression_contract.py": "0b1d8aa89cdcca387a4aa154d6fb6acb6b51493248929e310e0df9ea59113bd5",
+    "tools/verify_vulkan_registry.py": "6f4d0cb3d8b8585c2b745b42823c8b0be5382382897498770406b6e90c58363a",
+    "tools/verify_vulkanscope_04132.py": "c60ed6d643ad65a42ab6c83747687fd0f602f59ee99dfd72e55f4d387acd3933",
+    "worker/package.json": "b071049a4bdbf514d3dd0abb6c8566be249e012aca37c98446a084466d4c8582",
+    "assets/app.v03913.js": "faf402c06149a709d1b3a380df7e3968fd42bc88f9025e85a0a443fe6c896e84",
+    "regression/0.39.12_files.json": "333a0e3fb16cc55c5796fc127346f8a8bdcaafc587733b566e5eb8f0d39a91d8",
+    "rules/0.39.13_WINDOWS_UTF8_QUALITY_GATE_AUDIT.md": "8cda055ab4053f859d14e54dadaf3d2656706246b0e1d66b98f7ca935f16b23d",
+    "tools/test_utf8_text_io.py": "934d25d8b47726c115ee8d612fc662f4547b6f0d5440775155b84a13d28b1575",
+    "tools/verify_optional_npm_lock.py": "7484cd48a6e9f0c145d463a71e27db04cad7bc801b357344db3b261b057cf12f"
+  },
+  "selfHashExcluded": [
+    "regression/0.39.12_to_0.39.13_contract.json"
+  ]
+}

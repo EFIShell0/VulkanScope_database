@@ -1,3 +1,34 @@
+# VulkanScope Database 0.39.14
+
+- Fixes regression-gate false positives when a release is overlaid onto the real long-lived Git repository containing historical source/audit/assets that were not shipped in the predecessor release ZIP.
+- Adds explicit source-overlay and strict-release-package regression modes: predecessor-owned files remain hash-protected in both, while only strict-package mode rejects unrelated source-history files.
+- Treats generated `data/index.json` as semantic generated state so `build_index.py` no longer invalidates the predecessor contract merely by regenerating metadata/report inventory.
+- Adds an existing-repository fixture covering historical extras, stale app repair, generated-index regeneration, strict-package rejection and immutable predecessor mutation detection.
+- Cache-busts the frontend to `app.v03914.js` for release identity only; Worker/D1/API behavior is unchanged from 0.39.13.
+- Preserves VulkanScope 0.41.32 / Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 payload chunking and the 2 MiB non-truncating transport limit without a new migration.
+
+# VulkanScope Database 0.39.13
+
+- Fixes the Windows Python quality-gate crash caused by implicit CP1252 decoding of UTF-8 repository assets.
+- Makes every Python `Path.read_text` / `Path.write_text` operation in release tooling encoding-explicit and reads D1 migrations as UTF-8.
+- Adds a permanent regression test that proves the real frontend asset fails CP1252, succeeds UTF-8, and the VulkanScope 0.41.32 compatibility verifier completes successfully.
+- Runs the UTF-8 determinism test both directly in the Pages workflow and inside the aggregate quality gate.
+- Cache-busts the frontend as `app.v03913.js` only to publish the 0.39.13 Database release identity; capability, normalization and API behavior are unchanged.
+- Preserves VulkanScope 0.41.32 / Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 chunk storage, 2 MiB transport, report hashes and existing stored data without a new migration.
+
+# VulkanScope Database 0.39.12
+
+- Adds verified VulkanScope 0.41.32 compatibility while preserving submission schema 2, technicalReport 3 and normalizer 16.
+- Advances the canonical producer/query baseline to Vulkan 1.4.361 and locks the packaged `vk.xml` snapshot by SHA-256.
+- Accepts and cross-checks the additive 0.41.24+ multi-device summary provenance fields that 0.39.11 incorrectly rejected as unexpected keys.
+- Enforces authoritative 0.41.18+ complete-report markers and 0.41.24+ physical-device enumeration completeness before accepting current reports.
+- Enforces the 0.41.32 registry-coverage contract, including `VkPhysicalDevicePrivateDataBaseHandleFeaturesNV`.
+- Preserves the producer's 2 MiB non-truncating transport contract despite D1's 2,000,000-byte single-row value limit by adding atomic payload chunk storage for large canonical reports.
+- Switches request-body decoding to bounded incremental strict UTF-8, avoiding a second full raw-byte buffer and rejecting malformed byte sequences.
+- Adds a compact report-detail path used by the frontend to avoid duplicating normalized large arrays inside Worker memory; the legacy expanded detail response remains available.
+- Adds negative/current/historical, large-payload reconstruction and concurrent-idempotency contract tests plus registry/producer/regression quality gates.
+- Requires D1 migration `0003_payload_chunks.sql`; existing inline report rows require no rewrite.
+
 # VulkanScope Database 0.39.11
 
 - Fixed HTTP 400 rejection of complete VulkanScope 0.41.12 reports when the isolated Image Format Properties2 query group explicitly finishes as Unavailable or Not applicable before tuple evidence can be produced.

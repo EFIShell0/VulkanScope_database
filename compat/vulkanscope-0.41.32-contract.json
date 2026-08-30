@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "producer": "VulkanScope",
+  "producerVersion": "0.41.32",
+  "producerVersionCode": 442,
+  "producerSourceZipSha256": "bfa41b2229d47795e0d6de0826a17997e65db2c627fb46a84d3c333117925a3e",
+  "submissionSchema": 2,
+  "technicalReportSchema": 3,
+  "maxSubmissionBytes": 2097152,
+  "vulkanRegistryBaseline": "1.4.361",
+  "headerBaseline": "Vulkan 1.4.361 compile headers; validated query catalog Vulkan 1.4.361",
+  "registryReportSchema": "4",
+  "catalogSchemaVersion": 6,
+  "implementedPhysicalDeviceStructCount": 110,
+  "validatedRuntimeQueryGroupCount": 104,
+  "runtimeRegistryTokenReferenceCount": 268,
+  "validatedPhysicalDeviceQueryExtensionCount": 302,
+  "stablePhysicalDeviceQueryExtensionCount": 297,
+  "provisionalPhysicalDeviceQueryExtensionCount": 5,
+  "requiredEnvelopeAdditions": {
+    "gpu": ["summaryScope", "physicalDeviceCount"],
+    "driver": ["summaryScope"],
+    "vulkan": ["loaderApiVersion", "instanceApiVersion", "deviceApiSummaryScope"]
+  },
+  "requiredCompleteMarkers": ["baseReportComplete", "physicalDeviceEnumerationComplete", "physicalDeviceEnumerationSafetyRejected"],
+  "requiredPhysicalDeviceStruct": "VkPhysicalDevicePrivateDataBaseHandleFeaturesNV",
+  "databaseStorageStrategy": {
+    "d1InlinePayloadSafetyBytes": 1500000,
+    "chunkCodeUnits": 200000,
+    "d1DocumentedMaximumStringBlobOrRowBytes": 2000000
+  }
+}

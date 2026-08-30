@@ -18,7 +18,7 @@ def run(args, expect=0, contains=None, cwd=None):
 
 # Normal source audit must pass regardless of repository-owned root .git metadata.
 out=run([python,str(audit),'--source-tree',str(root)])
-if 'VulkanScope Database audit tool 0.39.11' not in out:
+if 'VulkanScope Database audit tool 0.39.14' not in out:
     raise SystemExit('audit version fingerprint missing')
 run([python,str(repair),'--check'])
 

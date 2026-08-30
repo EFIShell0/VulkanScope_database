@@ -126,6 +126,21 @@
         "deviceType": {
           "type": "string",
           "maxLength": 128
+        },
+        "summaryScope": {
+          "type": "string",
+          "enum": [
+            "singlePhysicalDevice",
+            "firstPhysicalDeviceCompatibilitySummary"
+          ]
+        },
+        "physicalDeviceCount": {
+          "type": [
+            "integer",
+            "number"
+          ],
+          "minimum": 1,
+          "maximum": 32
         }
       },
       "additionalProperties": false
@@ -150,6 +165,13 @@
             "string",
             "integer",
             "number"
+          ]
+        },
+        "summaryScope": {
+          "type": "string",
+          "enum": [
+            "singlePhysicalDevice",
+            "firstPhysicalDeviceCompatibilitySummary"
           ]
         }
       },
@@ -184,6 +206,21 @@
         "reportSchema": {
           "type": "string",
           "maxLength": 128
+        },
+        "loaderApiVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "instanceApiVersion": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "deviceApiSummaryScope": {
+          "type": "string",
+          "enum": [
+            "singlePhysicalDevice",
+            "firstPhysicalDeviceCompatibilitySummary"
+          ]
         }
       },
       "additionalProperties": false
