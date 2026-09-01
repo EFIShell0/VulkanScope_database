@@ -534,3 +534,13 @@
 - TXT/structured normalization must retain `surface.queryStatus` and `surface.queryReason` so historical current-schema reports can be compared without rewriting stored bytes or D1 payloads.
 - `tools/test_surface_compare_04142.mjs` and `tools/test_surface_compare_04142_negative_mutations.mjs` are mandatory. The compatibility test must fail against immutable 0.39.16 and pass against 0.39.17.
 - No D1 migration, stored-report rewrite, report-hash rewrite, normalizer bump, Worker validation weakening or payload schema change is introduced.
+
+## Release 0.39.18 / VulkanScope 0.41.43 producer-baseline requirements
+- Treat VulkanScope Database 0.39.17 as the immutable predecessor; predecessor ZIP SHA-256 is `3b1a8c62143e090ec827d7b965e125c0695f5122adb089119b9ce6254510e0bf`.
+- Current producer/query baseline is VulkanScope 0.41.43 / versionCode 453 with Vulkan 1.4.361. Submission schema 2, technicalReport 3, normalizer 16, D1 schema and 2 MiB transport ceiling remain unchanged.
+- This release is a producer-metadata/cache-identity update only. VulkanScope 0.41.43 driver-bound Surface rebind changes application lifecycle behavior but does not change Database payload or evidence semantics.
+- Pages frontend, static index and Worker health/list metadata must describe VulkanScope 0.41.43 as the current producer/query baseline. The current cache-busted frontend asset is `assets/app.v03918.js`; stale `app.v03917.js` must not remain in the strict release package.
+- Existing 0.39.17 Surface query-state Compare semantics and 0.39.16 historical pre-0.41.40 property/feature Compare canonicalization remain unchanged.
+- `tools/test_producer_baseline_04143.mjs` and `tools/test_producer_baseline_04143_negative_mutations.mjs` are mandatory. The baseline verifier must fail against immutable 0.39.17 and pass on 0.39.18; negative mutations must reject stale frontend/Worker producer metadata and stale frontend asset identity with an unrelated generated-state false-positive control.
+- Worker report validation, canonical hashing, D1 payload/chunk storage, request UTF-8 bounds, privacy/CORS rules, public-write policy, report IDs, stored payloads and migrations remain unchanged. No D1 migration, stored-report rewrite or report-hash rewrite is introduced.
+- Cloudflare Worker deployment and production runtime smoke testing remain separate evidence classes and are `NOT EXECUTED` until actually performed.

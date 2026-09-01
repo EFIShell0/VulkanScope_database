@@ -79,3 +79,7 @@ For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties
 ## 0.39.17 Surface Compare evidence-state integrity
 
 Surface Compare normalization now preserves the producer's query status/reason so a failed, incomplete, not-applicable or unknown Surface probe cannot be turned into fabricated Unsupported presentation evidence. Generic Surface diagnostic/property `false` values use availability semantics, while a negative presentation capability is labeled Unsupported only when its owning query completed successfully. This is a presentation/normalization correction only: stored payloads, canonical report hashes, D1 rows, submission validation, CORS, privacy-key rejection, authentication policy, request limits and Worker storage behavior are unchanged. The producer-bounded historical property-as-feature canonicalization introduced in 0.39.16 remains unchanged.
+
+## 0.39.18 producer metadata update
+
+0.39.18 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.

@@ -1,0 +1,786 @@
+{
+  "schemaVersion": 1,
+  "release": "0.39.17",
+  "files": [
+    {
+      "path": ".github/workflows/pages.yml",
+      "sha256": "4abe83e9da239583bde90c51c04ef9324539ab99dcf025df836abfd51c25124b",
+      "size": 2813
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "1ec3848c2dbaebb402871bc304f5b48c91c89e126a2afce35ee258a418ed2360",
+      "size": 438
+    },
+    {
+      "path": ".nojekyll",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "400.html",
+      "sha256": "575fe30c1d2f51a8e7dccac6bcf111adad7a222d2e6285bd7b8e9e3e7cc958eb",
+      "size": 1104
+    },
+    {
+      "path": "401.html",
+      "sha256": "67e761aa6fcbf809913417c662a12ecdfcf67b7034693a80724fd5cd11e74571",
+      "size": 1111
+    },
+    {
+      "path": "403.html",
+      "sha256": "fc969a0f6451845ee73b1d28af8c13e41d468a2c026c4cc2cf24e559503de8cd",
+      "size": 1107
+    },
+    {
+      "path": "404.html",
+      "sha256": "1d680055d2734084450d74304f7f0e4b02b0722d5a7675a56f4192447ebd06ea",
+      "size": 1113
+    },
+    {
+      "path": "405.html",
+      "sha256": "66a40e9268985b5e5e234fdacec8ac8ba7112b8b6f138e5913d0bb4507489924",
+      "size": 1116
+    },
+    {
+      "path": "408.html",
+      "sha256": "d2515a46b724565180290b4a34916a783fda90a5efabdd0b1619bc5bff6696e8",
+      "size": 1102
+    },
+    {
+      "path": "409.html",
+      "sha256": "de45ce0fe10032147c2ab9701f11783a9a5fa20c09e95766b17362084e5bfc87",
+      "size": 1116
+    },
+    {
+      "path": "413.html",
+      "sha256": "77531b239b1184d6f0f637993c2b93aaeea3d4610464542babc69c5b0b1f6ab5",
+      "size": 1122
+    },
+    {
+      "path": "415.html",
+      "sha256": "e92907583c602ec63425fab3fb2e6697cbbb5cb7614576d5bd39506ba4caafc0",
+      "size": 1148
+    },
+    {
+      "path": "429.html",
+      "sha256": "fab034421358f5e21e9c106a5748f36f8d99418d1ab45f63f6f345af5fa82cc6",
+      "size": 1114
+    },
+    {
+      "path": "500.html",
+      "sha256": "c144c52eff17df9762cf03538b329ea2edafdef0bd14cc2ec959bef840a4761c",
+      "size": 1111
+    },
+    {
+      "path": "502.html",
+      "sha256": "88c502e9629b66858f15eff71e46547177bd41cee8edc65428c7f3cab9194398",
+      "size": 1107
+    },
+    {
+      "path": "503.html",
+      "sha256": "eb11040f75e915a62c6b8c4f1beffe728a1bd98aafd2e490e32fb01cde15bfc5",
+      "size": 1116
+    },
+    {
+      "path": "504.html",
+      "sha256": "ce8b3cac53fc395888371e7faa8e479608a06c2e796b3bb908692992a6ff1a6f",
+      "size": 1104
+    },
+    {
+      "path": "BUILD_AUDIT.md",
+      "sha256": "f61e038ae0647f9eaa5170325cac9087a3c96430f4d220f53982177de73cd410",
+      "size": 1068
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "a14000ad5fe84cd66a2a39aff3b998d78d53635c5e5f07fbf03bc21aff2b3957",
+      "size": 9009
+    },
+    {
+      "path": "UPDATE_0.39.3.md",
+      "sha256": "65c76f2e7b2984830a2adbc722fb3c334e11161a6c57ca9994b8ff8840a16970",
+      "size": 874
+    },
+    {
+      "path": "UPDATE_0.39.4.md",
+      "sha256": "cc8c325e05882c13cb933dcc8942edcc36fae7cbf1ee7cbfc373bcc46264671f",
+      "size": 814
+    },
+    {
+      "path": "UPDATE_0.39.5.md",
+      "sha256": "8d3982601a5d5368e41bcb49bbb7e36cc3095e58726ec72bcc5497a4483fbcbf",
+      "size": 321
+    },
+    {
+      "path": "UPDATE_0.39.6.md",
+      "sha256": "7dbe9cf2fdda85641708287c46cdd7ed2e1d30922cbe5735efb5db22a3a869e5",
+      "size": 260
+    },
+    {
+      "path": "UPDATE_0.39.7.md",
+      "sha256": "4efa77ec398217d23fbc8d1c326ad459f4bc46c9638f8bb52026055a4eafdb9e",
+      "size": 327
+    },
+    {
+      "path": "UPDATE_0.39.8.md",
+      "sha256": "79231c993ba17f828b9fbb954b7d2e75916ab74aaf034284d1376f5f45b9ac3d",
+      "size": 667
+    },
+    {
+      "path": "assets/app.v03917.js",
+      "sha256": "89f7e3014079121139f5c7dd78569dba5767792389b9b0cfdacd4b0db3a54422",
+      "size": 181637
+    },
+    {
+      "path": "assets/apple-touch-icon-v0311.png",
+      "sha256": "43fb9dc11a3f7cba116fa12545a1dedda56735f4cd5571a8543ba024ae933bc5",
+      "size": 4866
+    },
+    {
+      "path": "assets/favicon-v0311.ico",
+      "sha256": "462a132c4a1e8a0f3b237fccc9010473df4de81abf74a37de17854477b60afb6",
+      "size": 6398
+    },
+    {
+      "path": "assets/favicon-v0311.png",
+      "sha256": "1583950c1039e85a15c2605249f2af17f179c136f259b46543650ed0eb43595c",
+      "size": 2701
+    },
+    {
+      "path": "assets/favicon.ico",
+      "sha256": "eb93cbbe2974a376dc328557c1a3604f87f6bbb4ffe2f91468b746742fef247e",
+      "size": 5045
+    },
+    {
+      "path": "assets/favicon.png",
+      "sha256": "34c38d42bf4fcfb7b38d5578cdc11e0758061fa724b90b86466dff55b7fd1d48",
+      "size": 2391
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_amd.png",
+      "sha256": "90ee261222f684064bfd611f350ea94c59ba54803593bebe0b46b159db177c3f",
+      "size": 1764
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_arm.png",
+      "sha256": "fcb25adc270c88d0bb3032cc209dcdf053c23dbd9923c1d7194af0881f070395",
+      "size": 2865
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_broadcom.png",
+      "sha256": "ddfa456e50a65969ad5b64bb5e203d35282380c4acfae7eb545217a48a0bb4e9",
+      "size": 12591
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_huawei.png",
+      "sha256": "3d664401a27bbfbfbff6e745c30772cfaa8c428b75c50acf66c844ef73e44a58",
+      "size": 9824
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_imagination.png",
+      "sha256": "e8a7c11f6f285ea276de7245eec42d2b546845d05feb1813a85d183658b20db8",
+      "size": 1085
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_intel.png",
+      "sha256": "9473a9ddef012b5a98e0308d6aceb843b14fb5a8d9e9e2f28790f2849c51a9d2",
+      "size": 1844
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_nvidia.png",
+      "sha256": "08e24a8ea51facb270ec6315e45ff5d057eb81738ca4672bdb1987a925e9fe28",
+      "size": 6238
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_qualcomm.png",
+      "sha256": "25c11260eadc8902c114ceacdb5c4a04a72984b2ed9608082e9bb0190529cad2",
+      "size": 10013
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_samsung.png",
+      "sha256": "f52c8577e176a239a8288e9c2d84be9aa430831a4837d074f444fa2d0c0aa190",
+      "size": 2169
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_unknown.png",
+      "sha256": "0c338a8e6fbc0031ded7e72cbf0f5d3f61205ffd242e518053a9f9d125330c4c",
+      "size": 3187
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_vivante.png",
+      "sha256": "cf56b998003538bfc7684a5da8ba95a3d75bd41edcd422999efdbcf6694a23c8",
+      "size": 6504
+    },
+    {
+      "path": "assets/gpu-vendors/gpu_vendor_vsi.png",
+      "sha256": "cf56b998003538bfc7684a5da8ba95a3d75bd41edcd422999efdbcf6694a23c8",
+      "size": 6504
+    },
+    {
+      "path": "assets/hdr/dolby_vision.png",
+      "sha256": "994c88520ba804306d04706871e9fb13fbcbae04b84cc93c8d35da6b9031f48d",
+      "size": 6285
+    },
+    {
+      "path": "assets/hdr/dolby_vision_2.png",
+      "sha256": "e64610ab6e9bd918df27b21950bf302966e9c8ee8ad3937183357af534c228be",
+      "size": 10315
+    },
+    {
+      "path": "assets/hdr/hdr10.svg",
+      "sha256": "29cee07ad391cf1ec6df35719902a6217999871dcf1d841d920d14337642fce3",
+      "size": 1685
+    },
+    {
+      "path": "assets/hdr/hdr10_plus.png",
+      "sha256": "b8f998774bd35016459474edbe4de2431f7e7e4325877eb71c9acc4103361243",
+      "size": 10268
+    },
+    {
+      "path": "assets/hdr/hdr10_plus_advanced.png",
+      "sha256": "49be0373edaa628ed2e6ea3d229fd094515ba1c29424f476e6329fb429743798",
+      "size": 19402
+    },
+    {
+      "path": "assets/hdr/hdr_vivid.webp",
+      "sha256": "bc9fddbb5c045080edb9bbd76c46437b64aa81a8f60f071bd356a4bfb5010fb5",
+      "size": 6550
+    },
+    {
+      "path": "assets/site.v0390.css",
+      "sha256": "bf8912cd1cc6e4802011380ef697824b5b3ba32b756e32c6c6e688b4a5ed5435",
+      "size": 46706
+    },
+    {
+      "path": "assets/vulkanscope_logo_horizontal.png",
+      "sha256": "4a788768a6968a94cc503f9c9dc59140c719e11210b39e3fddb537ca77c49f8a",
+      "size": 11795
+    },
+    {
+      "path": "changelog.md",
+      "sha256": "31d21ba2f1027fec1bb28004e48c678507cc5cea02554e3a14b9c827497ef89c",
+      "size": 8586
+    },
+    {
+      "path": "compat/vulkanscope-0.41.32-contract.json",
+      "sha256": "92f229c32e483c930e2ec212ae29479e5292f329e7a570dedf30832162c77d00",
+      "size": 1370
+    },
+    {
+      "path": "config.js",
+      "sha256": "06e0cedd4e0d062f483b2b03499bc336e5f47df0ad52989435302c6b32d254af",
+      "size": 92
+    },
+    {
+      "path": "data/index.json",
+      "sha256": "461ff3f96f35e5f4a090a5d22acc9aeec4d3ef55f5d2f90a3d95bddc02a5b67d",
+      "size": 433
+    },
+    {
+      "path": "error.html",
+      "sha256": "1a845453d3c084a8175ad7f61d3fa4e87b44e3fcf23b534f48ce04411fcaf267",
+      "size": 1118
+    },
+    {
+      "path": "index.html",
+      "sha256": "4c0b32de4e7815d5a6bc36636847caac35007ef8fd1569d396570bdced0e7f65",
+      "size": 7541
+    },
+    {
+      "path": "registry/registry_lock.json",
+      "sha256": "052b1d0c43fc1a87b1d8aa5606e35fcb9c440908d73f3edfe9beffd31128da67",
+      "size": 419
+    },
+    {
+      "path": "registry/upstream/vk.xml",
+      "sha256": "3ff4984b841932e04eebeb4ce2a6613ebd37c00ffb2e96549785b2c5d7da9e1d",
+      "size": 3305568
+    },
+    {
+      "path": "regression/0.39.11_files.json",
+      "sha256": "5b29fc9593db95a03c5fa0509bcd7c71178f19e4dd2d51cc2423c195ebac865a",
+      "size": 20200
+    },
+    {
+      "path": "regression/0.39.11_to_0.39.12_contract.json",
+      "sha256": "fb1d76222c5f1291f81b1adb4c7f3b73d121d887ce9a1580f0978f8f5aecb268",
+      "size": 4452
+    },
+    {
+      "path": "regression/0.39.12_files.json",
+      "sha256": "333a0e3fb16cc55c5796fc127346f8a8bdcaafc587733b566e5eb8f0d39a91d8",
+      "size": 22055
+    },
+    {
+      "path": "regression/0.39.12_to_0.39.13_contract.json",
+      "sha256": "3a31e79bbc979c7f5389b3740b7d708e1ea2a5d2d25439c041de9221410b92e3",
+      "size": 3981
+    },
+    {
+      "path": "regression/0.39.13_files.json",
+      "sha256": "858a8f5ecf363d1d54f7ee96902c3d307bfe3ee80262869e9ac6556d0badc3ab",
+      "size": 22900
+    },
+    {
+      "path": "regression/0.39.13_to_0.39.14_contract.json",
+      "sha256": "5f37e289cd3e6e1f9af91e5a06e5e1e62cd7337efda0be51168d9b21edf7acb2",
+      "size": 3831
+    },
+    {
+      "path": "regression/0.39.14_files.json",
+      "sha256": "3b2940cf239343bdc023dc79ce2be0b9dbbb9fee24e72c44692f846e65e2975a",
+      "size": 23605
+    },
+    {
+      "path": "regression/0.39.14_to_0.39.15_contract.json",
+      "sha256": "95f463b644e5e7af61d9f3c567d913dc203ce403cd77a1b2e46a0fad9440f141",
+      "size": 4346
+    },
+    {
+      "path": "regression/0.39.15_files.json",
+      "sha256": "214bac11fef9a5d95c55745846f8c1038a9ae108377188bb8a52b3d26700e514",
+      "size": 24317
+    },
+    {
+      "path": "regression/0.39.15_to_0.39.16_contract.json",
+      "sha256": "9d5d07669aff8c932155699eccf3dac58bea5f2955e9abf014ae007d1e7aa394",
+      "size": 4528
+    },
+    {
+      "path": "regression/0.39.16_files.json",
+      "sha256": "fc163d2944a5cd40849bd5f524d7af2f2cda13e8cd9de64d5f80d5280934b4c3",
+      "size": 25212
+    },
+    {
+      "path": "regression/0.39.16_to_0.39.17_contract.json",
+      "sha256": "b8ec46989f90f14a07a4be285162a1cd40b13be7193e53d82327117a3f5a0b6a",
+      "size": 4714
+    },
+    {
+      "path": "report.schema.json",
+      "sha256": "c6ae4ad1d7c177a8c427e68df6dbd1528b0ff42b261e9ee3190cb4eff1d997e8",
+      "size": 5827
+    },
+    {
+      "path": "rules/0.33.2_DATABASE_AUDIT.md",
+      "sha256": "f7a833d1b2b48bef894f4d1d00ee4538a2b064d80335e99fcc58d88bea205368",
+      "size": 1264
+    },
+    {
+      "path": "rules/0.33.3_UI_STATE_AUDIT.md",
+      "sha256": "a0013e724b2ef02d2b5025201119761a01e0e3f57112aa4392bc7a55816738df",
+      "size": 1028
+    },
+    {
+      "path": "rules/0.33.4_APP_IPV6_TITLE_AUDIT.md",
+      "sha256": "78a5c08cb166a34e099808384822a9029d7e967a21ed3d1b404553a414ef20f7",
+      "size": 713
+    },
+    {
+      "path": "rules/0.33.5_UI_PARITY_AUDIT.md",
+      "sha256": "5b85afaed7afc3f20c8affbcb4882d83346963f98c341f44f1b3990b7df95c16",
+      "size": 1023
+    },
+    {
+      "path": "rules/0.33.6_SCROLL_ERROR_AUDIT.md",
+      "sha256": "1be7db89398bbd802f160c9b64cd06bcb3bc23254246300570dfeae6dea981cd",
+      "size": 2173
+    },
+    {
+      "path": "rules/0.33.7_INTERACTION_PARITY_AUDIT.md",
+      "sha256": "8b5bb37a9981f4c9ba472e9c3064f2395d4ca7ab629a62e795a0abc8211fc165",
+      "size": 1173
+    },
+    {
+      "path": "rules/0.33.8_VENDOR_SECURITY_AUDIT.md",
+      "sha256": "896419a0855ebc2325090713b4eab0a3f20eb1be1da980985e6eef8a3b6d7053",
+      "size": 3111
+    },
+    {
+      "path": "rules/0.33.9_UI_SPEC_SECURITY_AUDIT.md",
+      "sha256": "13c205ccceeb1644a16e061b6a7d3fcb3a968bca251cf0f4dcb41275721e7836",
+      "size": 1846
+    },
+    {
+      "path": "rules/0.34.0_SELECT_UI_SECURITY_AUDIT.md",
+      "sha256": "e1292e82d2e3537ae98955e2f86e53522688aa43c4d6a3a014d4669e9a7c1a7a",
+      "size": 932
+    },
+    {
+      "path": "rules/0.34.1_SELECT_CONTRAST_FIX.md",
+      "sha256": "f5e7ba00995c722845b7bad4a4d91b66e5658ac21f08ca2c42d3466f54f43af4",
+      "size": 553
+    },
+    {
+      "path": "rules/0.34.2_COMPARE_TOGGLE_UI.md",
+      "sha256": "dab40eeb8b307556bbced73d0dc002f4d5e2ee7e22694a121163b834c7630ca2",
+      "size": 607
+    },
+    {
+      "path": "rules/0.34.3_API_VERSION_UI.md",
+      "sha256": "5f91f7ade59f92a63923c0240326e97e8a28a59823ae1adaec21db18e73c8446",
+      "size": 524
+    },
+    {
+      "path": "rules/0.34.4_NAV_APP_SPEC_AUDIT.md",
+      "sha256": "7a7a3ebf8837a7f7baa80db00a40ae210ec8430b30fdd488ee2b1c96c49c1a13",
+      "size": 1291
+    },
+    {
+      "path": "rules/0.34.5_HDR_DEVICE_LOGO_AUDIT.md",
+      "sha256": "9ee88cb0c1cac3f97512ed069a6e47d452c3536b9a570ed17ce106b848ce9ced",
+      "size": 681
+    },
+    {
+      "path": "rules/0.34.6_HDR10_SECURITY_AUDIT.md",
+      "sha256": "7cb9492a54518ea29f19c0b4e166ae98ecd758c204cb554d4897eca20e4fe182",
+      "size": 1379
+    },
+    {
+      "path": "rules/0.34.7_HDR_FILTER_AUDIT.md",
+      "sha256": "9e6296a5e89989fe57485d6aee7b5dc50c1d2f0e51e75aff1727a2b65d44645c",
+      "size": 468
+    },
+    {
+      "path": "rules/0.34.8_COMPACT_FILTER_HDR_ORDER_AUDIT.md",
+      "sha256": "906b95811856b644196858f7a873535f3a7e153785ddbd8cfad08d37eec7b7ed",
+      "size": 846
+    },
+    {
+      "path": "rules/0.34.9_COMPARE_PORTABILITY_DENSITY.md",
+      "sha256": "6c13c7a31ee422a098fdd6d0a32c036b0a0b306e3b46492d3e99c4f731b14242",
+      "size": 594
+    },
+    {
+      "path": "rules/0.35.0_FULL_DATABASE_AUDIT.md",
+      "sha256": "58ff4e82aac731507030068d0f368021a8d09480bbede2706d458ea8fb5e224a",
+      "size": 1723
+    },
+    {
+      "path": "rules/0.35.1_DOMINANT_COVERAGE_EMPHASIS.md",
+      "sha256": "f382fa6e8e847531f76d6030098e9b3329ebae9e53fe845c6121980138e50592",
+      "size": 306
+    },
+    {
+      "path": "rules/0.35.2_FULL_AUDIT_HARDENING.md",
+      "sha256": "c96fec5539a82ace618297bf3e0bf512c337d4925290d936b5848ca02d97ca68",
+      "size": 667
+    },
+    {
+      "path": "rules/0.35.3_COVERAGE_BACKGROUND_CONTAINMENT.md",
+      "sha256": "198ac12401cd9070d19b731d22b7e2f50cca8f0cb872ccf50bf455b99d41a738",
+      "size": 586
+    },
+    {
+      "path": "rules/0.35.4_CLOUDFLARE_ACCOUNT_ISOLATION.md",
+      "sha256": "199ac50d9cbfee50d61917389823ba9dc54a744349cae66b4acf7be7074eb44d",
+      "size": 697
+    },
+    {
+      "path": "rules/0.35.5_WINDOWS_ACCOUNT_VERIFIER.md",
+      "sha256": "0f011696add12b68b34894c71862783b02a792148972bfa17dd185b0003496cb",
+      "size": 972
+    },
+    {
+      "path": "rules/0.35.7_FULL_DATABASE_AUDIT.md",
+      "sha256": "e529fce9d7f486eafd7d3d77935362ac833ac2e305d28a499542c64695b12a62",
+      "size": 1459
+    },
+    {
+      "path": "rules/0.35.8_PROPERTY_LIMIT_SEMANTICS_AUDIT.md",
+      "sha256": "b9f77a1a74e202bf477579d367c74a22556f254ea5200363998fcbcec00ef16c",
+      "size": 1828
+    },
+    {
+      "path": "rules/0.35.9_DISPLAY_HDR_ABI_HOME_PARITY_AUDIT.md",
+      "sha256": "730e3e6f0c70c395bb50c7b4e22236011040e8d38027fc337094375fdb1d6daf",
+      "size": 958
+    },
+    {
+      "path": "rules/0.36.0_LUMINANCE_TYPOGRAPHY_PARITY_AUDIT.md",
+      "sha256": "8e0d64494c014fc1f09e50828456c559796ef4a94783f378d81ddc82fe72f0c3",
+      "size": 552
+    },
+    {
+      "path": "rules/0.36.1_VULKANSCOPE_0.34.1_REPORT_PARITY_AUDIT.md",
+      "sha256": "af764041685ca58f631cd7481fd7cf28ebd1c94c87cbbf4206a5efbc7aea1b88",
+      "size": 962
+    },
+    {
+      "path": "rules/0.36.5_CLOUDFLARE_COMPATIBILITY_DATE_AUDIT.md",
+      "sha256": "14681f54b42a52fb8696a365cd65cd00e537d34f063733d73d6a1422c939b692",
+      "size": 863
+    },
+    {
+      "path": "rules/0.36.5_VULKANSCOPE_0.35.1_FULL_DATABASE_AUDIT.md",
+      "sha256": "ee30967ee1fc54269ab033ee015651c04470bfc1b95bb1764b2f53fddebcaab3",
+      "size": 2640
+    },
+    {
+      "path": "rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md",
+      "sha256": "f02481d2b7c1849cf82559f88728e47d6826828dec44d204773ea893d1046d39",
+      "size": 1154
+    },
+    {
+      "path": "rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md",
+      "sha256": "b11275ad16892c8b5f7bf8572b90b7710202f0f6748865260eb62084cc4ee9e7",
+      "size": 696
+    },
+    {
+      "path": "rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md",
+      "sha256": "ea44be02355f17ec971ba830d203dacedbd33cde003e4cd3f0345513c18ef575",
+      "size": 6055
+    },
+    {
+      "path": "rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md",
+      "sha256": "73faf4ddd273f5c71c445b269e8e2252f30d9a39302479bf46dfca3f19f49914",
+      "size": 4843
+    },
+    {
+      "path": "rules/0.39.10_ASTC_CANONICAL_FORMAT_SUBMISSION_0.41.12_AUDIT.md",
+      "sha256": "5b586fcd8a0784510b6fd8c01efc021a9a4eb00fadfd938cd8c310bcb9da083d",
+      "size": 1691
+    },
+    {
+      "path": "rules/0.39.11_QUERY_GROUP_UNAVAILABLE_SUBMISSION_0.41.12_AUDIT.md",
+      "sha256": "87ae386094198cebfc7be3c28085f55916f111d9f0e8532d8e118fe81fae3ac9",
+      "size": 2976
+    },
+    {
+      "path": "rules/0.39.12_VULKAN_1.4.361_VULKANSCOPE_0.41.32_REGRESSION_RESOURCE_AUDIT.md",
+      "sha256": "e0896117571ed933a9d9a5cc86b20d05c911b13a5b951d9b484d478bfb27e711",
+      "size": 1297
+    },
+    {
+      "path": "rules/0.39.13_WINDOWS_UTF8_QUALITY_GATE_AUDIT.md",
+      "sha256": "8cda055ab4053f859d14e54dadaf3d2656706246b0e1d66b98f7ca935f16b23d",
+      "size": 1856
+    },
+    {
+      "path": "rules/0.39.14_EXISTING_REPOSITORY_OVERLAY_REGRESSION_AUDIT.md",
+      "sha256": "ebcfb1deecbbfc74187fb9e5af62118b777b3416386cec54ee74832a2108f88e",
+      "size": 1338
+    },
+    {
+      "path": "rules/0.39.15_VULKANSCOPE_0.41.40_REPORT_TEXT_COMPATIBILITY_AUDIT.md",
+      "sha256": "9c770465193c24c13b77668dd6746b6691dc201747b37997df3da2a87fbf1964",
+      "size": 2237
+    },
+    {
+      "path": "rules/0.39.16_VULKANSCOPE_0.41.41_HISTORICAL_COMPARE_IDENTITY_AUDIT.md",
+      "sha256": "c504dccb4ec008d7f285f2f90f19ad5dd955a3528797f39cc5b5462df68ad096",
+      "size": 2336
+    },
+    {
+      "path": "rules/0.39.17_VULKANSCOPE_0.41.42_SURFACE_EVIDENCE_STATE_AUDIT.md",
+      "sha256": "a1cb7584e8d1f7f4c7f286bb975f709a94565b8b5985e0917f8f4e8b4be95088",
+      "size": 1600
+    },
+    {
+      "path": "rules/0.39.1_VULKANSCOPE_0.41.5_COMPATIBILITY_HARDENING.md",
+      "sha256": "81a3ef7ab3bae510f1d4288e21dcaaa19a4c4f1e06da8b2a7a0dcd8275f0727d",
+      "size": 936
+    },
+    {
+      "path": "rules/0.39.2_CI_PAGES_ARTIFACT_HYGIENE.md",
+      "sha256": "419dfd0c1da8e30435e4a423b8a895de405ece89aace256ac52e885842a52443",
+      "size": 1268
+    },
+    {
+      "path": "rules/0.39.3_GITHUB_ACTIONS_SOURCE_AUDIT_HARDENING.md",
+      "sha256": "ab630ca2d27393172e27a63caf742e82491c0a8dbc26f89159552523c1244750",
+      "size": 2187
+    },
+    {
+      "path": "rules/0.39.4_TRACKED_SOURCE_AUDIT_REPOSITORY_REPAIR.md",
+      "sha256": "5d13642da1e9c7c9c1599166ac35c92c859aa49f2fe0e1fd79af296c6455dd40",
+      "size": 2118
+    },
+    {
+      "path": "rules/0.39.5_CROSS_PRODUCER_COMPARE_0.41.7_AUDIT.md",
+      "sha256": "1df4ee224f051189794760cf4eac1e04ad3059fd94818694ba4460d1d1791d55",
+      "size": 1624
+    },
+    {
+      "path": "rules/0.39.6_IMAGE_FORMAT_PROPERTIES2_TUPLE_STATE_0.41.8_AUDIT.md",
+      "sha256": "7ceffc1fc215438197017ab367c964c5faccaa0b786f189b78bac66b314dd296",
+      "size": 1352
+    },
+    {
+      "path": "rules/0.39.7_IMAGE_FORMAT_QUERY_OUTCOME_SEPARATION_0.41.9_AUDIT.md",
+      "sha256": "1ad077115c4ba1a48574251d62c0b05c88f67ccee3b5c435031fb9b5b79c2eb7",
+      "size": 2003
+    },
+    {
+      "path": "rules/0.39.8_IMAGE_FORMAT_QUERY_STATE_COMPLETENESS_0.41.10_AUDIT.md",
+      "sha256": "e9b65f4a7cddf7add449ebd75b9af369e3005fcbdd03ec61bd126e186519e311",
+      "size": 2683
+    },
+    {
+      "path": "rules/0.39.9_REPORT_STATE_CANONICAL_MASK_0.41.11_AUDIT.md",
+      "sha256": "a4c092723bbf3a4115b8e9145aa0b7c17be563f10df7cfeacbcc8c739aed417f",
+      "size": 578
+    },
+    {
+      "path": "rules/CAPSVIEWER_SITE_AUDIT.md",
+      "sha256": "c82d82c8d05236e749eef1090f2f8881c4600fe086c3a68d4507528840cd72e9",
+      "size": 2595
+    },
+    {
+      "path": "rules/HISTORY_0.33.1_DATABASE_AUDIT.md",
+      "sha256": "e6264d99080a56f135e909d535c210672852f4f1af17611c913a89d65b150e64",
+      "size": 1056
+    },
+    {
+      "path": "rules/PROJECT_RULES.md",
+      "sha256": "25776f4decf9a9d6ca652e7e98f4d8d2434421db778ad59e7718be6aeda7d5cb",
+      "size": 83575
+    },
+    {
+      "path": "tools/audit_database.py",
+      "sha256": "92c960048836ff882a5be27d29bd2e3f1f067f22149e78cc5f23d57d941e0b93",
+      "size": 38173
+    },
+    {
+      "path": "tools/build_index.py",
+      "sha256": "83d6befcf99fac0fc33ad93f129aeb0c5600a422bd58d4ead4f11507b6c78207",
+      "size": 1400
+    },
+    {
+      "path": "tools/build_pages_artifact.py",
+      "sha256": "61e81ac1e5bd6efc52725aba6b1e145f44c17a312df5785209c95aad7c2e902c",
+      "size": 2345
+    },
+    {
+      "path": "tools/import_vulkanscope_txt.py",
+      "sha256": "857bb7d646590162a4941c2b5eb392e6f45ef9f940c6a31936ee5efd3df3532e",
+      "size": 5281
+    },
+    {
+      "path": "tools/pages.workflow.yml",
+      "sha256": "4abe83e9da239583bde90c51c04ef9324539ab99dcf025df836abfd51c25124b",
+      "size": 2813
+    },
+    {
+      "path": "tools/quality_gate.py",
+      "sha256": "3bcc8c3b883deafe84399f5c15cd839b1e982a5f54add759d14ca8a768d5529a",
+      "size": 1934
+    },
+    {
+      "path": "tools/repair_repository.py",
+      "sha256": "83ba8e939d995c6dc2854d460ec9b00213c9919927be2b15789f735de63d4b34",
+      "size": 2537
+    },
+    {
+      "path": "tools/test_audit_hygiene.py",
+      "sha256": "f956abbc30e66cce2d34ad2788631cf1801403c4eeb527172119b0a556179e7d",
+      "size": 2379
+    },
+    {
+      "path": "tools/test_compare_04141_compat.mjs",
+      "sha256": "efc7e1b509deed971b877165424d153be152522f9424aaca41944e144520bfe2",
+      "size": 2805
+    },
+    {
+      "path": "tools/test_compare_04141_negative_mutations.mjs",
+      "sha256": "ddc82f1c96386fcf58a74eca92294ee509c95ff4e087e60816c97a77a358ab47",
+      "size": 1612
+    },
+    {
+      "path": "tools/test_compare_contract.mjs",
+      "sha256": "77d6e2dbbb7f218b2948d912333e724c2120665483dba43dc30caf4e084357fe",
+      "size": 8495
+    },
+    {
+      "path": "tools/test_existing_repo_overlay.py",
+      "sha256": "e34670a47a6708b30178cd8fe5ac3febff4a95a3c87f40d1d3298280d276cc84",
+      "size": 2721
+    },
+    {
+      "path": "tools/test_report_text_identity.mjs",
+      "sha256": "c0e6a50ac8b428d5318649122b6d2ce2ecbec2e08f712b871bbf89c63f652eb1",
+      "size": 1329
+    },
+    {
+      "path": "tools/test_routes.mjs",
+      "sha256": "94d04fc360691c2239e1171c59a9092b5066d99a71588355cf0f59f8f3746f43",
+      "size": 2731
+    },
+    {
+      "path": "tools/test_surface_compare_04142.mjs",
+      "sha256": "99b45caa519b3c9d9df77679d7dd7da2de6cefc1b3a53d7456a3d87af3d8ff65",
+      "size": 3442
+    },
+    {
+      "path": "tools/test_surface_compare_04142_negative_mutations.mjs",
+      "sha256": "737f07c41cce2388a80d4fab940f12d035fe20b0bf96d2956a654ba38f591443",
+      "size": 1497
+    },
+    {
+      "path": "tools/test_utf8_text_io.py",
+      "sha256": "982c535d584608d64433ee9b763fb6eae14a613a2946674c9015f67f0a83a511",
+      "size": 1387
+    },
+    {
+      "path": "tools/verify_optional_npm_lock.py",
+      "sha256": "7484cd48a6e9f0c145d463a71e27db04cad7bc801b357344db3b261b057cf12f",
+      "size": 1401
+    },
+    {
+      "path": "tools/verify_regression_contract.py",
+      "sha256": "e67a2415403baa34bf8eae0d6281396800d3fb358773db052e985699eeb6bb66",
+      "size": 4418
+    },
+    {
+      "path": "tools/verify_vulkan_registry.py",
+      "sha256": "6f4d0cb3d8b8585c2b745b42823c8b0be5382382897498770406b6e90c58363a",
+      "size": 1718
+    },
+    {
+      "path": "tools/verify_vulkanscope_04132.py",
+      "sha256": "45422e2585de2bcd812bf22273d34d6f81f0f561612664aa6502db51ace3d4d0",
+      "size": 2232
+    },
+    {
+      "path": "worker/migrations/0001_init.sql",
+      "sha256": "d6b3dff5b9949b4007397c6710e2a96b65b5f7d85f8f6ebfbbd92382148d6ab3",
+      "size": 602
+    },
+    {
+      "path": "worker/migrations/0002_report_cursor_index.sql",
+      "sha256": "38bb395875b7290b08081729d0d7cfb97b410f5dfb4cb2cf67296cf2cf64be69",
+      "size": 92
+    },
+    {
+      "path": "worker/migrations/0003_payload_chunks.sql",
+      "sha256": "4c6cb68b0942e44750dfdf2861005f53119b54450937a712322a7dd4b53c9fd8",
+      "size": 411
+    },
+    {
+      "path": "worker/package.json",
+      "sha256": "56153138022757949ab7aaf8e8cddd34633e438774cc6daf3122e56e20954cac",
+      "size": 975
+    },
+    {
+      "path": "worker/scripts/verify-cloudflare-account.mjs",
+      "sha256": "2749028a5b6526dfe833efe673854c4f66c898ed8efc564c64c269aaff3ba527",
+      "size": 2123
+    },
+    {
+      "path": "worker/src/index.js",
+      "sha256": "b1b78ef0fae3594d8c0a88566276d8de90e41c7b422efeef3e0ca04fbf5ac533",
+      "size": 42105
+    },
+    {
+      "path": "worker/tests/contract.mjs",
+      "sha256": "a73e9e88dc8636c1bea8c9b1d465bbbfbe12ec3f8768e9a6dab99977f893edd8",
+      "size": 43169
+    },
+    {
+      "path": "worker/wrangler.jsonc",
+      "sha256": "b7378ba59129c3b58e8e63ef04b73d3f530c2ebf03973d9d7fa537d7677310e9",
+      "size": 632
+    }
+  ]
+}

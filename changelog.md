@@ -1,3 +1,11 @@
+# VulkanScope Database 0.39.18
+
+- Advances current producer/query metadata to VulkanScope 0.41.43 / versionCode 453 with Vulkan 1.4.361.
+- Cache-busts the Pages frontend to `assets/app.v03918.js` and advances Database version metadata to 0.39.18.
+- Preserves Database 0.39.17 Surface query-state Compare semantics and 0.39.16 historical property/feature Compare compatibility unchanged.
+- Preserves schema 2, technicalReport 3, normalizer 16, Worker validation, canonical report hashing, D1 payload/chunk storage, privacy/CORS controls and the 2 MiB transport limit.
+- Adds failing-before-fix and negative-mutation coverage for stale producer/frontend metadata. No D1 migration, stored-report rewrite or report-hash rewrite is required.
+
 # VulkanScope Database 0.39.17
 
 - Preserves Surface `queryStatus` and `queryReason` through structured and TXT normalization so Compare can distinguish available, unavailable, incomplete, not-applicable and unknown evidence.
