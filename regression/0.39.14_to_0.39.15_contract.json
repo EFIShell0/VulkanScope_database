@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "baseline": "0.39.14",
+  "successor": "0.39.15",
+  "baselineZipSha256": "8405bef9cbe6fc1e2f1c3c5836f3c5c5f3cf612d1afc53313869b204af755777",
+  "baselineManifest": "regression/0.39.14_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "SECURITY.md",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_audit_hygiene.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_existing_repo_overlay.py",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v03914.js"
+  ],
+  "allowedNew": [
+    "assets/app.v03915.js",
+    "regression/0.39.14_files.json",
+    "regression/0.39.14_to_0.39.15_contract.json",
+    "rules/0.39.15_VULKANSCOPE_0.41.40_REPORT_TEXT_COMPATIBILITY_AUDIT.md",
+    "tools/test_report_text_identity.mjs"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    "node_modules",
+    ".wrangler",
+    "_site",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "build",
+    "dist",
+    ".tmp",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "ce6bb96bc7bcb1b8e3b73f2e8e51f7d8726d648b5985f07d473b359c75d5cf8b",
+    "BUILD_AUDIT.md": "200016332d3a09d8696133ad3ee0a365000fbb864243d20066fefde98ac9cc18",
+    "SECURITY.md": "ae9bc9e445be36338a2b3838bce027237e350aa80d45d992699a3bb51cf0550f",
+    "changelog.md": "3bada0ab528abfbbe0ef471ee0ce80d1bd3662219cf6a34e6c24cc0c879ed60f",
+    "index.html": "28e5818839227b19306788d2dbaa976b8195b3decbab301718988c2ef17f311c",
+    "rules/PROJECT_RULES.md": "49c97a3181e5ec1ba485d4cf8ce56234ce77c4850cb7518f3f91cee0f5fbfa28",
+    "tools/audit_database.py": "c9b303c0ddad97e1755bfe49cce8018b773b6d822fef12214eaafc62996bdbd4",
+    "tools/build_index.py": "bde691d598c8433a8ea29e9c17f82b7a5a321c8ff95cac8bee008c15e53c0db6",
+    "tools/build_pages_artifact.py": "de2ff7e4e1d14855a1708da0d08923b9784b36c19a251605d141b79f97babe9c",
+    "tools/pages.workflow.yml": "ce6bb96bc7bcb1b8e3b73f2e8e51f7d8726d648b5985f07d473b359c75d5cf8b",
+    "tools/quality_gate.py": "53087e7e620114bd5b2748f53e1769d80519effa8d7b691d1cd657c8d1b5b560",
+    "tools/repair_repository.py": "f24efe9b0d688cfcb3bd4875f79fc3ad1c3e011772e8d93bc0f2430119da21a4",
+    "tools/test_audit_hygiene.py": "05374de1fdee66b61293da587543682ff07a7214ca605441797aa6c974f09b7f",
+    "tools/test_compare_contract.mjs": "0bec97030c94b4f195623f91d826e11524e9b4aa5d3bb17b236f05e785b65e4c",
+    "tools/test_existing_repo_overlay.py": "1b8b091589295926400f162de78a9068b933ee35236c522232f4aac8092bdc42",
+    "tools/test_routes.mjs": "db83ebac0e394cfc554d5c070edced29e8a425b55d084f9d457d87cc4eb16622",
+    "tools/test_utf8_text_io.py": "f0109b25523c60b807888c5e7cdda091bdb33d5c95181de083c0db990f8c688c",
+    "tools/verify_regression_contract.py": "19b238bcc286b92086b53270afc5e1357363f20189c21708ef43f7634c99b073",
+    "tools/verify_vulkanscope_04132.py": "306d0281da64dcbe1e818f508128f922b7bd74d3d7364f8bb656708a5a823ee1",
+    "worker/package.json": "4ba499ae6dcbbe8914ee0e7b439e2a66cf0168ce20026dcbbea4b14af3a70bb1",
+    "worker/src/index.js": "309bb2c64dfe6cc0916d22a2ff0ea31807382211aa57c5c2e7880b137ddef270",
+    "worker/tests/contract.mjs": "bcb455e46252433d681eedc4afc72779f39e3617aa4b36af67e365d4c0dba423",
+    "assets/app.v03915.js": "d033ae4b4a30a07e7e200c7926dcbe9724d4dabe08241af672c2bb5b6f81aac5",
+    "regression/0.39.14_files.json": "3b2940cf239343bdc023dc79ce2be0b9dbbb9fee24e72c44692f846e65e2975a",
+    "rules/0.39.15_VULKANSCOPE_0.41.40_REPORT_TEXT_COMPATIBILITY_AUDIT.md": "9c770465193c24c13b77668dd6746b6691dc201747b37997df3da2a87fbf1964",
+    "tools/test_report_text_identity.mjs": "c0e6a50ac8b428d5318649122b6d2ce2ecbec2e08f712b871bbf89c63f652eb1"
+  },
+  "selfHashExcluded": [
+    "regression/0.39.14_to_0.39.15_contract.json"
+  ]
+}

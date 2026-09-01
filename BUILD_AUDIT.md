@@ -1,6 +1,14 @@
-# VulkanScope Database 0.39.14 Build / Release Audit
+# VulkanScope Database 0.39.15 Build / Release Audit
 
-- Database release: 0.39.14.
+Immutable predecessor: VulkanScope Database 0.39.14 ZIP SHA-256 `8405bef9cbe6fc1e2f1c3c5836f3c5c5f3cf612d1afc53313869b204af755777`. Current producer audited: VulkanScope 0.41.40 / versionCode 450; Vulkan registry 1.4.361; schema 2 / technicalReport 3; normalizer 16.
+
+Demonstrated defect: Database 0.39.14 requires the historical `Loader / instance API` TXT line although VulkanScope 0.41.24+ emits separate `Loader API` and `Base probe instance API` lines. This causes a valid current complete report to fail the Worker `report_text` contract with HTTP 400. 0.39.15 uses producer-version-aware identity validation, preserves historical merged-line acceptance, and requires the split form for current producers. No D1 migration or payload rewrite is introduced.
+
+Failing-before-fix, Worker contract, regression, source/artifact and package evidence are recorded by executable gates. Production Cloudflare deployment is a separate evidence class and is not implied by local tests.
+
+# VulkanScope Database 0.39.15 Build / Release Audit
+
+- Database release: 0.39.15.
 - Immutable predecessor: 0.39.13.
 - Producer/query baseline: VulkanScope 0.41.32 / versionCode 442.
 - Canonical Vulkan registry baseline: Vulkan 1.4.361 / VK_HEADER_VERSION 361.

@@ -14,7 +14,7 @@ for path in sorted((root / 'tools').rglob('*.py')):
         if not any(k.arg == 'encoding' for k in node.keywords):
             errors.append(f'{path.relative_to(root)}:{node.lineno} {node.func.attr} missing explicit encoding')
 
-app = root / 'assets' / 'app.v03914.js'
+app = root / 'assets' / 'app.v03915.js'
 raw = app.read_bytes()
 try:
     raw.decode('cp1252')

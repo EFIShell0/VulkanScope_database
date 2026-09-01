@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+import path from 'node:path';
+const arg=process.argv.find(x=>x.startsWith('--root='));
+const root=path.resolve(arg?arg.slice(7):path.join(import.meta.dirname,'..'));
+const mod=await import(pathToFileURL(path.join(root,'worker/src/index.js')).href+`?t=${Date.now()}`);
+assert.equal(typeof mod.validReportTextApiIdentity,'function','report-text API identity validator export missing');
+const current={application:{version:'0.41.40'},vulkan:{loaderInstanceApiVersion:'1.4.0',loaderApiVersion:'1.4.0',instanceApiVersion:'1.1.0'}};
+assert.equal(mod.validReportTextApiIdentity(current,['Loader API: 1.4.0','Base probe instance API: 1.1.0']),true);
+assert.equal(mod.validReportTextApiIdentity(current,['Loader / instance API: 1.4.0']),false);
+assert.equal(mod.validReportTextApiIdentity(current,['Loader API: 1.4.0','Base probe instance API: 1.4.0']),false);
+const legacy={application:{version:'0.41.13'},vulkan:{loaderInstanceApiVersion:'1.4.0'}};
+assert.equal(mod.validReportTextApiIdentity(legacy,['Loader / instance API: 1.4.0']),true);
+assert.equal(mod.validReportTextApiIdentity(legacy,['unrelated line']),false);
+console.log('PASS report-text API identity: current split form, historical merged form, wrong-instance and unrelated-line negatives');

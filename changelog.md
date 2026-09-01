@@ -1,10 +1,10 @@
-# VulkanScope Database 0.39.14
+# VulkanScope Database 0.39.15
 
 - Fixes regression-gate false positives when a release is overlaid onto the real long-lived Git repository containing historical source/audit/assets that were not shipped in the predecessor release ZIP.
 - Adds explicit source-overlay and strict-release-package regression modes: predecessor-owned files remain hash-protected in both, while only strict-package mode rejects unrelated source-history files.
 - Treats generated `data/index.json` as semantic generated state so `build_index.py` no longer invalidates the predecessor contract merely by regenerating metadata/report inventory.
 - Adds an existing-repository fixture covering historical extras, stale app repair, generated-index regeneration, strict-package rejection and immutable predecessor mutation detection.
-- Cache-busts the frontend to `app.v03914.js` for release identity only; Worker/D1/API behavior is unchanged from 0.39.13.
+- Cache-busts the frontend to `app.v03915.js` for release identity only; Worker/D1/API behavior is unchanged from 0.39.13.
 - Preserves VulkanScope 0.41.32 / Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 payload chunking and the 2 MiB non-truncating transport limit without a new migration.
 
 # VulkanScope Database 0.39.13

@@ -500,3 +500,14 @@
 - Source-overlay tolerance must never weaken predecessor-file hashing: modifying an unchanged predecessor-owned file still fails. Strict release-package verification must still reject unexpected files.
 - The aggregate quality gate must exercise an existing-repository fixture containing legitimate historical source files, generated index regeneration, stale app repair, strict-package rejection and immutable predecessor mutation detection.
 - VulkanScope 0.41.32, Vulkan 1.4.361, schema 2 / technicalReport 3, normalizer 16, D1 chunking and 2 MiB transport remain unchanged. No D1 migration is required.
+
+
+## Release 0.39.15 / VulkanScope 0.41.40 report-text identity compatibility requirements
+- Treat VulkanScope Database 0.39.14 as the immutable predecessor; predecessor ZIP SHA-256 is `8405bef9cbe6fc1e2f1c3c5836f3c5c5f3cf612d1afc53313869b204af755777`.
+- Current validated producer/query baseline is VulkanScope 0.41.40 / versionCode 450 with Vulkan 1.4.361. Submission schema 2, technicalReport schema 3, normalizer 16, D1 schema and 2 MiB transport ceiling remain unchanged.
+- Report-text identity is producer-version aware. VulkanScope 0.41.24+ must be accepted only when the TXT evidence contains both exact split lines `Loader API: <loaderApiVersion>` and `Base probe instance API: <instanceApiVersion>` matching the JSON envelope. The ambiguous historical merged line is not sufficient for current producers.
+- Historical producer compatibility is preserved: pre-0.41.24 submissions may continue to use `Loader / instance API: <loaderInstanceApiVersion>`. No historical report is rewritten.
+- A current complete report must never be truncated, field-dropped, relabeled or normalized merely to satisfy Worker validation. HTTP 400 fixes must correct the consumer contract rather than weaken producer evidence.
+- `tools/test_report_text_identity.mjs` and the Worker end-to-end contract are mandatory. Failing-before-fix must be demonstrated against immutable 0.39.14; the successor must accept current split identity, reject a current merged regression, accept historical merged identity, and reject mismatched loader/base-instance values.
+- Existing UTF-8 strict decoding, privacy-key rejection, canonical-payload hashing, D1 chunking/idempotency, CORS/account isolation, report completeness and query-state invariants remain mandatory. No D1 migration is introduced.
+- Release packaging must use the existing strict-package/extract/reverify workflow; build/Worker-deploy/runtime production evidence remains a separate PASS/FAIL/NOT EXECUTED class.

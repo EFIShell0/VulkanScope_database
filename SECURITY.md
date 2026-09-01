@@ -67,7 +67,7 @@ For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties
 - This is a release-tooling hardening change only. Worker request validation, D1 storage, report identity, submission privacy controls, payload limits, CORS and public-write policy are unchanged from 0.39.12.
 
 
-## 0.39.14 release-tree / repository-overlay separation
+## 0.39.15 release-tree / repository-overlay separation
 
 - Regression checks distinguish a long-lived source checkout from a distributable release tree. Historical source files that predate the packaged predecessor are not treated as newly introduced release content in source-overlay mode.
 - Predecessor-owned paths remain SHA-256 protected. This tolerance cannot hide a modification to an immutable predecessor file.
