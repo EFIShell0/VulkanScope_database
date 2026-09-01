@@ -2,7 +2,7 @@ from pathlib import Path
 import json,re,sys
 root=Path(__file__).resolve().parents[1]
 c=json.loads((root/'compat/vulkanscope-0.41.32-contract.json').read_text(encoding='utf-8'))
-w=(root/'worker/src/index.js').read_text(encoding='utf-8'); schema=json.loads((root/'report.schema.json').read_text(encoding='utf-8')); app=(root/'assets/app.v03915.js').read_text(encoding='utf-8'); errors=[]
+w=(root/'worker/src/index.js').read_text(encoding='utf-8'); schema=json.loads((root/'report.schema.json').read_text(encoding='utf-8')); app=(root/'assets/app.v03916.js').read_text(encoding='utf-8'); errors=[]
 def check(v,m):
     if not v: errors.append(m)
 check(c['producerVersion']=='0.41.32' and c['producerVersionCode']==442,'producer contract identity')

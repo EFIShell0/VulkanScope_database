@@ -1,3 +1,13 @@
+# VulkanScope Database 0.39.16 Build / Release Audit
+
+Immutable predecessor: VulkanScope Database 0.39.15 ZIP SHA-256 `bdf533c45c84644f66ee29d2fccd3151b2990adb7622031c688a33904a609831`. Current producer/query baseline: VulkanScope 0.41.41 / versionCode 451; Vulkan registry 1.4.361; schema 2 / technicalReport 3; normalizer 16.
+
+The supplied cross-version comparison demonstrates that pre-0.41.40 property-struct `VkBool32` fields stored in the historical Features dataset appear one-sided against 0.41.40+ correctly classified detailed properties. 0.39.16 adds presentation-only historical identity mapping for the exact `VkPhysicalDevice*Properties* · field` boolean pattern and changes no stored payload or report hash.
+
+The Compare summary now labels the visible union as `Visible fields` when Differences only is disabled and `Visible differences` only when the difference filter is enabled. Historical real Features and non-boolean evidence are false-positive controls and are not remapped.
+
+Failing-before-fix was demonstrated by `tools/test_compare_04141_compat.mjs` against immutable 0.39.15. Successor and negative-mutation gates are mandatory. No D1 migration is introduced. Production Cloudflare deployment remains a separate evidence class and is NOT EXECUTED by local source tests.
+
 # VulkanScope Database 0.39.15 Build / Release Audit
 
 Immutable predecessor: VulkanScope Database 0.39.14 ZIP SHA-256 `8405bef9cbe6fc1e2f1c3c5836f3c5c5f3cf612d1afc53313869b204af755777`. Current producer audited: VulkanScope 0.41.40 / versionCode 450; Vulkan registry 1.4.361; schema 2 / technicalReport 3; normalizer 16.
@@ -26,3 +36,5 @@ A real long-lived Git checkout can contain historical source files that are inte
 - `test_existing_repo_overlay.py` permanently reproduces the real repository scenario and checks source-overlay tolerance, stale-app repair, generated-index regeneration, strict-package rejection and immutable predecessor mutation detection.
 
 The repository repair is explicit and never silently run by the quality gate. Existing checkouts updated by extracting a release on top should run `python tools/repair_repository.py --apply` once before the gate.
+
+Final 0.39.16 source gate: `python tools/quality_gate.py` PASS, including immutable 0.39.15 regression verification, historical Compare compatibility/negative mutations, Worker contracts, D1 migration replay and staged Pages artifact audit. Production Cloudflare deployment remains NOT EXECUTED.

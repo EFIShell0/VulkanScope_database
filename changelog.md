@@ -1,3 +1,12 @@
+# VulkanScope Database 0.39.16
+
+- Canonicalizes pre-0.41.40 `VkPhysicalDevice*Properties* · field` boolean rows from the historical Features representation to the current detailed-property identity during Compare only.
+- Preserves historical stored payloads, report hashes and raw report detail; real Feature structs and non-boolean historical evidence are not rewritten.
+- Corrects the Compare summary metric so unfiltered union rows are labeled `Visible fields`; `Visible differences` is used only when Differences only is active.
+- Advances current producer/query metadata to VulkanScope 0.41.41 / versionCode 451 while preserving Vulkan 1.4.361, schema 2, technicalReport 3 and normalizer 16.
+- Adds failing-before-fix, behavioral and negative-mutation coverage for historical Compare compatibility.
+- No D1 migration, stored-report rewrite or report-hash rewrite is required.
+
 # VulkanScope Database 0.39.15
 
 - Fixes regression-gate false positives when a release is overlaid onto the real long-lived Git repository containing historical source/audit/assets that were not shipped in the predecessor release ZIP.

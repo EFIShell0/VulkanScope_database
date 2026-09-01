@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 2,
+  "baseline": "0.39.15",
+  "successor": "0.39.16",
+  "baselineZipSha256": "bdf533c45c84644f66ee29d2fccd3151b2990adb7622031c688a33904a609831",
+  "baselineManifest": "regression/0.39.15_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "SECURITY.md",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_audit_hygiene.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_existing_repo_overlay.py",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v03915.js"
+  ],
+  "allowedNew": [
+    "assets/app.v03916.js",
+    "regression/0.39.15_files.json",
+    "regression/0.39.15_to_0.39.16_contract.json",
+    "rules/0.39.16_VULKANSCOPE_0.41.41_HISTORICAL_COMPARE_IDENTITY_AUDIT.md",
+    "tools/test_compare_04141_compat.mjs",
+    "tools/test_compare_04141_negative_mutations.mjs"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    "node_modules",
+    ".wrangler",
+    "_site",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "build",
+    "dist",
+    ".tmp",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "4b4d050da41584b25c5a87da18cc5cfcf02e02faae43ad2bbb84a346763d6da0",
+    "BUILD_AUDIT.md": "8c3b0488bef8d860030c99fb0eb90ac0f84a6669bc9709dda0ed7a311656952d",
+    "SECURITY.md": "dd321a46d88064dc81a49bd2724abd96e1e95e5128899e86a3dadc9856496a2e",
+    "changelog.md": "f8ceec9743874fb88831cc40d87fa0690cc649af7083f269bf0eeaaad12d94a9",
+    "index.html": "b910d8e56af5ce37160b646785fa94632b635bd62499ce2bd02d53a00c5dfd0a",
+    "rules/PROJECT_RULES.md": "4c164f1b63e045f626c7ded5d5d705bef533d9e4731c11a2384eee35bfd446f6",
+    "tools/audit_database.py": "ebc5e1425167f2184336552d305b5132cc8db61fccb755e388b045be91904d26",
+    "tools/build_index.py": "9dc28baa3c671a2e5851eff902e59a031798e1295e6f1ff17b87bf9177471be4",
+    "tools/build_pages_artifact.py": "8ad470c760c42fdbc4a2ebe10b14feddc41772da59e0b452b360baec63997108",
+    "tools/pages.workflow.yml": "4b4d050da41584b25c5a87da18cc5cfcf02e02faae43ad2bbb84a346763d6da0",
+    "tools/quality_gate.py": "1ef88005734c4dbfdb73a97c1ce8dab0ac8d8ed9288b6ebafe534f2d553581d4",
+    "tools/repair_repository.py": "dbcf2c69cb4c9e646d9ddd134e60151b1e1697717ce3312ab6dc8ae2b678fefa",
+    "tools/test_audit_hygiene.py": "552c36d45e9bf342dddac8f602c0c68a1c5af2eb1245b5975cea01b707849714",
+    "tools/test_compare_contract.mjs": "ba1a162753dc1bd55f3a987e45d6b0c4e4d94ada87e57dc1955976af3e8fb745",
+    "tools/test_existing_repo_overlay.py": "a4a2b998160f2cbeadcb08f15800103eba437187b4c423334cbb7a94983c24ef",
+    "tools/test_routes.mjs": "39ea748dd1d80b2e1b353f573b3af376cc773e41d3d6f5ea8cfa7a99aafe1eb8",
+    "tools/test_utf8_text_io.py": "17f0f0b3662bba7b879f056d6fa7b4f6005afb4f8bacd1caec26474186eed875",
+    "tools/verify_regression_contract.py": "00d06b072814f6ccc4d2d21d139c3a4436295d0ee3d2c1d033795abe1c83009e",
+    "tools/verify_vulkanscope_04132.py": "ea774070a15448b22ca4adad41d0e671d7e7d6481ec6d3c992e8fe0160286a9a",
+    "worker/package.json": "c10b1a0f6ed668d675395e1f1d5d805fe9d9796d8efa172aaeedeb8e2c3aa6c3",
+    "worker/src/index.js": "edc8c03923eca27c576118791d29ff85a0de89a5ffd0b9d598f39fd62b6ecc8b",
+    "worker/tests/contract.mjs": "44bb5367ffafa469838af898aaec989a22af42a147e9f795c3156b74c4cdadfa",
+    "assets/app.v03916.js": "77f9e50a29bad5b79d86e77ac6679e0691cff9110f1e6f5b3e1e17b614ca12e7",
+    "regression/0.39.15_files.json": "214bac11fef9a5d95c55745846f8c1038a9ae108377188bb8a52b3d26700e514",
+    "rules/0.39.16_VULKANSCOPE_0.41.41_HISTORICAL_COMPARE_IDENTITY_AUDIT.md": "c504dccb4ec008d7f285f2f90f19ad5dd955a3528797f39cc5b5462df68ad096",
+    "tools/test_compare_04141_compat.mjs": "efc7e1b509deed971b877165424d153be152522f9424aaca41944e144520bfe2",
+    "tools/test_compare_04141_negative_mutations.mjs": "0635d1ad908f08110faf12a0704c4b39a394e5161ef4b6026659aa85049e3635"
+  },
+  "selfHashExcluded": [
+    "regression/0.39.15_to_0.39.16_contract.json"
+  ]
+}

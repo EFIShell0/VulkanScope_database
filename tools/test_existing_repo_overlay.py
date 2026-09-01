@@ -19,7 +19,7 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     (t / 'assets' / 'site.v0001.css').write_text('/* historical source */\n', encoding='utf-8')
     (t / 'rules' / 'HISTORICAL_LOCAL_AUDIT.md').write_text('# historical\n', encoding='utf-8')
     # Overlay extraction leaves the predecessor app behind; repair must be explicit and deterministic.
-    shutil.copy2(t / 'assets' / 'app.v03915.js', t / 'assets' / 'app.v03914.js')
+    shutil.copy2(t / 'assets' / 'app.v03916.js', t / 'assets' / 'app.v03915.js')
     chk = run(t, 'tools/repair_repository.py', '--check', expect=1)
     if 'stale versioned frontend assets' not in chk:
         raise SystemExit('repository repair check did not identify stale predecessor app')

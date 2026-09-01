@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v03915.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v03916.js',import.meta.url),'utf8');
 function extractFunction(name){
   const start=source.indexOf(`function ${name}(`);
   if(start<0)throw new Error(`missing ${name}`);
@@ -17,7 +17,7 @@ function extractFunction(name){
   throw new Error(`unterminated ${name}`);
 }
 const context={
-  hostImageCopyCompareIdentity:(section,name)=>({section,name}),canonicalPropertyValue:(_n,v)=>v,
+  canonicalPropertyValue:(_n,v)=>v,
   formatFlags:v=>String(v??''),bytesLabel:v=>String(v??''),memoryHeapFlags:v=>String(v??''),memoryFlags:v=>String(v??''),
   canonicalQueueFlags:v=>String(v??''),canonicalVideoCodecOperations:v=>String(v??''),queueVideoCodecState:q=>q.videoCodecQueryStatus||'unknown',
   boolState:v=>v===true?'supported':v===false?'unsupported':'unknown',canonicalSurfaceValue:(_k,v)=>String(v??''),semanticStatus:()=> 'available',hasFormatEvidence:v=>v!==undefined&&v!==null&&String(v).trim()!=='',
@@ -27,7 +27,10 @@ vm.createContext(context);
 const helperStart=source.indexOf('const compareEvidenceStatus=');
 const helperEnd=source.indexOf(';const boolState=',helperStart);
 if(helperStart<0||helperEnd<0)throw new Error('missing compareEvidenceStatus');
-vm.runInContext(`${source.slice(helperStart,helperEnd)};${extractFunction('compareMap')};this.compareMap=compareMap`,context);
+const identityStart=source.indexOf('const hostImageCopyCompareIdentity=');
+const identityEnd=source.indexOf('function compareMap(r)',identityStart);
+if(identityStart<0||identityEnd<0)throw new Error('missing compare identity helpers');
+vm.runInContext(`${source.slice(helperStart,helperEnd)};${source.slice(identityStart,identityEnd)};${extractFunction('compareMap')};this.compareMap=compareMap`,context);
 const base={capabilities:[{section:'VULKAN PROFILES',name:'VP_KHR_roadmap_2026 r.1',value:'FAIL old',status:'unsupported'}],profiles:[{name:'VP_KHR_roadmap_2026',revision:'r.2',summary:'UNKNOWN · partial evaluator',status:'unknown'}],extensions:[],instanceExtensions:[],formats:[],memoryHeaps:[],memoryTypes:[],queues:[],surface:{},instanceLayers:[],deviceLayers:[],queryDiagnostics:{},display:{},gpu:{vendorId:'0x5143'},driver:{},vulkan:{},application:{}};
 let map=context.compareMap(base);
 assert.equal([...map.keys()].some(k=>k.startsWith('VULKAN PROFILES /')),false,'normalized profiles must suppress duplicate legacy compare rows');

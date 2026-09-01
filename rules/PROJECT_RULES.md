@@ -511,3 +511,14 @@
 - `tools/test_report_text_identity.mjs` and the Worker end-to-end contract are mandatory. Failing-before-fix must be demonstrated against immutable 0.39.14; the successor must accept current split identity, reject a current merged regression, accept historical merged identity, and reject mismatched loader/base-instance values.
 - Existing UTF-8 strict decoding, privacy-key rejection, canonical-payload hashing, D1 chunking/idempotency, CORS/account isolation, report completeness and query-state invariants remain mandatory. No D1 migration is introduced.
 - Release packaging must use the existing strict-package/extract/reverify workflow; build/Worker-deploy/runtime production evidence remains a separate PASS/FAIL/NOT EXECUTED class.
+
+## Release 0.39.16 / VulkanScope 0.41.41 historical Compare identity requirements
+- Treat VulkanScope Database 0.39.15 as the immutable predecessor; predecessor ZIP SHA-256 is `bdf533c45c84644f66ee29d2fccd3151b2990adb7622031c688a33904a609831`.
+- Current producer/query baseline is VulkanScope 0.41.41 / versionCode 451 with Vulkan 1.4.361. Submission schema 2, technicalReport 3, normalizer 16, D1 schema and 2 MiB transport ceiling remain unchanged.
+- Compare must preserve historical report bytes and stored normalized evidence. Compatibility correction is presentation-only and must never rewrite D1 payloads, report hashes or raw report detail.
+- For producers before 0.41.40 only, a boolean historical Features row whose exact name is `VkPhysicalDevice*Properties* · <field>` is the old representation of a successfully queried property value. Compare may canonicalize it to section `VkPhysicalDevice*Properties*`, name `<field>`, value `true`/`false`, state Available so it matches 0.41.40+ property evidence.
+- Real `VkPhysicalDevice*Features*` rows, non-boolean rows, malformed names and 0.41.40+ producer evidence must not be remapped. Missing evidence remains Unknown/Not reported and is never inferred Unsupported.
+- Compare summary wording is semantic. With Differences only disabled, the visible union count is `Visible fields`; `Visible differences` is valid only while the differences filter is enabled.
+- `tools/test_compare_04141_compat.mjs` and `tools/test_compare_04141_negative_mutations.mjs` are mandatory. The compatibility test must fail against immutable 0.39.15 and pass against 0.39.16. Negative mutations must reject removal of the producer-version bound, property-struct identity mapping and dynamic visible-metric label. A real Feature row is the false-positive control.
+- Worker report-validation, canonical hashing, D1 payload/chunk storage, request UTF-8 bounds, privacy/CORS rules and public-write policy remain unchanged except current producer/query metadata advances to 0.41.41.
+- No D1 migration, stored-report rewrite or report-hash rewrite is introduced. Worker deployment and production runtime smoke testing remain separate evidence classes.

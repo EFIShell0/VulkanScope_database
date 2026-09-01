@@ -75,3 +75,7 @@ For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties
 - Stale versioned frontend app JavaScript is removed only through the explicit repository-repair command; the quality gate checks but does not silently mutate the checkout.
 - Generated `data/index.json` is semantic state, not a fixed release hash. Its schema/version/Vulkan producer metadata and structural types are validated after regeneration.
 - No Worker runtime, D1, request-body, privacy, CORS, report-hash or authentication policy changes are made in this release.
+
+## 0.39.16 historical Compare compatibility
+
+Historical property-as-feature canonicalization is presentation-only and producer-version bounded. It does not modify stored payloads, report hashes, D1 rows, submission validation, CORS, privacy-key rejection or authentication policy. Only pre-0.41.40 boolean rows whose names explicitly identify a `VkPhysicalDevice*Properties*` struct are remapped; real Feature structs and non-boolean rows remain unchanged.
