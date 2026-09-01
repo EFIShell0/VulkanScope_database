@@ -76,6 +76,6 @@ For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties
 - Generated `data/index.json` is semantic state, not a fixed release hash. Its schema/version/Vulkan producer metadata and structural types are validated after regeneration.
 - No Worker runtime, D1, request-body, privacy, CORS, report-hash or authentication policy changes are made in this release.
 
-## 0.39.16 historical Compare compatibility
+## 0.39.17 Surface Compare evidence-state integrity
 
-Historical property-as-feature canonicalization is presentation-only and producer-version bounded. It does not modify stored payloads, report hashes, D1 rows, submission validation, CORS, privacy-key rejection or authentication policy. Only pre-0.41.40 boolean rows whose names explicitly identify a `VkPhysicalDevice*Properties*` struct are remapped; real Feature structs and non-boolean rows remain unchanged.
+Surface Compare normalization now preserves the producer's query status/reason so a failed, incomplete, not-applicable or unknown Surface probe cannot be turned into fabricated Unsupported presentation evidence. Generic Surface diagnostic/property `false` values use availability semantics, while a negative presentation capability is labeled Unsupported only when its owning query completed successfully. This is a presentation/normalization correction only: stored payloads, canonical report hashes, D1 rows, submission validation, CORS, privacy-key rejection, authentication policy, request limits and Worker storage behavior are unchanged. The producer-bounded historical property-as-feature canonicalization introduced in 0.39.16 remains unchanged.

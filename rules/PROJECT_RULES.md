@@ -522,3 +522,15 @@
 - `tools/test_compare_04141_compat.mjs` and `tools/test_compare_04141_negative_mutations.mjs` are mandatory. The compatibility test must fail against immutable 0.39.15 and pass against 0.39.16. Negative mutations must reject removal of the producer-version bound, property-struct identity mapping and dynamic visible-metric label. A real Feature row is the false-positive control.
 - Worker report-validation, canonical hashing, D1 payload/chunk storage, request UTF-8 bounds, privacy/CORS rules and public-write policy remain unchanged except current producer/query metadata advances to 0.41.41.
 - No D1 migration, stored-report rewrite or report-hash rewrite is introduced. Worker deployment and production runtime smoke testing remain separate evidence classes.
+
+
+## Release 0.39.17 / VulkanScope 0.41.42 Surface evidence-state Compare requirements
+- Treat VulkanScope Database 0.39.16 as the immutable predecessor; predecessor ZIP SHA-256 is `0428aff0568bf4124f9cce94c18c951a788b6c0e19a2757d5f172067d1228aed`.
+- Current producer/query baseline is VulkanScope 0.41.42 / versionCode 452 with Vulkan 1.4.361. Submission schema 2, technicalReport 3, normalizer 16, D1 schema and 2 MiB transport ceiling remain unchanged.
+- Surface Compare and report-detail presentation must preserve explicit Surface query state. A false diagnostic/property value is an available queried value, not Unsupported capability evidence.
+- `presentationSupported=false` is Unsupported only when the owning Surface query completed Available. If the Surface query is Unavailable, Incomplete, Not applicable or Unknown, presentation support inherits that evidence state instead of fabricating Unsupported.
+- Per-queue presentation `supported=false` is Unsupported only when its `vkGetPhysicalDeviceSurfaceSupportKHR` query returned `VK_SUCCESS`; a failed/missing queue query inherits Unavailable/Incomplete/Not applicable/Unknown as appropriate.
+- Generic `surface.capabilities` scalar/boolean values use query-availability semantics. Diagnostic `false`, `NO` and numeric zero remain exact reported values and must not be reclassified as Unsupported.
+- TXT/structured normalization must retain `surface.queryStatus` and `surface.queryReason` so historical current-schema reports can be compared without rewriting stored bytes or D1 payloads.
+- `tools/test_surface_compare_04142.mjs` and `tools/test_surface_compare_04142_negative_mutations.mjs` are mandatory. The compatibility test must fail against immutable 0.39.16 and pass against 0.39.17.
+- No D1 migration, stored-report rewrite, report-hash rewrite, normalizer bump, Worker validation weakening or payload schema change is introduced.

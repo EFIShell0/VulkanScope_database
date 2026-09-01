@@ -26,7 +26,7 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
-      - name: Confirm 0.39.16 source files
+      - name: Confirm 0.39.17 source files
         run: |
           python tools/audit_database.py --version
           python tools/repair_repository.py --check
@@ -45,11 +45,15 @@ jobs:
       - name: Test source/artifact audit boundaries
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
-        run: node --check assets/app.v03916.js
+        run: node --check assets/app.v03917.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
       - name: Test compare semantics
         run: node tools/test_compare_contract.mjs
+      - name: Test Surface Compare evidence semantics
+        run: node tools/test_surface_compare_04142.mjs
+      - name: Test Surface Compare negative mutations
+        run: node tools/test_surface_compare_04142_negative_mutations.mjs
       - name: Check Worker JavaScript syntax
         run: node --check worker/src/index.js
       - name: Test Worker contract

@@ -1,3 +1,13 @@
+# VulkanScope Database 0.39.17
+
+- Preserves Surface `queryStatus` and `queryReason` through structured and TXT normalization so Compare can distinguish available, unavailable, incomplete, not-applicable and unknown evidence.
+- Treats generic Surface capability/diagnostic scalar values with availability semantics; diagnostic `false` / `NO` values are no longer mislabeled as unsupported capabilities.
+- Reports `presentationSupported=false` as Unsupported only when the owning Surface query completed as Available; failed, incomplete, not-applicable or unknown Surface probes retain their evidence state instead of fabricating negative support.
+- Applies the same query-result rule to per-queue presentation support: `false` becomes Unsupported only after a successful queue-support query.
+- Preserves VulkanScope Database 0.39.16 historical pre-0.41.40 property/feature Compare canonicalization and corrected `Visible fields` / `Visible differences` wording.
+- Advances current producer metadata to VulkanScope 0.41.42 / versionCode 452 while preserving Vulkan 1.4.361, schema 2, technicalReport 3 and normalizer 16.
+- Adds failing-before-fix, behavioral and negative-mutation tests for Surface evidence-state Compare semantics. No D1 migration, stored-report rewrite or report-hash rewrite is required.
+
 # VulkanScope Database 0.39.16
 
 - Canonicalizes pre-0.41.40 `VkPhysicalDevice*Properties* · field` boolean rows from the historical Features representation to the current detailed-property identity during Compare only.
