@@ -83,3 +83,11 @@ Surface Compare normalization now preserves the producer's query status/reason s
 ## 0.39.18 producer metadata update
 
 0.39.18 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.
+
+## 0.39.19 producer metadata update
+
+0.39.19 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.
+
+## 0.39.20 producer metadata update
+
+0.39.20 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.

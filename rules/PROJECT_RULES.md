@@ -544,3 +544,22 @@
 - `tools/test_producer_baseline_04143.mjs` and `tools/test_producer_baseline_04143_negative_mutations.mjs` are mandatory. The baseline verifier must fail against immutable 0.39.17 and pass on 0.39.18; negative mutations must reject stale frontend/Worker producer metadata and stale frontend asset identity with an unrelated generated-state false-positive control.
 - Worker report validation, canonical hashing, D1 payload/chunk storage, request UTF-8 bounds, privacy/CORS rules, public-write policy, report IDs, stored payloads and migrations remain unchanged. No D1 migration, stored-report rewrite or report-hash rewrite is introduced.
 - Cloudflare Worker deployment and production runtime smoke testing remain separate evidence classes and are `NOT EXECUTED` until actually performed.
+
+## Release 0.39.19 / VulkanScope 0.41.44 producer-baseline requirements
+- Treat VulkanScope Database 0.39.18 as immutable predecessor; predecessor ZIP SHA-256 is `97ff5e670762698be7d9a1cac76e442cf7f37a97712c7db4d0c9407e19771f68`.
+- Current producer/query baseline is VulkanScope 0.41.44 / versionCode 454 with Vulkan 1.4.361. Submission schema 2, technicalReport 3, normalizer 16, D1 schema and 2 MiB transport ceiling remain unchanged.
+- This release is producer-metadata/cache-identity only. VulkanScope 0.41.44 changes application-side Vulkan Profiles evaluation but does not change Database submission envelope, technicalReport structure, report-text identity or query-evidence state vocabulary.
+- Pages frontend, static index and Worker health/list metadata must identify VulkanScope 0.41.44 as current producer/query baseline. Current cache-busted frontend asset is `assets/app.v03919.js`; stale `app.v03918.js` must not remain in the strict release package.
+- Existing 0.39.17 Surface evidence-state Compare semantics and 0.39.16 historical pre-0.41.40 property/feature Compare canonicalization remain unchanged.
+- `tools/test_producer_baseline_04144.mjs` and `tools/test_producer_baseline_04144_negative_mutations.mjs` are mandatory. The baseline verifier must fail against immutable 0.39.18 and pass on 0.39.19; negative mutations must reject stale frontend/Worker producer metadata and stale frontend asset identity with an unrelated generated-state false-positive control.
+- Worker report validation, canonical hashing, D1 payload/chunk storage, request UTF-8 bounds, privacy/CORS rules, public-write policy, report IDs, stored payloads and migrations remain unchanged. No D1 migration, stored-report rewrite or report-hash rewrite is introduced.
+- Cloudflare Worker deployment and production runtime smoke testing remain separate evidence classes and are `NOT EXECUTED` until actually performed.
+
+## Release 0.39.20 / VulkanScope 0.41.45 producer-baseline requirements
+- Treat VulkanScope Database 0.39.19 as immutable predecessor; predecessor ZIP SHA-256 is `91e059a52264d5ab1c95ccd8cea9e84925a1a8b12987d2d0b05a0a124af59c7f`.
+- Current producer/query baseline is VulkanScope 0.41.45 / versionCode 455 with Vulkan 1.4.361. Submission schema 2, technicalReport 3, normalizer 16, D1 schema and 2 MiB transport ceiling remain unchanged.
+- This release is producer-metadata/cache-identity only. VulkanScope 0.41.45 changes application-side Vulkan Video exact-profile capability collection but does not change the Database submission envelope, report-text identity, query-state vocabulary or stored-report/hash semantics.
+- Pages frontend, static index and Worker health/list metadata must identify VulkanScope 0.41.45 as current producer/query baseline. Current cache-busted frontend asset is `assets/app.v03920.js`; stale `app.v03919.js` must not remain in the strict release package.
+- No D1 migration, stored payload rewrite, report hash rewrite, normalizer increment or Compare semantic change is permitted for this release.
+- `tools/test_producer_baseline_04145.mjs` and `tools/test_producer_baseline_04145_negative_mutations.mjs` are mandatory. The baseline verifier must fail against immutable 0.39.19 and pass on 0.39.20; negative mutations must reject stale frontend/Worker producer metadata and stale frontend asset identity with an unrelated generated-state false-positive control.
+- Source-overlay regression protection, strict-package verification, Pages artifact auditing, Worker contract tests and D1 migration-chain replay remain mandatory. Live Cloudflare deploy/runtime smoke is a separate evidence class and remains NOT EXECUTED unless actually run.

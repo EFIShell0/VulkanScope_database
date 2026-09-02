@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 
-const source=fs.readFileSync(new URL('../assets/app.v03918.js',import.meta.url),'utf8');
+const source=fs.readFileSync(new URL('../assets/app.v03920.js',import.meta.url),'utf8');
 function extractFunction(name){
   const start=source.indexOf(`function ${name}(`);
   if(start<0)throw new Error(`missing ${name}`);

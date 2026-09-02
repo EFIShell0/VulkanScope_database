@@ -1,3 +1,15 @@
+# VulkanScope Database 0.39.20
+
+- Advances current producer/query metadata to VulkanScope 0.41.45 / versionCode 455 with Vulkan 1.4.361.
+- Cache-busts the Pages frontend to `assets/app.v03920.js` and advances Database version metadata to 0.39.20.
+- Preserves schema 2, technicalReport 3, normalizer 16, Compare semantics, report hashes, D1 storage and all historical reports; no D1 migration is required.
+
+# VulkanScope Database 0.39.19
+
+- Advances current producer/query metadata to VulkanScope 0.41.44 / versionCode 454 with Vulkan 1.4.361.
+- Cache-busts the Pages frontend to `assets/app.v03919.js` and advances Database version metadata to 0.39.19.
+- Preserves schema 2, technicalReport 3, normalizer 16, Surface/Compare semantics, report hashes, D1 storage and all historical reports; no D1 migration is required.
+
 # VulkanScope Database 0.39.18
 
 - Advances current producer/query metadata to VulkanScope 0.41.43 / versionCode 453 with Vulkan 1.4.361.
