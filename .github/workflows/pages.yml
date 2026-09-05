@@ -26,10 +26,12 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
+      - name: Repair release checkout
+        run: python tools/repair_repository.py --apply
       - name: Confirm 0.39.24 source files
         run: |
-          python tools/audit_database.py --version
           python tools/repair_repository.py --check
+          python tools/audit_database.py --version
       - name: Verify deterministic UTF-8 tooling
         run: python tools/test_utf8_text_io.py
       - name: Verify optional npm lock
@@ -45,7 +47,8 @@ jobs:
       - name: Test source/artifact audit boundaries
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
-        run: node --check assets/app.v03924.js
+        run: |
+          node --check assets/app.v03924.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs

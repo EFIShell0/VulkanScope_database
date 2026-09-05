@@ -23,8 +23,19 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     chk = run(t, 'tools/repair_repository.py', '--check', expect=1)
     if 'stale versioned frontend assets' not in chk:
         raise SystemExit('repository repair check did not identify stale predecessor app')
+    workflow = (t / '.github' / 'workflows' / 'pages.yml').read_text(encoding='utf-8')
+    apply_token = 'python tools/repair_repository.py --apply'
+    check_token = 'python tools/repair_repository.py --check'
+    audit_token = 'python tools/audit_database.py --version'
+    if any(token not in workflow for token in (apply_token, check_token, audit_token)):
+        raise SystemExit('GitHub Actions preflight is missing repair/apply/check/audit token')
+    if not (workflow.index(apply_token) < workflow.index(check_token) < workflow.index(audit_token)):
+        raise SystemExit('GitHub Actions preflight does not repair stale overlay assets before checking/auditing')
     run(t, 'tools/repair_repository.py', '--apply')
     run(t, 'tools/repair_repository.py', '--check')
+    run(t, 'tools/audit_database.py', '--version')
+    if (t / 'assets' / 'app.v03916.js').exists():
+        raise SystemExit('CI-style repository repair left stale versioned frontend asset behind')
     out = run(t, 'tools/verify_regression_contract.py')
     if 'mode=source-overlay' not in out:
         raise SystemExit('source-overlay mode was not exercised')

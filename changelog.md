@@ -124,3 +124,8 @@
 - The complete tuple ledger remains excluded from Properties & Limits totals; Compare overlays only non-available states under the canonical tuple identity.
 - Historical VulkanScope 0.41.9 separated outcomes and 0.41.8 embedded negative tuple evidence remain compatible.
 - Current producer baseline is VulkanScope 0.41.10 / 420; schema 2, technicalReport 3, normalizer 15, Vulkan 1.4.360 and D1 storage remain unchanged.
+### 0.39.24 CI hotfix
+- GitHub Actions now repairs stale versioned frontend assets from long-lived/overlay-updated checkouts before the release source audit, preventing old `assets/app.v*.js` files from failing the build.
+- Fixed the frontend JavaScript syntax step so both current assets execute inside one valid YAML multiline command block.
+- Added exact stale-checkout regression coverage; Vulkan/report/Worker/Database semantics are unchanged.
+

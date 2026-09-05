@@ -31,3 +31,12 @@ The complete source `tools/quality_gate.py` is required before packaging and inc
 
 ## Deployment boundary
 Live Cloudflare Pages/Worker/D1 deployment is NOT EXECUTED in this packaging environment. The release package is deploy-ready source only.
+## GitHub Actions stale-checkout repair
+The release workflow now runs deterministic `repair_repository.py --apply` before source-version audit. A regression fixture creates a stale historical `app.v*.js`, proves the old audit-first sequence fails, applies the exact CI repair sequence, and proves the repaired checkout passes. The frontend syntax step was also corrected to a valid multiline YAML block.
+### Executed CI hotfix evidence
+- Reproduced the reported long-lived checkout condition with a stale `assets/app.v03920.js`: `repair_repository.py --check` rejects it before repair.
+- Executed the new CI preflight sequence (`--apply` -> `--check` -> audit version); the stale `app.v03920.js` was removed and the repaired checkout passed.
+- Parsed the corrected Pages workflow as YAML locally.
+- Full Database `tools/quality_gate.py`: PASS after the hotfix.
+- Frontend app/Encyclopedia JavaScript syntax, Worker syntax/contract, source audit and staged Pages artifact audit: PASS when executed separately.
+
