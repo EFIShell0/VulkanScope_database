@@ -1,0 +1,533 @@
+{
+  "schemaVersion": 1,
+  "appVersion": "0.80.10",
+  "registryBaseline": "Vulkan 1.4.362",
+  "core": [
+    {
+      "title": "Supported",
+      "category": "Evidence state",
+      "definition": "Positive runtime evidence confirms the exact reported capability or queried combination.",
+      "detail": "Support is scoped to the exact query; it is never inferred from a GPU marketing name."
+    },
+    {
+      "title": "Unsupported",
+      "category": "Evidence state",
+      "definition": "Explicit runtime evidence proves the exact capability or queried combination is not supported.",
+      "detail": "A negative result for one tuple/profile does not automatically make a broader feature or format unsupported."
+    },
+    {
+      "title": "Unavailable",
+      "category": "Evidence state",
+      "definition": "The query could not produce usable capability evidence.",
+      "detail": "Unavailable is not proof of unsupported hardware; failures, timeouts, incomplete prerequisites or inaccessible paths can produce it."
+    },
+    {
+      "title": "Not applicable",
+      "category": "Evidence state",
+      "definition": "A prerequisite, API scope or extension is not exposed, so that query does not apply to the selected runtime path.",
+      "detail": "For example, Vulkan Video being Not applicable does not prove hardware video decode/encode is absent; it describes only the Vulkan Video API path of the selected Vulkan driver."
+    },
+    {
+      "title": "Unknown",
+      "category": "Evidence state",
+      "definition": "There is not enough authoritative evidence to classify the capability.",
+      "detail": "Unknown is intentionally distinct from Unsupported and from Not applicable."
+    },
+    {
+      "title": "Vulkan instance",
+      "category": "Core concept",
+      "definition": "VkInstance is the application-level connection to a Vulkan implementation.",
+      "detail": "Instance extensions/layers and the instance API version define what can be requested before selecting a physical device."
+    },
+    {
+      "title": "Physical device",
+      "category": "Core concept",
+      "definition": "VkPhysicalDevice represents a Vulkan-capable implementation/device discovered from an instance.",
+      "detail": "Features, properties, limits, memory types, queues, formats and extension enumeration are primarily queried from this object."
+    },
+    {
+      "title": "Logical device",
+      "category": "Core concept",
+      "definition": "VkDevice is the application-created logical interface to one selected physical device.",
+      "detail": "Enabled device features/extensions and queues become usable through this object; enumeration alone does not enable them."
+    },
+    {
+      "title": "Queue",
+      "category": "Core concept",
+      "definition": "VkQueue is an execution/presentation queue obtained from a logical device.",
+      "detail": "Queue-family flags describe what kinds of work can be submitted; presentation support is Surface-specific evidence."
+    },
+    {
+      "title": "Command buffer",
+      "category": "Core concept",
+      "definition": "VkCommandBuffer records Vulkan commands for later submission to a queue.",
+      "detail": "Most vkCmd* calls record work; they do not execute GPU work at the moment the function is called."
+    },
+    {
+      "title": "Feature",
+      "category": "Capability class",
+      "definition": "A Vulkan feature is usually a Boolean capability that must be queried and, when required, enabled before use.",
+      "detail": "Feature structs often participate in extensible pNext chains."
+    },
+    {
+      "title": "Property",
+      "category": "Capability class",
+      "definition": "A property is implementation information such as supported modes, identifiers, alignments or behavioral characteristics.",
+      "detail": "Properties describe the implementation; they are not normally enabled like Boolean features."
+    },
+    {
+      "title": "Limit",
+      "category": "Capability class",
+      "definition": "A limit is a numeric boundary such as a maximum size/count or required alignment.",
+      "detail": "The comparison direction matters: some requirements need at least a value, while others require not exceeding a maximum."
+    },
+    {
+      "title": "Format",
+      "category": "Capability class",
+      "definition": "VkFormat identifies an image/buffer element format.",
+      "detail": "Format support depends on tiling, usage and feature flags; a single failed tuple must not be generalized into universal format unsupported status."
+    },
+    {
+      "title": "Layer",
+      "category": "API concept",
+      "definition": "A Vulkan layer can intercept Vulkan calls to provide validation, tooling or other behavior.",
+      "detail": "Layer presence is separate from device capability support."
+    },
+    {
+      "title": "Extension",
+      "category": "API concept",
+      "definition": "An extension adds Vulkan API functionality outside a particular core-version baseline.",
+      "detail": "Being registered by Khronos is reference metadata; runtime support requires authoritative enumeration/query evidence."
+    },
+    {
+      "title": "Surface / WSI",
+      "category": "Presentation",
+      "definition": "VkSurfaceKHR represents a platform presentation target; WSI means Window System Integration.",
+      "detail": "Surface formats, present modes, capabilities and presentation-queue support depend on the live Surface and can change with it."
+    },
+    {
+      "title": "Swapchain",
+      "category": "Presentation",
+      "definition": "VkSwapchainKHR manages presentable images associated with a Surface.",
+      "detail": "VK_SUBOPTIMAL_KHR can remain usable, while VK_ERROR_OUT_OF_DATE_KHR requires re-query/recreation before successful presentation can continue."
+    },
+    {
+      "title": "pNext",
+      "category": "Extensibility",
+      "definition": "pNext links extensible Vulkan structures into input/output chains.",
+      "detail": "Each chained structure must use the correct sType; VulkanScope uses validated chains rather than guessing unsupported structures."
+    },
+    {
+      "title": "sType",
+      "category": "Extensibility",
+      "definition": "sType identifies the concrete Vulkan structure type to the implementation.",
+      "detail": "It is normally set to the corresponding VK_STRUCTURE_TYPE_* enumerant before the structure is passed to Vulkan."
+    },
+    {
+      "title": "Loader API version",
+      "category": "Versioning",
+      "definition": "The highest Vulkan API version reported by the Vulkan loader entry-point path.",
+      "detail": "It is not the same as a physical device's API version or the driver version."
+    },
+    {
+      "title": "Device API version",
+      "category": "Versioning",
+      "definition": "The Vulkan core API version exposed by a particular VkPhysicalDevice.",
+      "detail": "Core feature/property query eligibility follows this runtime device version plus relevant extension exposure."
+    },
+    {
+      "title": "Driver version",
+      "category": "Versioning",
+      "definition": "A vendor/driver-specific version value associated with the selected physical device.",
+      "detail": "Its encoding can be vendor-specific and must not be confused with Vulkan core API version."
+    },
+    {
+      "title": "vk* command",
+      "category": "Naming",
+      "definition": "Vulkan commands use a lowercase vk prefix followed by an action/object name, for example vkCreateInstance or vkGetPhysicalDeviceProperties2.",
+      "detail": "The command's returned VkResult, if any, reports that operation's status rather than a global device verdict."
+    },
+    {
+      "title": "vkCmd* command",
+      "category": "Naming",
+      "definition": "vkCmd* commands record operations into a VkCommandBuffer.",
+      "detail": "Recording generally defers execution until the command buffer is submitted to an appropriate queue."
+    },
+    {
+      "title": "vkQueue* command",
+      "category": "Naming",
+      "definition": "vkQueue* commands act directly on a VkQueue, such as submitting work or presenting.",
+      "detail": "Queue-family capabilities and any Surface-specific presentation evidence still constrain valid use."
+    },
+    {
+      "title": "Vk* type",
+      "category": "Naming",
+      "definition": "Vk* names are Vulkan types: handles, structures, enums, bitmasks, aliases and related API types.",
+      "detail": "Structure names do not themselves prove that a runtime supports the feature represented by that structure."
+    },
+    {
+      "title": "VK_* token",
+      "category": "Naming",
+      "definition": "VK_* names are Vulkan constants, enumerants, bit flags, result codes, structure-type identifiers, extension-name macros and other registered tokens.",
+      "detail": "A _BIT token is normally a bitflag value; vendor/KHR/EXT suffixes identify the namespace that introduced the token."
+    },
+    {
+      "title": "VK_STRUCTURE_TYPE_*",
+      "category": "Naming",
+      "definition": "A VK_STRUCTURE_TYPE_* enumerant is the sType discriminator for a Vulkan structure.",
+      "detail": "It lets the implementation identify the concrete structure in ordinary arguments and pNext chains."
+    },
+    {
+      "title": "*_BIT",
+      "category": "Naming",
+      "definition": "Names ending in _BIT (before any vendor suffix) are bitflag enumerants intended to be combined in compatible flag fields.",
+      "detail": "A zero-valued *_NONE name means no bits are selected rather than a capability bit."
+    },
+    {
+      "title": "KHR / EXT / vendor suffix",
+      "category": "Naming",
+      "definition": "KHR identifies Khronos extensions, EXT identifies multi-vendor extensions, while tags such as AMD, NV, QCOM, ARM or INTEL identify vendor namespaces.",
+      "detail": "A suffix records API namespace/provenance; it is not runtime support evidence."
+    }
+  ],
+  "vkResults": [
+    {
+      "name": "VK_SUCCESS",
+      "value": 0,
+      "meaning": "Command successfully completed. This is success for that command only, not global capability evidence.",
+      "aliases": []
+    },
+    {
+      "name": "VK_NOT_READY",
+      "value": 1,
+      "meaning": "A fence or query has not completed yet; the operation can be checked again later.",
+      "aliases": []
+    },
+    {
+      "name": "VK_TIMEOUT",
+      "value": 2,
+      "meaning": "A wait operation did not finish within the requested timeout interval.",
+      "aliases": []
+    },
+    {
+      "name": "VK_EVENT_SET",
+      "value": 3,
+      "meaning": "The queried Vulkan event is currently signaled.",
+      "aliases": []
+    },
+    {
+      "name": "VK_EVENT_RESET",
+      "value": 4,
+      "meaning": "The queried Vulkan event is currently unsignaled.",
+      "aliases": []
+    },
+    {
+      "name": "VK_INCOMPLETE",
+      "value": 5,
+      "meaning": "A return array was too small for the complete result. Partial positive data may still be retained, but absence must not be inferred.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_OUT_OF_HOST_MEMORY",
+      "value": -1,
+      "meaning": "A CPU/host-side memory allocation required by the Vulkan operation failed.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_OUT_OF_DEVICE_MEMORY",
+      "value": -2,
+      "meaning": "A device/GPU memory allocation required by the Vulkan operation failed.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_INITIALIZATION_FAILED",
+      "value": -3,
+      "meaning": "An object could not be initialized for an implementation-specific reason.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_DEVICE_LOST",
+      "value": -4,
+      "meaning": "The logical or physical device was lost. Existing work may no longer complete and the device generally has to be recreated.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_MEMORY_MAP_FAILED",
+      "value": -5,
+      "meaning": "Mapping a Vulkan memory object into host address space failed.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_LAYER_NOT_PRESENT",
+      "value": -6,
+      "meaning": "A requested Vulkan layer is unavailable or could not be loaded.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_EXTENSION_NOT_PRESENT",
+      "value": -7,
+      "meaning": "A requested Vulkan extension is not exposed by the implementation for that creation/use path.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_FEATURE_NOT_PRESENT",
+      "value": -8,
+      "meaning": "A requested Vulkan feature is not supported for the attempted operation.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_INCOMPATIBLE_DRIVER",
+      "value": -9,
+      "meaning": "The requested Vulkan API/version is incompatible with the available driver implementation.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_TOO_MANY_OBJECTS",
+      "value": -10,
+      "meaning": "The implementation cannot create another object of the requested type because an object-count limit was reached.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_FORMAT_NOT_SUPPORTED",
+      "value": -11,
+      "meaning": "The exact requested format/use combination is not supported. VulkanScope never expands this into a broader format-wide claim.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_FRAGMENTED_POOL",
+      "value": -12,
+      "meaning": "A pool allocation failed specifically because the pool's available memory is fragmented.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_UNKNOWN",
+      "value": -13,
+      "meaning": "An unexpected runtime failure occurred that Vulkan cannot classify more specifically.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_VALIDATION_FAILED",
+      "value": -1000011001,
+      "meaning": "Invalid Vulkan usage was detected by an implementation or validation layer and the command failed.",
+      "aliases": [
+        "VK_ERROR_VALIDATION_FAILED_EXT"
+      ]
+    },
+    {
+      "name": "VK_ERROR_OUT_OF_POOL_MEMORY",
+      "value": -1000069000,
+      "meaning": "A pool allocation failed because the pool cannot satisfy the request.",
+      "aliases": [
+        "VK_ERROR_OUT_OF_POOL_MEMORY_KHR"
+      ]
+    },
+    {
+      "name": "VK_ERROR_INVALID_EXTERNAL_HANDLE",
+      "value": -1000072003,
+      "meaning": "An imported/exported external handle is not valid for the requested Vulkan handle type.",
+      "aliases": [
+        "VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR"
+      ]
+    },
+    {
+      "name": "VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS",
+      "value": -1000257000,
+      "meaning": "A requested opaque capture/device address or related captured handle information is no longer valid or available.",
+      "aliases": [
+        "VK_ERROR_INVALID_DEVICE_ADDRESS_EXT",
+        "VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR"
+      ]
+    },
+    {
+      "name": "VK_ERROR_FRAGMENTATION",
+      "value": -1000161000,
+      "meaning": "Creation failed because the relevant allocation space is too fragmented.",
+      "aliases": [
+        "VK_ERROR_FRAGMENTATION_EXT"
+      ]
+    },
+    {
+      "name": "VK_PIPELINE_COMPILE_REQUIRED",
+      "value": 1000297000,
+      "meaning": "Pipeline creation would require compilation, but the application requested a path that does not perform that compilation.",
+      "aliases": [
+        "VK_PIPELINE_COMPILE_REQUIRED_EXT",
+        "VK_ERROR_PIPELINE_COMPILE_REQUIRED_EXT"
+      ]
+    },
+    {
+      "name": "VK_ERROR_NOT_PERMITTED",
+      "value": -1000174001,
+      "meaning": "The implementation denied a privileged request, such as acquiring a higher global queue priority.",
+      "aliases": [
+        "VK_ERROR_NOT_PERMITTED_EXT",
+        "VK_ERROR_NOT_PERMITTED_KHR"
+      ]
+    },
+    {
+      "name": "VK_ERROR_SURFACE_LOST_KHR",
+      "value": -1000000000,
+      "meaning": "The presentation surface is no longer available and must be recreated before presentation can continue.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR",
+      "value": -1000000001,
+      "meaning": "The native window is already in use in a way that prevents Vulkan from using it for this surface operation.",
+      "aliases": []
+    },
+    {
+      "name": "VK_SUBOPTIMAL_KHR",
+      "value": 1000001003,
+      "meaning": "Presentation can still succeed, but the swapchain no longer matches the surface properties exactly.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_OUT_OF_DATE_KHR",
+      "value": -1000001004,
+      "meaning": "The surface changed and the swapchain is no longer compatible. Surface properties must be queried again and the swapchain recreated.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_INCOMPATIBLE_DISPLAY_KHR",
+      "value": -1000003001,
+      "meaning": "The display and swapchain/image presentation configuration are incompatible for the requested operation.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_INVALID_SHADER_NV",
+      "value": -1000012000,
+      "meaning": "One or more shaders failed the implementation's compile/link validation for this NVIDIA extension path.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_IMAGE_USAGE_NOT_SUPPORTED_KHR",
+      "value": -1000023000,
+      "meaning": "The requested image usage flags are not supported for the exact Vulkan Video/image query.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_VIDEO_PICTURE_LAYOUT_NOT_SUPPORTED_KHR",
+      "value": -1000023001,
+      "meaning": "The requested Vulkan Video picture layout is not supported.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_VIDEO_PROFILE_OPERATION_NOT_SUPPORTED_KHR",
+      "value": -1000023002,
+      "meaning": "The video codec operation selected by the exact video profile is not supported.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_VIDEO_PROFILE_FORMAT_NOT_SUPPORTED_KHR",
+      "value": -1000023003,
+      "meaning": "The format parameters in the exact Vulkan Video profile chain are not supported.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_VIDEO_PROFILE_CODEC_NOT_SUPPORTED_KHR",
+      "value": -1000023004,
+      "meaning": "Codec-specific parameters in the exact Vulkan Video profile chain are not supported.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_VIDEO_STD_VERSION_NOT_SUPPORTED_KHR",
+      "value": -1000023005,
+      "meaning": "The requested Vulkan Video standard-header version is not supported.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT",
+      "value": -1000158000,
+      "meaning": "The supplied DRM format-modifier plane layout is invalid for the requested image configuration.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_PRESENT_TIMING_QUEUE_FULL_EXT",
+      "value": -1000208000,
+      "meaning": "The swapchain's present-timing results queue has insufficient space for another requested timing record.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT",
+      "value": -1000255000,
+      "meaning": "An operation requiring application-controlled exclusive full-screen access failed because that exclusivity was lost.",
+      "aliases": []
+    },
+    {
+      "name": "VK_THREAD_IDLE_KHR",
+      "value": 1000268000,
+      "meaning": "A deferred operation is unfinished, but this thread currently has no work available to perform.",
+      "aliases": []
+    },
+    {
+      "name": "VK_THREAD_DONE_KHR",
+      "value": 1000268001,
+      "meaning": "A deferred operation is unfinished, but there is no more work to assign to additional threads.",
+      "aliases": []
+    },
+    {
+      "name": "VK_OPERATION_DEFERRED_KHR",
+      "value": 1000268002,
+      "meaning": "A deferred-host operation was requested and at least part of its work was actually deferred.",
+      "aliases": []
+    },
+    {
+      "name": "VK_OPERATION_NOT_DEFERRED_KHR",
+      "value": 1000268003,
+      "meaning": "A deferred-host operation was requested, but no part of the work was deferred.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR",
+      "value": -1000299000,
+      "meaning": "Video-standard parameters are syntactically/semantically invalid or exceed the codec/implementation capabilities for that exact request.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_COMPRESSION_EXHAUSTED_EXT",
+      "value": -1000338000,
+      "meaning": "Image creation with requested fixed-rate compression failed because the implementation's compression resources are exhausted.",
+      "aliases": []
+    },
+    {
+      "name": "VK_INCOMPATIBLE_SHADER_BINARY_EXT",
+      "value": 1000482000,
+      "meaning": "The supplied binary shader code is not compatible with this device.",
+      "aliases": [
+        "VK_ERROR_INCOMPATIBLE_SHADER_BINARY_EXT"
+      ]
+    },
+    {
+      "name": "VK_PIPELINE_BINARY_MISSING_KHR",
+      "value": 1000483000,
+      "meaning": "A requested pipeline binary was not found in the implementation's internal cache.",
+      "aliases": []
+    },
+    {
+      "name": "VK_ERROR_NOT_ENOUGH_SPACE_KHR",
+      "value": -1000483000,
+      "meaning": "The caller did not provide enough output space for all required returned data.",
+      "aliases": []
+    }
+  ],
+  "commonCommands": {
+    "vkEnumerateInstanceVersion": "Reports the highest Vulkan core API version supported by the loader path.",
+    "vkEnumerateInstanceExtensionProperties": "Enumerates instance extensions exposed by the loader/implementation for the requested layer scope.",
+    "vkCreateInstance": "Creates a VkInstance using the requested application API version, layers and instance extensions.",
+    "vkEnumeratePhysicalDevices": "Enumerates VkPhysicalDevice handles available to a Vulkan instance.",
+    "vkEnumerateDeviceExtensionProperties": "Enumerates device extensions exposed by a selected physical device.",
+    "vkGetPhysicalDeviceFeatures2": "Queries core and pNext-chained physical-device feature structures without enabling them.",
+    "vkGetPhysicalDeviceProperties2": "Queries core and pNext-chained physical-device properties/limits/identifiers.",
+    "vkGetPhysicalDeviceMemoryProperties2": "Queries memory heaps, memory types and pNext extension memory properties.",
+    "vkGetPhysicalDeviceQueueFamilyProperties2": "Queries queue-family counts, flags and pNext queue-family properties.",
+    "vkGetPhysicalDeviceFormatProperties2": "Queries format feature support, including extensible 64-bit format-feature data when exposed.",
+    "vkGetPhysicalDeviceImageFormatProperties2": "Tests an exact image type/format/tiling/usage/flags tuple and returns image-format properties when supported.",
+    "vkGetPhysicalDeviceSurfaceSupportKHR": "Tests whether one queue family can present to one concrete VkSurfaceKHR.",
+    "vkGetPhysicalDeviceSurfaceCapabilitiesKHR": "Queries presentation capabilities for a concrete Surface.",
+    "vkGetPhysicalDeviceSurfaceFormatsKHR": "Enumerates format/color-space pairs supported for a concrete Surface.",
+    "vkGetPhysicalDeviceSurfacePresentModesKHR": "Enumerates present modes supported for a concrete Surface.",
+    "vkGetPhysicalDeviceVideoCapabilitiesKHR": "Queries capabilities for one exact Vulkan Video profile chain; success must not be generalized to every codec/profile combination.",
+    "vkGetPhysicalDeviceVideoFormatPropertiesKHR": "Enumerates video format properties for a specified Vulkan Video profile/usage query."
+  }
+}

@@ -1,11 +1,19 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "api": "Vulkan",
-  "apiVersion": "1.4.361",
-  "headerVersion": 361,
-  "snapshotSha256": "3ff4984b841932e04eebeb4ce2a6613ebd37c00ffb2e96549785b2c5d7da9e1d",
+  "apiBaseline": "Vulkan 1.4.362",
+  "apiVersion": "1.4.362",
+  "publishedDate": "2026-09-04",
+  "registryRef": "1.4.362",
+  "registrySha256": "cf31c965cf6e788697139601da0c7e02a75a9b6c7ac764e7641f5521ffd9da06",
+  "snapshotSha256": "cf31c965cf6e788697139601da0c7e02a75a9b6c7ac764e7641f5521ffd9da06",
+  "bundledRegistryPath": "registry/upstream/vk.xml",
   "snapshotPath": "registry/upstream/vk.xml",
-  "registeredVulkanExtensionCount": 474,
-  "requiredCurrentExtension": "VK_NV_private_data_base_handle",
-  "requiredCurrentFeatureStruct": "VkPhysicalDevicePrivateDataBaseHandleFeaturesNV"
+  "headerRepository": "KhronosGroup/Vulkan-Headers",
+  "headerCommit": "ee2ec5fd83dafce291024683b50dc89219333076",
+  "headerTag": "v1.4.362",
+  "headerVersion": 362,
+  "registeredVulkanExtensionCount": 476,
+  "requiredCurrentExtension": "VK_VALVE_buffer_device_address_allocation_alignment",
+  "requiredCurrentFeatureStruct": "VkPhysicalDeviceBufferDeviceAddressAllocationAlignmentFeaturesVALVE"
 }

@@ -91,3 +91,14 @@ Surface Compare normalization now preserves the producer's query status/reason s
 ## 0.39.20 producer metadata update
 
 0.39.20 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.
+## 0.39.22 producer floor and read-path presentation hardening
+
+0.39.22 requires VulkanScope 0.80.1 or newer for new POST submissions and returns an explicit floor error before generic schema validation. Existing stored historical reports remain readable; no migration, payload rewrite or report-hash rewrite is performed. Historical physical-device-type canonicalization is read/presentation-only. Existing payload size limits, strict UTF-8 decoding, forbidden identifier checks, canonical hashing, D1 storage/chunking, fixed CORS origin, no-redirect application submission policy and privacy boundaries remain unchanged.
+
+## 0.39.23 producer floor and Encyclopedia reference surface
+
+0.39.23 requires VulkanScope 0.80.3 or newer for new POST submissions. Historical stored reports remain readable and no migration, stored-payload rewrite or report-hash rewrite is performed. The Encyclopedia is a checked-in offline/static reference generated from the locked Vulkan 1.4.361 registry and does not add a documentation/network endpoint. Registry entries are never treated as runtime support evidence. Existing bounded API reads, payload limits, canonical hashing, fixed origins, D1 chunking and privacy boundaries remain unchanged.
+
+## 0.39.24 Vulkan 1.4.362 registry update
+
+The registry/Encyclopedia update does not add endpoints, remote scripts, analytics, credentials, D1 migrations, stored-report rewrites or report-hash rewrites. The VulkanScope 0.80.3 server-side new-submission floor and existing bounded request/payload/privacy controls remain unchanged.

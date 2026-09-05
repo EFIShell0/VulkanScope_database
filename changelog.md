@@ -1,3 +1,29 @@
+# VulkanScope Database 0.39.24
+
+- Advances the current producer/query baseline to VulkanScope 0.80.10 / Vulkan 1.4.362 while keeping the new-submission floor at VulkanScope 0.80.3.
+- Accepts VulkanScope 0.80.10 reports with the new Vulkan 1.4.362 registry/header identity while retaining 0.80.3-0.80.9 / Vulkan 1.4.361 compatibility.
+- Regenerates the offline Encyclopedia to 842 commands, 6248 VK_* tokens, 2461 Vk* types, 476 extensions and 50 VkResult entries and updates visible Encyclopedia copy to 1.4.362.
+- Preserves schema 2, technicalReport 3, normalizer 16, D1 storage, historical report hashes and read compatibility without a migration.
+
+# VulkanScope Database 0.39.23
+
+- Updates the current producer/query baseline to VulkanScope 0.80.9 / versionCode 809 with Vulkan 1.4.361.
+- Raises the new-submission producer floor to VulkanScope 0.80.3; 0.80.2 and lower new submissions are rejected while historical stored reports remain readable.
+- Adds a Database-native offline Vulkan Encyclopedia generated from the same locked Vulkan 1.4.361 registry and curated VulkanScope evidence/VkResult reference model as the application.
+- Provides All, VkResult, Commands, VK_*, Types and Extensions search categories with the locked 842 / 6241 / 2457 / 474 / 50 census and bounded 24-result presentation.
+- Preserves explicit registry-reference versus runtime-evidence separation, existing loading progress, global page scroll arrows, historical canonical device-type presentation, Compare semantics and report hashes.
+- Cache-busts the Pages frontend to `assets/app.v03923.js` plus `assets/encyclopedia.v03923.js`.
+
+# VulkanScope Database 0.39.22
+
+- Updates the current producer/query baseline to VulkanScope 0.80.8 / versionCode 808 with Vulkan 1.4.361.
+- Requires VulkanScope 0.80.1 or newer for new report submissions while keeping all existing historical stored reports readable.
+- Adds a visible loading state from first paint and progressive report-index/report-body loading feedback.
+- Adds boundary-aware global page up/down controls with keyboard and reduced-motion support.
+- Canonicalizes historical friendly physical-device labels such as `Integrated GPU` to `VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU` at read/presentation time without rewriting stored payloads or report hashes.
+- Cache-busts the Pages frontend to `assets/app.v03922.js`.
+- Preserves schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.361, D1 storage and the existing bounded/non-truncating transport model; no D1 migration is required.
+
 # VulkanScope Database 0.39.20
 
 - Advances current producer/query metadata to VulkanScope 0.41.45 / versionCode 455 with Vulkan 1.4.361.
