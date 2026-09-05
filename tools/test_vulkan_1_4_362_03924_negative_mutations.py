@@ -18,9 +18,9 @@ for rel,a,b,name in mutations:
 with tempfile.TemporaryDirectory(prefix='db03924-fp-') as d:
     dst=Path(d)/'root';shutil.copytree(root,dst)
     p=dst/'changelog.md';s=p.read_text(encoding='utf-8')
-    needle='VulkanScope Database 0.39.24'
+    needle='VulkanScope Database 0.39.25'
     if needle not in s:raise SystemExit('FAIL false-positive source absent')
     p.write_text(s.replace(needle,needle+' ',1),encoding='utf-8')
     r=subprocess.run([sys.executable,str(ver),'--root',str(dst),'--skip-version'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
     if r.returncode!=0:raise SystemExit('FAIL false-positive wording mutation rejected')
-print('PASS Database 0.39.24 Vulkan 1.4.362 negative mutations and false-positive control')
+print('PASS Database 0.39.25 Vulkan 1.4.362 negative mutations and false-positive control')

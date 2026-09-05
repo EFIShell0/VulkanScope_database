@@ -23,4 +23,4 @@ for symbol,family in [('VK_SUCCESS','vkResults'),('vkGetPhysicalDeviceFeatures2'
     rows=data[family]
     found=any((x.get('name') if isinstance(x,dict) else x[0])==symbol for x in rows)
     if not found:raise SystemExit('FAIL Encyclopedia symbol '+symbol)
-print('PASS Database 0.39.24 producer-floor/Encyclopedia state machine')
+print('PASS Database 0.39.25 producer-floor/Encyclopedia state machine')

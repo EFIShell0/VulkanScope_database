@@ -604,7 +604,7 @@
 - The bundled canonical vk.xml is Vulkan 1.4.362 / header 362 with SHA-256 `cf31c965cf6e788697139601da0c7e02a75a9b6c7ac764e7641f5521ffd9da06`; Vulkan-Headers provenance is tag v1.4.362 commit `ee2ec5fd83dafce291024683b50dc89219333076`.
 - Database Encyclopedia must be regenerated from the same locked 1.4.362 registry and curated evidence/VkResult model as the application: exactly 842 commands, 6248 VK_* tokens, 2461 Vk* types, 476 extensions and 50 VkResult entries.
 - Registry/reference presence remains separate from runtime capability evidence. Existing Supported/Unsupported/Unavailable/Not applicable/Unknown and Vulkan Video clarification semantics remain unchanged.
-- Current frontend assets are `assets/app.v03924.js` and `assets/encyclopedia.v03924.js`; stale current-version assets must not remain in a strict release package.
+- Current frontend assets are `assets/app.v03925.js` and `assets/encyclopedia.v03924.js`; stale current-version assets must not remain in a strict release package.
 - Submission schema 2, technicalReport 3, normalizer 16, D1 schema, report hashes, payload chunking, historical device-type canonicalization, loading progress, global scroll controls and privacy/security limits remain unchanged. No D1 migration or stored payload rewrite is introduced.
 - `tools/verify_vulkan_1_4_362_03924.py` and `tools/test_vulkan_1_4_362_03924_negative_mutations.py` are mandatory. The verifier must fail against immutable 0.39.23 with version checking disabled and pass on 0.39.24. The mutation suite must reject registry provenance drift, producer-baseline drift, Encyclopedia corpus drift and generator census drift while accepting an unrelated wording-only change as a false-positive control. Deterministic generation, immutable predecessor regression, source quality gate, strict package verification and extracted-ZIP quality gate remain mandatory.
 - Live Cloudflare Pages/Worker deployment and remote D1 smoke testing remain NOT EXECUTED unless actually run.
@@ -612,5 +612,16 @@
 - A long-lived Git checkout may retain predecessor `assets/app.v*.js` files when a release ZIP is overlaid because archive extraction cannot delete tracked files absent from the successor package. GitHub Actions must therefore run `python tools/repair_repository.py --apply` immediately after Python setup and before `audit_database.py --version`, `quality_gate.py`, index generation or source-tree audit.
 - The repair step is workspace-local and deterministic: it restores the canonical Pages workflow and removes stale versioned frontend app assets without changing report data, D1 state, hashes, Worker validation, schema, normalizer or API semantics.
 - CI must then run `repair_repository.py --check` and `audit_database.py --version`; the existing-repository fixture must reproduce the pre-repair stale-asset failure and prove the post-repair sequence passes.
-- Frontend JavaScript syntax validation for `assets/app.v03924.js` and `assets/encyclopedia.v03924.js` must use one valid YAML multiline `run: |` block.
+- Frontend JavaScript syntax validation for `assets/app.v03925.js` and `assets/encyclopedia.v03924.js` must use one valid YAML multiline `run: |` block.
 - This is a release-tooling/CI hotfix within 0.39.24. Vulkan 1.4.362 registry content, 0.80.10 producer baseline, 0.80.3 submission floor, Encyclopedia corpus, stored reports and runtime presentation are unchanged.
+
+## Release 0.39.25 loading / Encyclopedia UI coherence requirements
+- Database version is 0.39.25. Treat VulkanScope Database 0.39.24 as immutable predecessor; producer/query baseline remains VulkanScope 0.80.10 / Vulkan 1.4.362 and new-submission floor remains VulkanScope 0.80.3.
+- This release is browser-presentation-only: no D1 migration, report rewrite, report-hash rewrite, schema change, normalizer bump, producer-floor change or Vulkan registry/corpus change is permitted.
+- Database loading remains an immediate accessible `role=status` / polite live region and continues reporting truthful report-index and bounded report-body progress.
+- Loading and Encyclopedia reuse the existing Database neutral panel/card, line, radius, typography, badge, notice, search and rose-accent design tokens rather than creating an independent visual theme.
+- The Encyclopedia remains offline/local and backed by the unchanged locked Vulkan 1.4.362 corpus: 842 commands, 6248 VK_* tokens, 2461 Vk* types, 476 extensions and 50 VkResult entries.
+- Registry/reference presence remains separate from runtime capability evidence; Vulkan Video Not applicable clarification and Supported/Unsupported/Unavailable/Not applicable/Unknown distinctions remain unchanged.
+- Encyclopedia categories, two-character minimum for large registry symbol families and 24-result visible bound remain unchanged. Global page up/down controls remain authoritative; no nested vertical Encyclopedia scroller is introduced.
+- Browser-visible application JavaScript advances to `assets/app.v03925.js`. The unchanged generated corpus remains `assets/encyclopedia.v03924.js`; main stylesheet changes are cache-busted through `site.v0390.css?v=03925`.
+- `tools/verify_03925_ui_coherence.py` and `tools/test_03925_ui_coherence_negative_mutations.py` are mandatory, alongside the retained 0.39.22/0.39.23 loading/Encyclopedia and 0.39.24 Vulkan 1.4.362 gates.

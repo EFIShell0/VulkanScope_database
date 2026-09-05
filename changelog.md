@@ -1,4 +1,12 @@
-# VulkanScope Database 0.39.24
+# VulkanScope Database 0.39.25
+
+- Aligns the startup/loading surface with the existing VulkanScope Database panel, typography, border/radius and accent language while preserving accessible truthful loading progress.
+- Redesigns the offline Vulkan Encyclopedia to use the same Database cards, badges, notices, search field and compact statistics language instead of a separate visual subsystem.
+- Preserves Vulkan 1.4.362, the 842/6248/2461/476/50 Encyclopedia corpus, evidence semantics, two-character large-family search floor and 24-result bound.
+- Preserves VulkanScope 0.80.10 producer/query baseline, 0.80.3 new-submission floor, schema 2 / technicalReport 3 / normalizer 16, D1 storage and report hashes.
+- Adds an immutable 0.39.24 -> 0.39.25 regression contract and targeted UI-coherence negative-mutation coverage.
+
+# VulkanScope Database 0.39.25
 
 - Advances the current producer/query baseline to VulkanScope 0.80.10 / Vulkan 1.4.362 while keeping the new-submission floor at VulkanScope 0.80.3.
 - Accepts VulkanScope 0.80.10 reports with the new Vulkan 1.4.362 registry/header identity while retaining 0.80.3-0.80.9 / Vulkan 1.4.361 compatibility.
@@ -124,7 +132,7 @@
 - The complete tuple ledger remains excluded from Properties & Limits totals; Compare overlays only non-available states under the canonical tuple identity.
 - Historical VulkanScope 0.41.9 separated outcomes and 0.41.8 embedded negative tuple evidence remain compatible.
 - Current producer baseline is VulkanScope 0.41.10 / 420; schema 2, technicalReport 3, normalizer 15, Vulkan 1.4.360 and D1 storage remain unchanged.
-### 0.39.24 CI hotfix
+### 0.39.25 CI hotfix
 - GitHub Actions now repairs stale versioned frontend assets from long-lived/overlay-updated checkouts before the release source audit, preventing old `assets/app.v*.js` files from failing the build.
 - Fixed the frontend JavaScript syntax step so both current assets execute inside one valid YAML multiline command block.
 - Added exact stale-checkout regression coverage; Vulkan/report/Worker/Database semantics are unchanged.

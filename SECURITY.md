@@ -99,6 +99,6 @@ Surface Compare normalization now preserves the producer's query status/reason s
 
 0.39.23 requires VulkanScope 0.80.3 or newer for new POST submissions. Historical stored reports remain readable and no migration, stored-payload rewrite or report-hash rewrite is performed. The Encyclopedia is a checked-in offline/static reference generated from the locked Vulkan 1.4.361 registry and does not add a documentation/network endpoint. Registry entries are never treated as runtime support evidence. Existing bounded API reads, payload limits, canonical hashing, fixed origins, D1 chunking and privacy boundaries remain unchanged.
 
-## 0.39.24 Vulkan 1.4.362 registry update
+## 0.39.25 Vulkan 1.4.362 registry update
 
 The registry/Encyclopedia update does not add endpoints, remote scripts, analytics, credentials, D1 migrations, stored-report rewrites or report-hash rewrites. The VulkanScope 0.80.3 server-side new-submission floor and existing bounded request/payload/privacy controls remain unchanged.

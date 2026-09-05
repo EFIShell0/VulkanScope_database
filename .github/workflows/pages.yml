@@ -28,7 +28,7 @@ jobs:
           python-version: "3.13"
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Confirm 0.39.24 source files
+      - name: Confirm 0.39.25 source files
         run: |
           python tools/repair_repository.py --check
           python tools/audit_database.py --version
@@ -48,7 +48,7 @@ jobs:
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
         run: |
-          node --check assets/app.v03924.js
+          node --check assets/app.v03925.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
