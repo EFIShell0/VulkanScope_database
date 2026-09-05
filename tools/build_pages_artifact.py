@@ -16,7 +16,7 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v03926.js','assets/encyclopedia.v03924.js',
+    'assets/app.v03927.js','assets/encyclopedia.v03924.js',
     'assets/site.v0390.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',

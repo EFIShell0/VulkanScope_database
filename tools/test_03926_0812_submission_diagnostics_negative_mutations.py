@@ -9,4 +9,4 @@ for rel,a,b in mutations:
         p=dst/rel;s=p.read_text(encoding='utf-8');assert a in s;p.write_text(s.replace(a,b,1),encoding='utf-8')
         r=subprocess.run([sys.executable,str(ver),str(dst)],capture_output=True,text=True)
         if r.returncode==0: raise SystemExit('FAIL negative mutation accepted: '+rel+' '+a)
-print('PASS Database 0.39.26 submission-diagnostics negative mutations')
+print('PASS Database 0.39.27 submission-diagnostics negative mutations')

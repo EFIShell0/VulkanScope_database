@@ -636,3 +636,15 @@
 - No D1 migration, report rewrite, report-hash rewrite, schema bump, normalizer bump, producer-floor change or Vulkan registry/corpus change is permitted.
 - Browser loading/Encyclopedia presentation from 0.39.25 is retained unchanged apart from release/current-producer metadata and normal cache-busting.
 - `tools/verify_03926_0812_submission_diagnostics.py` and its negative-mutation suite are mandatory alongside the complete Worker contract.
+
+## Release 0.39.27 exact producer registry-baseline string requirements
+- Database version is 0.39.27. Treat VulkanScope Database 0.39.26 as immutable predecessor; predecessor ZIP SHA-256 is `e3fe56410d806e65ad09c4cf0595ba743e925f89f9525b89ad667284f266d99b` with 206 files.
+- Current producer/query metadata remains VulkanScope 0.80.12 / versionCode 812 / Vulkan 1.4.362. The new-submission floor remains VulkanScope 0.80.3; schema 2, technicalReport 3 and normalizer 16 remain unchanged.
+- Worker registry validation must match the exact producer-emitted `registryBaseline` and `technicalReport.registryCoverage.baseline` strings. VulkanScope 0.80.10+ emits `Vulkan 1.4.362`; VulkanScope 0.80.3 through 0.80.9 emits `Vulkan 1.4.361`.
+- The Worker must not strip, add at ingest time, normalize or accept an alternate unprefixed registry-baseline spelling merely to make a submission pass. Exact cross-consistency with producer evidence remains fail-closed.
+- Header provenance remains exact: `Vulkan 1.4.362 compile headers; validated query catalog Vulkan 1.4.362` for 0.80.10+ and the corresponding `Vulkan 1.4.361 ...` form for 0.80.3 through 0.80.9. Registry report schema 4, catalog schema 6, 110 implemented physical-device structs, 104 validated query groups and the existing runtime token counts remain unchanged.
+- The canonical Worker contract must use producer-realistic prefixed fixtures and must explicitly reject the former unprefixed `1.4.362` / `1.4.361` fixture spellings with the bounded registry-contract validation class.
+- HTTP validation diagnostics introduced in 0.39.26 remain unchanged and bounded; submitted device/capability values are never echoed in validation errors.
+- No D1 migration, stored-report rewrite, report-hash rewrite, schema bump, normalizer bump, producer-floor change, Vulkan registry/corpus change or capability inference is permitted.
+- Browser loading/Encyclopedia behavior is unchanged. Release identity advances to cache-busted `assets/app.v03927.js`; the generated Encyclopedia remains `assets/encyclopedia.v03924.js` and the Vulkan 1.4.362 842/6248/2461/476/50 corpus remains unchanged.
+- `tools/verify_03927_registry_baseline_prefix.py` and `tools/test_03927_registry_baseline_prefix_negative_mutations.py` are mandatory alongside the retained 0.39.26 diagnostics gate and complete Worker contract.

@@ -1,3 +1,10 @@
+# VulkanScope Database 0.39.27
+
+- Fixes HTTP 400 `[vulkan_1_4_362_registry_contract]` for real VulkanScope 0.80.12 reports by validating the exact producer-emitted `Vulkan 1.4.362` registry-baseline string instead of the incorrect bare `1.4.362` test-fixture spelling.
+- Applies the same exact-string correction to accepted VulkanScope 0.80.3-0.80.9 reports, whose producer baseline is `Vulkan 1.4.361`.
+- Replaces Worker acceptance fixtures with producer-realistic prefixed baselines and adds negative coverage proving unprefixed aliases are rejected rather than silently normalized.
+- Retains VulkanScope 0.80.12 producer metadata, 0.80.3 submission floor, schema 2 / technicalReport 3 / normalizer 16, Vulkan 1.4.362 registry/Encyclopedia corpus, report hashes and D1 storage. No migration is required.
+
 # VulkanScope Database 0.39.25
 
 - Aligns the startup/loading surface with the existing VulkanScope Database panel, typography, border/radius and accent language while preserving accessible truthful loading progress.

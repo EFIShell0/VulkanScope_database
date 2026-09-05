@@ -28,7 +28,7 @@ jobs:
           python-version: "3.13"
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Confirm 0.39.26 source files
+      - name: Confirm 0.39.27 source files
         run: |
           python tools/repair_repository.py --check
           python tools/audit_database.py --version
@@ -48,7 +48,7 @@ jobs:
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
         run: |
-          node --check assets/app.v03926.js
+          node --check assets/app.v03927.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
@@ -62,6 +62,10 @@ jobs:
         run: |
           python tools/verify_03926_0812_submission_diagnostics.py
           python tools/test_03926_0812_submission_diagnostics_negative_mutations.py
+      - name: Verify exact Vulkan registry baseline producer strings
+        run: |
+          python tools/verify_03927_registry_baseline_prefix.py
+          python tools/test_03927_registry_baseline_prefix_negative_mutations.py
       - name: Check Worker JavaScript syntax
         run: node --check worker/src/index.js
       - name: Test Worker contract

@@ -6,22 +6,22 @@ const read=p=>fs.readFileSync(path.join(root,p),'utf8');
 const errors=[];
 const need=(condition,message)=>{if(!condition)errors.push(message)};
 const index=read('index.html');
-const appPath='assets/app.v03926.js';
+const appPath='assets/app.v03927.js';
 need(fs.existsSync(path.join(root,appPath)),'current frontend asset missing');
-need(index.includes('VulkanScope Database <strong>0.39.26</strong>'),'index database version stale');
-need(index.includes('./config.js?v=03926'),'config cache key stale');
-need(index.includes('./assets/app.v03926.js'),'frontend asset cache key stale');
+need(index.includes('VulkanScope Database <strong>0.39.27</strong>'),'index database version stale');
+need(index.includes('./config.js?v=03927'),'config cache key stale');
+need(index.includes('./assets/app.v03927.js'),'frontend asset cache key stale');
 if(fs.existsSync(path.join(root,appPath))){
   const app=read(appPath);
   need(app.includes('VulkanScope 0.80.12 · Vulkan 1.4.362'),'frontend producer/query baseline stale');
-  need(app.includes('Database 0.39.26 · schema'),'frontend footer database version stale');
+  need(app.includes('Database 0.39.27 · schema'),'frontend footer database version stale');
 }
 const worker=read('worker/src/index.js');
 need(worker.includes("producerQueryBaseline:'VulkanScope 0.80.12 · Vulkan 1.4.362'"),'Worker producer/query baseline stale');
 const packageJson=JSON.parse(read('worker/package.json'));
-need(packageJson.version==='0.39.26','Worker package version stale');
+need(packageJson.version==='0.39.27','Worker package version stale');
 const buildIndex=read('tools/build_index.py');
-need(buildIndex.includes('"databaseVersion":"0.39.26"'),'build_index database version stale');
+need(buildIndex.includes('"databaseVersion":"0.39.27"'),'build_index database version stale');
 need(buildIndex.includes('"producerQueryBaseline":"VulkanScope 0.80.12 · Vulkan 1.4.362"'),'build_index producer/query baseline stale');
 if(errors.length){for(const error of errors)console.log('FAIL:',error);process.exit(1)}
-console.log('PASS VulkanScope Database 0.39.26 producer baseline for VulkanScope 0.80.12');
+console.log('PASS VulkanScope Database 0.39.27 producer baseline for VulkanScope 0.80.12');

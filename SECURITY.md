@@ -106,3 +106,7 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 
 ## 0.39.26
 - Preserves fail-closed report validation while making current 0.80.12 rejection classes precise; no submitted report contents are echoed in errors.
+## 0.39.27 exact registry-baseline validation
+
+0.39.27 corrects a fail-closed producer-contract string mismatch without weakening report validation. The Worker now requires the exact Vulkan-prefixed registry baseline emitted by accepted VulkanScope producers and does not normalize alternate spellings at ingest. Existing payload-size bounds, strict UTF-8 decoding, forbidden identifier checks, canonical report hashing, D1 parameter binding/chunking, CORS/privacy policy and bounded validation-class feedback remain unchanged. No D1 migration or stored-report rewrite is introduced.
+

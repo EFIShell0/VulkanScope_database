@@ -6,14 +6,14 @@ root=Path(a.root).resolve() if a.root else Path(__file__).resolve().parents[1]
 index=(root/'index.html').read_text(encoding='utf-8')
 worker=(root/'worker/src/index.js').read_text(encoding='utf-8')
 pkg=json.loads((root/'worker/package.json').read_text(encoding='utf-8'))
-app_path=root/'assets/app.v03926.js'; enc_path=root/'assets/encyclopedia.v03924.js'
+app_path=root/'assets/app.v03927.js'; enc_path=root/'assets/encyclopedia.v03924.js'
 app=app_path.read_text(encoding='utf-8') if app_path.is_file() else ''
 enc=enc_path.read_text(encoding='utf-8') if enc_path.is_file() else ''
 errors=[]
 if not a.skip_version:
-    if 'VulkanScope Database <strong>0.39.26</strong>' not in index: errors.append('Database 0.39.26 footer missing')
-    if pkg.get('version')!='0.39.26': errors.append('Worker package version must be 0.39.26')
-if './assets/encyclopedia.v03924.js' not in index or './assets/app.v03926.js' not in index: errors.append('0.39.25 Encyclopedia/app assets are not loaded')
+    if 'VulkanScope Database <strong>0.39.27</strong>' not in index: errors.append('Database 0.39.27 footer missing')
+    if pkg.get('version')!='0.39.27': errors.append('Worker package version must be 0.39.27')
+if './assets/encyclopedia.v03924.js' not in index or './assets/app.v03927.js' not in index: errors.append('0.39.25 Encyclopedia/app assets are not loaded')
 if "['encyclopedia','Encyclopedia']" not in app: errors.append('Encyclopedia main navigation destination missing')
 if 'renderEncyclopedia' not in app or 'encyclopediaSearch' not in app: errors.append('Encyclopedia renderer/search missing')
 for token in ['All','VkResult','Commands','VK_*','Types','Extensions']:
@@ -25,4 +25,4 @@ if 'producerAtLeast0803=p=>{const v=producerVersion(p);return!!v&&(v.minor>80||v
 if 'VulkanScope 0.80.3+' not in worker: errors.append('Worker compatibility metadata is not 0.80.3+')
 if 'VulkanScope 0.80.3 or newer is required for new submissions' not in worker: errors.append('floor rejection message is not 0.80.3')
 if errors: raise SystemExit('FAIL Database retained floor/Encyclopedia contract\n- '+'\n- '.join(errors))
-print('PASS Database 0.39.26 retained floor/Encyclopedia contract')
+print('PASS Database 0.39.27 retained floor/Encyclopedia contract')
