@@ -8,7 +8,7 @@ parser.add_argument("--source-tree", type=Path, help="Audit a source checkout tr
 parser.add_argument("--artifact-tree", type=Path, help="Audit only a staged/deployable Pages artifact tree")
 parser.add_argument("--version", action="store_true", help="Print the audit tool/database version and exit")
 args=parser.parse_args()
-AUDIT_VERSION="0.39.25"
+AUDIT_VERSION="0.39.26"
 if args.version:
     print(f"VulkanScope Database audit tool {AUDIT_VERSION}")
     sys.exit(0)
@@ -26,7 +26,7 @@ def audit_artifact_tree(artifact_root: Path):
     actual_top={x.name for x in artifact_root.iterdir()}
     for extra in sorted(actual_top-allowed_top): artifact_errors.append(f'forbidden Pages artifact top-level entry {extra}')
     allowed_assets={
-        'app.v03925.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png',
+        'app.v03926.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png',
         'favicon.ico','favicon.png','vulkanscope_logo_horizontal.png',
         'gpu-vendors/gpu_vendor_amd.png','gpu-vendors/gpu_vendor_arm.png','gpu-vendors/gpu_vendor_broadcom.png',
         'gpu-vendors/gpu_vendor_huawei.png','gpu-vendors/gpu_vendor_imagination.png','gpu-vendors/gpu_vendor_intel.png',
@@ -53,7 +53,7 @@ def audit_artifact_tree(artifact_root: Path):
     idx=artifact_root/'index.html'
     if idx.is_file():
         body=idx.read_text(encoding='utf-8')
-        acheck('app.v03925.js' in body and 'encyclopedia.v03924.js' in body and 'config.js?v=03925' in body and 'site.v0390.css' in body,'Pages artifact current asset references')
+        acheck('app.v03926.js' in body and 'encyclopedia.v03924.js' in body and 'config.js?v=03926' in body and 'site.v0390.css' in body,'Pages artifact current asset references')
     attr=re.compile(r"(?:href|src)=[\"']([^\"']+)[\"']",re.I)
     for html in artifact_root.glob('*.html'):
         body=html.read_text(encoding='utf-8')
@@ -74,7 +74,7 @@ def audit_artifact_tree(artifact_root: Path):
             if contained: acheck(target.is_file(),f'broken Pages artifact local asset {html.name}: {ref}')
     if artifact_errors:
         print("\n".join(artifact_errors)); sys.exit(1)
-    print('VulkanScope Database 0.39.25 Pages artifact audit: PASS')
+    print('VulkanScope Database 0.39.26 Pages artifact audit: PASS')
     sys.exit(0)
 
 if args.artifact_tree:
@@ -91,7 +91,7 @@ def check(cond,msg):
 def text(path): return path.read_text(encoding='utf-8')
 
 index=text(root/'index.html')
-app=text(root/'assets/app.v03925.js')
+app=text(root/'assets/app.v03926.js')
 css=text(root/'assets/site.v0390.css')
 worker=text(root/'worker/src/index.js')
 rules=text(root/'rules/PROJECT_RULES.md')
@@ -107,11 +107,11 @@ check(not (root/'release.md').exists(),'root release.md is forbidden in source r
 check(not (root/'fastlane').exists(),'packaged Fastlane/store metadata is forbidden in source release')
 check(workflow==workflow_template,'pages.yml must exactly match tools/pages.workflow.yml; run python tools/repair_repository.py --apply')
 # Release identity / cache busting
-check('VulkanScope Database <strong>0.39.25</strong>' in index,'index version')
-check('site.v0390.css' in index and 'app.v03925.js' in index and 'encyclopedia.v03924.js' in index and 'config.js?v=03925' in index,'0.39.25 cache-busted asset refs')
-check('site.v0390.css?v=03925' in index and 'app.v03925.js?v=03925' in index,'0.39.25 UI hotfix cache key')
-check('Database 0.39.25' in app,'frontend database version')
-check('VulkanScope 0.80.10 · Vulkan 1.4.362' in app,'frontend producer baseline')
+check('VulkanScope Database <strong>0.39.26</strong>' in index,'index version')
+check('site.v0390.css' in index and 'app.v03926.js' in index and 'encyclopedia.v03924.js' in index and 'config.js?v=03926' in index,'0.39.26 cache-busted asset refs')
+check('site.v0390.css?v=03926' in index and 'app.v03926.js?v=03926' in index,'0.39.26 UI hotfix cache key')
+check('Database 0.39.26' in app,'frontend database version')
+check('VulkanScope 0.80.12 · Vulkan 1.4.362' in app,'frontend producer baseline')
 check("['encyclopedia','Encyclopedia']" in app and 'renderEncyclopedia' in app and 'encyclopediaSearch' in app,'Database Encyclopedia route/search')
 check((root/'assets/encyclopedia.v03924.js').is_file(),'Database Encyclopedia runtime asset')
 if (root/'assets/encyclopedia.v03924.js').is_file():
@@ -120,7 +120,7 @@ if (root/'assets/encyclopedia.v03924.js').is_file():
         check(token in encyclopedia,f'Encyclopedia corpus {token}')
 check('Registry/reference presence is not runtime capability evidence.' in app,'Encyclopedia registry/runtime evidence separation')
 check("connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev" in index,'CSP API pin')
-check('node --check assets/app.v03925.js' in workflow,'workflow frontend syntax check')
+check('node --check assets/app.v03926.js' in workflow,'workflow frontend syntax check')
 check('node tools/test_report_text_identity.mjs' in workflow,'workflow report-text identity test')
 check('actions/checkout@v7' in workflow and 'persist-credentials: false' in workflow,'workflow current checkout and credential hardening')
 check('actions/setup-python@v7' in workflow,'workflow current setup-python')
@@ -131,7 +131,7 @@ check('python tools/audit_database.py --version' in workflow and 'python tools/r
 repair_apply_pos=workflow.find('python tools/repair_repository.py --apply')
 audit_version_pos=workflow.find('python tools/audit_database.py --version')
 check(repair_apply_pos >= 0 and audit_version_pos >= 0 and repair_apply_pos < audit_version_pos,'workflow repairs stale overlay assets before source version audit')
-check('run: |\n          node --check assets/app.v03925.js\n          node --check assets/encyclopedia.v03924.js' in workflow,'workflow validates both frontend JavaScript assets in one YAML run block')
+check('run: |\n          node --check assets/app.v03926.js\n          node --check assets/encyclopedia.v03924.js' in workflow,'workflow validates both frontend JavaScript assets in one YAML run block')
 check('python tools/audit_database.py --source-tree .' in workflow,'workflow explicit source-tree audit')
 check('python tools/quality_gate.py' in workflow,'workflow spec/compatibility quality gate')
 check('python tools/test_utf8_text_io.py' in workflow,'workflow Windows/locale UTF-8 regression test')
@@ -267,7 +267,7 @@ check('detailedProperties=[],imageFormatQueryResults=[],limits=[]' in worker,'wo
 check('tr?.schemaVersion===3&&d' in worker,'worker structured override')
 check("publishedVulkanSpec:'Vulkan 1.4.362 (2026-09-04)'" in worker,'published spec metadata')
 check('VulkanScope producer/query baseline 1.4.362' in worker,'producer registry metadata')
-check('VulkanScope 0.80.10 · Vulkan 1.4.362' in worker,'current producer metadata')
+check('VulkanScope 0.80.12 · Vulkan 1.4.362' in worker,'current producer metadata')
 for token in ['producerVersion=p=>','producerAtLeast0803=p=>','supportedProducer=p=>','producerAtLeast0414=p=>','currentProducerIdentity=p=>','p.application.versionCode===800+v.patch','validSecurityPatch=p=>','applicationAbiConsistent=p=>','validCurrentQueueSemantics=p=>','validCurrentQueryDiagnostics=p=>','producerAtLeast0418=p=>','producerAtLeast0419=p=>','producerAtLeast04110=p=>','validCurrentImageFormatTupleSemantics=p=>']:
     check(token in worker,f'producer contract {token}')
 check('producerAtLeast0414(p)' in worker,'0.41.4+ semantics range helper is used')
@@ -290,6 +290,7 @@ check('producerAtLeast04113=p=>' in worker and 'imageFormatQueryStatus' in worke
 check("Image Format Properties 2 query" in worker and "groupValue.startsWith('Unavailable: ')" in worker and "groupValue.startsWith('Not applicable: ')" in worker,'0.41.12 explicit Image Format Properties2 query-group Unavailable/Not applicable acceptance')
 check("d.imageFormatQueryResults.length!==0" in worker and "Image Format Properties2 Query Diagnostics" in worker,'query-group Unavailable path rejects contradictory tuple/property/diagnostic evidence')
 check('image_format_query_state' in worker and 'Incomplete or invalid VulkanScope submission schema [' in worker,'bounded Worker validation-class feedback')
+check("validation='envelope_shape'" in worker and "validation='producer_identity'" in worker and "'vulkan_1_4_362_registry_contract'" in worker,'0.39.26 precise current submission validation classes')
 
 
 check('producerAtLeast04118' in worker and 'validCompleteReportMarkers' in worker and 'baseReportComplete' in worker,'0.41.18+ complete-report marker cross-check')
@@ -326,9 +327,9 @@ required_rules=[
 'Release 0.39.17 / VulkanScope 0.41.42 Surface evidence-state Compare requirements',
 'Release 0.39.18 / VulkanScope 0.41.43 producer-baseline requirements',
 'Release 0.39.20 / VulkanScope 0.41.45 producer-baseline requirements',
-'Release 0.39.21 / VulkanScope 0.41.46 producer-baseline requirements', 'Release 0.39.22 / VulkanScope 0.80.8 loading, producer-floor, canonical-device-type and page-scroll requirements', 'Release 0.39.23 / VulkanScope 0.80.9 producer-floor and Vulkan Encyclopedia requirements', 'Release 0.39.24 / VulkanScope 0.80.10 / Vulkan 1.4.362 requirements', 'Release 0.39.25 loading / Encyclopedia UI coherence requirements']
+'Release 0.39.21 / VulkanScope 0.41.46 producer-baseline requirements', 'Release 0.39.22 / VulkanScope 0.80.8 loading, producer-floor, canonical-device-type and page-scroll requirements', 'Release 0.39.23 / VulkanScope 0.80.9 producer-floor and Vulkan Encyclopedia requirements', 'Release 0.39.24 / VulkanScope 0.80.10 / Vulkan 1.4.362 requirements', 'Release 0.39.25 loading / Encyclopedia UI coherence requirements','Release 0.39.26 / VulkanScope 0.80.12 submission-diagnostics requirements']
 for token in required_rules: check(token in rules,f'release rule {token}')
-for rel in ['rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md','rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md','rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md','rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md','rules/0.39.1_VULKANSCOPE_0.41.5_COMPATIBILITY_HARDENING.md','rules/0.39.2_CI_PAGES_ARTIFACT_HYGIENE.md','rules/0.39.3_GITHUB_ACTIONS_SOURCE_AUDIT_HARDENING.md','rules/0.39.4_TRACKED_SOURCE_AUDIT_REPOSITORY_REPAIR.md','rules/0.39.5_CROSS_PRODUCER_COMPARE_0.41.7_AUDIT.md','rules/0.39.6_IMAGE_FORMAT_PROPERTIES2_TUPLE_STATE_0.41.8_AUDIT.md','rules/0.39.7_IMAGE_FORMAT_QUERY_OUTCOME_SEPARATION_0.41.9_AUDIT.md','rules/0.39.8_IMAGE_FORMAT_QUERY_STATE_COMPLETENESS_0.41.10_AUDIT.md','rules/0.39.10_ASTC_CANONICAL_FORMAT_SUBMISSION_0.41.12_AUDIT.md','rules/0.39.11_QUERY_GROUP_UNAVAILABLE_SUBMISSION_0.41.12_AUDIT.md','rules/0.39.12_VULKAN_1.4.361_VULKANSCOPE_0.41.32_REGRESSION_RESOURCE_AUDIT.md','rules/0.39.13_WINDOWS_UTF8_QUALITY_GATE_AUDIT.md','rules/0.39.14_EXISTING_REPOSITORY_OVERLAY_REGRESSION_AUDIT.md','rules/0.39.15_VULKANSCOPE_0.41.40_REPORT_TEXT_COMPATIBILITY_AUDIT.md','rules/0.39.16_VULKANSCOPE_0.41.41_HISTORICAL_COMPARE_IDENTITY_AUDIT.md','rules/0.39.17_VULKANSCOPE_0.41.42_SURFACE_EVIDENCE_STATE_AUDIT.md','rules/0.39.18_VULKANSCOPE_0.41.43_PRODUCER_BASELINE_AUDIT.md','rules/0.39.20_VULKANSCOPE_0.41.45_PRODUCER_BASELINE_AUDIT.md','rules/0.39.21_VULKANSCOPE_0.41.46_PRODUCER_BASELINE_AUDIT.md','rules/0.39.22_VULKANSCOPE_0.80.8_LOADING_FLOOR_CANONICAL_TYPE_AUDIT.md','rules/0.39.23_VULKANSCOPE_0.80.9_FLOOR_ENCYCLOPEDIA_AUDIT.md','rules/0.39.24_VULKAN_1.4.362_VULKANSCOPE_0.80.10_AUDIT.md','rules/0.39.25_LOADING_ENCYCLOPEDIA_UI_COHERENCE_AUDIT.md']:
+for rel in ['rules/0.37.0_VULKANSCOPE_0.41.0_TRENDS_PERMALINK_AUDIT.md','rules/0.37.1_QUEUE_VIDEO_QUERY_STATE_AUDIT.md','rules/0.38.0_STATISTICS_HASH_ROUTING_0.41.4_FULL_AUDIT.md','rules/0.39.0_FILTER_STATISTICS_FULL_AUDIT.md','rules/0.39.1_VULKANSCOPE_0.41.5_COMPATIBILITY_HARDENING.md','rules/0.39.2_CI_PAGES_ARTIFACT_HYGIENE.md','rules/0.39.3_GITHUB_ACTIONS_SOURCE_AUDIT_HARDENING.md','rules/0.39.4_TRACKED_SOURCE_AUDIT_REPOSITORY_REPAIR.md','rules/0.39.5_CROSS_PRODUCER_COMPARE_0.41.7_AUDIT.md','rules/0.39.6_IMAGE_FORMAT_PROPERTIES2_TUPLE_STATE_0.41.8_AUDIT.md','rules/0.39.7_IMAGE_FORMAT_QUERY_OUTCOME_SEPARATION_0.41.9_AUDIT.md','rules/0.39.8_IMAGE_FORMAT_QUERY_STATE_COMPLETENESS_0.41.10_AUDIT.md','rules/0.39.10_ASTC_CANONICAL_FORMAT_SUBMISSION_0.41.12_AUDIT.md','rules/0.39.11_QUERY_GROUP_UNAVAILABLE_SUBMISSION_0.41.12_AUDIT.md','rules/0.39.12_VULKAN_1.4.361_VULKANSCOPE_0.41.32_REGRESSION_RESOURCE_AUDIT.md','rules/0.39.13_WINDOWS_UTF8_QUALITY_GATE_AUDIT.md','rules/0.39.14_EXISTING_REPOSITORY_OVERLAY_REGRESSION_AUDIT.md','rules/0.39.15_VULKANSCOPE_0.41.40_REPORT_TEXT_COMPATIBILITY_AUDIT.md','rules/0.39.16_VULKANSCOPE_0.41.41_HISTORICAL_COMPARE_IDENTITY_AUDIT.md','rules/0.39.17_VULKANSCOPE_0.41.42_SURFACE_EVIDENCE_STATE_AUDIT.md','rules/0.39.18_VULKANSCOPE_0.41.43_PRODUCER_BASELINE_AUDIT.md','rules/0.39.20_VULKANSCOPE_0.41.45_PRODUCER_BASELINE_AUDIT.md','rules/0.39.21_VULKANSCOPE_0.41.46_PRODUCER_BASELINE_AUDIT.md','rules/0.39.22_VULKANSCOPE_0.80.8_LOADING_FLOOR_CANONICAL_TYPE_AUDIT.md','rules/0.39.23_VULKANSCOPE_0.80.9_FLOOR_ENCYCLOPEDIA_AUDIT.md','rules/0.39.24_VULKAN_1.4.362_VULKANSCOPE_0.80.10_AUDIT.md','rules/0.39.25_LOADING_ENCYCLOPEDIA_UI_COHERENCE_AUDIT.md','rules/0.39.26_VULKANSCOPE_0.80.12_SUBMISSION_DIAGNOSTICS_AUDIT.md']:
     check((root/rel).is_file(),f'audit document {rel}')
 
 # Static metadata / toolchain
@@ -339,11 +340,11 @@ check('summaryScope' in schema['properties']['gpu']['properties'] and 'physicalD
 check('summaryScope' in schema['properties']['driver']['properties'],'published schema current driver summary provenance')
 check(all(k in schema['properties']['vulkan']['properties'] for k in ['loaderApiVersion','instanceApiVersion','deviceApiSummaryScope']),'published schema VulkanScope 0.41.32 envelope fields')
 static=json.loads(text(root/'data/index.json'))
-check(static.get('databaseVersion')=='0.39.25','static database version')
+check(static.get('databaseVersion')=='0.39.26','static database version')
 check(static.get('normalizerVersion')==16,'static normalizer')
-check(static.get('producerQueryBaseline')=='VulkanScope 0.80.10 · Vulkan 1.4.362','static producer baseline')
+check(static.get('producerQueryBaseline')=='VulkanScope 0.80.12 · Vulkan 1.4.362','static producer baseline')
 build_index=text(root/'tools/build_index.py')
-check('\"databaseVersion\":\"0.39.25\"' in build_index and '\"producerQueryBaseline\":\"VulkanScope 0.80.10 · Vulkan 1.4.362\"' in build_index,'build_index current release metadata')
+check('\"databaseVersion\":\"0.39.26\"' in build_index and '\"producerQueryBaseline\":\"VulkanScope 0.80.12 · Vulkan 1.4.362\"' in build_index,'build_index current release metadata')
 wr=json.loads(text(root/'worker/wrangler.jsonc'))
 check(wr.get('compatibility_date')=='2026-08-23','worker deployment-verified compatibility date')
 check(wr.get('account_id')=='ccf3de9d3f2a4394af2fb7be7fd5bbf4','Cloudflare account pin')
@@ -353,7 +354,7 @@ check(wr.get('observability',{}).get('enabled') is True,'Cloudflare observabilit
 check(wr.get('observability',{}).get('logs',{}).get('head_sampling_rate')==0.1,'Cloudflare log sampling')
 check(wr.get('observability',{}).get('traces',{}).get('head_sampling_rate')==0.01,'Cloudflare trace sampling')
 pkg=json.loads(text(root/'worker/package.json'))
-check(pkg.get('version')=='0.39.25','worker package version')
+check(pkg.get('version')=='0.39.26','worker package version')
 check(pkg.get('devDependencies',{}).get('wrangler')=='4.125.0','Wrangler pin')
 for key in ['predeploy','premigrate','premigrations:list','pred1:count']:
     check('verify:account' in pkg.get('scripts',{}).get(key,''),f'account guard {key}')
@@ -429,7 +430,7 @@ if not used_git_manifest:
 
 # Critical update files must be unique/canonical, because archive extraction does not delete stale files.
 versioned_apps=sorted(p.name for p in (root/'assets').glob('app.v*.js') if p.is_file())
-check(versioned_apps==['app.v03925.js'],f'exactly one versioned frontend app asset is permitted; run repository repair: {versioned_apps}')
+check(versioned_apps==['app.v03926.js'],f'exactly one versioned frontend app asset is permitted; run repository repair: {versioned_apps}')
 check((root/'tools/repair_repository.py').is_file(),'repository repair tool present')
 check((root/'tools/pages.workflow.yml').is_file(),'canonical workflow template present')
 check((root/'worker/migrations/0003_payload_chunks.sql').is_file(),'D1 payload-chunk migration present')
@@ -439,7 +440,7 @@ check((root/'compat/vulkanscope-0.41.32-contract.json').is_file(),'VulkanScope 0
 # Syntax / contract tests
 node=shutil.which('node')
 if node:
-    for f in [root/'assets/app.v03925.js',root/'assets/encyclopedia.v03924.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
+    for f in [root/'assets/app.v03926.js',root/'assets/encyclopedia.v03924.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
         r=subprocess.run([node,'--check',str(f)],capture_output=True,text=True)
         if r.returncode: errors.append(f'node-check {f.relative_to(root)}: {r.stderr.strip()}')
     r=subprocess.run([node,str(root/'tools/test_routes.mjs')],capture_output=True,text=True,cwd=root)

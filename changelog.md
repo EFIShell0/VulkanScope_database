@@ -137,3 +137,7 @@
 - Fixed the frontend JavaScript syntax step so both current assets execute inside one valid YAML multiline command block.
 - Added exact stale-checkout regression coverage; Vulkan/report/Worker/Database semantics are unchanged.
 
+
+
+## 0.39.26
+- Preserves fail-closed report validation while making current 0.80.12 rejection classes precise; no submitted report contents are echoed in errors.

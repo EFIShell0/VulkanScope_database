@@ -102,3 +102,7 @@ Surface Compare normalization now preserves the producer's query status/reason s
 ## 0.39.25 Vulkan 1.4.362 registry update
 
 The registry/Encyclopedia update does not add endpoints, remote scripts, analytics, credentials, D1 migrations, stored-report rewrites or report-hash rewrites. The VulkanScope 0.80.3 server-side new-submission floor and existing bounded request/payload/privacy controls remain unchanged.
+
+
+## 0.39.26
+- Preserves fail-closed report validation while making current 0.80.12 rejection classes precise; no submitted report contents are echoed in errors.

@@ -625,3 +625,14 @@
 - Encyclopedia categories, two-character minimum for large registry symbol families and 24-result visible bound remain unchanged. Global page up/down controls remain authoritative; no nested vertical Encyclopedia scroller is introduced.
 - Browser-visible application JavaScript advances to `assets/app.v03925.js`. The unchanged generated corpus remains `assets/encyclopedia.v03924.js`; main stylesheet changes are cache-busted through `site.v0390.css?v=03925`.
 - `tools/verify_03925_ui_coherence.py` and `tools/test_03925_ui_coherence_negative_mutations.py` are mandatory, alongside the retained 0.39.22/0.39.23 loading/Encyclopedia and 0.39.24 Vulkan 1.4.362 gates.
+
+
+## Release 0.39.26 / VulkanScope 0.80.12 submission-diagnostics requirements
+- Database version is 0.39.26. Treat VulkanScope Database 0.39.25 as immutable predecessor. Current producer/query metadata advances to VulkanScope 0.80.12 / Vulkan 1.4.362; the new-submission floor remains VulkanScope 0.80.3.
+- VulkanScope 0.80.12 preserves submission schema 2, technicalReport 3, report-text identity and the 0.80.10+ Vulkan 1.4.362 registry contract. A canonical 0.80.12 / versionCode 812 fixture must be accepted with HTTP 201.
+- Do not weaken, normalize, truncate or rewrite complete-report evidence to obtain acceptance. Existing fail-closed validation remains authoritative.
+- HTTP 400 validation feedback must distinguish at least exact envelope-shape failure, producer version/versionCode identity failure and the 0.80.10+ Vulkan 1.4.362 registry contract instead of collapsing those failures into `envelope_or_report_contract`.
+- Validation-class feedback remains bounded and must not echo submitted capability values or personal/device-identifying contents.
+- No D1 migration, report rewrite, report-hash rewrite, schema bump, normalizer bump, producer-floor change or Vulkan registry/corpus change is permitted.
+- Browser loading/Encyclopedia presentation from 0.39.25 is retained unchanged apart from release/current-producer metadata and normal cache-busting.
+- `tools/verify_03926_0812_submission_diagnostics.py` and its negative-mutation suite are mandatory alongside the complete Worker contract.
