@@ -28,7 +28,7 @@ jobs:
           python-version: "3.13"
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Confirm 0.39.27 source files
+      - name: Confirm 1.0.3 source files
         run: |
           python tools/repair_repository.py --check
           python tools/audit_database.py --version
@@ -48,7 +48,7 @@ jobs:
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
         run: |
-          node --check assets/app.v03927.js
+          node --check assets/app.v1003.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
@@ -66,12 +66,21 @@ jobs:
         run: |
           python tools/verify_03927_registry_baseline_prefix.py
           python tools/test_03927_registry_baseline_prefix_negative_mutations.py
+          python tools/verify_1_0_0_producer_baseline.py --skip-version
+          python tools/verify_1_0_1_full_audit.py --skip-version
+          node tools/test_surface_evidence_1001.mjs
+          python tools/test_1_0_1_full_audit_negative_mutations.py
+          python tools/verify_1_0_2_producer_baseline.py
+          python tools/test_1_0_2_producer_baseline_state_machine.py
+          python tools/test_1_0_2_producer_baseline_negative_mutations.py
       - name: Check Worker JavaScript syntax
         run: node --check worker/src/index.js
       - name: Test Worker contract
         run: node worker/tests/contract.mjs
       - name: Stage allow-listed Pages artifact
         run: python tools/build_pages_artifact.py _site
+      - name: Build deploy-time preloaded report snapshot
+        run: python tools/build_preload_snapshot.py _site/data/preload
       - name: Audit staged Pages artifact
         run: python tools/audit_database.py --artifact-tree _site
       - name: Upload GitHub Pages artifact

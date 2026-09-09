@@ -106,7 +106,11 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 
 ## 0.39.26
 - Preserves fail-closed report validation while making current 0.80.12 rejection classes precise; no submitted report contents are echoed in errors.
-## 0.39.27 exact registry-baseline validation
+## 1.0.0 producer-version and registry-contract validation
 
-0.39.27 corrects a fail-closed producer-contract string mismatch without weakening report validation. The Worker now requires the exact Vulkan-prefixed registry baseline emitted by accepted VulkanScope producers and does not normalize alternate spellings at ingest. Existing payload-size bounds, strict UTF-8 decoding, forbidden identifier checks, canonical report hashing, D1 parameter binding/chunking, CORS/privacy policy and bounded validation-class feedback remain unchanged. No D1 migration or stored-report rewrite is introduced.
+1.0.0 extends the fail-closed producer parser across the VulkanScope 1.0.0 major-version boundary without weakening report validation or the VulkanScope 0.80.3 submission floor. VulkanScope 1.0.0 requires versionCode 1000 and remains subject to the exact Vulkan-prefixed 1.4.362 registry/header contract. Alternate unprefixed registry spellings remain invalid. Existing payload-size bounds, strict UTF-8 decoding, forbidden identifier checks, canonical report hashing, D1 parameter binding/chunking, CORS/privacy policy and bounded validation-class feedback remain unchanged. No D1 migration, stored-report rewrite or report-hash rewrite is introduced.
 
+
+## 1.0.1 Surface evidence-state integrity
+
+1.0.1 preserves Surface query status as authoritative evidence when normalizing and rendering report details. A false presentation Boolean is classified as Unsupported only after an `available` Surface query; incomplete, unavailable, not-applicable and unknown queries retain those evidence states. Report-text line order cannot alter this classification. This correction does not change D1 storage, hashes, report schemas, upload limits, CORS, privacy rejection, payload chunking or deployment permissions.

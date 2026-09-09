@@ -1,3 +1,37 @@
+# VulkanScope Database 1.0.3
+
+- Adds deploy-time same-origin report preloading: the Pages workflow builds a complete bounded snapshot from the paginated Worker index and compact reports, split into content-hashed JSON chunks, so normal visits no longer wait for a full per-report database refetch.
+- Keeps the live Worker authoritative by refreshing the index asynchronously and fetching only report IDs missing from the deploy snapshot; missing/invalid snapshots fall back to the existing bounded live loader, and newer direct report/Compare routes can fetch only the requested reports first.
+- Adds a fixed top reading-progress indicator that advances/reverses with page scroll position and hides when the document is not scrollable.
+- Makes page up/down controls fade/translate smoothly with scroll activity while preserving top/middle/bottom eligibility and reduced-motion behavior.
+- Adds semantic local inline SVG icons to the custom filter listboxes without changing the authoritative native select state or adding third-party dependencies.
+- Advances current producer/query identity to VulkanScope 1.0.15 / versionCode 1015 / Vulkan 1.4.362 with exact fail-closed `1.0.P -> 1000 + P` validation.
+- Records source evidence that VulkanScope 1.0.15 `technicalReportJson` and `databaseSubmissionJson` remain byte-equivalent to 1.0.2; schema 2 / technicalReport 3 / normalizer 16, D1 schema, stored report bytes/hashes and the 0.80.3 submission floor remain unchanged.
+- Cache-busts the materially changed frontend to `assets/app.v1003.js` with release key 1003. No D1 migration or stored-report rewrite is required.
+
+# VulkanScope Database 1.0.2
+
+- Advanced the current producer/query identity to VulkanScope 1.0.2 / versionCode 1002 / Vulkan 1.4.362.
+- Advanced the cache-busted Pages frontend to `assets/app.v1002.js`.
+- Preserved VulkanScope 1.0.1/1001 and 1.0.0/1000 historical producer identities, the 0.80.3 submission floor, schema 2 / technicalReport 3, normalizer 16, Surface/Compare semantics and D1 storage.
+- No D1 migration, stored-report rewrite, report-hash rewrite or normalizer bump.
+
+# VulkanScope Database 1.0.1
+
+- Corrects Surface evidence-state normalization so incomplete, unavailable, not-applicable and unknown Surface queries are never displayed as fabricated Unsupported presentation evidence.
+- Makes Worker report-text Surface classification independent of whether `Query status=` appears before or after the Boolean availability line.
+- Makes the Pages Surface detail view use the same query-aware state helpers as Compare/normalization.
+- Advances current producer identity to VulkanScope 1.0.1 / versionCode 1001 while retaining VulkanScope 1.0.0 / 1000 and 0.80.x historical compatibility.
+- Preserves schema 2 / technicalReport 3 / normalizer 16, Vulkan 1.4.362, the 0.80.3 submission floor, D1 schema and report hashes. No migration or stored-report rewrite is required.
+
+# VulkanScope Database 1.0.0
+
+- Advances Database release identity and current producer metadata to VulkanScope 1.0.0 / versionCode 1000 / Vulkan 1.4.362.
+- Extends producer semantic-version parsing across the 1.0.0 major-version boundary without weakening the VulkanScope 0.80.3 new-submission floor.
+- Preserves the exact 0.80.10+ `Vulkan 1.4.362` registry/header contract and fail-closed producer identity validation.
+- Preserves schema 2 / technicalReport 3 / normalizer 16, D1 data, report hashes, payload chunking, privacy/security boundaries and the Vulkan 1.4.362 Encyclopedia corpus.
+- No D1 migration or stored-report rewrite is required.
+
 # VulkanScope Database 0.39.27
 
 - Fixes HTTP 400 `[vulkan_1_4_362_registry_contract]` for real VulkanScope 0.80.12 reports by validating the exact producer-emitted `Vulkan 1.4.362` registry-baseline string instead of the incorrect bare `1.4.362` test-fixture spelling.
