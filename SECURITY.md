@@ -148,3 +148,9 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 - Windows GitHub Actions now performs `npm install` and the actual `npm run security:audit` before the Linux build is eligible to deploy. High/critical findings remain blocking; `npm audit fix --force` remains prohibited.
 - These changes do not modify API authentication/public-write policy, CORS, payload bounds, privacy rejection, D1 schema, report hashing, stored payloads, migrations or capability evidence semantics.
 
+## Database 1.0.8 tagged-checkout / release-package boundary controls
+
+- A Git checkout may contain legitimate historical tracked source files that were not shipped in the immutable predecessor ZIP; those files are source-history state and are not automatically trusted as release content.
+- Release packaging uses an explicit predecessor-derived path set rather than recursively archiving the checkout. Historical stale assets and local deployment state are excluded unless they are explicitly part of the successor contract.
+- Strict-tree verification runs against a clean extract of the constructed deterministic ZIP. The extracted path set must exactly equal the expected package allow-list, and every extracted byte must equal the selected source byte before release publication.
+- Injecting an unexpected file into the clean release tree remains a fatal strict-package regression. This change does not relax Worker validation, payload limits, canonical hashing, D1 parameterization/chunking, CORS, privacy-key rejection, account isolation or production audit requirements.

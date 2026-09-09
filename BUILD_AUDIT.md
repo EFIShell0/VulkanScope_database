@@ -1,3 +1,46 @@
+# VulkanScope Database 1.0.8 build audit
+
+## Scope
+1.0.8 is a release-tooling boundary fix over immutable Database 1.0.7 (`414da835326c3414215d598c8cf12b8391bfa112a5f02eff4031a788bfdf1b67`, 260 files). It addresses the observed GitHub tag-release failure where strict-package verification was incorrectly run against a history-bearing tagged checkout containing historical tracked frontend assets that were never members of the immutable 1.0.7 ZIP.
+
+## Preserved runtime/data contracts
+- current producer/query baseline: VulkanScope 1.0.15 / versionCode 1015 / Vulkan 1.4.362;
+- submission schema 2 / technicalReport schema 3 / normalizer 16;
+- VulkanScope 0.80.3 new-submission floor;
+- D1 migrations remain exactly `0001_init.sql`, `0002_report_cursor_index.sql`, `0003_payload_chunks.sql`;
+- Worker report validation, payload bytes, report IDs/hashes, privacy/CORS semantics and preload/live-delta behavior are unchanged;
+- browser identity advances only to Database 1.0.8 / `assets/app.v1008.js` / cache key 1008.
+
+## Root-cause correction
+- tagged/long-lived Git checkout verification uses source-overlay mode, so unrelated historical tracked files do not masquerade as release-package members;
+- raw tagged checkout `--strict-tree` invocation was removed from the release workflow;
+- `tools/package_release.py` derives the exact package member set from the immutable predecessor manifest plus explicit successor additions/removals;
+- deterministic ZIP construction excludes unrelated repository history and local `worker/package-lock.json`;
+- the ZIP is clean-extracted, exact path-set checked, byte-compared to selected source files, then strict-tree and source-audited from inside the extract.
+
+## Executed verification
+- repository repair/check and source audit: PASS;
+- immutable 1.0.7 -> 1.0.8 source-overlay regression: PASS;
+- existing-repository overlay / generated-index / strict-package fixture: PASS;
+- UTF-8, optional-lock, Vulkan registry and VulkanScope compatibility gates: PASS;
+- route, Compare, historical Compare, Surface Compare and producer-baseline gates: PASS;
+- loading/scroll, Encyclopedia, Vulkan 1.4.362, UI coherence and submission-diagnostics gates including negative mutations: PASS;
+- retained 1.0.0/1.0.1/1.0.2/1.0.3/1.0.4/1.0.5/1.0.6/1.0.7 compatibility/hardening gates: PASS;
+- new 1.0.8 release-boundary verifier and negative mutations: PASS;
+- history-bearing tagged-checkout state machine with stale `site.v*.css` / `assets/app.js`: PASS;
+- Worker JavaScript syntax and Worker contract: PASS;
+- D1 migration-chain replay: PASS;
+- Pages staging and Pages artifact audit: PASS.
+
+The aggregate `tools/quality_gate.py` was started and progressed through its initial gates, but the hosted execution environment terminates long single commands before this project-wide chain completes. Every constituent gate was therefore executed separately and its result recorded above; no aggregate PASS is claimed for the timed-out single invocation.
+
+## Packaging evidence
+- deterministic release member count: 266 files;
+- independent package build A: clean-extract exact path set, source-byte equality, strict-tree and source audit PASS;
+- independent package build B: clean-extract exact path set, source-byte equality, strict-tree and source audit PASS;
+- build A / build B ZIP byte equality: PASS.
+The SHA-256 sidecar is emitted from the final sealed package after this audit and the successor hash contract are finalized.
+
 # VulkanScope Database 1.0.7 build audit
 
 ## Scope

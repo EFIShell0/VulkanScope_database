@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import argparse, json
 
-ap=argparse.ArgumentParser(description='Verify VulkanScope Database 1.0.7 Windows checkout/security-audit hardening')
+ap=argparse.ArgumentParser(description='Verify retained VulkanScope Database 1.0.7 Windows checkout/security-audit hardening on the current release')
 ap.add_argument('--root', default=None)
 a=ap.parse_args()
 root=Path(a.root).resolve() if a.root else Path(__file__).resolve().parents[1]
@@ -21,7 +21,7 @@ def j(rel):
     except:return {}
 
 pkg=j('worker/package.json')
-need(pkg.get('version')=='1.0.7','Worker package version must be 1.0.7')
+need(pkg.get('version')=='1.0.8','current Worker package version must be 1.0.8')
 need((pkg.get('devDependencies') or {}).get('wrangler')=='4.130.0','Wrangler must remain exactly 4.130.0')
 need((pkg.get('overrides') or {}).get('sharp')=='0.35.4','sharp override must remain exactly 0.35.4')
 
@@ -53,18 +53,18 @@ need('name: Exercise Windows security-audit subprocess path' in workflow and 'ru
 need(workflow.count('python tools/verify_1_0_7_windows_checkout_security.py')>=3,'1.0.7 verifier must gate Windows, build and release jobs')
 need("node','tools/test_1_0_7_security_audit_runner.mjs" in text('tools/quality_gate.py'),'behavioral npm-cli runner state-machine must be part of quality gate')
 
-index=text('index.html'); app=text('assets/app.v1007.js'); static=j('data/index.json')
-need('VulkanScope Database <strong>1.0.7</strong>' in index,'1.0.7 footer identity missing')
-need('app.v1007.js?v=1007' in index and 'site.v0390.css?v=1007' in index and 'config.js?v=1007' in index,'1.0.7 cache identity missing')
-need('Database 1.0.7 · schema' in app,'1.0.7 frontend identity missing')
-need(static.get('databaseVersion')=='1.0.7','static databaseVersion must be 1.0.7')
-need(sorted(p.name for p in (root/'assets').glob('app.v*.js'))==['app.v1007.js'],'exactly one current versioned app asset must remain')
+index=text('index.html'); app=text('assets/app.v1008.js'); static=j('data/index.json')
+need('VulkanScope Database <strong>1.0.8</strong>' in index,'current 1.0.8 footer identity missing')
+need('app.v1008.js?v=1008' in index and 'site.v0390.css?v=1008' in index and 'config.js?v=1008' in index,'current 1.0.8 cache identity missing')
+need('Database 1.0.8 · schema' in app,'current 1.0.8 frontend identity missing')
+need(static.get('databaseVersion')=='1.0.8','static databaseVersion must be 1.0.8')
+need(sorted(p.name for p in (root/'assets').glob('app.v*.js'))==['app.v1008.js'],'exactly one current versioned app asset must remain')
 
 repair=text('tools/repair_repository.py')
-need("CURRENT_APP = 'app.v1007.js'" in repair,'repository repair current app identity drifted')
+need("CURRENT_APP = 'app.v1008.js'" in repair,'repository repair current app identity drifted')
 pack=text('tools/package_release.py')
-need('1.0.6_to_1.0.7_contract.json' in pack,'release packager must use 1.0.6 -> 1.0.7 contract')
-need('VulkanScope-Database-1.0.7.zip' in pack,'release packager output identity drifted')
+need('1.0.7_to_1.0.8_contract.json' in pack,'current release packager must use 1.0.7 -> 1.0.8 contract')
+need('VulkanScope-Database-1.0.8.zip' in pack,'current release packager output identity drifted')
 need("paths.discard('worker/package-lock.json')" in pack,'local audit lock must remain excluded from release package')
 
 rules=text('rules/PROJECT_RULES.md')
@@ -72,7 +72,7 @@ need('## Release 1.0.7 Windows checkout / npm subprocess hardening requirements'
 need(sorted(x.name for x in (root/'worker/migrations').glob('*.sql'))==['0001_init.sql','0002_report_cursor_index.sql','0003_payload_chunks.sql'],'D1 migration set changed')
 
 if errors:
-    print('FAIL VulkanScope Database 1.0.7 Windows checkout/security-audit hardening')
+    print('FAIL retained VulkanScope Database 1.0.7 Windows checkout/security-audit hardening on Database 1.0.8')
     for e in errors: print(' - '+e)
     raise SystemExit(1)
-print('PASS VulkanScope Database 1.0.7 Windows checkout/security-audit hardening')
+print('PASS retained VulkanScope Database 1.0.7 Windows checkout/security-audit hardening on Database 1.0.8')

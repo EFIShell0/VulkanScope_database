@@ -21,7 +21,7 @@ def j(rel):
     except:return {}
 
 pkg=j('worker/package.json')
-need(pkg.get('version')=='1.0.7','current Worker package version must be 1.0.7')
+need(pkg.get('version')=='1.0.8','current Worker package version must be 1.0.8')
 need((pkg.get('devDependencies') or {}).get('wrangler')=='4.130.0','Wrangler must remain exactly 4.130.0')
 need((pkg.get('overrides') or {}).get('sharp')=='0.35.4','sharp security override must remain exactly 0.35.4')
 allow=pkg.get('allowScripts') or {}
@@ -61,12 +61,12 @@ need(workflow.count('python tools/verify_1_0_6_ci_audit_hardening.py')>=2,'retai
 alias=text('tools/verify_1_0_5_stale_lock_repair.py')
 need('verify_1_0_5_optional_lock_overlay.py' in alias,'documented 1.0.5 verifier compatibility wrapper missing')
 
-index=text('index.html'); app=text('assets/app.v1007.js'); static=j('data/index.json')
-need('VulkanScope Database <strong>1.0.7</strong>' in index,'current 1.0.7 browser footer identity missing')
-need('app.v1007.js?v=1007' in index and 'site.v0390.css?v=1007' in index and 'config.js?v=1007' in index,'current 1.0.7 cache identity missing')
-need('Database 1.0.7 · schema' in app,'current 1.0.7 frontend identity missing')
-need(static.get('databaseVersion')=='1.0.7','static databaseVersion must be 1.0.7')
-need(sorted(p.name for p in (root/'assets').glob('app.v*.js'))==['app.v1007.js'],'exactly one current versioned app asset must remain')
+index=text('index.html'); app=text('assets/app.v1008.js'); static=j('data/index.json')
+need('VulkanScope Database <strong>1.0.8</strong>' in index,'current 1.0.8 browser footer identity missing')
+need('app.v1008.js?v=1008' in index and 'site.v0390.css?v=1008' in index and 'config.js?v=1008' in index,'current 1.0.8 cache identity missing')
+need('Database 1.0.8 · schema' in app,'current 1.0.8 frontend identity missing')
+need(static.get('databaseVersion')=='1.0.8','static databaseVersion must be 1.0.8')
+need(sorted(p.name for p in (root/'assets').glob('app.v*.js'))==['app.v1008.js'],'exactly one current versioned app asset must remain')
 
 rules=text('rules/PROJECT_RULES.md')
 need('## Release 1.0.6 CI / deterministic Encyclopedia / npm-audit hardening requirements' in rules,'historical 1.0.6 rules section missing')
@@ -78,4 +78,4 @@ if errors:
     print('FAIL retained VulkanScope Database 1.0.6 CI/audit hardening')
     for e in errors: print(' - '+e)
     raise SystemExit(1)
-print('PASS retained VulkanScope Database 1.0.6 CI/audit hardening on Database 1.0.7')
+print('PASS retained VulkanScope Database 1.0.6 CI/audit hardening on Database 1.0.8')

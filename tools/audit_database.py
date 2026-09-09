@@ -8,7 +8,7 @@ parser.add_argument("--source-tree", type=Path, help="Audit a source checkout tr
 parser.add_argument("--artifact-tree", type=Path, help="Audit only a staged/deployable Pages artifact tree")
 parser.add_argument("--version", action="store_true", help="Print the audit tool/database version and exit")
 args=parser.parse_args()
-AUDIT_VERSION="1.0.7"
+AUDIT_VERSION="1.0.8"
 if args.version:
     print(f"VulkanScope Database audit tool {AUDIT_VERSION}")
     sys.exit(0)
@@ -26,7 +26,7 @@ def audit_artifact_tree(artifact_root: Path):
     actual_top={x.name for x in artifact_root.iterdir()}
     for extra in sorted(actual_top-allowed_top): artifact_errors.append(f'forbidden Pages artifact top-level entry {extra}')
     allowed_assets={
-        'app.v1007.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png',
+        'app.v1008.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png',
         'favicon.ico','favicon.png','vulkanscope_logo_horizontal.png',
         'gpu-vendors/gpu_vendor_amd.png','gpu-vendors/gpu_vendor_arm.png','gpu-vendors/gpu_vendor_broadcom.png',
         'gpu-vendors/gpu_vendor_huawei.png','gpu-vendors/gpu_vendor_imagination.png','gpu-vendors/gpu_vendor_intel.png',
@@ -53,7 +53,7 @@ def audit_artifact_tree(artifact_root: Path):
     idx=artifact_root/'index.html'
     if idx.is_file():
         body=idx.read_text(encoding='utf-8')
-        acheck('app.v1007.js' in body and 'encyclopedia.v03924.js' in body and 'config.js?v=1007' in body and 'site.v0390.css' in body,'Pages artifact current asset references')
+        acheck('app.v1008.js' in body and 'encyclopedia.v03924.js' in body and 'config.js?v=1008' in body and 'site.v0390.css' in body,'Pages artifact current asset references')
     attr=re.compile(r"(?:href|src)=[\"']([^\"']+)[\"']",re.I)
     for html in artifact_root.glob('*.html'):
         body=html.read_text(encoding='utf-8')
@@ -74,7 +74,7 @@ def audit_artifact_tree(artifact_root: Path):
             if contained: acheck(target.is_file(),f'broken Pages artifact local asset {html.name}: {ref}')
     if artifact_errors:
         print("\n".join(artifact_errors)); sys.exit(1)
-    print('VulkanScope Database 1.0.7 Pages artifact audit: PASS')
+    print('VulkanScope Database 1.0.8 Pages artifact audit: PASS')
     sys.exit(0)
 
 if args.artifact_tree:
@@ -91,7 +91,7 @@ def check(cond,msg):
 def text(path): return path.read_text(encoding='utf-8')
 
 index=text(root/'index.html')
-app=text(root/'assets/app.v1007.js')
+app=text(root/'assets/app.v1008.js')
 css=text(root/'assets/site.v0390.css')
 worker=text(root/'worker/src/index.js')
 rules=text(root/'rules/PROJECT_RULES.md')
@@ -107,10 +107,10 @@ check(not (root/'release.md').exists(),'root release.md is forbidden in source r
 check(not (root/'fastlane').exists(),'packaged Fastlane/store metadata is forbidden in source release')
 check(workflow==workflow_template,'pages.yml must exactly match tools/pages.workflow.yml; run python tools/repair_repository.py --apply')
 # Release identity / cache busting
-check('VulkanScope Database <strong>1.0.7</strong>' in index,'index version')
-check('site.v0390.css' in index and 'app.v1007.js' in index and 'encyclopedia.v03924.js' in index and 'config.js?v=1007' in index,'1.0.7 cache-busted asset refs')
-check('site.v0390.css?v=1007' in index and 'app.v1007.js?v=1007' in index,'1.0.7 UI cache key')
-check('Database 1.0.7' in app,'frontend database version')
+check('VulkanScope Database <strong>1.0.8</strong>' in index,'index version')
+check('site.v0390.css' in index and 'app.v1008.js' in index and 'encyclopedia.v03924.js' in index and 'config.js?v=1008' in index,'1.0.8 cache-busted asset refs')
+check('site.v0390.css?v=1008' in index and 'app.v1008.js?v=1008' in index,'1.0.8 UI cache key')
+check('Database 1.0.8' in app,'frontend database version')
 check('VulkanScope 1.0.15 · Vulkan 1.4.362' in app,'frontend producer baseline')
 check("['encyclopedia','Encyclopedia']" in app and 'renderEncyclopedia' in app and 'encyclopediaSearch' in app,'Database Encyclopedia route/search')
 check((root/'assets/encyclopedia.v03924.js').is_file(),'Database Encyclopedia runtime asset')
@@ -120,7 +120,7 @@ if (root/'assets/encyclopedia.v03924.js').is_file():
         check(token in encyclopedia,f'Encyclopedia corpus {token}')
 check('Registry/reference presence is not runtime capability evidence.' in app,'Encyclopedia registry/runtime evidence separation')
 check("connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev" in index,'CSP API pin')
-check('node --check assets/app.v1007.js' in workflow,'workflow frontend syntax check')
+check('node --check assets/app.v1008.js' in workflow,'workflow frontend syntax check')
 check('node tools/test_report_text_identity.mjs' in workflow,'workflow report-text identity test')
 check('actions/checkout@v7' in workflow and 'persist-credentials: false' in workflow,'workflow current checkout and credential hardening')
 check('actions/setup-python@v7' in workflow,'workflow current setup-python')
@@ -131,7 +131,7 @@ check('python tools/audit_database.py --version' in workflow and 'python tools/r
 repair_apply_pos=workflow.find('python tools/repair_repository.py --apply')
 audit_version_pos=workflow.find('python tools/audit_database.py --version')
 check(repair_apply_pos >= 0 and audit_version_pos >= 0 and repair_apply_pos < audit_version_pos,'workflow repairs stale overlay assets before source version audit')
-check('run: |\n          node --check assets/app.v1007.js\n          node --check assets/encyclopedia.v03924.js' in workflow,'workflow validates both frontend JavaScript assets in one YAML run block')
+check('run: |\n          node --check assets/app.v1008.js\n          node --check assets/encyclopedia.v03924.js' in workflow,'workflow validates both frontend JavaScript assets in one YAML run block')
 check('python tools/audit_database.py --source-tree .' in workflow,'workflow explicit source-tree audit')
 check('python tools/quality_gate.py' in workflow,'workflow spec/compatibility quality gate')
 check('python tools/verify_03927_registry_baseline_prefix.py' in workflow and 'python tools/test_03927_registry_baseline_prefix_negative_mutations.py' in workflow,'workflow exact registry-baseline producer-string gate')
@@ -344,11 +344,11 @@ check('summaryScope' in schema['properties']['gpu']['properties'] and 'physicalD
 check('summaryScope' in schema['properties']['driver']['properties'],'published schema current driver summary provenance')
 check(all(k in schema['properties']['vulkan']['properties'] for k in ['loaderApiVersion','instanceApiVersion','deviceApiSummaryScope']),'published schema VulkanScope 0.41.32 envelope fields')
 static=json.loads(text(root/'data/index.json'))
-check(static.get('databaseVersion')=='1.0.7','static database version')
+check(static.get('databaseVersion')=='1.0.8','static database version')
 check(static.get('normalizerVersion')==16,'static normalizer')
 check(static.get('producerQueryBaseline')=='VulkanScope 1.0.15 · Vulkan 1.4.362','static producer baseline')
 build_index=text(root/'tools/build_index.py')
-check('\"databaseVersion\":\"1.0.7\"' in build_index and '\"producerQueryBaseline\":\"VulkanScope 1.0.15 · Vulkan 1.4.362\"' in build_index,'build_index current release metadata')
+check('\"databaseVersion\":\"1.0.8\"' in build_index and '\"producerQueryBaseline\":\"VulkanScope 1.0.15 · Vulkan 1.4.362\"' in build_index,'build_index current release metadata')
 wr=json.loads(text(root/'worker/wrangler.jsonc'))
 check(wr.get('compatibility_date')=='2026-08-23','worker deployment-verified compatibility date')
 check(wr.get('account_id')=='ccf3de9d3f2a4394af2fb7be7fd5bbf4','Cloudflare account pin')
@@ -358,7 +358,7 @@ check(wr.get('observability',{}).get('enabled') is True,'Cloudflare observabilit
 check(wr.get('observability',{}).get('logs',{}).get('head_sampling_rate')==0.1,'Cloudflare log sampling')
 check(wr.get('observability',{}).get('traces',{}).get('head_sampling_rate')==0.01,'Cloudflare trace sampling')
 pkg=json.loads(text(root/'worker/package.json'))
-check(pkg.get('version')=='1.0.7','worker package version')
+check(pkg.get('version')=='1.0.8','worker package version')
 check(pkg.get('devDependencies',{}).get('wrangler')=='4.130.0','Wrangler pin')
 check(pkg.get('scripts',{}).get('security:audit')=='node scripts/security-audit.mjs','lock-backed high/critical npm audit gate')
 check((pkg.get('overrides') or {}).get('sharp')=='0.35.4','patched sharp transitive override')
@@ -440,7 +440,7 @@ if not used_git_manifest:
 
 # Critical update files must be unique/canonical, because archive extraction does not delete stale files.
 versioned_apps=sorted(p.name for p in (root/'assets').glob('app.v*.js') if p.is_file())
-check(versioned_apps==['app.v1007.js'],f'exactly one versioned frontend app asset is permitted; run repository repair: {versioned_apps}')
+check(versioned_apps==['app.v1008.js'],f'exactly one versioned frontend app asset is permitted; run repository repair: {versioned_apps}')
 check((root/'tools/repair_repository.py').is_file(),'repository repair tool present')
 check((root/'tools/pages.workflow.yml').is_file(),'canonical workflow template present')
 check((root/'worker/migrations/0003_payload_chunks.sql').is_file(),'D1 payload-chunk migration present')
@@ -450,7 +450,7 @@ check((root/'compat/vulkanscope-0.41.32-contract.json').is_file(),'VulkanScope 0
 # Syntax / contract tests
 node=shutil.which('node')
 if node:
-    for f in [root/'assets/app.v1007.js',root/'assets/encyclopedia.v03924.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
+    for f in [root/'assets/app.v1008.js',root/'assets/encyclopedia.v03924.js',root/'worker/src/index.js',root/'worker/tests/contract.mjs']:
         r=subprocess.run([node,'--check',str(f)],capture_output=True,text=True)
         if r.returncode: errors.append(f'node-check {f.relative_to(root)}: {r.stderr.strip()}')
     r=subprocess.run([node,str(root/'tools/test_routes.mjs')],capture_output=True,text=True,cwd=root)

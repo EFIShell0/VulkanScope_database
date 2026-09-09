@@ -4,8 +4,8 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1];ver=root/'tools/verify_0809_floor_encyclopedia.py'
 mut=[
 ('worker/src/index.js','versionAtLeast(v,0,80,3)','versionAtLeast(v,0,80,1)','producer-floor'),
-('assets/app.v1007.js',"['encyclopedia','Encyclopedia']","['encyclopediaRemoved','Encyclopedia']",'encyclopedia-route'),
-('assets/app.v1007.js','Registry/reference presence is not runtime capability evidence.','Registry reference proves runtime capability.','evidence-separation'),
+('assets/app.v1008.js',"['encyclopedia','Encyclopedia']","['encyclopediaRemoved','Encyclopedia']",'encyclopedia-route'),
+('assets/app.v1008.js','Registry/reference presence is not runtime capability evidence.','Registry reference proves runtime capability.','evidence-separation'),
 ('assets/encyclopedia.v03924.js','"commands":842','"commands":841','locked-census')]
 for rel,a,b,name in mut:
     with tempfile.TemporaryDirectory(prefix='vsdb3923-mut-') as d:

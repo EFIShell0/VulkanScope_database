@@ -1,3 +1,11 @@
+# VulkanScope Database 1.0.8
+
+- Fixes GitHub tag-release failure on long-lived repositories containing historical tracked frontend assets that were never members of the immutable predecessor release ZIP.
+- Restores the intended source-overlay / strict-package boundary: the tagged checkout is predecessor-hash verified in source-overlay mode, while strict-tree verification runs only against the deterministic clean release extract.
+- Hardens `tools/package_release.py` to derive the exact package path set, exclude repository-history extras and local deployment state, clean-extract the ZIP, compare every packaged file byte-for-byte with the selected source, and strict-tree/source-audit the extract before publishing.
+- Adds a regression state machine reproducing stale historical `assets/site.v*.css` and `assets/app.js` checkout files, proving they are tolerated as repository history but excluded from the release ZIP; injected package extras still fail closed.
+- Advances release/cache identity to 1.0.8 / `assets/app.v1008.js` / key 1008 while preserving VulkanScope 1.0.15/1015, Vulkan 1.4.362, schema 2/technicalReport 3/normalizer 16, D1 schema, report hashes and preload behavior. No migration or stored-report rewrite.
+
 # VulkanScope Database 1.0.7
 
 - Fixes Windows-only Encyclopedia byte drift at the checkout layer with canonical LF `.gitattributes`; byte comparison remains strict and now diagnoses CRLF checkout drift explicitly.

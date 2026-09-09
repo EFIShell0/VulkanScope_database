@@ -11,11 +11,11 @@ def txt(r):
 def js(r):
     try:return json.loads(txt(r))
     except:return {}
-worker=txt('worker/src/index.js'); tests=txt('worker/tests/contract.mjs'); index=txt('index.html'); app=txt('assets/app.v1007.js'); rules=txt('rules/PROJECT_RULES.md'); audit=txt('rules/1.0.1_FULL_SECURITY_SPEC_CORRECTNESS_USABILITY_AUDIT.md'); static=js('data/index.json'); pkg=js('worker/package.json')
+worker=txt('worker/src/index.js'); tests=txt('worker/tests/contract.mjs'); index=txt('index.html'); app=txt('assets/app.v1008.js'); rules=txt('rules/PROJECT_RULES.md'); audit=txt('rules/1.0.1_FULL_SECURITY_SPEC_CORRECTNESS_USABILITY_AUDIT.md'); static=js('data/index.json'); pkg=js('worker/package.json')
 if not a.skip_version:
     need(pkg.get('version') in {'1.0.1','1.0.2'},'Worker package version must preserve 1.0.1+ retained compatibility')
     need(('VulkanScope Database <strong>1.0.1</strong>' in index) or ('VulkanScope Database <strong>1.0.2</strong>' in index),'retained footer identity missing')
-    need((('app.v1007.js?v=1001' in index and 'config.js?v=1001' in index) or ('app.v1007.js?v=1007' in index and 'config.js?v=1002' in index)),'retained cache identity missing')
+    need((('app.v1008.js?v=1001' in index and 'config.js?v=1001' in index) or ('app.v1008.js?v=1008' in index and 'config.js?v=1002' in index)),'retained cache identity missing')
     need(static.get('databaseVersion') in {'1.0.1','1.0.2'},'static databaseVersion must preserve retained 1.0.1+ identity')
     need(static.get('producerQueryBaseline') in {'VulkanScope 1.0.1 · Vulkan 1.4.362','VulkanScope 1.0.2 · Vulkan 1.4.362'},'static current producer baseline drifted')
 need(("if(v.major===1&&v.minor===0&&v.patch===0)return p.application.versionCode===1000" in worker) or ("if(v.major===1&&v.minor===0)return p.application.versionCode===1000+v.patch" in worker),'historical 1.0.0/1000 identity rule missing')
