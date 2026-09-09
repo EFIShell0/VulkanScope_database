@@ -1,3 +1,12 @@
+# VulkanScope Database 1.0.7
+
+- Fixes Windows-only Encyclopedia byte drift at the checkout layer with canonical LF `.gitattributes`; byte comparison remains strict and now diagnoses CRLF checkout drift explicitly.
+- Fixes Worker predeploy `spawnSync npm.cmd EINVAL` by invoking npm's JavaScript CLI through the current Node executable instead of spawning the Windows command shim.
+- Reuses an existing audited workspace lock and bootstraps one only when absent; exact Wrangler 4.130.0 and sharp 0.35.4 resolution/integrity checks still precede `npm audit --audit-level=high`.
+- Makes Windows CI reproduce the real deployment path with setup-node v7 / Node 24, `npm install`, and `npm run security:audit`; the Linux build job also pins Node 24.
+- Adds dedicated 1.0.7 verifier and negative-mutation coverage for LF checkout policy, direct `npm.cmd` regressions, lock-bootstrap behavior, and the Windows security-audit gate.
+- Preserves VulkanScope 1.0.15/1015, Vulkan 1.4.362, schema 2/technicalReport 3/normalizer 16, D1 schema, report hashes and preload behavior. No migration or stored-report rewrite.
+
 # VulkanScope Database 1.0.6
 
 - Fixes Windows-only Encyclopedia regeneration drift by emitting deterministic UTF-8/LF bytes.

@@ -16,7 +16,7 @@ def text(rel: str) -> str:
     return p.read_text(encoding='utf-8') if p.is_file() else ''
 
 pkg=json.loads(text('worker/package.json'))
-need(pkg.get('version')=='1.0.6','Worker package version must be 1.0.6')
+need(pkg.get('version')=='1.0.7','Worker package version must be 1.0.7')
 need((pkg.get('devDependencies') or {}).get('wrangler')=='4.130.0','Wrangler must remain exactly pinned to 4.130.0')
 need('worker/package-lock.json' in text('.gitignore'),'optional worker/package-lock.json must remain ignored')
 
@@ -43,20 +43,20 @@ if repair_token in workflow and lock_token in workflow:
 need('python tools/verify_1_0_5_optional_lock_overlay.py' in workflow,'retained 1.0.5 stale-lock hardening verifier missing from workflow')
 
 packager=text('tools/package_release.py')
-need("1.0.5_to_1.0.6_contract.json" in packager,'current release packager must use 1.0.5 -> 1.0.6 immutable contract')
+need("1.0.6_to_1.0.7_contract.json" in packager,'current release packager must use 1.0.6 -> 1.0.7 immutable contract')
 need("paths.discard('worker/package-lock.json')" in packager,'release packager must continue excluding optional local lock')
 
 rules=text('rules/PROJECT_RULES.md')
 need('## Release 1.0.5 stale optional-lock overlay hardening requirements' in rules,'retained 1.0.5 rules section missing')
 need('tracked-but-ignored' in rules and 'worker/package-lock.json' in rules,'retained 1.0.5 rules do not describe tracked-but-ignored lock failure class')
 
-index=text('index.html'); app=text('assets/app.v1006.js')
-need('VulkanScope Database <strong>1.0.6</strong>' in index,'1.0.6 footer identity missing')
-need('app.v1006.js?v=1006' in index and 'config.js?v=1006' in index,'1.0.6 cache identity missing')
-need('Database 1.0.6 · schema' in app,'frontend 1.0.6 identity missing')
+index=text('index.html'); app=text('assets/app.v1007.js')
+need('VulkanScope Database <strong>1.0.7</strong>' in index,'1.0.7 footer identity missing')
+need('app.v1007.js?v=1007' in index and 'config.js?v=1007' in index,'1.0.7 cache identity missing')
+need('Database 1.0.7 · schema' in app,'frontend 1.0.7 identity missing')
 
 if errors:
-    print('FAIL retained VulkanScope Database 1.0.5 optional-lock overlay hardening on Database 1.0.6')
+    print('FAIL retained VulkanScope Database 1.0.5 optional-lock overlay hardening on Database 1.0.7')
     for e in errors: print(' - '+e)
     raise SystemExit(1)
-print('PASS Database 1.0.6 retains 1.0.5 stale tracked-but-ignored npm-lock repair semantics')
+print('PASS Database 1.0.7 retains 1.0.5 stale tracked-but-ignored npm-lock repair semantics')

@@ -27,6 +27,11 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
       - name: Verify canonical repository state
         run: python tools/repair_repository.py --check
       - name: Verify Windows/toolchain/release hardening
@@ -41,8 +46,16 @@ jobs:
           node tools/test_surface_compare_04142_negative_mutations.mjs
       - name: Verify Windows-stable Encyclopedia regeneration
         run: python tools/test_0809_floor_encyclopedia_state_machine.py
-      - name: Verify 1.0.6 CI/audit hardening
+      - name: Install audited Worker toolchain on Windows
+        working-directory: worker
+        run: npm install
+      - name: Exercise Windows security-audit subprocess path
+        working-directory: worker
+        run: npm run security:audit
+      - name: Verify retained 1.0.6 CI/audit hardening
         run: python tools/verify_1_0_6_ci_audit_hardening.py
+      - name: Verify 1.0.7 Windows checkout/security hardening
+        run: python tools/verify_1_0_7_windows_checkout_security.py
 
   build:
     needs: windows-tooling
@@ -59,9 +72,14 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Confirm 1.0.6 source files
+      - name: Confirm 1.0.7 source files
         run: |
           python tools/repair_repository.py --check
           python tools/audit_database.py --version
@@ -71,8 +89,10 @@ jobs:
         run: python tools/verify_optional_npm_lock.py
       - name: Verify retained 1.0.5 stale-lock overlay hardening
         run: python tools/verify_1_0_5_optional_lock_overlay.py
-      - name: Verify 1.0.6 CI/audit hardening
+      - name: Verify retained 1.0.6 CI/audit hardening
         run: python tools/verify_1_0_6_ci_audit_hardening.py
+      - name: Verify 1.0.7 Windows checkout/security hardening
+        run: python tools/verify_1_0_7_windows_checkout_security.py
       - name: Test report-text API identity compatibility
         run: node tools/test_report_text_identity.mjs
       - name: Run spec / compatibility quality gate
@@ -85,7 +105,7 @@ jobs:
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
         run: |
-          node --check assets/app.v1006.js
+          node --check assets/app.v1007.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
@@ -170,6 +190,7 @@ jobs:
           python tools/verify_1_0_4_windows_toolchain_release.py
           python tools/verify_1_0_5_optional_lock_overlay.py
           python tools/verify_1_0_6_ci_audit_hardening.py
+          python tools/verify_1_0_7_windows_checkout_security.py
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release
@@ -178,7 +199,7 @@ jobs:
         shell: bash
         run: |
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.6.zip dist/VulkanScope-Database-1.0.6.zip.sha256 --clobber
+            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.7.zip dist/VulkanScope-Database-1.0.7.zip.sha256 --clobber
           else
-            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.6.zip dist/VulkanScope-Database-1.0.6.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.6" --generate-notes
+            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.7.zip dist/VulkanScope-Database-1.0.7.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.7" --generate-notes
           fi

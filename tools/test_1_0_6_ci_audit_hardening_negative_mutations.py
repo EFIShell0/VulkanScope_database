@@ -29,4 +29,4 @@ with tempfile.TemporaryDirectory(prefix='vsdb106-control-') as td:
     p=dst/'changelog.md'; p.write_text(p.read_text(encoding='utf-8')+'\n',encoding='utf-8',newline='\n')
     r=subprocess.run([sys.executable,str(ver),'--root',str(dst)],capture_output=True,text=True)
     if r.returncode!=0: raise SystemExit('FAIL harmless changelog whitespace false-positive control rejected\n'+r.stdout+r.stderr)
-print('PASS VulkanScope Database 1.0.6 CI/audit hardening negative mutations')
+print('PASS VulkanScope Database 1.0.7 CI/audit hardening negative mutations')

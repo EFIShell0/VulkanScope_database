@@ -13,7 +13,11 @@ with tempfile.TemporaryDirectory(prefix='vsdb3923-enc-') as d:
     out=Path(d)/'encyclopedia.js'
     subprocess.run([sys.executable,str(root/'tools/generate_encyclopedia_03924.py'),'--registry',str(root/'registry/upstream/vk.xml'),'--curated',str(root/'registry/encyclopedia_curated.json'),'--output',str(out)],check=True,stdout=subprocess.DEVNULL)
     expected=(root/'assets/encyclopedia.v03924.js').read_bytes()
-    if out.read_bytes()!=expected:raise SystemExit('FAIL Encyclopedia regeneration drift')
+    if b'\r' in expected:raise SystemExit('FAIL Encyclopedia checkout line-ending drift: committed fixture must remain LF-only; verify .gitattributes')
+    actual=out.read_bytes()
+    if actual!=expected:
+        limit=min(len(actual),len(expected)); at=next((i for i in range(limit) if actual[i]!=expected[i]),limit)
+        raise SystemExit(f'FAIL Encyclopedia regeneration drift at byte {at}: generated={len(actual)} expected={len(expected)}')
 text=(root/'assets/encyclopedia.v03924.js').read_text(encoding='utf-8')
 prefix='window.VULKANSCOPE_ENCYCLOPEDIA=';payload=text[len(prefix):].rstrip().removesuffix(';')
 data=json.loads(payload)

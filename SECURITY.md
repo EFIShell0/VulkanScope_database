@@ -138,3 +138,13 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 - The sharp advisory class reported by the 1.0.5 workspace is addressed with an exact `overrides.sharp=0.35.4`; `npm audit fix --force` remains forbidden.
 - Cloudflare account verification still precedes the security audit and any failure remains deployment-blocking.
 - Release ZIPs continue to exclude local `worker/package-lock.json`; the lock is deployment-workspace evidence, not source-release state.
+
+## Database 1.0.7 Windows subprocess and deterministic-checkout controls
+
+- Repository text is canonical LF through root `.gitattributes`; the generated Encyclopedia fixture is not permitted to depend on Windows `core.autocrlf` behavior. Binary artwork remains excluded from text conversion.
+- The strict Encyclopedia byte-regeneration check is retained. A CRLF checkout is rejected and diagnosed rather than normalized away.
+- Worker security audit never executes `npm.cmd` directly. npm's CLI JavaScript entry point is launched with the current Node executable, avoiding Windows command-shim spawn behavior while preserving shell-free argument boundaries.
+- Existing deployment workspace locks are reused. If a lock is absent, only the ignored local lock is bootstrapped before exact Wrangler 4.130.0 / sharp 0.35.4 resolution and integrity checks, followed by `npm audit --audit-level=high`.
+- Windows GitHub Actions now performs `npm install` and the actual `npm run security:audit` before the Linux build is eligible to deploy. High/critical findings remain blocking; `npm audit fix --force` remains prohibited.
+- These changes do not modify API authentication/public-write policy, CORS, payload bounds, privacy rejection, D1 schema, report hashing, stored payloads, migrations or capability evidence semantics.
+
