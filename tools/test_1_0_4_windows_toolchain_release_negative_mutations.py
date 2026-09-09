@@ -15,7 +15,7 @@ with tempfile.TemporaryDirectory(prefix='vsdb104-neg-') as td:
     mutations = []
     mutations.append(('windows-url-path', 'tools/test_compare_04141_compat.mjs', "path.dirname(fileURLToPath(import.meta.url))", "path.dirname(new URL(import.meta.url).pathname)"))
     mutations.append(('release-job', 'tools/pages.workflow.yml', '  release:\n', '  release_disabled:\n'))
-    mutations.append(('cache-key', 'index.html', 'app.v1005.js?v=1005', 'app.v1005.js?v=1003'))
+    mutations.append(('cache-key', 'index.html', 'app.v1006.js?v=1006', 'app.v1006.js?v=1003'))
     for label, rel, old, new in mutations:
         p = base / rel
         original = p.read_text(encoding='utf-8')
@@ -38,4 +38,4 @@ with tempfile.TemporaryDirectory(prefix='vsdb104-neg-') as td:
     pkg = json.loads(original); del pkg['allowScripts']['workerd']; pkgp.write_text(json.dumps(pkg, indent=2)+'\n', encoding='utf-8')
     if run(base) == 0:
         raise SystemExit('FAIL negative mutation accepted: unreviewed workerd install script')
-print('PASS VulkanScope Database 1.0.5 negative mutations')
+print('PASS VulkanScope Database 1.0.6 negative mutations')

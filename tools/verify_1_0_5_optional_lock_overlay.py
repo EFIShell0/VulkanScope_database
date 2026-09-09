@@ -2,7 +2,7 @@ from __future__ import annotations
 from pathlib import Path
 import argparse, json, sys
 
-parser=argparse.ArgumentParser(description='Verify VulkanScope Database 1.0.5 stale optional npm-lock overlay hardening')
+parser=argparse.ArgumentParser(description='Verify retained VulkanScope Database 1.0.5 stale optional npm-lock overlay hardening on the current release')
 parser.add_argument('--root', default=None)
 args=parser.parse_args()
 root=Path(args.root).resolve() if args.root else Path(__file__).resolve().parents[1]
@@ -16,7 +16,7 @@ def text(rel: str) -> str:
     return p.read_text(encoding='utf-8') if p.is_file() else ''
 
 pkg=json.loads(text('worker/package.json'))
-need(pkg.get('version')=='1.0.5','Worker package version must be 1.0.5')
+need(pkg.get('version')=='1.0.6','Worker package version must be 1.0.6')
 need((pkg.get('devDependencies') or {}).get('wrangler')=='4.130.0','Wrangler must remain exactly pinned to 4.130.0')
 need('worker/package-lock.json' in text('.gitignore'),'optional worker/package-lock.json must remain ignored')
 
@@ -40,23 +40,23 @@ lock_token='python tools/verify_optional_npm_lock.py'
 need(repair_token in workflow and lock_token in workflow,'build workflow must contain repair and optional-lock verification steps')
 if repair_token in workflow and lock_token in workflow:
     need(workflow.index(repair_token) < workflow.index(lock_token),'repository repair must run before optional-lock verification')
-need('python tools/verify_1_0_5_optional_lock_overlay.py' in workflow,'1.0.5 stale-lock hardening verifier missing from workflow')
+need('python tools/verify_1_0_5_optional_lock_overlay.py' in workflow,'retained 1.0.5 stale-lock hardening verifier missing from workflow')
 
 packager=text('tools/package_release.py')
-need("1.0.4_to_1.0.5_contract.json" in packager,'release packager must use 1.0.4 -> 1.0.5 immutable contract')
+need("1.0.5_to_1.0.6_contract.json" in packager,'current release packager must use 1.0.5 -> 1.0.6 immutable contract')
 need("paths.discard('worker/package-lock.json')" in packager,'release packager must continue excluding optional local lock')
 
 rules=text('rules/PROJECT_RULES.md')
-need('## Release 1.0.5 stale optional-lock overlay hardening requirements' in rules,'1.0.5 rules section missing')
-need('tracked-but-ignored' in rules and 'worker/package-lock.json' in rules,'1.0.5 rules do not describe tracked-but-ignored lock failure class')
+need('## Release 1.0.5 stale optional-lock overlay hardening requirements' in rules,'retained 1.0.5 rules section missing')
+need('tracked-but-ignored' in rules and 'worker/package-lock.json' in rules,'retained 1.0.5 rules do not describe tracked-but-ignored lock failure class')
 
-index=text('index.html'); app=text('assets/app.v1005.js')
-need('VulkanScope Database <strong>1.0.5</strong>' in index,'1.0.5 footer identity missing')
-need('app.v1005.js?v=1005' in index and 'config.js?v=1005' in index,'1.0.5 cache identity missing')
-need('Database 1.0.5 · schema' in app,'frontend 1.0.5 identity missing')
+index=text('index.html'); app=text('assets/app.v1006.js')
+need('VulkanScope Database <strong>1.0.6</strong>' in index,'1.0.6 footer identity missing')
+need('app.v1006.js?v=1006' in index and 'config.js?v=1006' in index,'1.0.6 cache identity missing')
+need('Database 1.0.6 · schema' in app,'frontend 1.0.6 identity missing')
 
 if errors:
-    print('FAIL VulkanScope Database 1.0.5 optional-lock overlay hardening')
+    print('FAIL retained VulkanScope Database 1.0.5 optional-lock overlay hardening on Database 1.0.6')
     for e in errors: print(' - '+e)
     raise SystemExit(1)
-print('PASS VulkanScope Database 1.0.5: stale tracked-but-ignored npm lock is purged before fail-closed lock verification')
+print('PASS Database 1.0.6 retains 1.0.5 stale tracked-but-ignored npm-lock repair semantics')

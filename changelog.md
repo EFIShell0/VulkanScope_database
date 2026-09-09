@@ -1,3 +1,12 @@
+# VulkanScope Database 1.0.6
+
+- Fixes Windows-only Encyclopedia regeneration drift by emitting deterministic UTF-8/LF bytes.
+- Fixes GitHub Actions historical 1.0.2 producer verification by using retained `--skip-version` mode.
+- Fixes Worker predeploy `npm audit` ENOLOCK by creating and validating an ignored audit lock before auditing.
+- Pins the Wrangler/Miniflare sharp transitive to patched sharp 0.35.4 without `--force`.
+- Adds a compatibility wrapper for the previously documented 1.0.5 stale-lock verifier command.
+- Preserves VulkanScope 1.0.15/1015, Vulkan 1.4.362, schema 2/technicalReport 3/normalizer 16, D1 schema and report hashes. No migration.
+
 # VulkanScope Database 1.0.5
 
 - Fixes the 1.0.4 GitHub Actions failure caused by an old tracked-but-ignored `worker/package-lock.json` retaining Wrangler `^4.125.0` / resolved 4.125.0 while canonical source requires exact 4.130.0.

@@ -21,4 +21,4 @@ for name,rel,a,b in mutations:
         if r.returncode==0:
             print(r.stdout)
             raise SystemExit(f'{name}: negative mutation was accepted')
-print('PASS VulkanScope Database 1.0.5 optional-lock overlay negative mutations')
+print('PASS VulkanScope Database 1.0.6 optional-lock overlay negative mutations')

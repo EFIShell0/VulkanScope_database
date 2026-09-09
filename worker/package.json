@@ -1,7 +1,7 @@
 {
   "name": "vulkanscope-database-worker",
   "private": true,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "scripts": {
     "auth:create": "wrangler auth create vulkanscope",
     "auth:activate": "wrangler auth activate vulkanscope .",
@@ -17,7 +17,7 @@
     "pred1:count": "npm run verify:account",
     "d1:count": "wrangler d1 execute vulkanscope-database --remote --command \"SELECT COUNT(*) AS report_count FROM reports;\"",
     "dev": "wrangler dev",
-    "security:audit": "npm audit --audit-level=high"
+    "security:audit": "node scripts/security-audit.mjs"
   },
   "devDependencies": {
     "wrangler": "4.130.0"
@@ -27,5 +27,8 @@
     "esbuild": true,
     "sharp": true,
     "workerd": true
+  },
+  "overrides": {
+    "sharp": "0.35.4"
   }
 }

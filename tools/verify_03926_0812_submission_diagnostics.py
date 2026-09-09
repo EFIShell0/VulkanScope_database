@@ -3,7 +3,7 @@ import sys
 root=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else Path(__file__).resolve().parents[1]
 w=(root/"worker/src/index.js").read_text(encoding="utf-8")
 t=(root/"worker/tests/contract.mjs").read_text(encoding="utf-8")
-a=(root/"assets/app.v1005.js").read_text(encoding="utf-8")
+a=(root/"assets/app.v1006.js").read_text(encoding="utf-8")
 e=[]
 def need(c,m):
     if not c:e.append(m)

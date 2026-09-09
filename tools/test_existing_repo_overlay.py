@@ -19,7 +19,7 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     (t / 'assets' / 'site.v0001.css').write_text('/* historical source */\n', encoding='utf-8')
     (t / 'rules' / 'HISTORICAL_LOCAL_AUDIT.md').write_text('# historical\n', encoding='utf-8')
     # Overlay extraction leaves the predecessor app behind; repair must be explicit and deterministic.
-    shutil.copy2(t / 'assets' / 'app.v1005.js', t / 'assets' / 'app.v03916.js')
+    shutil.copy2(t / 'assets' / 'app.v1006.js', t / 'assets' / 'app.v03916.js')
     # Simulate the real 1.0.4 failure: an ignored but still Git-tracked legacy lock survives an overlay.
     stale_lock = t / 'worker' / 'package-lock.json'
     stale_lock.write_text('{\n  \"name\": \"vulkanscope-database-worker\",\n  \"lockfileVersion\": 3,\n  \"packages\": {\n    \"\": {\"name\": \"vulkanscope-database-worker\", \"devDependencies\": {\"wrangler\": \"^4.125.0\"}},\n    \"node_modules/wrangler\": {\"version\": \"4.125.0\", \"integrity\": \"sha512-stale-fixture\"}\n  }\n}\n', encoding='utf-8')

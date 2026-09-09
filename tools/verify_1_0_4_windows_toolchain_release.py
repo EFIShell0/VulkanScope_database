@@ -2,7 +2,7 @@ from __future__ import annotations
 from pathlib import Path
 import argparse, json, sys
 
-parser = argparse.ArgumentParser(description='Verify VulkanScope Database 1.0.5 Windows/toolchain/release hardening')
+parser = argparse.ArgumentParser(description='Verify VulkanScope Database 1.0.6 Windows/toolchain/release hardening')
 parser.add_argument('--root', default=None)
 args = parser.parse_args()
 root = Path(args.root).resolve() if args.root else Path(__file__).resolve().parents[1]
@@ -16,12 +16,16 @@ def text(rel: str) -> str:
     return (root / rel).read_text(encoding='utf-8')
 
 pkg = json.loads(text('worker/package.json'))
-need(pkg.get('version') == '1.0.5', 'Worker package version must be 1.0.5')
+need(pkg.get('version') == '1.0.6', 'Worker package version must be 1.0.6')
 need((pkg.get('devDependencies') or {}).get('wrangler') == '4.130.0', 'Wrangler must be exactly pinned to 4.130.0')
 allow = pkg.get('allowScripts') or {}
 for dep in ('esbuild', 'sharp', 'workerd'):
     need(allow.get(dep) is True, f'allowScripts must explicitly approve reviewed {dep} install scripts')
-need((pkg.get('scripts') or {}).get('security:audit') == 'npm audit --audit-level=high', 'security:audit script missing or weakened')
+security_cmd=(pkg.get('scripts') or {}).get('security:audit')
+need(security_cmd in ('npm audit --audit-level=high','node scripts/security-audit.mjs'), 'security:audit script missing or weakened')
+if security_cmd=='node scripts/security-audit.mjs':
+    helper=text('worker/scripts/security-audit.mjs')
+    need("run(['audit','--audit-level=high'])" in helper, 'lock-backed security helper no longer enforces high-severity npm audit')
 
 portable = [
     'tools/test_compare_04141_compat.mjs',
@@ -35,10 +39,10 @@ for rel in portable:
     need('new URL(import.meta.url).pathname' not in s, f'{rel} retains Windows-unsafe URL pathname conversion')
 
 index = text('index.html')
-app = text('assets/app.v1005.js')
-need('VulkanScope Database <strong>1.0.5</strong>' in index, '1.0.5 footer identity missing')
-need('app.v1005.js?v=1005' in index and 'config.js?v=1005' in index and 'site.v0390.css?v=1005' in index, '1.0.5 cache identity missing')
-need('Database 1.0.5 · schema' in app, 'frontend Database 1.0.5 identity missing')
+app = text('assets/app.v1006.js')
+need('VulkanScope Database <strong>1.0.6</strong>' in index, '1.0.6 footer identity missing')
+need('app.v1006.js?v=1006' in index and 'config.js?v=1006' in index and 'site.v0390.css?v=1006' in index, '1.0.6 cache identity missing')
+need('Database 1.0.6 · schema' in app, 'frontend Database 1.0.6 identity missing')
 
 workflow = text('tools/pages.workflow.yml')
 need('tags: ["v*"]' in workflow, 'tag trigger missing from canonical workflow')
@@ -62,8 +66,8 @@ need('Wrangler 4.130.0' in rules, '1.0.4 rules do not pin reviewed Wrangler vers
 need('Windows' in rules and 'fileURLToPath' in rules, '1.0.4 Windows URL-path rule missing')
 
 if errors:
-    print('FAIL VulkanScope Database 1.0.5 Windows/toolchain/release audit')
+    print('FAIL VulkanScope Database 1.0.6 Windows/toolchain/release audit')
     for e in errors:
         print(' - ' + e)
     raise SystemExit(1)
-print('PASS VulkanScope Database 1.0.5: Windows-safe Node paths, reviewed install-script policy, Wrangler 4.130.0, automatic tag release')
+print('PASS VulkanScope Database 1.0.6: Windows-safe Node paths, reviewed install-script policy, Wrangler 4.130.0, automatic tag release')

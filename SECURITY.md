@@ -130,3 +130,11 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 - `worker/package-lock.json` remains optional ignored local state and is not a release artifact. Because `.gitignore` cannot untrack a file already committed by an older release, canonical repository repair explicitly removes an existing legacy lock before release verification.
 - This cleanup does not weaken supply-chain checks: `worker/package.json` remains exactly pinned to Wrangler 4.130.0, and any optional lock that is deliberately retained in another workspace must resolve exactly Wrangler 4.130.0 with integrity metadata.
 - Stale 4.125.x lock state is rejected before repair and never accepted as equivalent to the reviewed 4.130.0 toolchain.
+
+
+## Database 1.0.6 lock-backed deployment audit
+
+- `npm audit` is never called without a lock. The deployment audit helper creates/refreshes an ignored package lock from the exact direct pins, validates Wrangler 4.130.0 plus patched sharp 0.35.4 and integrity metadata, then runs `npm audit --audit-level=high`.
+- The sharp advisory class reported by the 1.0.5 workspace is addressed with an exact `overrides.sharp=0.35.4`; `npm audit fix --force` remains forbidden.
+- Cloudflare account verification still precedes the security audit and any failure remains deployment-blocking.
+- Release ZIPs continue to exclude local `worker/package-lock.json`; the lock is deployment-workspace evidence, not source-release state.

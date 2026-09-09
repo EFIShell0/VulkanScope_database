@@ -39,6 +39,10 @@ jobs:
           node tools/test_compare_04141_negative_mutations.mjs
           node tools/test_surface_compare_04142.mjs
           node tools/test_surface_compare_04142_negative_mutations.mjs
+      - name: Verify Windows-stable Encyclopedia regeneration
+        run: python tools/test_0809_floor_encyclopedia_state_machine.py
+      - name: Verify 1.0.6 CI/audit hardening
+        run: python tools/verify_1_0_6_ci_audit_hardening.py
 
   build:
     needs: windows-tooling
@@ -57,7 +61,7 @@ jobs:
           python-version: "3.13"
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Confirm 1.0.5 source files
+      - name: Confirm 1.0.6 source files
         run: |
           python tools/repair_repository.py --check
           python tools/audit_database.py --version
@@ -65,8 +69,10 @@ jobs:
         run: python tools/test_utf8_text_io.py
       - name: Verify optional npm lock
         run: python tools/verify_optional_npm_lock.py
-      - name: Verify 1.0.5 stale-lock overlay hardening
+      - name: Verify retained 1.0.5 stale-lock overlay hardening
         run: python tools/verify_1_0_5_optional_lock_overlay.py
+      - name: Verify 1.0.6 CI/audit hardening
+        run: python tools/verify_1_0_6_ci_audit_hardening.py
       - name: Test report-text API identity compatibility
         run: node tools/test_report_text_identity.mjs
       - name: Run spec / compatibility quality gate
@@ -79,7 +85,7 @@ jobs:
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
         run: |
-          node --check assets/app.v1005.js
+          node --check assets/app.v1006.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
@@ -101,7 +107,7 @@ jobs:
           python tools/verify_1_0_1_full_audit.py --skip-version
           node tools/test_surface_evidence_1001.mjs
           python tools/test_1_0_1_full_audit_negative_mutations.py
-          python tools/verify_1_0_2_producer_baseline.py
+          python tools/verify_1_0_2_producer_baseline.py --skip-version
           python tools/test_1_0_2_producer_baseline_state_machine.py
           python tools/test_1_0_2_producer_baseline_negative_mutations.py
       - name: Check Worker JavaScript syntax
@@ -163,6 +169,7 @@ jobs:
           python tools/verify_regression_contract.py --strict-tree
           python tools/verify_1_0_4_windows_toolchain_release.py
           python tools/verify_1_0_5_optional_lock_overlay.py
+          python tools/verify_1_0_6_ci_audit_hardening.py
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release
@@ -171,7 +178,7 @@ jobs:
         shell: bash
         run: |
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.5.zip dist/VulkanScope-Database-1.0.5.zip.sha256 --clobber
+            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.6.zip dist/VulkanScope-Database-1.0.6.zip.sha256 --clobber
           else
-            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.5.zip dist/VulkanScope-Database-1.0.5.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.5" --generate-notes
+            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.6.zip dist/VulkanScope-Database-1.0.6.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.6" --generate-notes
           fi

@@ -11,11 +11,11 @@ def txt(r):
 def js(r):
     try:return json.loads(txt(r))
     except:return {}
-worker=txt('worker/src/index.js'); tests=txt('worker/tests/contract.mjs'); index=txt('index.html'); app=txt('assets/app.v1005.js'); rules=txt('rules/PROJECT_RULES.md'); audit=txt('rules/1.0.2_VULKANSCOPE_1.0.2_PRODUCER_BASELINE_AUDIT.md'); static=js('data/index.json'); pkg=js('worker/package.json')
+worker=txt('worker/src/index.js'); tests=txt('worker/tests/contract.mjs'); index=txt('index.html'); app=txt('assets/app.v1006.js'); rules=txt('rules/PROJECT_RULES.md'); audit=txt('rules/1.0.2_VULKANSCOPE_1.0.2_PRODUCER_BASELINE_AUDIT.md'); static=js('data/index.json'); pkg=js('worker/package.json')
 if not a.skip_version:
     need(pkg.get('version')=='1.0.2','Worker package version must be 1.0.2')
     need('VulkanScope Database <strong>1.0.2</strong>' in index,'Database 1.0.2 footer identity missing')
-    need('app.v1005.js?v=1005' in index and 'config.js?v=1002' in index and 'site.v0390.css?v=1002' in index,'1.0.2 cache identity missing')
+    need('app.v1006.js?v=1006' in index and 'config.js?v=1002' in index and 'site.v0390.css?v=1002' in index,'1.0.2 cache identity missing')
     need(static.get('databaseVersion')=='1.0.2','static databaseVersion must be 1.0.2')
     need(static.get('producerQueryBaseline')=='VulkanScope 1.0.2 · Vulkan 1.4.362','static producer baseline must be VulkanScope 1.0.2 / Vulkan 1.4.362')
 need(("if(v.major===1&&v.minor===0&&v.patch===0)return p.application.versionCode===1000" in worker) or ("if(v.major===1&&v.minor===0)return p.application.versionCode===1000+v.patch" in worker),'historical 1.0.0/1000 identity rule missing')
@@ -34,7 +34,7 @@ need('Normalizer: 16' in audit and 'NOT EXECUTED' in audit,'1.0.2 audit evidence
 need((root/'regression/1.0.1_to_1.0.2_contract.json').is_file(),'1.0.2 immutable regression contract missing')
 need(sorted(x.name for x in (root/'worker/migrations').glob('*.sql'))==['0001_init.sql','0002_report_cursor_index.sql','0003_payload_chunks.sql'],'D1 migration set changed')
 apps=sorted(x.name for x in (root/'assets').glob('app.v*.js'))
-need(apps==['app.v1005.js'],f'strict current frontend asset identity drifted: {apps}')
+need(apps==['app.v1006.js'],f'strict current frontend asset identity drifted: {apps}')
 if errors:
     print('FAIL VulkanScope Database 1.0.2 producer baseline')
     for e in errors: print('-',e)

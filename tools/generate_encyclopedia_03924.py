@@ -95,6 +95,6 @@ def main():
     expected={'commands':842,'tokens':6248,'types':2461,'extensions':476,'vkResults':50}
     if data['counts']!=expected:raise SystemExit(f'encyclopedia census mismatch {data["counts"]} != {expected}')
     payload=json.dumps(data,ensure_ascii=False,separators=(',',':'))
-    Path(args.output).write_text('window.VULKANSCOPE_ENCYCLOPEDIA='+payload+';\n',encoding='utf-8')
+    Path(args.output).write_bytes(('window.VULKANSCOPE_ENCYCLOPEDIA='+payload+';\n').encode('utf-8'))
     print('generated',args.output,data['counts'])
 if __name__=='__main__':main()

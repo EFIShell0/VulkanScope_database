@@ -1,3 +1,41 @@
+# VulkanScope Database 1.0.6 build audit
+
+## Scope
+1.0.6 repairs the concrete 1.0.5 rollout failures: Windows-only Encyclopedia regeneration byte drift, the GitHub build invoking the historical Database 1.0.2 producer verifier without retained mode, the previously documented but absent stale-lock verifier filename, and Worker predeploy `npm audit` failing with ENOLOCK after optional-lock repair. The reported three-high-severity sharp advisory class is addressed with an exact patched sharp 0.35.4 override while Wrangler remains exactly 4.130.0.
+
+## Executed packaging evidence
+- repository repair/check: PASS;
+- optional-lock verifier with no packaged lock: PASS, Wrangler 4.130.0 and sharp override 0.35.4 verified;
+- retained 1.0.5 optional-lock verifier and compatibility wrapper: PASS;
+- 1.0.6 CI/audit hardening verifier and negative mutations: PASS;
+- deterministic Encyclopedia regeneration state machine: PASS on Linux; generator now emits explicit UTF-8/LF bytes and the same gate is mandatory on `windows-latest`;
+- historical Database 1.0.2 producer verifier in `--skip-version` retained mode: PASS;
+- source audit / audit hygiene: PASS;
+- Compare / historical Compare / Surface Compare / producer / loading-scroll / Encyclopedia / Vulkan 1.4.362 / UI coherence / submission-diagnostics / registry-prefix / historical 1.0.0-1.0.5 gates: PASS when executed as constituent gates;
+- Worker JavaScript syntax and contract: PASS;
+- in-memory D1 migration-chain replay: PASS; migration set unchanged;
+- staged Pages artifact audit: PASS;
+- aggregate `tools/quality_gate.py` reached passing regression/source/audit/hash-route gates before the packaging environment command timeout; no one-command aggregate PASS is claimed.
+
+## Live/network evidence boundary
+The packaging environment cannot reach npm registry or the production Worker API. Therefore a live `npm audit` and live preload snapshot fetch are NOT EXECUTED here. They are not waived: `worker/scripts/security-audit.mjs` creates/validates an audit lock and production `predeploy` fails closed on any remaining high/critical npm advisory; GitHub Pages builds the deploy-time preload snapshot in its networked runner.
+
+## Release invariants
+- current producer/query baseline remains VulkanScope 1.0.15 / versionCode 1015 / Vulkan 1.4.362;
+- schema 2 / technicalReport 3 / normalizer 16 / 0.80.3 submission floor unchanged;
+- no D1 migration, stored-report rewrite, report-id/hash rewrite, normalizer bump or capability/evidence semantic broadening;
+- browser identity advances only to Database 1.0.6 / `assets/app.v1006.js` / cache key 1006;
+- final release uses immutable 1.0.5 -> 1.0.6 regression verification and deterministic packaging.
+
+## Final packaging evidence
+- immutable 1.0.5 -> 1.0.6 source-overlay regression: PASS;
+- strict release-tree regression: PASS;
+- deterministic package census: 253 files;
+- two independently generated ZIPs: byte-identical PASS;
+- clean-extract source/package byte equality: 253/253 PASS;
+- clean-extract repository check, strict regression, source audit, 1.0.6 hardening verifier, Encyclopedia regeneration, retained 1.0.2 verifier and Worker contract: PASS.
+The archive SHA-256 is emitted only in the external `.sha256` sidecar to avoid self-reference.
+
 # VulkanScope Database 1.0.5 build audit
 
 ## Scope

@@ -4,7 +4,7 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1];ver=root/'tools/verify_0808_floor_loading_scroll.py'
 mut=[
 ('worker/src/index.js','versionAtLeast(v,0,80,3)','versionAtLeast(v,0,80,1)','producer-floor'),
-('assets/app.v1005.js','VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU','Integrated GPU','canonical-type'),
+('assets/app.v1006.js','VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU','Integrated GPU','canonical-type'),
 ('index.html','id="databaseLoading"','id="databaseLoadingRemoved"','loading-surface'),
 ('index.html','id="pageScrollDown"','id="pageScrollDownRemoved"','scroll-control')]
 for rel,a,b,name in mut:
