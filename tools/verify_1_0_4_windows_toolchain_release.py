@@ -2,7 +2,7 @@ from __future__ import annotations
 from pathlib import Path
 import argparse, json, sys
 
-parser = argparse.ArgumentParser(description='Verify VulkanScope Database 1.0.4 Windows/toolchain/release hardening')
+parser = argparse.ArgumentParser(description='Verify VulkanScope Database 1.0.5 Windows/toolchain/release hardening')
 parser.add_argument('--root', default=None)
 args = parser.parse_args()
 root = Path(args.root).resolve() if args.root else Path(__file__).resolve().parents[1]
@@ -16,7 +16,7 @@ def text(rel: str) -> str:
     return (root / rel).read_text(encoding='utf-8')
 
 pkg = json.loads(text('worker/package.json'))
-need(pkg.get('version') == '1.0.4', 'Worker package version must be 1.0.4')
+need(pkg.get('version') == '1.0.5', 'Worker package version must be 1.0.5')
 need((pkg.get('devDependencies') or {}).get('wrangler') == '4.130.0', 'Wrangler must be exactly pinned to 4.130.0')
 allow = pkg.get('allowScripts') or {}
 for dep in ('esbuild', 'sharp', 'workerd'):
@@ -35,10 +35,10 @@ for rel in portable:
     need('new URL(import.meta.url).pathname' not in s, f'{rel} retains Windows-unsafe URL pathname conversion')
 
 index = text('index.html')
-app = text('assets/app.v1004.js')
-need('VulkanScope Database <strong>1.0.4</strong>' in index, '1.0.4 footer identity missing')
-need('app.v1004.js?v=1004' in index and 'config.js?v=1004' in index and 'site.v0390.css?v=1004' in index, '1.0.4 cache identity missing')
-need('Database 1.0.4 · schema' in app, 'frontend Database 1.0.4 identity missing')
+app = text('assets/app.v1005.js')
+need('VulkanScope Database <strong>1.0.5</strong>' in index, '1.0.5 footer identity missing')
+need('app.v1005.js?v=1005' in index and 'config.js?v=1005' in index and 'site.v0390.css?v=1005' in index, '1.0.5 cache identity missing')
+need('Database 1.0.5 · schema' in app, 'frontend Database 1.0.5 identity missing')
 
 workflow = text('tools/pages.workflow.yml')
 need('tags: ["v*"]' in workflow, 'tag trigger missing from canonical workflow')
@@ -62,8 +62,8 @@ need('Wrangler 4.130.0' in rules, '1.0.4 rules do not pin reviewed Wrangler vers
 need('Windows' in rules and 'fileURLToPath' in rules, '1.0.4 Windows URL-path rule missing')
 
 if errors:
-    print('FAIL VulkanScope Database 1.0.4 Windows/toolchain/release audit')
+    print('FAIL VulkanScope Database 1.0.5 Windows/toolchain/release audit')
     for e in errors:
         print(' - ' + e)
     raise SystemExit(1)
-print('PASS VulkanScope Database 1.0.4: Windows-safe Node paths, reviewed install-script policy, Wrangler 4.130.0, automatic tag release')
+print('PASS VulkanScope Database 1.0.5: Windows-safe Node paths, reviewed install-script policy, Wrangler 4.130.0, automatic tag release')

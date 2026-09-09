@@ -1,3 +1,29 @@
+# VulkanScope Database 1.0.5 build audit
+
+## Scope
+1.0.5 is a repository-overlay/toolchain-state hotfix for the real 1.0.4 CI failure where an ignored but previously tracked `worker/package-lock.json` remained at Wrangler 4.125.0. The canonical Worker package pin remains exactly 4.130.0.
+
+## Executed evidence
+- repository repair/check: PASS
+- optional lock verifier with no packaged lock: PASS, canonical Wrangler 4.130.0 pin verified
+- dedicated 1.0.5 stale-lock verifier and negative mutations: PASS
+- exact existing-repository overlay fixture with stale `^4.125.0` / resolved 4.125.0 lock: pre-repair rejection PASS; repair deletion PASS; post-repair verifier PASS
+- immutable 1.0.4 -> 1.0.5 regression: source-overlay PASS; strict-package PASS
+- source audit / audit hygiene / UTF-8 / registry / report-text / route / Compare / Surface / producer / loading-scroll / Encyclopedia / Vulkan 1.4.362 / submission diagnostics / historical producer gates: PASS when executed as constituent gates
+- Worker JavaScript syntax and Worker contract: PASS
+- in-memory D1 migration-chain replay: PASS
+- staged Pages artifact audit: PASS
+- clean-extract source equality: PASS
+- clean-extract strict regression, source audit, Worker contract, D1 replay and Pages artifact audit: PASS
+- aggregate `tools/quality_gate.py` invocation reached the same passing early gates but exceeded the execution environment time limit before the full long chain completed; no aggregate PASS is claimed. Required constituent gates were executed separately instead.
+
+## Required evidence
+- canonical repository repair removes stale versioned app assets/workflows and an existing ignored legacy `worker/package-lock.json`;
+- optional-lock verification always checks `worker/package.json` == Wrangler 4.130.0 and fail-closes any present mismatched lock;
+- overlay regression recreates the stale 4.125.0 lock, observes failure before repair, then proves repair removes it;
+- 1.0.4 Windows/toolchain hardening, VulkanScope 1.0.15 compatibility, preload/UI semantics, Worker contract, D1 replay and Pages artifact audits remain retained gates;
+- final release uses immutable 1.0.4 -> 1.0.5 source-overlay/strict-tree verification and deterministic packaging.
+
 # VulkanScope Database 1.0.4 build / regression audit
 
 ## Release identity

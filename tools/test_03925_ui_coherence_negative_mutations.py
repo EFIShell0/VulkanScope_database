@@ -4,9 +4,9 @@ root=Path(__file__).resolve().parents[1]
 ver=root/'tools/verify_03925_ui_coherence.py'
 mutations=[
  ('index.html','aria-live="polite"','aria-live="off"','loading-live-region'),
- ('index.html','app.v1004.js?v=1004','app.v1004.js','cache-bust'),
- ('assets/app.v1004.js','notice encyclopedia-evidence-note','encyclopedia-evidence-note','shared-notice-language'),
- ('assets/app.v1004.js','entries.length>=24','entries.length>=240','result-bound'),
+ ('index.html','app.v1005.js?v=1005','app.v1005.js','cache-bust'),
+ ('assets/app.v1005.js','notice encyclopedia-evidence-note','encyclopedia-evidence-note','shared-notice-language'),
+ ('assets/app.v1005.js','entries.length>=24','entries.length>=240','result-bound'),
 ]
 for rel,a,b,label in mutations:
     with tempfile.TemporaryDirectory(prefix='db03925-ui-mut-') as d:

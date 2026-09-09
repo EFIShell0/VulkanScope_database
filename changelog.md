@@ -1,3 +1,11 @@
+# VulkanScope Database 1.0.5
+
+- Fixes the 1.0.4 GitHub Actions failure caused by an old tracked-but-ignored `worker/package-lock.json` retaining Wrangler `^4.125.0` / resolved 4.125.0 while canonical source requires exact 4.130.0.
+- Makes `repair_repository.py --apply` purge that optional legacy lock before CI/release verification so a long-lived repository overlay converges to the canonical source tree.
+- Strengthens `verify_optional_npm_lock.py`: canonical `worker/package.json` must always pin Wrangler 4.130.0; an optional lock, when present outside the repaired checkout, must also resolve exactly 4.130.0 with integrity metadata.
+- Adds a regression fixture that reproduces the stale tracked lock, proves pre-repair rejection and post-repair cleanup, plus dedicated 1.0.5 verifier/negative-mutation gates.
+- Advances release/cache identity to 1.0.5 / `assets/app.v1005.js` / key 1005. VulkanScope 1.0.15 compatibility, preload behavior, schema 2 / technicalReport 3 / normalizer 16 and D1 storage are unchanged; no migration is required.
+
 # VulkanScope Database 1.0.4
 
 - Fixes Windows Node ESM path resolution in Compare/Surface regression tests by replacing URL pathname conversion with `fileURLToPath(import.meta.url)`, preventing doubled-drive paths such as `C:\C:\...`.

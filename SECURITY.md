@@ -123,3 +123,10 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 - Node ESM repository-path conversion uses `fileURLToPath(import.meta.url)` so Windows drive-letter paths are not reinterpreted as URL path text.
 - A mandatory Windows GitHub Actions job exercises the path-sensitive Compare/Surface tests before Linux build/deploy/release jobs.
 - Tag release publication occurs in GitHub Actions with job-scoped `contents: write`; local GitHub CLI presence is not a security or release prerequisite.
+
+
+## Database 1.0.5 optional lock hygiene
+
+- `worker/package-lock.json` remains optional ignored local state and is not a release artifact. Because `.gitignore` cannot untrack a file already committed by an older release, canonical repository repair explicitly removes an existing legacy lock before release verification.
+- This cleanup does not weaken supply-chain checks: `worker/package.json` remains exactly pinned to Wrangler 4.130.0, and any optional lock that is deliberately retained in another workspace must resolve exactly Wrangler 4.130.0 with integrity metadata.
+- Stale 4.125.x lock state is rejected before repair and never accepted as equivalent to the reviewed 4.130.0 toolchain.

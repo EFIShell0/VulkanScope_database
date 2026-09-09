@@ -5,11 +5,11 @@ root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v1004.js'
+CURRENT_APP = 'app.v1005.js'
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
-parser.add_argument('--apply', action='store_true', help='Replace workflow directory with canonical pages.yml and remove stale versioned app assets')
+parser.add_argument('--apply', action='store_true', help='Replace workflow directory with canonical pages.yml, remove stale versioned app assets, and purge ignored legacy worker/package-lock.json workspace state')
 args = parser.parse_args()
 if not (args.check or args.apply):
     parser.error('choose --check or --apply')
@@ -32,6 +32,8 @@ def stale_apps():
     assets = root / 'assets'
     return sorted(p for p in assets.glob('app.v*.js') if p.name != CURRENT_APP)
 
+optional_lock = root / 'worker' / 'package-lock.json'
+
 if args.apply:
     workflow_dir.mkdir(parents=True, exist_ok=True)
     for p in list(workflow_dir.iterdir()):
@@ -42,7 +44,12 @@ if args.apply:
     shutil.copy2(canonical, workflow)
     for p in stale_apps():
         p.unlink()
-    print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned app JS removed.')
+    lock_removed = False
+    if optional_lock.is_file():
+        optional_lock.unlink()
+        lock_removed = True
+    suffix = '; ignored legacy worker/package-lock.json removed' if lock_removed else ''
+    print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned app JS removed' + suffix + '.')
 
 errors=[]
 if not workflow.is_file():
@@ -61,6 +68,6 @@ if not (root/'assets'/CURRENT_APP).is_file():
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 1.0.4 repository state: PASS')
+print(f'VulkanScope Database 1.0.5 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')

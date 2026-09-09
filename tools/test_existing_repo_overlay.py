@@ -19,7 +19,13 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     (t / 'assets' / 'site.v0001.css').write_text('/* historical source */\n', encoding='utf-8')
     (t / 'rules' / 'HISTORICAL_LOCAL_AUDIT.md').write_text('# historical\n', encoding='utf-8')
     # Overlay extraction leaves the predecessor app behind; repair must be explicit and deterministic.
-    shutil.copy2(t / 'assets' / 'app.v1004.js', t / 'assets' / 'app.v03916.js')
+    shutil.copy2(t / 'assets' / 'app.v1005.js', t / 'assets' / 'app.v03916.js')
+    # Simulate the real 1.0.4 failure: an ignored but still Git-tracked legacy lock survives an overlay.
+    stale_lock = t / 'worker' / 'package-lock.json'
+    stale_lock.write_text('{\n  \"name\": \"vulkanscope-database-worker\",\n  \"lockfileVersion\": 3,\n  \"packages\": {\n    \"\": {\"name\": \"vulkanscope-database-worker\", \"devDependencies\": {\"wrangler\": \"^4.125.0\"}},\n    \"node_modules/wrangler\": {\"version\": \"4.125.0\", \"integrity\": \"sha512-stale-fixture\"}\n  }\n}\n', encoding='utf-8')
+    stale = run(t, 'tools/verify_optional_npm_lock.py', expect=1)
+    if 'stale optional lock' not in stale:
+        raise SystemExit('legacy optional lock mismatch was not rejected before repair')
     chk = run(t, 'tools/repair_repository.py', '--check', expect=1)
     if 'stale versioned frontend assets' not in chk:
         raise SystemExit('repository repair check did not identify stale predecessor app')
@@ -35,6 +41,9 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     if not (apply_i < check_i < audit_i):
         raise SystemExit('GitHub Actions build preflight does not repair stale overlay assets before checking/auditing')
     run(t, 'tools/repair_repository.py', '--apply')
+    if stale_lock.exists():
+        raise SystemExit('repository repair left ignored legacy worker/package-lock.json behind')
+    run(t, 'tools/verify_optional_npm_lock.py')
     run(t, 'tools/repair_repository.py', '--check')
     run(t, 'tools/audit_database.py', '--version')
     if (t / 'assets' / 'app.v03916.js').exists():

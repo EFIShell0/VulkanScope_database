@@ -32,7 +32,7 @@ try:
         r=subprocess.run(cmd,capture_output=True,text=True)
         if r.returncode: raise SystemExit(r.stdout+r.stderr)
         manifest=json.loads((out/'manifest.json').read_text(encoding='utf-8'))
-        assert manifest['databaseVersion']=='1.0.4'
+        assert manifest['databaseVersion']=='1.0.5'
         assert manifest['reportCount']==2
         assert [x['id'] for x in manifest['reports']]==ids
         found=[]
@@ -41,6 +41,6 @@ try:
             chunk=json.loads((out/item['file']).read_text(encoding='utf-8'))
             found.extend(x['id'] for x in chunk['reports'])
         assert found==ids
-        print('PASS 1.0.4 preload builder: paged index -> bounded static chunk snapshot')
+        print('PASS retained preload builder on Database 1.0.5: paged index -> bounded static chunk snapshot')
 finally:
     server.shutdown(); server.server_close()
