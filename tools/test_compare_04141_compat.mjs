@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
 import vm from 'node:vm';
-const root=process.argv[2]?path.resolve(process.argv[2]):path.resolve(path.dirname(new URL(import.meta.url).pathname),'..');
+const root=process.argv[2]?path.resolve(process.argv[2]):path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const assets=fs.readdirSync(path.join(root,'assets')).filter(x=>/^app\.v\d+\.js$/.test(x)).sort();
 if(!assets.length)throw new Error('frontend asset missing');
 const source=fs.readFileSync(path.join(root,'assets',assets.at(-1)),'utf8');

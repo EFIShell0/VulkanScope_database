@@ -20,7 +20,7 @@ def jload(rel):
 worker=text('worker/src/index.js')
 tests=text('worker/tests/contract.mjs')
 index=text('index.html')
-app=text('assets/app.v1000.js') if not args.skip_version else text('assets/app.v1003.js')
+app=text('assets/app.v1000.js') if not args.skip_version else text('assets/app.v1004.js')
 rules=text('rules/PROJECT_RULES.md')
 audit=text('rules/1.0.0_VULKANSCOPE_1.0.0_PRODUCER_BASELINE_AUDIT.md')
 pkg=jload('worker/package.json')

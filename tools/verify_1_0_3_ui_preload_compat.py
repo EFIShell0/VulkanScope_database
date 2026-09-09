@@ -15,16 +15,16 @@ def data(rel):
     try:return json.loads(text(rel))
     except:return {}
 
-index=text('index.html'); app=text('assets/app.v1003.js'); css=text('assets/site.v0390.css')
+index=text('index.html'); app=text('assets/app.v1004.js'); css=text('assets/site.v0390.css')
 worker=text('worker/src/index.js'); tests=text('worker/tests/contract.mjs'); workflow=text('tools/pages.workflow.yml')
 rules=text('rules/PROJECT_RULES.md'); pkg=data('worker/package.json'); static=data('data/index.json'); compat=data('compat/vulkanscope-1.0.15-database-contract.json')
 
-need(pkg.get('version')=='1.0.3','Worker package version must be 1.0.3')
-need('VulkanScope Database <strong>1.0.3</strong>' in index,'1.0.3 footer identity missing')
-need('app.v1003.js?v=1003' in index and 'site.v0390.css?v=1003' in index and 'config.js?v=1003' in index,'1.0.3 cache identity missing')
-need(static.get('databaseVersion')=='1.0.3','static databaseVersion must be 1.0.3')
+need(pkg.get('version')=='1.0.4','Worker package version must be 1.0.4')
+need('VulkanScope Database <strong>1.0.4</strong>' in index,'1.0.4 footer identity missing')
+need('app.v1004.js?v=1004' in index and 'site.v0390.css?v=1004' in index and 'config.js?v=1004' in index,'1.0.4 cache identity missing')
+need(static.get('databaseVersion')=='1.0.4','static databaseVersion must be 1.0.4')
 need(static.get('producerQueryBaseline')=='VulkanScope 1.0.15 · Vulkan 1.4.362','static producer baseline must be VulkanScope 1.0.15 / Vulkan 1.4.362')
-need(sorted(p.name for p in (root/'assets').glob('app.v*.js'))==['app.v1003.js'],'exactly one current versioned app asset must remain')
+need(sorted(p.name for p in (root/'assets').glob('app.v*.js'))==['app.v1004.js'],'exactly one current versioned app asset must remain')
 
 # Smooth page-scroll controls + top reading progress.
 need('id="pageProgress" class="page-progress"' in index and 'id="pageProgressBar"' in index,'top page reading progress markup missing')
@@ -55,11 +55,11 @@ need(compat.get('submissionEnvelopeSchemaVersion')==2 and compat.get('technicalR
 need(compat.get('sourceEvidence',{}).get('technicalReportJson',{}).get('byteEquivalentToVulkanScope1_0_2') is True,'technicalReport serializer equivalence evidence missing')
 need(compat.get('sourceEvidence',{}).get('databaseSubmissionJson',{}).get('byteEquivalentToVulkanScope1_0_2') is True,'database submission serializer equivalence evidence missing')
 need(sorted(p.name for p in (root/'worker/migrations').glob('*.sql'))==['0001_init.sql','0002_report_cursor_index.sql','0003_payload_chunks.sql'],'D1 migration set must remain unchanged')
-need('Release 1.0.3 / VulkanScope 1.0.15 preloaded UI and compatibility requirements' in rules,'1.0.3 rules section missing')
-need((root/'rules/1.0.3_VULKANSCOPE_1.0.15_PRELOAD_UI_COMPATIBILITY_AUDIT.md').is_file(),'1.0.3 release audit missing')
+need('Release 1.0.3 / VulkanScope 1.0.15 preloaded UI and compatibility requirements' in rules,'retained 1.0.3 rules section missing')
+need((root/'rules/1.0.3_VULKANSCOPE_1.0.15_PRELOAD_UI_COMPATIBILITY_AUDIT.md').is_file(),'retained 1.0.3 release audit missing')
 
 if errors:
-    print('FAIL VulkanScope Database 1.0.3 preload/UI/compatibility audit')
+    print('FAIL VulkanScope Database retained 1.0.3 preload/UI/compatibility audit on 1.0.4')
     for error in errors: print('-',error)
     raise SystemExit(1)
-print('PASS VulkanScope Database 1.0.3: smooth scroll UI, reading progress, deploy preload/live delta, semantic filter icons, VulkanScope 1.0.15 schema-compatible producer')
+print('PASS VulkanScope Database 1.0.4 retains 1.0.3 preload/UI/compatibility semantics and VulkanScope 1.0.15 schema-compatible producer')

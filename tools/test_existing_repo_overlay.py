@@ -19,7 +19,7 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     (t / 'assets' / 'site.v0001.css').write_text('/* historical source */\n', encoding='utf-8')
     (t / 'rules' / 'HISTORICAL_LOCAL_AUDIT.md').write_text('# historical\n', encoding='utf-8')
     # Overlay extraction leaves the predecessor app behind; repair must be explicit and deterministic.
-    shutil.copy2(t / 'assets' / 'app.v1003.js', t / 'assets' / 'app.v03916.js')
+    shutil.copy2(t / 'assets' / 'app.v1004.js', t / 'assets' / 'app.v03916.js')
     chk = run(t, 'tools/repair_repository.py', '--check', expect=1)
     if 'stale versioned frontend assets' not in chk:
         raise SystemExit('repository repair check did not identify stale predecessor app')
@@ -29,8 +29,11 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-overlay-') as td:
     audit_token = 'python tools/audit_database.py --version'
     if any(token not in workflow for token in (apply_token, check_token, audit_token)):
         raise SystemExit('GitHub Actions preflight is missing repair/apply/check/audit token')
-    if not (workflow.index(apply_token) < workflow.index(check_token) < workflow.index(audit_token)):
-        raise SystemExit('GitHub Actions preflight does not repair stale overlay assets before checking/auditing')
+    apply_i = workflow.index(apply_token)
+    check_i = workflow.index(check_token, apply_i)
+    audit_i = workflow.index(audit_token, check_i)
+    if not (apply_i < check_i < audit_i):
+        raise SystemExit('GitHub Actions build preflight does not repair stale overlay assets before checking/auditing')
     run(t, 'tools/repair_repository.py', '--apply')
     run(t, 'tools/repair_repository.py', '--check')
     run(t, 'tools/audit_database.py', '--version')

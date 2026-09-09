@@ -5,7 +5,7 @@ mutations=[
  ('worker/src/index.js',"if(v.major===1&&v.minor===0)return p.application.versionCode===1000+v.patch","if(v.major===1&&v.minor===0)return true",'producer-identity'),
  ('worker/src/index.js',"if(a){surface.available=a[1].toLowerCase()==='true';surface.presentationSupported=a[2].toLowerCase()==='true';continue}","if(a){surface.available=a[1].toLowerCase()==='true';surface.presentationSupported=a[2].toLowerCase()==='true';push(out,'SURFACE','Available',a[1],surfaceAvailableState(surface));continue}",'line-order'),
  ('worker/src/index.js',"q==='available'?'unsupported'","q==='unavailable'?'unsupported'",'unsupported-evidence'),
- ('assets/app.v1003.js',"const av=surfaceAvailableState(s),pr=surfacePresentationState(s),diag=","const av=s.available?'available':'unavailable',pr=s.presentationSupported?'supported':'unsupported',diag=",'frontend-bool-state'),
+ ('assets/app.v1004.js',"const av=surfaceAvailableState(s),pr=surfacePresentationState(s),diag=","const av=s.available?'available':'unavailable',pr=s.presentationSupported?'supported':'unsupported',diag=",'frontend-bool-state'),
 ]
 def run(tree):
  return subprocess.run([sys.executable,str(verifier),'--root',str(tree),'--skip-version'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True).returncode

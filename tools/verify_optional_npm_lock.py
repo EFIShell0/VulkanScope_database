@@ -19,7 +19,7 @@ packages=data.get('packages') or {}
 rootpkg=packages.get('') or {}
 if rootpkg.get('name') not in (None,'vulkanscope-database-worker'):
     errors.append(f"unexpected root package name {rootpkg.get('name')!r}")
-want='4.125.0'
+want='4.130.0'
 root_wr=(rootpkg.get('devDependencies') or {}).get('wrangler')
 if root_wr != want:
     errors.append(f'root wrangler pin {root_wr!r} != {want}')

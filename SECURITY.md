@@ -114,3 +114,12 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 ## 1.0.1 Surface evidence-state integrity
 
 1.0.1 preserves Surface query status as authoritative evidence when normalizing and rendering report details. A false presentation Boolean is classified as Unsupported only after an `available` Surface query; incomplete, unavailable, not-applicable and unknown queries retain those evidence states. Report-text line order cannot alter this classification. This correction does not change D1 storage, hashes, report schemas, upload limits, CORS, privacy rejection, payload chunking or deployment permissions.
+
+## Database 1.0.4 release-toolchain controls
+
+- Production Worker deployment uses exactly pinned Wrangler 4.130.0 and is blocked by `npm audit --audit-level=high` after the fail-closed Cloudflare account identity check.
+- Do not use `npm audit fix --force` to silence deployment advisories; a dependency/toolchain update must be reviewed and pinned instead.
+- npm install scripts are not blanket-approved. The project `allowScripts` policy permits only the reviewed Wrangler toolchain installers `esbuild`, `sharp`, and `workerd`.
+- Node ESM repository-path conversion uses `fileURLToPath(import.meta.url)` so Windows drive-letter paths are not reinterpreted as URL path text.
+- A mandatory Windows GitHub Actions job exercises the path-sensitive Compare/Surface tests before Linux build/deploy/release jobs.
+- Tag release publication occurs in GitHub Actions with job-scoped `contents: write`; local GitHub CLI presence is not a security or release prerequisite.

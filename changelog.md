@@ -1,3 +1,13 @@
+# VulkanScope Database 1.0.4
+
+- Fixes Windows Node ESM path resolution in Compare/Surface regression tests by replacing URL pathname conversion with `fileURLToPath(import.meta.url)`, preventing doubled-drive paths such as `C:\C:\...`.
+- Adds a mandatory `windows-latest` GitHub Actions gate that executes the path-sensitive Compare and Surface tests before the Linux Pages build/deploy can proceed.
+- Updates the pinned Cloudflare Wrangler toolchain to 4.130.0 and makes high/critical `npm audit` findings a production deploy blocker; no `--force` downgrade path is used.
+- Adds explicit npm `allowScripts` approvals for the reviewed `esbuild`, `sharp` and `workerd` toolchain installers instead of leaving install-script execution unreviewed.
+- Makes GitHub Release publication automatic on `v*` tag pushes from the GitHub-hosted runner, so local `gh` installation is no longer required; reruns upload assets with `--clobber`.
+- Adds deterministic strict-tree release packaging with fixed ZIP timestamps and a separate SHA-256 sidecar.
+- Advances Database/cache identity to 1.0.4 / `assets/app.v1004.js` while retaining VulkanScope 1.0.15 / 1015 compatibility, preload behavior, schema 2 / technicalReport 3 / normalizer 16 and D1 storage unchanged. No migration or stored-report rewrite is required.
+
 # VulkanScope Database 1.0.3
 
 - Adds deploy-time same-origin report preloading: the Pages workflow builds a complete bounded snapshot from the paginated Worker index and compact reports, split into content-hashed JSON chunks, so normal visits no longer wait for a full per-report database refetch.

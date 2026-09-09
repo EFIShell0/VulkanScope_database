@@ -2,17 +2,44 @@ name: Deploy VulkanScope Database
 on:
   push:
     branches: ["main"]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  windows-tooling:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Verify canonical repository state
+        run: python tools/repair_repository.py --check
+      - name: Verify Windows/toolchain/release hardening
+        run: python tools/verify_1_0_4_windows_toolchain_release.py
+      - name: Exercise Windows path-sensitive Node regressions
+        run: |
+          node tools/test_compare_04141_compat.mjs
+          node tools/test_compare_04141_negative_mutations.mjs
+          node tools/test_surface_compare_04142.mjs
+          node tools/test_surface_compare_04142_negative_mutations.mjs
+
   build:
+    needs: windows-tooling
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -28,7 +55,7 @@ jobs:
           python-version: "3.13"
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Confirm 1.0.3 source files
+      - name: Confirm 1.0.4 source files
         run: |
           python tools/repair_repository.py --check
           python tools/audit_database.py --version
@@ -48,7 +75,7 @@ jobs:
         run: python tools/test_audit_hygiene.py
       - name: Check frontend JavaScript syntax
         run: |
-          node --check assets/app.v1003.js
+          node --check assets/app.v1004.js
           node --check assets/encyclopedia.v03924.js
       - name: Test hash routes
         run: node tools/test_routes.mjs
@@ -90,6 +117,7 @@ jobs:
           include-hidden-files: true
 
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build
@@ -106,3 +134,39 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5
+
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Repair and verify tagged source
+        run: |
+          python tools/repair_repository.py --apply
+          python tools/repair_repository.py --check
+          python tools/verify_regression_contract.py --strict-tree
+          python tools/verify_1_0_4_windows_toolchain_release.py
+      - name: Build deterministic release assets
+        run: python tools/package_release.py dist
+      - name: Create or refresh GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.4.zip dist/VulkanScope-Database-1.0.4.zip.sha256 --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.4.zip dist/VulkanScope-Database-1.0.4.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.4" --generate-notes
+          fi

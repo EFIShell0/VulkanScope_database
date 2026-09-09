@@ -5,10 +5,10 @@ errors=[]
 def need(c,m):
     if not c: errors.append(m)
 def text(p): return (root/p).read_text(encoding='utf-8')
-index=text('index.html'); app=text('assets/app.v1003.js'); css=text('assets/site.v0390.css')
+index=text('index.html'); app=text('assets/app.v1004.js'); css=text('assets/site.v0390.css')
 need('role="status" aria-live="polite" aria-atomic="true"' in index,'loading live-region contract missing')
 need('database-loading-label">DATABASE STATUS<' in index,'loading Database status label missing')
-need('site.v0390.css?v=1003' in index and 'app.v1003.js?v=1003' in index,'main-page UI cache-busting key missing')
+need('site.v0390.css?v=1004' in index and 'app.v1004.js?v=1004' in index,'main-page UI cache-busting key missing')
 for token in ['setDatabaseLoading(true,\'Loading report index…\'','setDatabaseLoading(true,\'Loading reports…\'','let completed=0','failedReportLoads']:
     need(token in app,f'loading progress contract missing: {token}')
 for token in ['class="encyclopedia-panel"','class="encyclopedia-stats"','notice encyclopedia-evidence-note','badge info','Registry/reference presence is not runtime capability evidence.']:
