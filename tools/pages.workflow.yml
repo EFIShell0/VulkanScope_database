@@ -35,13 +35,13 @@ jobs:
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-      - name: Verify Database 1.0.20 release-state contract
+      - name: Verify Database 1.0.21 release-state contract
         run: |
           python tools/verify_regression_contract.py
-          python tools/verify_1_0_20_release_state_handshake.py
-          python tools/test_1_0_20_release_state_handshake_negative_mutations.py
+          python tools/verify_1_0_21_live_report_sync.py
+          python tools/test_1_0_21_live_report_sync_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1020.js
+          node --check assets/app.v1021.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -72,14 +72,14 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Run Database 1.0.20 quality gate
+      - name: Run Database 1.0.21 quality gate
         run: python tools/quality_gate.py
       - name: Build static index
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_1_0_20_release_state_handshake.py
-          python tools/test_1_0_20_release_state_handshake_negative_mutations.py
+          python tools/verify_1_0_21_live_report_sync.py
+          python tools/test_1_0_21_live_report_sync_negative_mutations.py
       - name: Stage non-release-ready Pages artifact for audit
         run: python tools/build_pages_artifact.py _site
       - name: Audit non-release-ready Pages artifact
@@ -105,10 +105,10 @@ jobs:
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
           python tools/verify_regression_contract.py
-          python tools/verify_1_0_20_release_state_handshake.py
-          python tools/test_1_0_20_release_state_handshake_negative_mutations.py
+          python tools/verify_1_0_21_live_report_sync.py
+          python tools/test_1_0_21_live_report_sync_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1020.js
+          node --check assets/app.v1021.js
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release from validated main commit
@@ -116,7 +116,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          TAG="v1.0.20"
+          TAG="v1.0.21"
           if gh release view "$TAG" >/dev/null 2>&1; then
             git fetch --force origin "refs/tags/$TAG:refs/tags/$TAG"
             TAG_SHA="$(git rev-list -n 1 "$TAG")"
@@ -124,9 +124,9 @@ jobs:
               echo "Release $TAG already targets $TAG_SHA, not validated commit $GITHUB_SHA; bump the Database version instead of retargeting a published tag." >&2
               exit 1
             fi
-            gh release upload "$TAG" dist/VulkanScope-Database-1.0.20.zip dist/VulkanScope-Database-1.0.20.zip.sha256 --clobber
+            gh release upload "$TAG" dist/VulkanScope-Database-1.0.21.zip dist/VulkanScope-Database-1.0.21.zip.sha256 --clobber
           else
-            gh release create "$TAG" dist/VulkanScope-Database-1.0.20.zip dist/VulkanScope-Database-1.0.20.zip.sha256 --target "$GITHUB_SHA" --title "VulkanScope Database 1.0.20" --generate-notes
+            gh release create "$TAG" dist/VulkanScope-Database-1.0.21.zip dist/VulkanScope-Database-1.0.21.zip.sha256 --target "$GITHUB_SHA" --title "VulkanScope Database 1.0.21" --generate-notes
           fi
 
   deploy:

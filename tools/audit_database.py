@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.0.20'
-DB_VERSION='1.0.20'
-APP_ASSET='app.v1020.js'
-CACHE_KEY='1020'
+AUDIT_VERSION='1.0.21'
+DB_VERSION='1.0.21'
+APP_ASSET='app.v1021.js'
+CACHE_KEY='1021'
 PRODUCER='VulkanScope 1.0.19 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -85,7 +85,7 @@ def audit_source(root:Path):
     need(root.is_dir(),f'source tree missing: {root}')
     if not root.is_dir():
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_0_20_release_state_handshake.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
+    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_0_21_live_report_sync.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
     for rel in required: need((root/rel).is_file(),f'missing required source file {rel}')
     if errors:
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
@@ -101,12 +101,12 @@ def audit_source(root:Path):
     need(not (root/'fastlane').exists(),'Fastlane/store metadata is forbidden in source release')
     for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
         need(token in index,f'current index identity missing: {token}')
-    need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=10000,RELEASE_CHECK_INTERVAL_MS=10000;" in app,'frontend release/live-sync identity mismatch')
+    need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=3000,RELEASE_CHECK_INTERVAL_MS=10000;" in app,'frontend release/live-sync identity mismatch')
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need("databaseVersion:" not in worker,'legacy Worker databaseVersion refresh signal must be absent')
-    need(worker.count("databaseReleaseVersion:'1.0.20'")>=2,'Worker databaseReleaseVersion mismatch')
-    need(worker.count("workerReleaseVersion:'1.0.20'")>=2,'Worker workerReleaseVersion mismatch')
+    need(worker.count("databaseReleaseVersion:'1.0.21'")>=3,'Worker databaseReleaseVersion mismatch')
+    need(worker.count("workerReleaseVersion:'1.0.21'")>=3,'Worker workerReleaseVersion mismatch')
     need(worker.count("frontendUpdateSignal:'same-origin-pages-marker'")>=2,'Worker frontendUpdateSignal metadata missing')
 
     # Current Vulkan/producer metadata and immutable evidence model.
@@ -122,7 +122,7 @@ def audit_source(root:Path):
     need('technicalReport' in schema.get('required',[]),'technicalReport must remain required')
     need(static.get('normalizerVersion')==16,'normalizer version changed unexpectedly')
 
-    # Requested 1.0.20 UI/release behavior and preserved evidence semantics.
+    # Requested 1.0.21 foreground live-sync behavior and preserved evidence semantics.
     for token in ["classList.add('modal-page-size-select','drop-up')",'fill="#3DDC84"',"donutChart('GPU / reports',chartItems,rs.length,'',state.deviceSliceLimit)",'GPU / REPORT DISTRIBUTION','device-report-counts','modal-value-list modal-paged-list','coverage-report-list modal-paged-list','--coverage-position:${ratio*100}%']:
         need(token in app,f'current frontend contract missing: {token}')
     need('fill="#E2676A"' not in app,'legacy red Android tint remains')
@@ -131,7 +131,10 @@ def audit_source(root:Path):
     need("high=ratio>0&&(rank===true||rank==='dominant')?' high':''" in app,'dominant non-zero coverage glow semantics missing')
     need("const vendorId=r=>canonicalVendorId(r?.gpu?.vendorId??'Unknown');" in app,'raw GPU vendor-ID provenance changed')
     need("[/^HDR10\\+$/i,'hdr10_plus_v1014.png','hdr10plus']" in app,'audited HDR10+ asset mapping changed')
-    need('window.setInterval(runLiveSync,LIVE_SYNC_INTERVAL_MS)' in app,'live report synchronization missing')
+    need('window.setInterval(()=>void runLiveSync(false),LIVE_SYNC_INTERVAL_MS)' in app,'foreground live report synchronization timer missing')
+    need("new URL(`${api}/v1/sync`)" in app and "fetchJsonBounded(u,{cache:'no-store'})" in app,'lightweight no-store sync-head polling missing')
+    need("if(!force&&head.syncToken===liveSyncToken)" in app,'sync-head unchanged-token shortcut missing')
+    need("COUNT(*) OVER() AS report_count" in worker and "url.pathname==='/v1/sync'&&request.method==='GET'" in worker,'Worker sync-head endpoint/query missing')
     need("fetchJsonBounded(`./data/release.json?_=${Date.now()}`,{cache:'no-store'})" in app,'release-ready same-origin marker polling missing')
     need('releaseMarkerShapeValid' in app and 'publishedFrontendReady(marker)' in app,'published frontend readiness probe missing')
     need('UPDATE_RETRY_SUPPRESS_MS=120000' in app and 'sessionStorage.setItem(UPDATE_ATTEMPT_KEY' in app,'repeat-refresh loop suppression missing')

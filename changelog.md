@@ -1,5 +1,13 @@
 # VulkanScope Database changelog
 
+## 1.0.21
+
+- Replaces the fragile full-index-only background refresh with a lightweight `/v1/sync` freshness head polled every 3 seconds while the page is active.
+- Adds cache-resistant no-store + nonce live requests, forced reconciliation on focus/visibility/pageshow/online, and atomic report/index replacement so newly accepted reports update the active page, counters, statistics and filters without F5.
+- Fetches only newly missing compact report payloads after the sync token changes; failed reconciliations keep the last committed token and retry instead of silently advancing stale state.
+- Preserves exact-report de-duplication: resubmitting the same canonical report ID does not create a second statistical sample.
+- Keeps the 1.0.20 Pages release-ready handshake independent from live report synchronization.
+
 ## 1.0.20
 - Breaks the refresh-loop dependency between cached 1.0.18 frontends and Worker rollout by removing the legacy Worker `databaseVersion` refresh signal; Worker release identity is informational only.
 - Replaces the source-ready marker with a schema-2 non-ready marker. Only the post-Release staged Pages artifact can be transitioned to `releaseReady:true`.

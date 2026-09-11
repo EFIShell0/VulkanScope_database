@@ -13,6 +13,7 @@ class DB {
         return {success:true}
       },
       async first(){
+        if(sql.includes('COUNT(*) OVER() AS report_count')){const rows=[...self.rows.values()].sort((a,b)=>String(b.submitted_at).localeCompare(String(a.submitted_at))||String(b.id).localeCompare(String(a.id))),latest=rows[0];return latest?{latest_id:latest.id,latest_submitted_at:latest.submitted_at,report_count:rows.length}:null}
         if(sql.includes('SELECT submitted_at FROM reports WHERE id=?')){const row=self.rows.get(args[0]);return row?{submitted_at:row.submitted_at}:null}
         if(sql.includes('SELECT payload_json,submitted_at,id FROM reports WHERE id=?'))return self.rows.get(args[0])||null;
         return null
@@ -72,20 +73,31 @@ let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.0.20');
-assert.equal(j.workerReleaseVersion,'1.0.20');
+assert.equal(j.databaseReleaseVersion,'1.0.21');
+assert.equal(j.workerReleaseVersion,'1.0.21');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.362/);
 assert.match(j.producerQueryBaseline,/1\.0\.19/);
 assert.match(j.compatibleProducer,/1\.0\.19\+/);
 
+r=await call('/v1/sync');
+assert.equal(r.status,200);
+j=await r.json();
+assert.equal(j.databaseReleaseVersion,'1.0.21');
+assert.equal(j.workerReleaseVersion,'1.0.21');
+assert.equal(j.reportCount,0);
+assert.equal(j.latestReportId,'');
+assert.equal(j.latestSubmittedAt,'');
+assert.equal(j.syncToken,'0::');
+const emptySyncToken=j.syncToken;
+
 r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.0.20');
-assert.equal(j.workerReleaseVersion,'1.0.20');
+assert.equal(j.databaseReleaseVersion,'1.0.21');
+assert.equal(j.workerReleaseVersion,'1.0.21');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.match(j.producerQueryBaseline,/1\.0\.19/);
 assert.match(j.compatibleProducer,/1\.0\.19\+/);
@@ -103,6 +115,15 @@ assert.equal(r.status,201);
 const accepted=await r.json();
 assert.match(accepted.id,/^[a-f0-9]{64}$/);
 assert.equal(accepted.status,'accepted');
+
+r=await call('/v1/sync');
+assert.equal(r.status,200);
+j=await r.json();
+assert.equal(j.reportCount,1);
+assert.equal(j.latestReportId,accepted.id);
+assert.ok(j.latestSubmittedAt);
+assert.notEqual(j.syncToken,emptySyncToken);
+assert.equal(j.syncToken,`1:${j.latestSubmittedAt}:${accepted.id}`);
 
 const below=structuredClone(current);
 below.application.version='1.0.18';
@@ -164,4 +185,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.0.20 transport contract: VulkanScope 1.0.19 producer floor + legacy refresh-signal removal + historical reads + transport/security basics');
+console.log('PASS Worker 1.0.21 transport contract: live sync head + VulkanScope 1.0.19 producer floor + historical reads + transport/security basics');
