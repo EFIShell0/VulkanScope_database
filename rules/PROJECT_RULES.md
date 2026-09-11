@@ -766,3 +766,12 @@
 - The Reports Report ID column must not truncate the 64-character SHA-256 identifier. It exposes a dedicated copy control that copies the exact full 64-character ID; activating the control must not activate row navigation.
 - Coverage percentages below 20% use a structurally distinct, patterned/angled progress fill while preserving the semantic state color. Values below 5% receive the stronger very-low shape. The visual must not alter the numerical percentage.
 - Browser-visible JavaScript/CSS changes are cache-busted with key `1009`; current application JavaScript is `assets/app.v1009.js`. No D1 migration, report hash rewrite, submission-schema bump, technicalReport-schema bump, normalizer bump or Vulkan registry corpus change is introduced.
+
+## Release 1.0.10 Reports render-array hotfix requirements
+- Database version is 1.0.10. Treat VulkanScope Database 1.0.9 (SHA-256 `0d75cfe949901636635a1039ac53921834fe690be7099ad96d45ef14a4ee6517`) as the immutable predecessor.
+- The shared `table(heads, rows)` helper owns HTML row serialization and therefore receives an Array of row strings. Callers must not pre-serialize a row Array with `.join('')` before passing it to `table()`.
+- `renderReports()` must keep `rs.map(...)` as an Array through the `table(..., rows)` call. The Database-unavailable fallback must never be triggered by a local `rows.join is not a function` presentation bug.
+- Do not make `table()` permissive to strings merely to hide this failure class; the caller type contract remains explicit and regression-tested.
+- All Database 1.0.9 behavior remains mandatory: atomic live-index/payload reconciliation before first committed render, one committed report Map for Reports/statistics, server-authoritative stacked Date/Time/Time zone, full 64-character Report ID copy control, low/very-low coverage shapes, and the VulkanScope 1.0.19 new-submission floor.
+- Browser-visible JavaScript advances to `assets/app.v1010.js` with cache key 1010. Schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.362, D1 schema, stored report bytes/hashes, payload chunking, privacy rules and transport limits remain unchanged.
+- `tools/verify_1_0_10_reports_render_hotfix.py` and `tools/test_1_0_10_reports_render_hotfix_negative_mutations.py` are mandatory release gates. Final packaging requires immutable 1.0.9 -> 1.0.10 source-overlay verification, clean-extract strict-tree verification and deterministic ZIP construction.

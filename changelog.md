@@ -1,3 +1,10 @@
+# VulkanScope Database 1.0.10
+
+- Fixes the Reports startup failure `rows.join is not a function` introduced in 1.0.9: `renderReports()` now keeps its mapped rows as an Array and passes that Array directly to the shared `table()` serializer.
+- Keeps `table()` strict instead of accepting strings, so caller type mistakes remain detectable rather than being silently masked.
+- Retains the complete 1.0.9 behavior: atomic live reconciliation, synchronized Reports/statistics, stacked server submission Date/Time/Time zone, full 64-character Report ID copy control, low-percentage coverage shapes, and the VulkanScope 1.0.19 submission floor.
+- Advances browser/release identity to 1.0.10 / `assets/app.v1010.js` / cache key 1010. Schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.362, D1 schema, report IDs/hashes, payload storage and privacy/transport limits are unchanged; no migration or stored-report rewrite is introduced.
+
 # VulkanScope Database 1.0.9
 
 - Makes deploy-snapshot/live-Worker reconciliation atomic before the first visible database render, so a newly submitted report updates Reports, the report count and every statistics/coverage view from one committed dataset instead of appearing later as a sliding row.
