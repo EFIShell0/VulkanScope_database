@@ -34,12 +34,12 @@ jobs:
           package-manager-cache: false
       - name: Verify canonical repository state
         run: python tools/repair_repository.py --check
-      - name: Verify Database 1.0.13 release contract
+      - name: Verify Database 1.0.14 release contract
         run: |
           python tools/verify_regression_contract.py
-          python tools/verify_1_0_13_reports_disclosure_spray_ui.py
-          python tools/test_1_0_13_reports_disclosure_spray_ui_negative_mutations.py
-          node --check assets/app.v1013.js
+          python tools/verify_1_0_14_database_ui_integrity.py
+          python tools/test_1_0_14_database_ui_integrity_negative_mutations.py
+          node --check assets/app.v1014.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -70,14 +70,14 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Run Database 1.0.13 quality gate
+      - name: Run Database 1.0.14 quality gate
         run: python tools/quality_gate.py
       - name: Build static index
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_1_0_13_reports_disclosure_spray_ui.py
-          python tools/test_1_0_13_reports_disclosure_spray_ui_negative_mutations.py
+          python tools/verify_1_0_14_database_ui_integrity.py
+          python tools/test_1_0_14_database_ui_integrity_negative_mutations.py
       - name: Stage allow-listed Pages artifact
         run: python tools/build_pages_artifact.py _site
       - name: Build deploy-time preloaded report snapshot
@@ -128,8 +128,8 @@ jobs:
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
           python tools/verify_regression_contract.py
-          python tools/verify_1_0_13_reports_disclosure_spray_ui.py
-          python tools/test_1_0_13_reports_disclosure_spray_ui_negative_mutations.py
+          python tools/verify_1_0_14_database_ui_integrity.py
+          python tools/test_1_0_14_database_ui_integrity_negative_mutations.py
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release
@@ -138,7 +138,7 @@ jobs:
         shell: bash
         run: |
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.13.zip dist/VulkanScope-Database-1.0.13.zip.sha256 --clobber
+            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.14.zip dist/VulkanScope-Database-1.0.14.zip.sha256 --clobber
           else
-            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.13.zip dist/VulkanScope-Database-1.0.13.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.13" --generate-notes
+            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.14.zip dist/VulkanScope-Database-1.0.14.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.14" --generate-notes
           fi

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.13",
+  "successor": "1.0.14",
+  "baselineZipSha256": "dfb27ff28e6c8c5638a84b10d107f69925768f6c0ca5e1e4cb963463f1cd414c",
+  "baselineManifest": "regression/1.0.13_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1013.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1014.js",
+    "assets/hdr/hdr10_plus_v1014.png",
+    "regression/1.0.13_files.json",
+    "regression/1.0.13_to_1.0.14_contract.json",
+    "rules/1.0.14_REPORTS_COVERAGE_INFO_DISPLAY_AUDIT.md",
+    "tools/test_1_0_14_database_ui_integrity_negative_mutations.py",
+    "tools/verify_1_0_14_database_ui_integrity.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.13_to_1.0.14_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "d15298b62e083d7244f74f24e7ff267168f9d42384713127f54cb873ad4f121e",
+    "BUILD_AUDIT.md": "77005540e546c1f0fb0eb8118529d3cf3434772b49799fd8500c6da1f83ad57b",
+    "assets/site.v0390.css": "413f5b87cc28d5f3065ee7627aa1dbb99b8356c39ecaaacce4e2538aff7e6639",
+    "changelog.md": "13963b7403a9eb797f1fbc321ae8a96e55751c999126ccf4bb21654e4789237a",
+    "index.html": "a87244f339af00c1162dc5e5bc96c9574c8ea64c8c3ba5ebb01484ae98afc67c",
+    "rules/PROJECT_RULES.md": "294e5f470a0d80c05899bf8802a26bc85207ccdf12dac640e82b3cab34b049bf",
+    "tools/build_index.py": "7992864e8ff3d1b2fbda67bd0db4b49cc10ee9df3efc7eaa98a80c595975e008",
+    "tools/build_pages_artifact.py": "c6dbf9e1965cf23ad449ac390e5cc1793c4420918d28defae54923b3fa7333f8",
+    "tools/build_preload_snapshot.py": "7626dad91a367d86b5c0ce4af71e5e0c25d1bef06b05374cbafa95323e00bb39",
+    "tools/package_release.py": "86531d3a3b677ad5ab966062a90978874f5ff7754fcdff5a342aa1fdb816b8dd",
+    "tools/pages.workflow.yml": "d15298b62e083d7244f74f24e7ff267168f9d42384713127f54cb873ad4f121e",
+    "tools/quality_gate.py": "df52ae43caf9bb883b567a792ec0e7605a71c4fcf4ea0e621dbb1fb91bb04653",
+    "tools/repair_repository.py": "d04cae9cc2d3a5830013a0f8cd26543a363a5a776b680ecbb068291e9cd78690",
+    "tools/test_utf8_text_io.py": "0c9400a81600d0cf85f7215241cb37195fe184ff27addb0483609a368d3e6767",
+    "tools/verify_regression_contract.py": "ac918d2aa8fd08e943c77b5400a0897209ec46a7654d7efe3dfd867e37ae9045",
+    "tools/verify_vulkanscope_04132.py": "289c2815913634841b75c9a16aaa78d52204b922bd9dbaf7611e8bed0d29e2c0",
+    "worker/package.json": "8fd6279cf69f36e66fbe0c1b350156268c1ffa2b87dbe90b694c7e101d7966c1",
+    "worker/tests/contract.mjs": "143190fdef8db027873e62629b5f4f29b2eedefbbd54adfcf86fd4e31defd50c",
+    "assets/app.v1014.js": "52f676fef698e31be27ba97d7cdee9fa711000af75819a551ac6f46d1ef9d9aa",
+    "assets/hdr/hdr10_plus_v1014.png": "8c38222517cd48357da8a93623e3c40aa06cccc7046e806b89cf81350907aba8",
+    "regression/1.0.13_files.json": "e721d12f74230a7f4f01ec8d860642a00887e7037dbaecce77032ed663f3bdaa",
+    "rules/1.0.14_REPORTS_COVERAGE_INFO_DISPLAY_AUDIT.md": "02025e39378ffa20958e62b87f54978f1b6a72066d12eae24076975a316e3b8b",
+    "tools/test_1_0_14_database_ui_integrity_negative_mutations.py": "914876a18e1776096fcfdd66f311768c4df4c20d9f65adbc84260d8ad2aa78f0",
+    "tools/verify_1_0_14_database_ui_integrity.py": "4f492932dfb8bf58b197d73739f6a8aa6eb30674f70245eaca65fad3bcb7f098"
+  }
+}

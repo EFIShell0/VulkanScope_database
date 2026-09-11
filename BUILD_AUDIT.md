@@ -1,3 +1,26 @@
+# VulkanScope Database 1.0.14 build / regression audit
+
+## Identity
+- Database version: 1.0.14
+- Immutable predecessor: VulkanScope Database 1.0.13
+- Predecessor ZIP SHA-256: `dfb27ff28e6c8c5638a84b10d107f69925768f6c0ca5e1e4cb963463f1cd414c`
+- Current producer/query baseline: VulkanScope 1.0.19 / versionCode 1019 / Vulkan 1.4.362
+- Submission schema 2 / technicalReport 3 / normalizer 16
+- D1 migration: none
+
+## Scope
+This release is limited to the requested Reports layout, complete percentage-state ranking, Developer Info, vendor-ID provenance hardening, coverage-report modal, high-percentage endpoint effect, exact HDR10+ artwork and display typography. Worker validation/storage semantics and report bytes/IDs remain unchanged.
+
+## Mandatory verification
+- 1.0.14 UI/data-provenance verifier and negative mutations.
+- Immutable 1.0.13 -> 1.0.14 source-overlay and strict-package regression verification.
+- JavaScript/Worker syntax and Worker contract.
+- D1 migration-chain replay.
+- Pages allow-list staging including cache-busted HDR10+ artwork.
+- Deterministic ZIP and clean-extract byte equality.
+
+Live Cloudflare deployment and production-browser smoke testing are not claimed by the packaging environment.
+
 # VulkanScope Database 1.0.13 build / regression audit
 
 ## Identity

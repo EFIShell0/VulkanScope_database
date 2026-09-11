@@ -1,3 +1,15 @@
+# VulkanScope Database 1.0.14
+
+- Pins the Reports Submitted three-line disclosure control to the left while the Submitted label and Date / Time / Time zone content expand only to its right; widens technical columns so the table grows horizontally instead of squeezing content.
+- Reworks multi-state coverage math so Unknown and every other represented state participate in totals/dominance. Highest percentage state(s) stay solid, every strictly lower peer is black-hatched, and 0.0% remains visible as an empty hatched track.
+- Moves Coverage reports lists into a centered dark-backdrop modal with a right-arrow launcher.
+- Adds Developer Info under the GitHub repository control for Semih Boran / EFI Shell.
+- Audits GPU vendor-ID provenance: raw IDs remain submitted Vulkan `VkPhysicalDeviceProperties.vendorID` evidence; the browser no longer falls back to textual vendor metadata, while name/family mappings remain presentation-only.
+- Anchors >=80% semantic light/spray to a clamped bar endpoint so the effect remains visible at 100%, and retains reduced-motion containment.
+- Replaces the HDR10+ browser asset with the exact VulkanScope application artwork and removes the CSS color inversion that altered its colors.
+- Gives resolution and preferred wide-gamut values the same proportional boxed display typography.
+- Advances browser/release identity to 1.0.14 / `assets/app.v1014.js` / cache key 1014. No D1 migration, stored-report rewrite, report-hash change, schema bump, normalizer bump or Vulkan registry change is introduced.
+
 # VulkanScope Database 1.0.13
 
 - Repairs the Reports Submitted disclosure so the collapsed Date / Time / Time zone state no longer reserves a blank expanded-width column; only the compact three-line control remains.

@@ -16,7 +16,7 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v1013.js','assets/encyclopedia.v03924.js',
+    'assets/app.v1014.js','assets/encyclopedia.v03924.js',
     'assets/site.v0390.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',
@@ -35,7 +35,7 @@ asset_files=[
     'assets/gpu-vendors/gpu_vendor_vivante.png',
     'assets/gpu-vendors/gpu_vendor_vsi.png',
     'assets/hdr/dolby_vision.png','assets/hdr/dolby_vision_2.png',
-    'assets/hdr/hdr10.svg','assets/hdr/hdr10_plus.png',
+    'assets/hdr/hdr10.svg','assets/hdr/hdr10_plus.png','assets/hdr/hdr10_plus_v1014.png',
     'assets/hdr/hdr10_plus_advanced.png','assets/hdr/hdr_vivid.webp',
 ]
 for name in public_files + asset_files:
