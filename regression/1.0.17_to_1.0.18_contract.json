@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.17",
+  "successor": "1.0.18",
+  "baselineZipSha256": "4279690b5c88d14747528b9a4e4d14eca695d3946743d9af66a5f51ada4264e2",
+  "baselineManifest": "regression/1.0.17_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1017.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1018.js",
+    "regression/1.0.17_files.json",
+    "regression/1.0.17_to_1.0.18_contract.json",
+    "rules/1.0.18_FULL_UI_SPEC_SECURITY_OPTIMIZATION_AUDIT.md",
+    "tools/test_1_0_18_full_audit_negative_mutations.py",
+    "tools/verify_1_0_18_full_audit.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.17_to_1.0.18_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "4ed971803cd75333d5bc39cf0ebda190309ff099ddfadffdee4644371e389d09",
+    "BUILD_AUDIT.md": "eb4a6ad763986b46d19f23bf2384ef77d5fad5ffe0cc25d165f5eeb0ff3c0613",
+    "assets/site.v0390.css": "075817103f391d0c35f1848bfca4c68892fff6b9d12c46c368a862f14f261e72",
+    "changelog.md": "8de19f74ac8a5a391f2d6277b25fdc02ad95347ac7a7a14d81e0aae147e07c95",
+    "index.html": "073b74a52f186d71bb8a138e5cb90cec7204876195992075e4bac5f9e1579db0",
+    "rules/PROJECT_RULES.md": "e075e64c7dcfa857b7d4b8efb3946ddc04519422c0032dab61390c499282dd72",
+    "tools/audit_database.py": "ca66c57eed007faa92fb545867c4e2bbb61e566ae89e0d6bb69bd43e2428f780",
+    "tools/build_index.py": "36e74065ed907f1df8ab940f4d6f2878b00c49562fe047b3ad9bde38565fc03f",
+    "tools/build_pages_artifact.py": "f5a9fb0a31cc7bb10a171e115d084e913d2dab7991dc9f3909ae42213817155e",
+    "tools/build_preload_snapshot.py": "806d27133348f9d8e49602b228d1fe1a2df9f05059583c0b6f1a9192d0a78ada",
+    "tools/package_release.py": "7e38da78853e51284ab5712929724bf0f37f5893780b5c57e737acd316f86751",
+    "tools/pages.workflow.yml": "4ed971803cd75333d5bc39cf0ebda190309ff099ddfadffdee4644371e389d09",
+    "tools/quality_gate.py": "9fe4b01ca4f595855f4c3470f1b977a0dfe218f9e16ec4fb425e3830baef886e",
+    "tools/repair_repository.py": "1ef419b9015428d0a1714cd410bf9d2936c314a7330604b4b46a0cb7a43965a9",
+    "tools/test_compare_contract.mjs": "410c8c5ae2d37cbb306c3b888aacbe7ccdce353c2f16572af372dbe632b04b9e",
+    "tools/test_routes.mjs": "d8e5d01ee8d75186a7f3ca626f538267d44f58e8d994a30abd813242fb0dda86",
+    "tools/test_utf8_text_io.py": "fd53e3e07bbb214a1be8ca2889d9832150f1a11a5f6ba8e4f5dbb2809314e1b1",
+    "tools/verify_regression_contract.py": "52fb4d2bb8c7a31451969ec88682b1135f8ef9c94468436c4bff4ebbbe00b468",
+    "tools/verify_vulkanscope_04132.py": "f44d76cb8c4d11470ab14bbaa51de0beff55b58b49ee07ba1b34eb1999395337",
+    "worker/package.json": "4345bd86faf4f9a8e2c16c60b233bdb50d21cebe167301aad78820141a6f049a",
+    "worker/src/index.js": "1ed0a768bd72ed5198a0716629042e1d048ca038de66194d1268cb736311220b",
+    "worker/tests/contract.mjs": "cc62114efe0a8c25c34a935fc081b7d5ac29fcc0835656f75098c112187194ad",
+    "assets/app.v1018.js": "e73e06bae0168086ffa4a3caa3d2bb24bb50ad813a3bed42adf33de6ec56b4ac",
+    "regression/1.0.17_files.json": "96211193b5bc8944a91edfc3eafc0135a60d15205d0cc9a65b68fab9f16d40ee",
+    "rules/1.0.18_FULL_UI_SPEC_SECURITY_OPTIMIZATION_AUDIT.md": "38ac6890fd13bdb0be2adf894e635a0bef58e3bb24020b5b9538e5fbbb97b044",
+    "tools/test_1_0_18_full_audit_negative_mutations.py": "bbd3d14a2c22a46e4a7666ddef1bc18fac16012eb3a0bc69a7aad8ffbf6c136e",
+    "tools/verify_1_0_18_full_audit.py": "2e7b5616702b467d6396eeb4b98daaf27fbc785375a6952cb4850f5f12b563bd"
+  }
+}
