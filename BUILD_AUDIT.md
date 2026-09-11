@@ -1,3 +1,20 @@
+# VulkanScope Database 1.0.9 build audit
+
+## Scope
+1.0.9 is a live-data/UI consistency and producer-floor successor to immutable Database 1.0.8 (`aa406aafdf52bfa8e008e093e3518f4313ffd8ff4efaac1722ce923fe6f1744c`). It fixes the observed stale deploy-snapshot count / late report-row insertion path.
+
+## Corrective contract
+- preload/live reconciliation stages missing compact reports off-state and commits `state.reports` plus `state.index` only after the complete live index is satisfied;
+- the initial visible render occurs after reconciliation, so Reports, metrics and statistics share one dataset;
+- Report ID copies the exact 64-hex identifier; submission Date/Time/Time zone are separate and derive from server `submitted_at`;
+- low (<20%) and very-low (<5%) coverage retains exact width but gains a distinct pattern/shape;
+- new submissions require VulkanScope 1.0.19 / 1019 or newer; historical stored GETs remain readable.
+
+## Preserved boundary
+Schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.362 registry corpus, D1 migrations, canonical report hashes, payload chunking, 2 MiB request ceiling, CORS/privacy rules and historical stored bytes are unchanged. No D1 migration or stored-report rewrite.
+
+---
+
 # VulkanScope Database 1.0.8 build audit
 
 ## Scope

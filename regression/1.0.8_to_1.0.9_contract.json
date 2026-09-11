@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.8",
+  "successor": "1.0.9",
+  "baselineZipSha256": "aa406aafdf52bfa8e008e093e3518f4313ffd8ff4efaac1722ce923fe6f1744c",
+  "baselineManifest": "regression/1.0.8_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "SECURITY.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1008.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1009.js",
+    "regression/1.0.8_files.json",
+    "regression/1.0.8_to_1.0.9_contract.json",
+    "rules/1.0.9_LIVE_REPORT_CONSISTENCY_UI_FLOOR_AUDIT.md",
+    "tools/verify_1_0_9_live_consistency_ui_floor.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.8_to_1.0.9_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "d3c2a2759703074a5b6bf7589dc51282b929271ef08f7e45107ace5beff55990",
+    "BUILD_AUDIT.md": "65e34817ad180020475889f74ad46a59b326e63edb2901820aa88ebf8289ad33",
+    "SECURITY.md": "423e32f3da83f64bf0070a231a71fbd23b4fd0c86e979d03820833a6982baa26",
+    "assets/site.v0390.css": "ed7ebd7c6146e34c1afe64cefc39fb7f5206ae9a10ad7c0601576f9dde886f78",
+    "changelog.md": "171be1b4abb7b4b2e2d34cb750fbac856cf7d6d666fc403f6b6fdb734a292041",
+    "index.html": "e9a4c80767ac3fcf12583549c065d2588cfb1cbbf63985a1c1f48a75274f657d",
+    "rules/PROJECT_RULES.md": "6e332075b2d29e10ce0c7866096eacfed77707de3fc34060cb07552fda3dc13a",
+    "tools/build_index.py": "ef31f6db75d88c7ac3bdc637f447f5a7c7a72d3f97da96507327a6db6bca1883",
+    "tools/build_pages_artifact.py": "ced948f07499a060e3b52e86db01b120c853820673685200e7e28de7e1f98c0b",
+    "tools/build_preload_snapshot.py": "9dac7f6de549d7a983504b6dc7c869c17f97fb9bf39888f1edf859b86be18c5e",
+    "tools/package_release.py": "87b41a2b24857630721dcad7dfa736de2badac46b0c39fe0fbd1e93e7b7b38ae",
+    "tools/pages.workflow.yml": "d3c2a2759703074a5b6bf7589dc51282b929271ef08f7e45107ace5beff55990",
+    "tools/quality_gate.py": "f99055f6e6f7e6a3bdfb22d6417871056bd947b6058697873c1707b7772f7352",
+    "tools/repair_repository.py": "a8dda613570332044f19708f58bc91633490110c71f51aad3e21b9d517415cb0",
+    "tools/test_utf8_text_io.py": "c480887d4d1133c3d3cb0b1b625d8734b906ec816482d9fd4ee87f352170b683",
+    "tools/verify_regression_contract.py": "0b6ee891a487eef5e023484bb73045e2300179cb473517808879dbfac3fb27d9",
+    "tools/verify_vulkanscope_04132.py": "0a49971853eaf75a987091c668933bacc4bab452d22b681b854a329be598a5a3",
+    "worker/package.json": "b9db6f22ffbcc4ac5367b21c50de105965f461aea114dc468910dfffff043643",
+    "worker/src/index.js": "5821d514ad41b1953e015363c8888c64984b6292fcdea1428e7354bf94a95051",
+    "worker/tests/contract.mjs": "0a90907f68d46f4fa8cb0f33569687efd96205d39aaa30fd88c1f64d89ecf03c",
+    "assets/app.v1009.js": "c4d3de0a422e806c0bb748d1e4900a89efcb20a5c35c8b9eccc65c62ec7ccdb0",
+    "regression/1.0.8_files.json": "19c177ab911ccaaa358606c17907d69ab3cb231a59252ad5579de24ba950052d",
+    "rules/1.0.9_LIVE_REPORT_CONSISTENCY_UI_FLOOR_AUDIT.md": "f0e6566cb0d63c86adad1032397a1120cdecb09d73269a4bddf05dc26813d955",
+    "tools/verify_1_0_9_live_consistency_ui_floor.py": "42259c463b65b6c51b06ab2963526d21f162a7e71fe66d701ff2563c8b473603"
+  }
+}

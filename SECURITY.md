@@ -8,6 +8,13 @@ The site has no third-party JavaScript, analytics, remote fonts or advertising d
 
 Unknown, unsupported and unavailable capability states remain distinct. Missing query data is never inferred as unsupported without direct evidence.
 
+## 1.0.9 producer-floor and live-state integrity
+
+- New VulkanScope report POSTs require canonical producer version 1.0.19 or newer. The floor check happens before generic submission validation; versionCode identity, schema, registry/header, completeness, privacy-key and payload-size checks still apply afterward.
+- Raising the POST floor does not revoke read access to historical stored reports and does not rewrite or rehash D1 rows.
+- Frontend live reconciliation is staged off-state and committed only when the complete live report set is available, avoiding partial statistics/report-list state.
+- Report ID clipboard actions validate the existing lowercase 64-hex identifier and do not introduce any external clipboard/library dependency or network endpoint.
+
 ## 0.33.8 submission hardening
 
 The Worker accepts report submissions only as `application/json`. The outer schema must identify the producer as VulkanScope (`com.efishell.vulkanscope`) and `collection.status` must be `available`; incomplete collection submissions are rejected. Existing payload-size, forbidden-field, D1 parameter binding and no-request-IP-storage controls remain in force.

@@ -1,3 +1,12 @@
+# VulkanScope Database 1.0.9
+
+- Makes deploy-snapshot/live-Worker reconciliation atomic before the first visible database render, so a newly submitted report updates Reports, the report count and every statistics/coverage view from one committed dataset instead of appearing later as a sliding row.
+- Keeps the live Worker authoritative while preserving complete deploy-time snapshot fallback when live synchronization is unavailable; incomplete live payload deltas never partially mutate visible state.
+- Replaces the truncated Report ID cell with a copy control for the exact 64-character SHA-256 ID, and separates server-authoritative submission Date, Time and Time zone onto three lines.
+- Gives coverage below 20% a patterned/angled progress-bar shape and below 5% a stronger very-low shape without changing exact percentage widths or semantic state colors.
+- Raises the new-submission floor to VulkanScope 1.0.19 / versionCode 1019. VulkanScope 1.0.18 and every older producer are rejected for new POSTs; historical stored reports remain readable.
+- Advances Database/cache identity to 1.0.9 / `assets/app.v1009.js` / key 1009. Schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.362, D1 schema, report IDs/hashes, payload chunking and privacy/transport limits are unchanged. No migration or stored-report rewrite.
+
 # VulkanScope Database 1.0.8
 
 - Fixes GitHub tag-release failure on long-lived repositories containing historical tracked frontend assets that were never members of the immutable predecessor release ZIP.
