@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.16",
+  "successor": "1.0.17",
+  "baselineZipSha256": "c908f95c5a515f3fc6fb79dfda2c0da8e866b24c59aa0b3278c5b26c70766245",
+  "baselineManifest": "regression/1.0.16_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1016.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1017.js",
+    "regression/1.0.16_files.json",
+    "regression/1.0.16_to_1.0.17_contract.json",
+    "rules/1.0.17_COVERAGE_GLOW_VERSIONS_PAGED_MODAL_AUDIT.md",
+    "tools/test_1_0_17_glow_versions_paged_modals_negative_mutations.py",
+    "tools/verify_1_0_17_glow_versions_paged_modals.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.16_to_1.0.17_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "b5c6d337d8ae2aee6c2df6633070c3acee226e5c5c22bd5e8e208156b79ca226",
+    "BUILD_AUDIT.md": "3c2c94f22849a92a3a8a74b6cd9580945cbbcb9ffb4cfbec34e831299f0254d6",
+    "assets/site.v0390.css": "7e9b72a4548b592e7bfa4e75752a10473eeec501c88c479265eb9fb2cf305646",
+    "changelog.md": "dbe4cc6b16b2b3ed89b3aa2e92ba3bd8863f1cdd20dcee8679db2b1c6f5ff0f8",
+    "index.html": "f8e7b87a32c4375bed312532c8becceca0a71bdb53dda0c5dbabfc71f5654e2d",
+    "rules/PROJECT_RULES.md": "96320eca24afa300e8f85e2316b330566632552cbb4a9953d3e01713c024c680",
+    "tools/build_index.py": "708e5d0b99ac4f16a9a6b3ade71708932df6f8596889943749cf0018570dc74b",
+    "tools/build_pages_artifact.py": "b4b61d0230ee2ae5025ea6b4bc1f8c36d42e4227839b71712d6d6081789fed31",
+    "tools/build_preload_snapshot.py": "a08683733970d7a2478da6728eb45822ed2cbf1ff47b7377c6596d36f25de487",
+    "tools/package_release.py": "657a1609bd70c334f4839c0287a55d2463ee36bd1e138c9832eedd9b02d7b848",
+    "tools/pages.workflow.yml": "b5c6d337d8ae2aee6c2df6633070c3acee226e5c5c22bd5e8e208156b79ca226",
+    "tools/quality_gate.py": "336d802c5924b32e1457fcf84c51666fe8c9544400022204ecdd42758dcda597",
+    "tools/repair_repository.py": "4994c57320ece59022eb1700e0c82ade8c6613bc1ba896877c21f1cf5b52c361",
+    "tools/test_utf8_text_io.py": "baed5055c9838e9e26066b68b44ebc648a1f2eb1ceeab39cc171a5654a7b7fc4",
+    "tools/verify_regression_contract.py": "480cf207bfdc4b1c9d5504d9b97e691902ae9a74b69b1cc32f72a4c4bce472cf",
+    "tools/verify_vulkanscope_04132.py": "16ab6dc7f6e260707d9bcdb6ac38c3d627c10165c2d67cbe41edbd222ed46bd8",
+    "worker/package.json": "88feb6ea05a1baa038022e35e3d082405075b1a9aecf27db41a17af9af68d4cb",
+    "worker/src/index.js": "850632d43cbe6c9581d45fa27bc3f98bf0c19a19a53eb75e4db7773cb07e598c",
+    "worker/tests/contract.mjs": "ae5ceb6a41a9567d4db3b81f79dab76f29242a8b607d712ed04be0d9259792a5",
+    "assets/app.v1017.js": "bd45c3474bc8a8aed68b99b46fa946f3d9d430f890af72483d0c7e47b651e298",
+    "regression/1.0.16_files.json": "834b56a0c0d27bbdd038c666ad0843c7e15f4b751934629a309ed6bc12990811",
+    "rules/1.0.17_COVERAGE_GLOW_VERSIONS_PAGED_MODAL_AUDIT.md": "c00b72098c295837299d1c5239f35bdbafb023c898e13ea44a612f6df6574415",
+    "tools/test_1_0_17_glow_versions_paged_modals_negative_mutations.py": "e407851b44654e0c30c042350ac2e9eb4301889b2a1b9064b166c2488a5bc780",
+    "tools/verify_1_0_17_glow_versions_paged_modals.py": "215edc7defdcfff03dd72f8784766cbe1ac5ca4e7dbd57a2b2ea814e0b8c7a88"
+  }
+}

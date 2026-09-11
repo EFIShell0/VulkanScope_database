@@ -1,9 +1,8 @@
-# VulkanScope Database 1.0.16
+# VulkanScope Database 1.0.17
 
-- Widens the Reports Submitted, Vendor and Type right-growing disclosures so complete time-zone, vendor/family/raw-ID and canonical physical-device-type values fit without clipping; compact three-line controls remain physically pinned to the left.
-- Converts aggregate `distinct`/value drill-downs from inline downward accordions to the same right-arrow, centered dark-backdrop modal language used by Coverage reports.
-- Reworks Versions into the Statistics donut-chart language. Each slice represents a GPU + selected Vulkan version cohort, while the table below lists GPU, version, exact report count and share; no coverage bars are used.
-- Adds bounded live database synchronization every 10 seconds plus immediate checks when the page regains visibility, focus or connectivity. New report payloads are fetched only when missing, then the report universe is swapped atomically and all visible statistics/views are refreshed.
-- Adds `databaseVersion` to Worker health/report-index metadata. When a newer Database frontend release is detected, the current page shows a centered dark update dialog with a `Refresh now` button instead of silently hot-swapping code.
-- Preserves 1.0.15 coverage-state ranking/hatching, zero-state tracks, Developer Info, vendor-ID provenance, Coverage reports modal, HDR10+ asset fidelity, Display/HDR chips, loading accents, soft interaction motion and reduced-motion behavior.
-- Advances release/browser identity to 1.0.16 / `assets/app.v1016.js` / cache key 1016. No D1 migration or report rewrite is required.
+- Fixes the inconsistent high-percentage coverage glow across every aggregate tab. Coverage bars at 80% or higher now use a valid percentage-valued endpoint anchored to a positioned bar, plus a persistent semantic halo and animated particle spray; 100% bars no longer lose the endpoint effect.
+- Preserves dominant/subordinate ranking, lower-share hatching, zero-percent hatched-empty tracks and all Supported / Unsupported / Available / Unavailable / Not applicable / Unknown semantics.
+- Extends the Versions report-count table with the same GPU identity treatment used by Devices: bold GPU name, vendor logo and canonical vendor/family/raw-ID text, while retaining the Statistics-style circular GPU/version chart and keeping coverage bars out of Versions.
+- Adds shared bounded pagination to Coverage Reports and Distinct/value modals: 10 / 25 / 50 rows per page, maximum 50 visible rows, explicit range/page text, Previous/Next controls and a visible vertical scrollbar inside the modal.
+- Preserves live report synchronization, database-version refresh notification, Submitted/Vendor/Type disclosures, Developer Info, raw vendor-ID provenance, HDR10+ artwork, Display/HDR chips, loading accents, soft motion and reduced-motion behavior.
+- Advances release/browser identity to 1.0.17 / `assets/app.v1017.js` / cache key 1017. No D1 migration or report rewrite is required.
