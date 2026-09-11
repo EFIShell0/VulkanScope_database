@@ -1,15 +1,14 @@
-name: Deploy VulkanScope Database
+name: Release VulkanScope Database
 on:
   push:
     branches: ["main"]
-    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: vulkanscope-database-production
   cancel-in-progress: false
 
 jobs:
@@ -36,13 +35,13 @@ jobs:
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-      - name: Verify Database 1.0.19 release contract
+      - name: Verify Database 1.0.20 release-state contract
         run: |
           python tools/verify_regression_contract.py
-          python tools/verify_1_0_19_dominant_glow_release_ready.py
-          python tools/test_1_0_19_dominant_glow_release_ready_negative_mutations.py
+          python tools/verify_1_0_20_release_state_handshake.py
+          python tools/test_1_0_20_release_state_handshake_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1019.js
+          node --check assets/app.v1020.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -73,35 +72,27 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Run Database 1.0.19 quality gate
+      - name: Run Database 1.0.20 quality gate
         run: python tools/quality_gate.py
       - name: Build static index
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_1_0_19_dominant_glow_release_ready.py
-          python tools/test_1_0_19_dominant_glow_release_ready_negative_mutations.py
-      - name: Stage allow-listed Pages artifact
+          python tools/verify_1_0_20_release_state_handshake.py
+          python tools/test_1_0_20_release_state_handshake_negative_mutations.py
+      - name: Stage non-release-ready Pages artifact for audit
         run: python tools/build_pages_artifact.py _site
-      - name: Build deploy-time preloaded report snapshot
-        run: python tools/build_preload_snapshot.py _site/data/preload
-      - name: Audit staged Pages artifact
+      - name: Audit non-release-ready Pages artifact
         run: python tools/audit_database.py --artifact-tree _site
-      - name: Upload GitHub Pages artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: _site
-          include-hidden-files: true
 
   release:
-    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build
     permissions:
       contents: write
     steps:
-      - name: Checkout tagged source
+      - name: Checkout validated main commit
         uses: actions/checkout@v7
         with:
           persist-credentials: false
@@ -109,32 +100,38 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.13"
-      - name: Repair and verify tagged source
+      - name: Repair and verify release source
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
           python tools/verify_regression_contract.py
-          python tools/verify_1_0_19_dominant_glow_release_ready.py
-          python tools/test_1_0_19_dominant_glow_release_ready_negative_mutations.py
+          python tools/verify_1_0_20_release_state_handshake.py
+          python tools/test_1_0_20_release_state_handshake_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1019.js
+          node --check assets/app.v1020.js
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
-      - name: Create or refresh GitHub Release
+      - name: Create or refresh GitHub Release from validated main commit
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.19.zip dist/VulkanScope-Database-1.0.19.zip.sha256 --clobber
+          TAG="v1.0.20"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            git fetch --force origin "refs/tags/$TAG:refs/tags/$TAG"
+            TAG_SHA="$(git rev-list -n 1 "$TAG")"
+            if [ "$TAG_SHA" != "$GITHUB_SHA" ]; then
+              echo "Release $TAG already targets $TAG_SHA, not validated commit $GITHUB_SHA; bump the Database version instead of retargeting a published tag." >&2
+              exit 1
+            fi
+            gh release upload "$TAG" dist/VulkanScope-Database-1.0.20.zip dist/VulkanScope-Database-1.0.20.zip.sha256 --clobber
           else
-            gh release create "$GITHUB_REF_NAME" dist/VulkanScope-Database-1.0.19.zip dist/VulkanScope-Database-1.0.19.zip.sha256 --verify-tag --title "VulkanScope Database 1.0.19" --generate-notes
+            gh release create "$TAG" dist/VulkanScope-Database-1.0.20.zip dist/VulkanScope-Database-1.0.20.zip.sha256 --target "$GITHUB_SHA" --title "VulkanScope Database 1.0.20" --generate-notes
           fi
 
   deploy:
-    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     needs: [build, release]
     permissions:
       contents: read
@@ -144,8 +141,35 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout released main commit
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Repair release checkout
+        run: |
+          python tools/repair_repository.py --apply
+          python tools/repair_repository.py --check
+      - name: Build deploy-time static index
+        run: python tools/build_index.py
+      - name: Stage deploy-time Pages artifact
+        run: python tools/build_pages_artifact.py _site
+      - name: Build deploy-time preloaded report snapshot
+        run: python tools/build_preload_snapshot.py _site/data/preload
+      - name: Mark staged artifact release-ready only after GitHub Release success
+        run: python tools/mark_release_ready.py _site
+      - name: Audit release-ready Pages artifact
+        run: python tools/audit_database.py --artifact-tree _site --require-release-ready
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v6
-      - name: Publish release-ready GitHub Pages artifact
+        uses: actions/configure-pages@v5
+      - name: Upload release-ready GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          include-hidden-files: true
+      - name: Deploy release-ready GitHub Pages artifact
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
