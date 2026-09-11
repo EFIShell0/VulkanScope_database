@@ -1,19 +1,23 @@
-# VulkanScope Database 1.0.15 build / regression audit
+# VulkanScope Database 1.0.16 build / regression audit
 
 ## Release identity
-- Database version: 1.0.15
-- Immutable predecessor: VulkanScope Database 1.0.14
+- Database version: 1.0.16
+- Immutable predecessor: VulkanScope Database 1.0.15
 - Producer/query baseline: VulkanScope 1.0.19 / Vulkan 1.4.362
 - Submission schema 2 / technicalReport 3 / normalizer 16
 
 ## Mandatory release gates
 - Repository overlay repair followed by canonical repository-state verification.
-- Immutable 1.0.14 -> 1.0.15 source-overlay and strict-package regression verification.
-- 1.0.15 UI/data-provenance verifier, including every preserved 1.0.14 requirement.
-- 1.0.15 Versions circular-statistics / separate-table / no-bar contract.
-- Shared search clear-control, interaction-motion and per-box loading-accent contract plus negative mutations.
-- Worker contract, Vulkan registry lock, UTF-8 checks, D1 migration replay, Pages allow-list staging and deterministic ZIP packaging.
+- Immutable 1.0.15 -> 1.0.16 source-overlay and strict-package regression verification.
+- 1.0.16 live synchronization / modal-detail / Versions verifier plus negative mutations.
+- Worker contract including `databaseVersion: 1.0.16`, Vulkan registry lock, UTF-8 checks, D1 migration replay and Pages allow-list staging.
+- Deterministic ZIP packaging with clean-extract strict regression verification.
 
-No D1 migration or stored payload rewrite is introduced.
+## User-requested scope
+- Expanded Submitted/Vendor/Type disclosures fit full values while keeping the three-line control pinned left and table growth horizontal.
+- Distinct/value drill-downs use the same right-arrow centered dark-backdrop modal as Coverage reports.
+- Versions uses the Statistics donut language for GPU/version/report cohorts with a separate exact-count table and no coverage bars.
+- Live reports synchronize every 10 seconds and on focus/visibility/online recovery; only missing payloads are fetched and the report map is swapped atomically.
+- A newer API database version produces a centered update dialog with an explicit Refresh now action rather than silently replacing frontend code.
 
-- Adds the previously omitted fixed-left three-line disclosure controls to Reports Vendor and Type; both expand only to the right like Submitted and retain horizontal table growth.
+No D1 migration, stored payload rewrite, submission schema bump, normalizer bump or Vulkan registry change is introduced.

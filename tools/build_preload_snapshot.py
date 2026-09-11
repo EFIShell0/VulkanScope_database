@@ -14,7 +14,7 @@ from pathlib import Path
 MAX_RESPONSE_BYTES = 4 * 1024 * 1024
 MAX_CHUNK_BYTES = 3 * 1024 * 1024
 DEFAULT_API = 'https://vulkanscope-database-api.vulkanscope.workers.dev'
-USER_AGENT = 'VulkanScope-Database-preload/1.0.15'
+USER_AGENT = 'VulkanScope-Database-preload/1.0.16'
 
 
 def canonical_bytes(value) -> bytes:
@@ -131,7 +131,7 @@ def main():
     generated = dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
     manifest = {
         'schemaVersion': 1,
-        'databaseVersion': '1.0.15',
+        'databaseVersion': '1.0.16',
         'sourceSchemaVersion': meta.get('schemaVersion'),
         'normalizerVersion': meta.get('normalizerVersion', 16),
         'publishedVulkanSpec': meta.get('publishedVulkanSpec', 'Vulkan 1.4.362 (2026-09-04)'),

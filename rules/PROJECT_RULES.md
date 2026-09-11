@@ -834,3 +834,13 @@
 - Every route/filter/search render emits a short loading accent on the major box families (metrics, cards, tables, key/value boxes and section panels). This is a presentation-only loading cue and never changes report data, state or support semantics.
 - History-bearing repository overlays are repaired before canonical-state verification in every CI job that can be the first gate. `tools/repair_repository.py --apply` removes stale versioned frontend app assets before `--check`; the release package itself still contains exactly one current `assets/app.v1015.js`.
 - VulkanScope producer/query baseline, schema 2 / technical report 3, normalizer 16, D1 schema, raw vendor-ID provenance, coverage-state semantics, HDR10+ audited artwork and 1.0.14 report/disclosure/modal/display behavior remain unchanged.
+
+
+## Release 1.0.16 live synchronization / modal-details / Versions parity
+- Reports Submitted, Vendor and Type disclosure controls stay physically pinned to the left edge while expanded content grows only to the right; expanded widths must fit complete date/time/time-zone, vendor/family/raw-ID and canonical physical-device-type text without clipping.
+- Aggregate Distinct/value drill-down controls use the same centered modal, dark backdrop, right-arrow trigger and keyboard/focus semantics as Coverage reports; inline downward accordion disclosure is not used for these table drill-downs.
+- Versions uses the same local circular/donut visual language as Statistics. Cohorts are GPU + selected Vulkan-version dimension, while exact GPU/version/report counts remain in a separate table below and no coverage bar is used.
+- The frontend live-sync loop polls the bounded report index at a conservative interval and on focus/visibility/online recovery, fetches only missing report payloads, swaps the report set atomically, and re-renders all affected metrics/views when the live report universe changes.
+- The live API exposes a databaseVersion release identity. A frontend seeing a newer databaseVersion must show a centered dark-backdrop update dialog with an explicit Refresh now action; it must not silently hot-swap frontend code.
+- Live synchronization must preserve supported/unsupported/unavailable/unknown evidence semantics, active filters where still valid, current route/detail state and bounded fetch limits.
+- Release assets that change JavaScript behavior are cache-busted as app.v1016.js / ?v=1016. No D1 migration or stored-report rewrite is required for 1.0.16.

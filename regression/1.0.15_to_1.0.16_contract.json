@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.15",
+  "successor": "1.0.16",
+  "baselineZipSha256": "0b46c4cba1316ea98edb3952db8685e9be8db6496fd16af212c6977b27a46bda",
+  "baselineManifest": "regression/1.0.15_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1015.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1016.js",
+    "regression/1.0.15_files.json",
+    "regression/1.0.15_to_1.0.16_contract.json",
+    "rules/1.0.16_LIVE_MODAL_VERSIONS_AUDIT.md",
+    "tools/test_1_0_16_live_modal_versions_negative_mutations.py",
+    "tools/verify_1_0_16_live_modal_versions.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.15_to_1.0.16_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "fa34cbb173cb5d606546f7ffd572ce71c42f046e85edbd9c0dadeaa504394eb8",
+    "BUILD_AUDIT.md": "f09417fd30b0a69b8fe771454e15672d8281e1d6b9194dbd21a68784f973131c",
+    "assets/site.v0390.css": "4a3e859eb5515088c4f5a409eb58899427415b32c70bf70a22630e844e368a81",
+    "changelog.md": "bb81e10c9f7862b075be5e4f992426bfabb54c65c9cba5954313cfdbdcb42434",
+    "index.html": "0351e109f21901d4bc885f011646127c2d8088a2aeab5123744b935d6274ae8d",
+    "rules/PROJECT_RULES.md": "261d70356dc2002fbdbb32e6236f759cf32420d27f9f8779ee9850c7d5b913be",
+    "tools/build_index.py": "af61db31f091be951c4db7481ce77aaa79bae18a1e3c19e908e48d85cdd5b11e",
+    "tools/build_pages_artifact.py": "e7c2c774f7dcfbe04e31ab3cbb8482d9254d9bec2284fa5ec9c9aa254b041bb2",
+    "tools/build_preload_snapshot.py": "d733803d31cc02393d0cafa5a3eb8b38a432cc7e4e72164cfa3c1a65c130b9cd",
+    "tools/package_release.py": "0c59ac597d20d39749e6b847e550a54d176040d2da6eea453b42f044705c8639",
+    "tools/pages.workflow.yml": "fa34cbb173cb5d606546f7ffd572ce71c42f046e85edbd9c0dadeaa504394eb8",
+    "tools/quality_gate.py": "db16a25cd64af325ecce5f4561b6f4da03258ee41b7421a6a0b49241ec841d47",
+    "tools/repair_repository.py": "da47ebaeae7cc6e28c81d83debc8f8b8fd16901abb9f21c558c540b24a2977d3",
+    "tools/verify_regression_contract.py": "5c3179c811be7dae08d0364e33d3e2e1fc6dd91e6bd8c36c50218149ad2ba072",
+    "tools/verify_vulkanscope_04132.py": "e287429ec3a0057a0248a5e58df1815707adb6632a62ea093a14e5deb818987b",
+    "worker/package.json": "4b195e06b022b0b10c18c7017b922078f9b4fc836e0e0c7e07fe8a790f1c560e",
+    "worker/src/index.js": "be9013ece189310d2f6c5e7bc82eb853d2ebbeb7810d586f95a3196c4399ecb0",
+    "worker/tests/contract.mjs": "e9cc04c75946e069716ab4efc511939e9949891a0fc70783bcd707268e029fdc",
+    "assets/app.v1016.js": "e320659db54fb02ad2b8810daa4e48573b9178f856391802091f1585522790a9",
+    "regression/1.0.15_files.json": "dfcef3f57b43afd5052a1bb0a47d4415efe56f09b15261279ffc89520f16550c",
+    "rules/1.0.16_LIVE_MODAL_VERSIONS_AUDIT.md": "da48b2c3ee0f7f252ff5fb9abf9593e54770128491e222f367426f4b4166b9d9",
+    "tools/test_1_0_16_live_modal_versions_negative_mutations.py": "34603e9ea3594b8fb99a9dbae2a6421329656274e5ad198efc7fa15d7076498c",
+    "tools/verify_1_0_16_live_modal_versions.py": "1297c91df2c93cc29b1a7be0eadb97c7aa939267e69e3cab5f841535433789ac",
+    "tools/test_utf8_text_io.py": "6655ed6a68087bdb833e6f96f2c0f176737339019a3f6ded7cb0898ef27ab12e"
+  }
+}

@@ -1,10 +1,9 @@
-# VulkanScope Database 1.0.15
+# VulkanScope Database 1.0.16
 
-- Adds the previously omitted fixed-left three-line disclosure controls to Reports Vendor and Type; both expand only to the right like Submitted and retain horizontal table growth.
-- Reworks Versions into circular distribution statistics for Device API, Loader/instance API and combined pairs, with a separate report-count/share table below and no percentage coverage bars in that view.
-- Adds one consistent animated clear-X implementation to global search, Encyclopedia search and all row-filter search fields; native browser search cancel glyphs are suppressed.
-- Applies a shared soft click/hover/focus transition language across interactive controls, with `prefers-reduced-motion` support.
-- Adds short per-view/per-box loading accents on route/filter/search renders without altering data or capability semantics.
-- Fixes the release workflow failure shown in the 1.0.14 Actions screenshot: Windows tooling now runs repository overlay repair before canonical-state verification, removing stale versioned app assets such as `assets/app.v1013.js` and then rechecking the checkout.
-- Preserves all 1.0.14 Submitted-table, multi-state coverage, Developer Info, vendor-ID provenance, Coverage-report modal, high-percent glow, HDR10+ and Display/HDR typography fixes.
-- Advances browser/release identity to 1.0.15 / `assets/app.v1015.js` / cache key 1015. No D1 migration, stored-report rewrite, report-hash change, schema bump, normalizer bump or Vulkan registry change is introduced.
+- Widens the Reports Submitted, Vendor and Type right-growing disclosures so complete time-zone, vendor/family/raw-ID and canonical physical-device-type values fit without clipping; compact three-line controls remain physically pinned to the left.
+- Converts aggregate `distinct`/value drill-downs from inline downward accordions to the same right-arrow, centered dark-backdrop modal language used by Coverage reports.
+- Reworks Versions into the Statistics donut-chart language. Each slice represents a GPU + selected Vulkan version cohort, while the table below lists GPU, version, exact report count and share; no coverage bars are used.
+- Adds bounded live database synchronization every 10 seconds plus immediate checks when the page regains visibility, focus or connectivity. New report payloads are fetched only when missing, then the report universe is swapped atomically and all visible statistics/views are refreshed.
+- Adds `databaseVersion` to Worker health/report-index metadata. When a newer Database frontend release is detected, the current page shows a centered dark update dialog with a `Refresh now` button instead of silently hot-swapping code.
+- Preserves 1.0.15 coverage-state ranking/hatching, zero-state tracks, Developer Info, vendor-ID provenance, Coverage reports modal, HDR10+ asset fidelity, Display/HDR chips, loading accents, soft interaction motion and reduced-motion behavior.
+- Advances release/browser identity to 1.0.16 / `assets/app.v1016.js` / cache key 1016. No D1 migration or report rewrite is required.
