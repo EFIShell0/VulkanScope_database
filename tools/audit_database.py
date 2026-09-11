@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.0.18'
-DB_VERSION='1.0.18'
-APP_ASSET='app.v1018.js'
-CACHE_KEY='1018'
+AUDIT_VERSION='1.0.19'
+DB_VERSION='1.0.19'
+APP_ASSET='app.v1019.js'
+CACHE_KEY='1019'
 PRODUCER='VulkanScope 1.0.19 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -91,7 +91,7 @@ def audit_source(root:Path):
     need(not (root/'fastlane').exists(),'Fastlane/store metadata is forbidden in source release')
     for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
         need(token in index,f'current index identity missing: {token}')
-    need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=10000;" in app,'frontend release/live-sync identity mismatch')
+    need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=10000,RELEASE_CHECK_INTERVAL_MS=10000;" in app,'frontend release/live-sync identity mismatch')
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need(worker.count(f"databaseVersion:'{DB_VERSION}'")>=2,'Worker health/list databaseVersion mismatch')
@@ -109,16 +109,22 @@ def audit_source(root:Path):
     need('technicalReport' in schema.get('required',[]),'technicalReport must remain required')
     need(static.get('normalizerVersion')==16,'normalizer version changed unexpectedly')
 
-    # Requested 1.0.18 UI behavior and preserved evidence semantics.
+    # Requested 1.0.19 UI behavior and preserved evidence semantics.
     for token in ["classList.add('modal-page-size-select','drop-up')",'fill="#3DDC84"',"donutChart('GPU / reports',chartItems,rs.length,'',state.deviceSliceLimit)",'GPU / REPORT DISTRIBUTION','device-report-counts','modal-value-list modal-paged-list','coverage-report-list modal-paged-list','--coverage-position:${ratio*100}%']:
         need(token in app,f'current frontend contract missing: {token}')
     need('fill="#E2676A"' not in app,'legacy red Android tint remains')
     need('bottom:calc(100% + 7px)!important' in css and '.modal-page-size-select' in css,'modal page-size menu containment CSS missing')
     need('.modal-paged-list{min-height:0;max-height:min(52vh,520px);overflow-y:auto' in css,'bounded modal scrollbar missing')
-    need("high=ratio>=.8?' high':''" in app,'high-coverage semantic threshold changed')
+    need("high=ratio>0&&(rank===true||rank==='dominant')?' high':''" in app,'dominant non-zero coverage glow semantics missing')
     need("const vendorId=r=>canonicalVendorId(r?.gpu?.vendorId??'Unknown');" in app,'raw GPU vendor-ID provenance changed')
     need("[/^HDR10\\+$/i,'hdr10_plus_v1014.png','hdr10plus']" in app,'audited HDR10+ asset mapping changed')
     need('window.setInterval(runLiveSync,LIVE_SYNC_INTERVAL_MS)' in app,'live report synchronization missing')
+    need("fetchJsonBounded(`./data/release.json?_=${Date.now()}`,{cache:'no-store'})" in app,'release-ready same-origin marker polling missing')
+    need('maybeShowDatabaseUpdate(meta)' not in app,'Worker databaseVersion must not trigger frontend refresh notices')
+    need((root/'data/release.json').is_file(),'release-ready marker source missing')
+    if (root/'data/release.json').is_file():
+        marker=json.loads(text('data/release.json')); need(marker.get('databaseVersion')==DB_VERSION and marker.get('releaseReady') is True,'release-ready marker identity/state mismatch')
+    need("if: startsWith(github.ref, 'refs/tags/v')" in workflow and 'needs: [build, release]' in workflow,'Pages deployment must be tag-only and wait for GitHub Release completion')
 
     # Browser/Worker security and resource ceilings.
     for token in ["default-src 'self'","connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev","object-src 'none'","base-uri 'none'","form-action 'none'","frame-ancestors 'none'"]:

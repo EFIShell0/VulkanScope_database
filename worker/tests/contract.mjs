@@ -71,7 +71,7 @@ async function call(path,{method='GET',body,origin,contentType='application/json
 let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
-assert.equal(j.databaseVersion,'1.0.18');
+assert.equal(j.databaseVersion,'1.0.19');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.362/);
 assert.match(j.producerQueryBaseline,/1\.0\.19/);
@@ -80,7 +80,7 @@ assert.match(j.compatibleProducer,/1\.0\.19\+/);
 r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseVersion,'1.0.18');
+assert.equal(j.databaseVersion,'1.0.19');
 assert.match(j.producerQueryBaseline,/1\.0\.19/);
 assert.match(j.compatibleProducer,/1\.0\.19\+/);
 
@@ -158,4 +158,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.0.18 contract: 1.0.19 floor/current producer + historical reads + transport/security basics');
+console.log('PASS Worker 1.0.19 contract: 1.0.19 floor/current producer + historical reads + transport/security basics');
