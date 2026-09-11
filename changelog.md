@@ -1,3 +1,10 @@
+# VulkanScope Database 1.0.11
+
+- Fixes the GitHub Actions `Reverify generated index metadata` command-boundary regression: the verifier and negative-mutation test now execute as separate commands inside an explicit `run: |` block.
+- Keeps `.github/workflows/pages.yml` byte-identical to the canonical `tools/pages.workflow.yml` and adds a negative mutation that recreates the exact malformed 1.0.10 workflow.
+- Retains the 1.0.10 Reports row-array fix plus 1.0.9 atomic live reconciliation, full Report ID copy, stacked server-authoritative time, low/very-low coverage styling and VulkanScope 1.0.19 submission floor.
+- Advances release/cache identity to 1.0.11 / `assets/app.v1011.js` / cache key 1011. Schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.362, D1 schema, report hashes/storage and privacy/transport behavior are unchanged.
+
 # VulkanScope Database 1.0.10
 
 - Fixes the Reports startup failure `rows.join is not a function` introduced in 1.0.9: `renderReports()` now keeps its mapped rows as an Array and passes that Array directly to the shared `table()` serializer.
