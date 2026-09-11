@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.12",
+  "successor": "1.0.13",
+  "baselineZipSha256": "5584a3bf4ae4103b23ce7100915b51abb6d7b307ada5b52599fca41cf50a4078",
+  "baselineManifest": "regression/1.0.12_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1012.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1013.js",
+    "regression/1.0.12_files.json",
+    "regression/1.0.12_to_1.0.13_contract.json",
+    "rules/1.0.13_REPORTS_DISCLOSURE_SPRAY_UI_AUDIT.md",
+    "tools/test_1_0_13_reports_disclosure_spray_ui_negative_mutations.py",
+    "tools/verify_1_0_13_reports_disclosure_spray_ui.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.12_to_1.0.13_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "b294cd850c0c47ef0e82786e7fe1baef88ed21eaeaf35891234a4881759096c3",
+    "BUILD_AUDIT.md": "1d636d07b34771a426d25959ab05649d08fb140b0a81ebf9cc8a0a20e42c0fd5",
+    "assets/site.v0390.css": "6360ab22cea670c0c65b2c937135e483f5f41b200ad59082c146783cf3f0e053",
+    "changelog.md": "6d616c91cacb7aaa6989fa595c4f571f2c2dffc83de3bc050947878a1d873db2",
+    "index.html": "fc50b2fe1929a34e5f73a3b3549ce8939fb55fd3d138c29f69e0e93dfc4b71bd",
+    "rules/PROJECT_RULES.md": "b4fb7bb6e64a56abb7ef8589b43ac66da4d00e6193a7e9ae909bcdf5ee20b40b",
+    "tools/build_index.py": "d94f11151d0388e6fea25a71fa719ce3d904560b55a8708f4e7a26f503449031",
+    "tools/build_pages_artifact.py": "3e7efbdf8f36c3de96cdd4a3ae12c55e41037ade62df014926348a78edc08ba1",
+    "tools/build_preload_snapshot.py": "134e18426344aa1e39d49a383c09adc747ebfac32f2644b7088e818fd9a6a1fd",
+    "tools/package_release.py": "d54085b3f57d567fe8a06cd478acf74d815a87bf762c534aaff2b5ce51f57b01",
+    "tools/pages.workflow.yml": "b294cd850c0c47ef0e82786e7fe1baef88ed21eaeaf35891234a4881759096c3",
+    "tools/quality_gate.py": "555a0421cdf07c4cadcc764db6a3f3cffd3f6eac700756a4e2dac7f03c8e35e1",
+    "tools/repair_repository.py": "2d9efeacacd2ac131ced3057ab0846bc9e07dd3778ce12102443604e02007a66",
+    "tools/test_utf8_text_io.py": "005473a6ca89d8138ad5c7d187f70e2bc711b84675dec9779026561054b77e19",
+    "tools/verify_regression_contract.py": "83bfeecee31232fc93dd902ce030f1c212b13b3090b3beba8ecc7ac2cd557cc3",
+    "tools/verify_vulkanscope_04132.py": "d2c2b04bffc6a947bde1f7475811d64c0d952b57d00eb5c9f4d4e20a74e3a529",
+    "worker/package.json": "38bcb80d8044ba1d526dcf5d52d36a6b5b0fc516030bbe247229787340fd2017",
+    "worker/tests/contract.mjs": "760c48197057fa9f7190e781ca0a02251059967865ac787d7f5682ab2cf64fcf",
+    "assets/app.v1013.js": "54ef547387914b7305bcddf8a364bb2d299009942698dab0663164a754c1e139",
+    "regression/1.0.12_files.json": "e18afae3f3dae453e63ab4648e80d26f53be897756b92b8f7ea6ae97714a2ad9",
+    "rules/1.0.13_REPORTS_DISCLOSURE_SPRAY_UI_AUDIT.md": "525ac813dd3ce5a77e6b35bbff860a30532da4a7dd5bcba696e68d06e878ccb3",
+    "tools/test_1_0_13_reports_disclosure_spray_ui_negative_mutations.py": "22809b0a6f1c08fea1af087fff0068a5e95a8a67c4d9be1359950f0d2fea389d",
+    "tools/verify_1_0_13_reports_disclosure_spray_ui.py": "35e7c0c09f2358aaa51d847af1e13e2c637663e81baa77d5bb39dd5be319d257"
+  }
+}

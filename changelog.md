@@ -1,3 +1,11 @@
+# VulkanScope Database 1.0.13
+
+- Repairs the Reports Submitted disclosure so the collapsed Date / Time / Time zone state no longer reserves a blank expanded-width column; only the compact three-line control remains.
+- Adds a smooth bounded width/height/opacity/transform expansion and lets the Reports table grow horizontally instead of compressing adjacent technical columns; horizontal scroller geometry is refreshed after the transition.
+- Replaces the high-coverage white sweep with a semantic-state-colored endpoint spray/burst and matching pulse halo for >=80% coverage, with reduced-motion containment.
+- Retains the 1.0.12 black low-percentage hatch, Android application filter artwork and report-back scroll restoration, plus all 1.0.11/1.0.10/1.0.9 correctness and submission-floor contracts.
+- Advances browser/release identity to 1.0.13 / `assets/app.v1013.js` / cache key 1013. No D1 migration, stored-report rewrite, report-hash change, schema bump, normalizer bump or Vulkan registry change is introduced.
+
 # VulkanScope Database 1.0.12
 
 - Reworks low-percentage coverage bars to keep their exact rectangular percentage width and semantic color while using only a thick black diagonal hatch; the former wedge/angled-end treatment is removed.
