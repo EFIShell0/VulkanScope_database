@@ -1,3 +1,12 @@
+# VulkanScope Database 1.0.12
+
+- Reworks low-percentage coverage bars to keep their exact rectangular percentage width and semantic color while using only a thick black diagonal hatch; the former wedge/angled-end treatment is removed.
+- Adds a bounded shine/glow treatment to coverage at 80% and above, with reduced-motion fallback.
+- Collapses Reports Date / Time / Time zone by default behind an accessible three-line control in the Submitted header; expanded values receive enough width/wrapping to remain readable.
+- Restores the exact source-route scroll position when leaving report detail through browser Back or the in-page Back control, while opening report detail at the top.
+- Replaces the generic Android filter glyph with the exact current VulkanScope application `ic_android.xml` head artwork as a local inline SVG.
+- Advances browser/release identity to 1.0.12 / `assets/app.v1012.js` / cache key 1012 while retaining VulkanScope 1.0.19 submission floor, schema 2 / technicalReport 3 / normalizer 16, Vulkan 1.4.362 and unchanged D1/report-storage semantics.
+
 # VulkanScope Database 1.0.11
 
 - Fixes the GitHub Actions `Reverify generated index metadata` command-boundary regression: the verifier and negative-mutation test now execute as separate commands inside an explicit `run: |` block.

@@ -156,4 +156,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.0.11 contract: 1.0.19 floor/current producer + historical reads + transport/security basics');
+console.log('PASS Worker 1.0.12 contract: 1.0.19 floor/current producer + historical reads + transport/security basics');

@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser(description='Verify immutable predecessor regre
 parser.add_argument('--strict-tree', action='store_true', help='Reject every file not present in the predecessor or explicit successor allow-list; intended for release ZIP/package verification')
 args = parser.parse_args()
 
-cpath = root / 'regression' / '1.0.10_to_1.0.11_contract.json'
+cpath = root / 'regression' / '1.0.11_to_1.0.12_contract.json'
 c = json.loads(cpath.read_text(encoding='utf-8'))
 b = json.loads((root / c['baselineManifest']).read_text(encoding='utf-8'))
 bm = {x['path']: x for x in b['files']}
@@ -38,7 +38,7 @@ def validate_generated(rel: str, p: Path) -> None:
         return
     required = {
         'schemaVersion': 1,
-        'databaseVersion': '1.0.11',
+        'databaseVersion': '1.0.12',
         'normalizerVersion': 16,
         'publishedVulkanSpec': 'Vulkan 1.4.362 (2026-09-04)',
         'vulkanRegistryBaseline': 'VulkanScope producer/query baseline 1.4.362',

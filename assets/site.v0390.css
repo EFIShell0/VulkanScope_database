@@ -222,3 +222,33 @@ tr:hover .api-version-chip{border-color:#5c3a3d;background:linear-gradient(180de
 
 /* Database 1.0.9 — report identity/timestamp and low-coverage affordances */
 .submitted-stack{display:grid;gap:3px;min-width:154px}.submitted-stack span{display:grid;grid-template-columns:62px minmax(0,1fr);gap:8px;align-items:baseline;white-space:nowrap;font-variant-numeric:tabular-nums}.submitted-stack b{color:var(--subtle);font-size:10px;font-weight:850;letter-spacing:.045em;text-transform:uppercase}.report-id-copy{min-height:34px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #3a3a42;border-radius:10px;background:linear-gradient(180deg,#1a1a1e,#121214);color:var(--text);padding:6px 10px;font:inherit;font-size:11px;font-weight:800;white-space:nowrap;cursor:pointer;transition:background .16s ease,border-color .16s ease,transform .12s ease}.report-id-copy:hover{background:#202025;border-color:#4a4b54}.report-id-copy:active{transform:scale(.97)}.report-id-copy:focus-visible{outline:2px solid rgba(170,183,255,.78);outline-offset:2px}.report-id-copy.copied{border-color:#397250;background:#132a1d;color:#c9f7da}.report-id-copy svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.report-id-length{margin-top:4px;color:var(--subtle);font-size:10px;white-space:nowrap}.coverage.low .coverage-bar{position:relative;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.035) 0 4px,transparent 4px 8px)}.coverage.low .coverage-fill{position:relative;background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.3) 0 2px,transparent 2px 5px);clip-path:polygon(0 0,100% 0,calc(100% - 4px) 100%,0 100%)}.coverage.very-low .coverage-fill{clip-path:polygon(0 0,100% 50%,0 100%);filter:drop-shadow(0 0 2px rgba(255,255,255,.25))}.coverage.low .coverage-bar::after{content:"";position:absolute;left:clamp(1px,calc(var(--coverage-pct)*1%),calc(100% - 1px));top:-2px;width:2px;height:11px;border-radius:2px;background:rgba(244,244,245,.72);transform:translateX(-1px);pointer-events:none}@media(max-width:760px){.submitted-stack{min-width:142px}.submitted-stack span{grid-template-columns:58px auto}.report-id-copy{min-height:36px}}@media(prefers-reduced-motion:reduce){.report-id-copy{transition:none}}
+
+/* Database 1.0.12 — coverage texture/glow, collapsible submitted metadata, app Android icon */
+.coverage.supported{--coverage-glow:rgba(116,226,166,.58)}
+.coverage.unsupported{--coverage-glow:rgba(255,143,152,.58)}
+.coverage.available{--coverage-glow:rgba(170,183,255,.55)}
+.coverage.unavailable{--coverage-glow:rgba(255,215,107,.55)}
+.coverage.not_applicable{--coverage-glow:rgba(159,143,186,.52)}
+.coverage.unknown{--coverage-glow:rgba(119,121,131,.5)}
+.coverage.low .coverage-bar{background-image:none}
+.coverage.low .coverage-fill,.coverage.very-low .coverage-fill{clip-path:none!important;filter:none!important;background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.9) 0 3px,transparent 3px 6px);background-blend-mode:normal;border-radius:inherit}
+.coverage.low .coverage-bar::after{display:none!important}
+.coverage.high .coverage-fill{position:relative;overflow:hidden;box-shadow:0 0 8px var(--coverage-glow),0 0 2px rgba(255,255,255,.2)}
+.coverage.high .coverage-fill::after{content:"";position:absolute;inset:-2px auto -2px -44%;width:38%;pointer-events:none;background:linear-gradient(100deg,transparent 0,rgba(255,255,255,.08) 22%,rgba(255,255,255,.72) 50%,rgba(255,255,255,.08) 78%,transparent 100%);transform:skewX(-18deg);animation:coverageHighShine 2.6s cubic-bezier(.2,.8,.2,1) infinite}
+@keyframes coverageHighShine{0%,22%{left:-44%;opacity:0}32%{opacity:.9}56%{left:112%;opacity:.75}57%,100%{left:112%;opacity:0}}
+.submitted-head{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:108px}
+.submitted-toggle{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border:1px solid #35363c;border-radius:9px;background:linear-gradient(180deg,#19191d,#111113);color:var(--muted);cursor:pointer;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .12s ease}
+.submitted-toggle:hover,.submitted-toggle.active{background:#202025;border-color:#494a53;color:var(--text)}
+.submitted-toggle:active{transform:scale(.95)}
+.submitted-toggle:focus-visible{outline:2px solid rgba(255,92,102,.72);outline-offset:2px}
+.submitted-toggle svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round}
+.submitted-stack{min-width:212px;gap:4px}
+.submitted-stack[hidden]{display:none!important}
+.submitted-stack>span{display:grid;grid-template-columns:64px minmax(132px,1fr);gap:8px;align-items:start;white-space:normal}
+.submitted-stack .submitted-value{display:block;min-width:0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.submitted-stack>span:nth-child(-n+2) .submitted-value{white-space:nowrap}
+.submitted-cell{vertical-align:top}
+.filter-option-icon.android-app-icon{width:18px;height:11px;flex:0 0 18px;fill:initial;stroke:none;opacity:1;overflow:visible}
+.custom-select-button .filter-option-icon.android-app-icon,.custom-select-option .filter-option-icon.android-app-icon{color:inherit}
+@media(max-width:760px){.submitted-head{min-width:104px}.submitted-stack{min-width:196px}.submitted-stack>span{grid-template-columns:60px minmax(120px,1fr)}.filter-option-icon.android-app-icon{width:17px;height:10px;flex-basis:17px}}
+@media(prefers-reduced-motion:reduce){.coverage.high .coverage-fill::after{animation:none;left:58%;opacity:.38}.submitted-toggle{transition:none}}
