@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.14",
+  "successor": "1.0.15",
+  "baselineZipSha256": "0b5a6bc8e4de19f9ad6772e9e71ddef8bf9966c6847f8a2c1732d72e16884e2e",
+  "baselineManifest": "regression/1.0.14_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1014.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1015.js",
+    "regression/1.0.14_files.json",
+    "regression/1.0.14_to_1.0.15_contract.json",
+    "rules/1.0.15_VERSIONS_MOTION_LOADING_OVERLAY_AUDIT.md",
+    "tools/test_1_0_15_database_ui_integrity_negative_mutations.py",
+    "tools/verify_1_0_15_database_ui_integrity.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.14_to_1.0.15_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "47a35e0630bc092bc8fed5f8c42452e7c23cda90d99e940850921e575e77993b",
+    "BUILD_AUDIT.md": "5cb309cb672ecb2d6596913c4e4ea08d08378577e3827bfbde43fd3e70637015",
+    "assets/app.v1015.js": "089f52e7f1d269e6ab816afd031b0ecde43b52cc1f54976537e6b07abe55ea6a",
+    "assets/site.v0390.css": "15412e7c52477dbd13c1890a5a270e6fc4e79afe23eeb4f4bb6bac565eb14aac",
+    "changelog.md": "77f81883e47c09d31a274c87abccf18cc5d481ef88925de3017ba2eed2a41508",
+    "data/index.json": "6ef426c2aab78a3c90916012e9dea24478b2a5b54dfc03d0629dd69a39dfcaa8",
+    "index.html": "410d36bd34b9fe076e3b39c4515570fd212c66df1e5c8f047781337dc882056a",
+    "regression/1.0.14_files.json": "2c5bb24686858ba271eccad4cb8ec9b5675062b7dfeb4d4497d61737d3c39a6f",
+    "rules/1.0.15_VERSIONS_MOTION_LOADING_OVERLAY_AUDIT.md": "5d1ff41115dfa8deb46d85930fe136954eb939ce0c40681468bf7083badd11a3",
+    "rules/PROJECT_RULES.md": "17492363f132e10b7bdd04d83c4b92227c8b8ea859bbf40577e45bdc472cb790",
+    "tools/build_index.py": "234c21567a78221582d9ed2936db527ee10f9091f5fae1dcf67142e0d5de3e3a",
+    "tools/build_pages_artifact.py": "b1260491c934c2e934c2bafdf137b3b128ce6b0af5c1bd48047e1d0c835a3229",
+    "tools/build_preload_snapshot.py": "227b78d534483823509f6405a8ada38298d4194e04485371a49be43083c113fe",
+    "tools/package_release.py": "d363adf05fab155d2df57ea7860ced39e00370cbb145d73e2834358bf4a84f66",
+    "tools/pages.workflow.yml": "47a35e0630bc092bc8fed5f8c42452e7c23cda90d99e940850921e575e77993b",
+    "tools/quality_gate.py": "ece7d38971383867d8eee65778f31a7aa12a02e5d734f1ff4a03aa601ada40e0",
+    "tools/repair_repository.py": "b1f9e16be86428346044f9723b1352f355ab6794940de2dab34fdf8a92b1b1b4",
+    "tools/test_1_0_15_database_ui_integrity_negative_mutations.py": "b20cdcc6da69d6f4fed44214d81f0947040e892e53c97188313543dba469ea26",
+    "tools/test_utf8_text_io.py": "8e75836219a410e5efcb09c8901fb3642de803d18ef6bd45c03969870bab1897",
+    "tools/verify_1_0_15_database_ui_integrity.py": "67502159a8aeeeced4950f32dd171249317a6e16a455d562893ceb6cc15b4025",
+    "tools/verify_regression_contract.py": "e2a1ec07316e7a1824243db23c08ce510764b03f6577d27b20ee070d2be97521",
+    "tools/verify_vulkanscope_04132.py": "7c672a2ad6ca59726f4d007217873e1228a20e1fd20a2fcd0277ee7ef1b55b38",
+    "worker/package.json": "eb95d6156860d58c03b10243adb246518c3907fb98b6bdabdb2b05f7d59adee3",
+    "worker/tests/contract.mjs": "45e055c3d107758c996a1436736a6669ea76f630d3ce569239f557fdc1433070"
+  }
+}

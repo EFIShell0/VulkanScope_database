@@ -823,3 +823,14 @@
 - Resolution and gamut tokens use the same proportional display-value typography; preferred wide-gamut values are boxed tokens in aggregate and report detail views.
 - Browser-visible JavaScript advances to `assets/app.v1014.js`; stylesheet/config cache key advances to 1014. Schema 2, technicalReport 3, normalizer 16, Vulkan 1.4.362, D1 schema/migrations, stored payload bytes/hashes, report IDs, privacy/security controls and transport bounds remain unchanged.
 - `tools/verify_1_0_14_database_ui_integrity.py` and `tools/test_1_0_14_database_ui_integrity_negative_mutations.py` are mandatory release gates. Final packaging requires immutable 1.0.13 -> 1.0.14 source-overlay verification, deterministic construction and clean-extract strict-tree verification.
+
+
+## Release 1.0.15 Versions/motion/loading/overlay requirements
+- Reports Vendor and Type columns use the same fixed-left three-horizontal-line disclosure pattern as Submitted. Their toggle position never shifts; the label/value area expands only to the right and the table grows horizontally instead of squeezing technical text.
+- The Versions view uses circular share statistics for the selected Device API, Loader/instance API, or device+loader pair distribution. Version percentage bars are forbidden in this view.
+- Versions report counts and shares are repeated below the circular statistics in a separate ordinary table so precise counts remain readable and accessible without interpreting a chart.
+- Search fields use one local clear-control implementation rather than inconsistent browser-native cancel glyphs. Global search, Encyclopedia search and row-filter searches share the same soft hover/press/focus motion and keyboard semantics.
+- Buttons, cards and interactive controls use the shared short Material-consistent transition language. `prefers-reduced-motion` removes decorative motion without removing state changes or focus visibility.
+- Every route/filter/search render emits a short loading accent on the major box families (metrics, cards, tables, key/value boxes and section panels). This is a presentation-only loading cue and never changes report data, state or support semantics.
+- History-bearing repository overlays are repaired before canonical-state verification in every CI job that can be the first gate. `tools/repair_repository.py --apply` removes stale versioned frontend app assets before `--check`; the release package itself still contains exactly one current `assets/app.v1015.js`.
+- VulkanScope producer/query baseline, schema 2 / technical report 3, normalizer 16, D1 schema, raw vendor-ID provenance, coverage-state semantics, HDR10+ audited artwork and 1.0.14 report/disclosure/modal/display behavior remain unchanged.

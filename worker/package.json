@@ -1,7 +1,7 @@
 {
   "name": "vulkanscope-database-worker",
   "private": true,
-  "version": "1.0.14",
+  "version": "1.0.15",
   "scripts": {
     "auth:create": "wrangler auth create vulkanscope",
     "auth:activate": "wrangler auth activate vulkanscope .",

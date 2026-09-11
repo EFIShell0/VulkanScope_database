@@ -1,45 +1,19 @@
-# VulkanScope Database 1.0.14 build / regression audit
+# VulkanScope Database 1.0.15 build / regression audit
 
-## Identity
-- Database version: 1.0.14
-- Immutable predecessor: VulkanScope Database 1.0.13
-- Predecessor ZIP SHA-256: `dfb27ff28e6c8c5638a84b10d107f69925768f6c0ca5e1e4cb963463f1cd414c`
-- Current producer/query baseline: VulkanScope 1.0.19 / versionCode 1019 / Vulkan 1.4.362
+## Release identity
+- Database version: 1.0.15
+- Immutable predecessor: VulkanScope Database 1.0.14
+- Producer/query baseline: VulkanScope 1.0.19 / Vulkan 1.4.362
 - Submission schema 2 / technicalReport 3 / normalizer 16
-- D1 migration: none
 
-## Scope
-This release is limited to the requested Reports layout, complete percentage-state ranking, Developer Info, vendor-ID provenance hardening, coverage-report modal, high-percentage endpoint effect, exact HDR10+ artwork and display typography. Worker validation/storage semantics and report bytes/IDs remain unchanged.
+## Mandatory release gates
+- Repository overlay repair followed by canonical repository-state verification.
+- Immutable 1.0.14 -> 1.0.15 source-overlay and strict-package regression verification.
+- 1.0.15 UI/data-provenance verifier, including every preserved 1.0.14 requirement.
+- 1.0.15 Versions circular-statistics / separate-table / no-bar contract.
+- Shared search clear-control, interaction-motion and per-box loading-accent contract plus negative mutations.
+- Worker contract, Vulkan registry lock, UTF-8 checks, D1 migration replay, Pages allow-list staging and deterministic ZIP packaging.
 
-## Mandatory verification
-- 1.0.14 UI/data-provenance verifier and negative mutations.
-- Immutable 1.0.13 -> 1.0.14 source-overlay and strict-package regression verification.
-- JavaScript/Worker syntax and Worker contract.
-- D1 migration-chain replay.
-- Pages allow-list staging including cache-busted HDR10+ artwork.
-- Deterministic ZIP and clean-extract byte equality.
+No D1 migration or stored payload rewrite is introduced.
 
-Live Cloudflare deployment and production-browser smoke testing are not claimed by the packaging environment.
-
-# VulkanScope Database 1.0.13 build / regression audit
-
-## Identity
-- Database version: 1.0.13
-- Immutable predecessor: VulkanScope Database 1.0.12
-- Predecessor ZIP SHA-256: `5584a3bf4ae4103b23ce7100915b51abb6d7b307ada5b52599fca41cf50a4078`
-- Current producer/query baseline: VulkanScope 1.0.19 / versionCode 1019 / Vulkan 1.4.362
-- Submission schema 2 / technicalReport 3 / normalizer 16
-- D1 migration: none
-
-## Scope
-This release repairs Reports Submitted disclosure geometry/animation and replaces the >=80% white shine with semantic state-colored endpoint spray/pulse presentation. It does not change normalized report semantics, Worker validation, D1 storage, report IDs/hashes, preload/live reconciliation, privacy/security boundaries or transport limits.
-
-## Mandatory verification
-- 1.0.13 disclosure/spray verifier and negative mutations.
-- Immutable 1.0.12 -> 1.0.13 source-overlay and strict-package regression verification.
-- Worker contract and JavaScript syntax.
-- D1 migration-chain replay.
-- Pages allow-list staging.
-- Deterministic ZIP and clean-extract byte equality.
-
-Live Cloudflare deployment and production D1/browser smoke testing are not claimed by the packaging environment.
+- Adds the previously omitted fixed-left three-line disclosure controls to Reports Vendor and Type; both expand only to the right like Submitted and retain horizontal table growth.
