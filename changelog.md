@@ -1,3 +1,10 @@
+## 1.2.6
+- Replace browser-specific viewport scrollbar-button endpoint painting with an accessible same-origin DOM viewport rail so endpoint arrow state is deterministic across supported Chromium, Firefox and Safari/WebKit families.
+- Keep the top UP arrow gray/disabled at absolute top and the bottom DOWN arrow Vulkan red at absolute bottom while preventing out-of-range movement.
+- Redesign report detail hero and Overview as a structured evidence workspace; show the complete canonical 64-character report ID and provide a local copy-ID affordance.
+- Enlarge and restyle the report Back control across every detail tab; preserve smooth/reduced-motion behavior and mobile containment.
+- Database/frontend/Worker identity advances to 1.2.6 / `app.v1206.js` / cache key 1206; D1, report hashes, Vulkan evidence and the VulkanScope 1.2.5 submission floor are unchanged.
+
 ## 1.2.5
 
 - Fix the Database-themed far-right viewport scrollbar so endpoint state is applied to the real root scrollbar across Chromium/WebKit ownership differences: the UP arrow becomes gray at the absolute top and the DOWN arrow remains Vulkan red at the absolute bottom as requested.
