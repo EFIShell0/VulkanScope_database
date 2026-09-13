@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.2.0'
-DB_VERSION='1.2.0'
-APP_ASSET='app.v1200.js'
-CACHE_KEY='1200'
+AUDIT_VERSION='1.2.1'
+DB_VERSION='1.2.1'
+APP_ASSET='app.v1201.js'
+CACHE_KEY='1201'
 PRODUCER='VulkanScope 1.2.5 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -85,7 +85,7 @@ def audit_source(root:Path):
     need(root.is_dir(),f'source tree missing: {root}')
     if not root.is_dir():
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_0_workspace_floor_settings.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
+    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
     for rel in required: need((root/rel).is_file(),f'missing required source file {rel}')
     if errors:
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
@@ -105,8 +105,8 @@ def audit_source(root:Path):
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need("databaseVersion:" not in worker,'legacy Worker databaseVersion refresh signal must be absent')
-    need(worker.count("databaseReleaseVersion:'1.2.0'")>=3,'Worker databaseReleaseVersion mismatch')
-    need(worker.count("workerReleaseVersion:'1.2.0'")>=3,'Worker workerReleaseVersion mismatch')
+    need(worker.count("databaseReleaseVersion:'1.2.1'")>=3,'Worker databaseReleaseVersion mismatch')
+    need(worker.count("workerReleaseVersion:'1.2.1'")>=3,'Worker workerReleaseVersion mismatch')
     need(worker.count("frontendUpdateSignal:'same-origin-pages-marker'")>=2,'Worker frontendUpdateSignal metadata missing')
 
     # Current Vulkan/producer metadata and immutable evidence model.
@@ -122,7 +122,7 @@ def audit_source(root:Path):
     need('technicalReport' in schema.get('required',[]),'technicalReport must remain required')
     need(static.get('normalizerVersion')==16,'normalizer version changed unexpectedly')
 
-    # Requested 1.2.0 connectivity/UI behavior plus preserved evidence semantics.
+    # Retained connectivity/UI behavior plus preserved evidence semantics.
     for token in ["classList.add('modal-page-size-select','drop-up')",'fill="#3DDC84"',"donutChart('GPU / reports',chartItems,rs.length,'',state.deviceSliceLimit)",'GPU / REPORT DISTRIBUTION','device-report-counts','modal-value-list modal-paged-list','coverage-report-list modal-paged-list','--coverage-position:${ratio*100}%']:
         need(token in app,f'current frontend contract missing: {token}')
     need('fill="#E2676A"' not in app,'legacy red Android tint remains')

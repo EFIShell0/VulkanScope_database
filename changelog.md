@@ -7,7 +7,7 @@
 - Compare emphasizes VulkanScope producer versions in bold white to make cross-producer differences immediately visible.
 - Surface, Compare, Encyclopedia and every other non-Reports view receive purpose-specific workspace hierarchy and coherent applicable-filter grouping without changing evidence semantics.
 - Settings informational and warning messages use distinct icon-backed blue/amber semantic callouts.
-- Release identity advances to Database 1.2.0 / app.v1200 / cache 1200; D1 schema, stored payloads, report IDs/hashes, normalizer and Vulkan registry baseline remain unchanged.
+- Release identity advances to Database 1.2.1 / app.v1200 / cache 1200; D1 schema, stored payloads, report IDs/hashes, normalizer and Vulkan registry baseline remain unchanged.
 
 ## 1.0.25
 - Replaced the Internet panel's manual Refresh action with automatic request-scoped network observations every 3 seconds while the Internet Settings category is open and online.
@@ -76,3 +76,11 @@
 - Stabilizes >=80% semantic coverage glow/spray positioning across aggregate tabs, including exactly 100%.
 - Adds Devices-parity GPU identity to the Versions exact-count table.
 - Adds bounded scrollbar + 10/25/50 pagination to Coverage Reports and Distinct/value dialogs.
+
+## 1.2.1
+- Added compact sticky Compare tracking while scrolling long comparisons.
+- Clarified browser effective network class so `4g` is never presented as LTE/physical access technology.
+- Locked submission sorting/age filtering to raw server timestamps regardless of regional display preferences.
+- Added confirmation dialogs for favorite removal and clearing saved browser data.
+- Restored report-detail tab synchronization and interaction.
+- Increased page scrollbar width and added disabled endpoint states to page scroll controls.
