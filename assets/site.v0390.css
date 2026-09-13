@@ -778,3 +778,15 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
   #contentView[data-main-view="compare"] .compare-filter-controls>.custom-select{min-width:0!important;width:100%!important;max-width:100%!important}
 }
 
+/* VulkanScope Database 1.2.11 — Compare mobile identity-flow containment */
+.compare-identity-line{max-height:20rem;min-width:0}
+.compare-workspace.is-compact .compare-identity-line{max-height:0}
+@media(max-width:760px){
+  #contentView[data-main-view="compare"] .compare-report-meta{min-width:0;max-width:100%}
+  #contentView[data-main-view="compare"] .compare-identity-line{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;align-items:start;min-width:0;max-width:100%}
+  #contentView[data-main-view="compare"] .compare-identity-line span{display:block;min-width:0;max-width:100%;overflow-wrap:anywhere}
+  #contentView[data-main-view="compare"] .compare-identity-meta{min-width:0;max-width:100%}
+  #contentView[data-main-view="compare"] .compare-identity-meta span{max-width:100%;overflow-wrap:anywhere}
+  #contentView[data-main-view="compare"] .compare-workspace.is-compact .compare-identity-line{max-height:0}
+}
+

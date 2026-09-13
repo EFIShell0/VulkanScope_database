@@ -1,3 +1,8 @@
+## 1.2.11
+- Fixed the narrow/mobile Compare report identity collision where a wrapped `System Vulkan driver …` identity row could overlap the Baseline/Candidate metadata chips. The full report-identity block now expands to its content in the normal workspace and narrow layouts stack GPU, vendor and driver identity rows intrinsically.
+- The compact pinned Compare state still collapses the identity rows to zero height and restores them when the full workspace returns; report selection, A/B identity, evidence filters and comparison semantics are unchanged.
+- Database/frontend/Worker identity advances to 1.2.11 / `app.v1211.js` / `browser-compat.v1211.js` / cache key 1211. D1 schema, stored report bytes/hashes, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 new-submission floor are unchanged.
+
 ## 1.2.10
 - Fixed mobile/portrait filter containment across every non-Reports Database workspace. Global filter families and view-specific subfilters now collapse to intrinsic single-column controls at <=900 px with `min-width:0`/100% containment, preventing the narrow multi-column squeeze shown on Compare and aggregate views. Reports keeps its already-correct 1.2.9 layout.
 - Cross-producer Compare warnings now render both VulkanScope version identities, including versionCode when present, in bold white while keeping the warning text and evidence semantics unchanged.
