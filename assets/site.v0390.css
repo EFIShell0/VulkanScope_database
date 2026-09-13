@@ -508,7 +508,7 @@ html{scrollbar-width:thin;scrollbar-color:#684047 #100c0d;scrollbar-gutter:stabl
 .settings-select-row.settings-country-row{grid-template-columns:1fr}.settings-country-row>span{margin-bottom:2px}.settings-country-row .country-custom-select{width:100%;min-width:0!important}.settings-country-row .country-custom-select .custom-select-menu{width:100%;max-width:100%}
 
 
-/* VulkanScope Database 1.2.1 — sticky comparison tracking, endpoint scroll state, confirmations and detail repair */
+/* VulkanScope Database 1.2.2 — release API retry hardening; inherited sticky comparison tracking, endpoint scroll state, confirmations and detail repair */
 html{scrollbar-width:auto;scrollbar-color:#784249 #100c0d}
 html::-webkit-scrollbar,body::-webkit-scrollbar{width:14px;height:14px}
 html::-webkit-scrollbar-track,body::-webkit-scrollbar-track{background:#100c0d}

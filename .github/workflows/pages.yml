@@ -35,13 +35,13 @@ jobs:
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-      - name: Verify Database 1.2.1 compare / temporal / detail contract
+      - name: Verify Database 1.2.2 compare / temporal / detail contract
         run: |
           python tools/verify_regression_contract.py
-          python tools/verify_1_2_1_compare_temporal_detail.py
-          python tools/test_1_2_1_compare_temporal_detail_negative_mutations.py
+          python tools/verify_1_2_2_release_retry.py
+          python tools/test_1_2_2_release_retry_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1201.js
+          node --check assets/app.v1202.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -72,14 +72,14 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Run Database 1.2.1 quality gate
+      - name: Run Database 1.2.2 quality gate
         run: python tools/quality_gate.py
       - name: Build static index
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_1_2_1_compare_temporal_detail.py
-          python tools/test_1_2_1_compare_temporal_detail_negative_mutations.py
+          python tools/verify_1_2_2_release_retry.py
+          python tools/test_1_2_2_release_retry_negative_mutations.py
       - name: Stage non-release-ready Pages artifact for audit
         run: python tools/build_pages_artifact.py _site
       - name: Audit non-release-ready Pages artifact
@@ -105,10 +105,10 @@ jobs:
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
           python tools/verify_regression_contract.py
-          python tools/verify_1_2_1_compare_temporal_detail.py
-          python tools/test_1_2_1_compare_temporal_detail_negative_mutations.py
+          python tools/verify_1_2_2_release_retry.py
+          python tools/test_1_2_2_release_retry_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1201.js
+          node --check assets/app.v1202.js
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release from validated main commit
@@ -116,18 +116,80 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          TAG="v1.2.1"
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            git fetch --force origin "refs/tags/$TAG:refs/tags/$TAG"
-            TAG_SHA="$(git rev-list -n 1 "$TAG")"
-            if [ "$TAG_SHA" != "$GITHUB_SHA" ]; then
-              echo "Release $TAG already targets $TAG_SHA, not validated commit $GITHUB_SHA; bump the Database version instead of retargeting a published tag." >&2
-              exit 1
+          set -euo pipefail
+          TAG="v1.2.2"
+          ZIP="dist/VulkanScope-Database-1.2.2.zip"
+          SHA="dist/VulkanScope-Database-1.2.2.zip.sha256"
+
+          is_transient_github_error() {
+            printf '%s' "$1" | grep -Eqi 'HTTP 429|HTTP 5[0-9][0-9]|rate limit|temporarily unavailable'
+          }
+
+          verify_remote_tag_owner() {
+            git fetch --force origin "+refs/tags/$TAG:refs/tags/$TAG" >/dev/null 2>&1 || true
+            if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+              TAG_SHA="$(git rev-list -n 1 "$TAG")"
+              if [ "$TAG_SHA" != "$GITHUB_SHA" ]; then
+                echo "Release $TAG already targets $TAG_SHA, not validated commit $GITHUB_SHA; bump the Database version instead of retargeting a published tag." >&2
+                exit 1
+              fi
+              return 0
             fi
-            gh release upload "$TAG" dist/VulkanScope-Database-1.2.1.zip dist/VulkanScope-Database-1.2.1.zip.sha256 --clobber
-          else
-            gh release create "$TAG" dist/VulkanScope-Database-1.2.1.zip dist/VulkanScope-Database-1.2.1.zip.sha256 --target "$GITHUB_SHA" --title "VulkanScope Database 1.2.1" --generate-notes
-          fi
+            return 1
+          }
+
+          for attempt in 1 2 3 4 5; do
+            echo "GitHub Release publication attempt $attempt/5 for $TAG"
+
+            set +e
+            VIEW_OUT="$(gh release view "$TAG" --json tagName 2>&1)"
+            VIEW_RC=$?
+            set -e
+
+            if [ "$VIEW_RC" -eq 0 ]; then
+              verify_remote_tag_owner
+              set +e
+              OUT="$(gh release upload "$TAG" "$ZIP" "$SHA" --clobber 2>&1)"
+              RC=$?
+              set -e
+              if [ "$RC" -eq 0 ]; then
+                echo "Release $TAG assets are published."
+                exit 0
+              fi
+            else
+              if is_transient_github_error "$VIEW_OUT"; then
+                OUT="$VIEW_OUT"
+                RC="$VIEW_RC"
+              else
+                # A missing release is expected on first publication. A pre-existing tag is allowed only
+                # when it resolves to the exact validated main commit.
+                if verify_remote_tag_owner; then
+                  CREATE_MODE=(--verify-tag)
+                else
+                  CREATE_MODE=(--target "$GITHUB_SHA")
+                fi
+                set +e
+                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 1.2.2" --generate-notes 2>&1)"
+                RC=$?
+                set -e
+                if [ "$RC" -eq 0 ]; then
+                  echo "Release $TAG created."
+                  exit 0
+                fi
+              fi
+            fi
+
+            printf '%s\n' "$OUT" >&2
+            if ! is_transient_github_error "$OUT"; then
+              echo "Non-transient GitHub Release failure; refusing to retry." >&2
+              exit "$RC"
+            fi
+            if [ "$attempt" -eq 5 ]; then
+              echo "GitHub Release API remained unavailable after 5 attempts." >&2
+              exit "$RC"
+            fi
+            sleep "$((attempt * 5))"
+          done
 
   deploy:
     runs-on: ubuntu-latest

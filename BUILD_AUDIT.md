@@ -1,14 +1,10 @@
-# VulkanScope Database 1.2.1 build / regression audit
+# VulkanScope Database 1.2.2 build / regression audit
 
-- Database/frontend/Worker release identity: **1.2.1**.
-- Frontend identity: `assets/app.v1201.js`, cache key **1201**; stylesheet cache key also **1201**.
-- Immutable predecessor: VulkanScope Database **1.2.0**, ZIP SHA-256 `b3768a0997e87589ce4358df448018daf5befdd8932ec0363436120b72b2132c`.
-- D1 schema/migration chain, report payload bytes/hashes, normalizer **16**, Vulkan registry **1.4.362/header 362** and historical report readability are unchanged.
-- New report POST floor remains VulkanScope **1.2.5 / versionCode 1205**.
-- Compare has a natural-top full workspace and a smooth compact sticky tracking state for long comparisons; selected reports/toggles/filters are not rewritten by the sticky state.
-- Page scrolling uses a wider Database-styled vertical scrollbar and persistent endpoint-aware up/down controls with the unavailable direction disabled.
-- `navigator.connection.effectiveType` is labelled only as a browser effective performance class; it is explicitly not treated as LTE/5G/FTTH/Wi-Fi physical-access evidence.
-- Regional date/time settings remain presentation-only. Submission sorting and submission-age filtering consume the original server timestamp through `submissionEpoch()`.
-- Removing a Favorite and clearing saved browser data require an accessible in-product destructive-action confirmation; adding Favorites remains immediate.
-- Report-detail tab synchronization was restored by defining `syncDetailTabUi()`, keeping ARIA/tabindex state coherent and allowing the detail body to render/switch normally.
-- Mandatory gates: immutable 1.2.0→1.2.1 regression contract, 1.2.1 verifier + negative mutations, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition, clean-extract strict-tree audit and deterministic ZIP construction.
+- Database/frontend/Worker release identity: **1.2.2**.
+- Immutable predecessor: VulkanScope Database 1.2.1 ZIP SHA-256 `8df3051f0c495a1c245792cbccf431660de906a1ab757129c140f197a1944107`.
+- Frontend identity: `assets/app.v1202.js`, cache key **1202**.
+- Release workflow keeps job-scoped `contents: write` only on the release job.
+- GitHub Release creation/upload uses bounded retry for transient HTTP 429/5xx failures and re-checks tag/release ownership against validated `GITHUB_SHA` before every mutating attempt.
+- Existing tags/releases that resolve to another commit fail closed and require a version bump; no published tag is retargeted.
+- D1 schema/migrations, stored payload bytes/hashes, report IDs, normalizer 16, Vulkan 1.4.362 and VulkanScope 1.2.5 producer floor are unchanged.
+- Mandatory gates: immutable 1.2.1→1.2.2 regression contract, 1.2.2 release-retry verifier + negative mutations, inherited 1.2.1 UI semantics, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition and deterministic strict ZIP construction.
