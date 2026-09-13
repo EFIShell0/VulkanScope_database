@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.2.2'
-DB_VERSION='1.2.2'
-APP_ASSET='app.v1202.js'
-CACHE_KEY='1202'
+AUDIT_VERSION='1.2.3'
+DB_VERSION='1.2.3'
+APP_ASSET='app.v1203.js'
+CACHE_KEY='1203'
 PRODUCER='VulkanScope 1.2.5 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -21,7 +21,7 @@ if args.version:
     raise SystemExit(0)
 
 ASSET_ALLOW={
-    APP_ASSET,'encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png','favicon.ico','favicon.png','vulkanscope_logo_horizontal.png',
+    APP_ASSET,'browser-compat.v1203.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png','favicon.ico','favicon.png','vulkanscope_logo_horizontal.png',
     'gpu-vendors/gpu_vendor_amd.png','gpu-vendors/gpu_vendor_arm.png','gpu-vendors/gpu_vendor_broadcom.png','gpu-vendors/gpu_vendor_huawei.png','gpu-vendors/gpu_vendor_imagination.png','gpu-vendors/gpu_vendor_intel.png','gpu-vendors/gpu_vendor_nvidia.png','gpu-vendors/gpu_vendor_qualcomm.png','gpu-vendors/gpu_vendor_samsung.png','gpu-vendors/gpu_vendor_unknown.png','gpu-vendors/gpu_vendor_vivante.png','gpu-vendors/gpu_vendor_vsi.png',
     'hdr/dolby_vision.png','hdr/dolby_vision_2.png','hdr/hdr10.svg','hdr/hdr10_plus.png','hdr/hdr10_plus_advanced.png','hdr/hdr10_plus_v1014.png','hdr/hdr_vivid.webp'
 }
@@ -85,11 +85,11 @@ def audit_source(root:Path):
     need(root.is_dir(),f'source tree missing: {root}')
     if not root.is_dir():
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
+    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/browser-compat.v1203.js','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
     for rel in required: need((root/rel).is_file(),f'missing required source file {rel}')
     if errors:
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    index=text('index.html'); app=text(f'assets/{APP_ASSET}'); css=text('assets/site.v0390.css'); worker=text('worker/src/index.js'); rules=text('rules/PROJECT_RULES.md'); workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
+    index=text('index.html'); app=text(f'assets/{APP_ASSET}'); compat=text('assets/browser-compat.v1203.js'); css=text('assets/site.v0390.css'); worker=text('worker/src/index.js'); rules=text('rules/PROJECT_RULES.md'); workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
     pkg=json.loads(text('worker/package.json')); schema=json.loads(text('report.schema.json')); static=json.loads(text('data/index.json')); lock=json.loads(text('registry/registry_lock.json')); wr=json.loads(text('worker/wrangler.jsonc'))
 
     # Release/cache identity and canonical workflow.
@@ -102,11 +102,17 @@ def audit_source(root:Path):
     for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
         need(token in index,f'current index identity missing: {token}')
     need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=3000,RELEASE_CHECK_INTERVAL_MS=10000" in app,'frontend release/live-sync identity mismatch')
+    need('browser-compat.v1203.js?v=1203' in index and 'browserCompatibilityGate' in index,'browser compatibility gate/reference missing')
+    need("chromium:84,firefox:86,safari:14.1" in compat and 'Element.prototype.getAnimations' in compat and 'window.ResizeObserver' in compat,'browser minimum/feature gate mismatch')
+    need("const browserLanguage=()=> 'en-US'" in app and "new Intl.DisplayNames(['en'],{type:'region'})" in app,'English-only regional presentation contract missing')
+    need("classList.toggle('at-page-top',atTop)" in app and "classList.toggle('at-page-bottom',atBottom)" in app,'native scrollbar endpoint state classes missing')
+    need('html.at-page-top::-webkit-scrollbar-button' in css and 'html.at-page-bottom::-webkit-scrollbar-button' in css,'native scrollbar endpoint visual states missing')
+    need('@media(max-width:430px)' in css and 'overflow-x:hidden' in css,'mobile overflow containment contract missing')
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need("databaseVersion:" not in worker,'legacy Worker databaseVersion refresh signal must be absent')
-    need(worker.count("databaseReleaseVersion:'1.2.2'")>=3,'Worker databaseReleaseVersion mismatch')
-    need(worker.count("workerReleaseVersion:'1.2.2'")>=3,'Worker workerReleaseVersion mismatch')
+    need(worker.count("databaseReleaseVersion:'1.2.3'")>=3,'Worker databaseReleaseVersion mismatch')
+    need(worker.count("workerReleaseVersion:'1.2.3'")>=3,'Worker workerReleaseVersion mismatch')
     need(worker.count("frontendUpdateSignal:'same-origin-pages-marker'")>=2,'Worker frontendUpdateSignal metadata missing')
 
     # Current Vulkan/producer metadata and immutable evidence model.
@@ -215,7 +221,7 @@ def audit_source(root:Path):
         except Exception as exc: errors.append(f'Python syntax {py.name}: {exc}')
     node=shutil.which('node')
     if node:
-        for rel in [f'assets/{APP_ASSET}','assets/encyclopedia.v03924.js','worker/src/index.js','worker/tests/contract.mjs']:
+        for rel in [f'assets/{APP_ASSET}','assets/browser-compat.v1203.js','assets/encyclopedia.v03924.js','worker/src/index.js','worker/tests/contract.mjs']:
             r=subprocess.run([node,'--check',str(root/rel)],capture_output=True,text=True)
             if r.returncode: errors.append(f'node --check {rel}: {r.stderr.strip()}')
         for rel,cwd in [('tools/test_routes.mjs',root),('tools/test_compare_contract.mjs',root),('worker/tests/contract.mjs',root/'worker')]:

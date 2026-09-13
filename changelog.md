@@ -1,8 +1,8 @@
-## 1.2.2
+## 1.2.3
 
 - Hardened the GitHub Release publication boundary against transient GitHub API `5xx` / `429` failures with bounded exponential retry and state re-checks between attempts.
-- Release creation remains fail-closed: an existing `v1.2.2` tag or release must resolve to the validated `GITHUB_SHA`; published tags are never retargeted.
-- Database/Worker/frontend identity advances to 1.2.2 / `app.v1202.js` / cache key 1202. D1 schema, report payload bytes/hashes, normalizer, Vulkan registry baseline and the VulkanScope 1.2.5 submission floor are unchanged.
+- Release creation remains fail-closed: an existing `v1.2.3` tag or release must resolve to the validated `GITHUB_SHA`; published tags are never retargeted.
+- Database/Worker/frontend identity advances to 1.2.3 / `app.v1203.js` / cache key 1203. D1 schema, report payload bytes/hashes, normalizer, Vulkan registry baseline and the VulkanScope 1.2.5 submission floor are unchanged.
 
 # VulkanScope Database changelog
 
