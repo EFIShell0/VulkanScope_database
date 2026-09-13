@@ -652,7 +652,7 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
 /* Compare: sticky behavior belongs to a dedicated overflow-visible shell. The workspace itself may
    compact, but it no longer owns sticky positioning or clips report-selector menus. */
 .compare-page{position:relative;min-width:0;overflow:visible}
-.compare-sticky-shell{position:sticky;top:var(--compare-sticky-top,78px);z-index:145;overflow:visible;isolation:isolate;transition:top .22s cubic-bezier(.2,.8,.2,1),filter .22s ease}
+.compare-sticky-placeholder{height:0;pointer-events:none}.compare-sticky-shell{position:relative;z-index:145;overflow:visible;isolation:isolate;transition:filter .22s ease,box-shadow .22s ease,background .22s ease}.compare-sticky-shell.is-pinned{position:fixed;z-index:320;overflow:visible;isolation:isolate;pointer-events:auto}
 .compare-sticky-shell.is-pinned{filter:drop-shadow(0 14px 20px rgba(0,0,0,.22))}
 .compare-sticky-shell>.compare-workspace{position:relative!important;top:auto!important;z-index:auto!important;overflow:visible!important}
 .compare-report-grid,.compare-report-card{overflow:visible!important}
@@ -660,7 +660,7 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
 .compare-report-card.select-open{z-index:240;border-color:rgba(255,255,255,.18);box-shadow:0 16px 38px rgba(0,0,0,.34)}
 .compare-report-card.select-open .custom-select{z-index:250}.compare-report-card.select-open .custom-select-menu{z-index:280;max-height:min(390px,calc(100vh - 120px))}
 .compare-workspace.is-compact .compare-report-card.select-open .custom-select-menu{z-index:300}
-@media(max-width:760px){.compare-sticky-shell{top:var(--compare-sticky-top,104px)}.compare-sticky-shell>.compare-workspace{max-width:100%}}
+@media(max-width:760px){.compare-sticky-shell>.compare-workspace{max-width:100%}}
 
 /* Viewport rail: endpoint buttons now share a conventional disabled state. The thumb deliberately
    keeps the normal cursor even while being pointer-draggable. */
@@ -693,3 +693,7 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
 @media(max-width:460px){.hero-v127-side{grid-template-columns:1fr}.hero-v127-rule{grid-column:auto}.hero-v127 .metrics{grid-template-columns:1fr}.hero-metrics-head{align-items:flex-start;flex-direction:column}.hero-v127-grid,.hero-command-deck{padding-left:14px;padding-right:14px}}
 @media(prefers-reduced-motion:reduce){.compare-sticky-shell,.compare-report-card,.hero-workspace-card,.hero-command-deck .search-box,.hero-v127 .metric,.hero-v127 .metric:after,.reports-table .click-row>td,.reports-table .click-row .submitted-reveal,.reports-table .click-row .submitted-stack,.reports-table .click-row .submitted-summary{transition:none!important}}
 
+
+/* 1.2.8 Compare viewport-follow hotfix: explicit fixed pin avoids ancestor overflow/sticky-container ambiguity. */
+.compare-sticky-shell.is-pinned .compare-workspace{max-height:calc(100vh - 16px);overflow:visible!important}.compare-sticky-shell.is-pinned .compare-report-card.select-open,.compare-sticky-shell.is-pinned .custom-select.open{z-index:420!important}.compare-sticky-shell.is-pinned .custom-select-menu{z-index:460!important;max-height:min(390px,calc(100vh - 118px))}
+@media(prefers-reduced-motion:reduce){.compare-sticky-placeholder,.compare-sticky-shell{transition:none!important}}

@@ -1,3 +1,9 @@
+## 1.2.8
+
+- Fixed Compare follow behavior by replacing ancestor-sensitive CSS sticky ownership with a JS-synchronized viewport-fixed shell and a flow placeholder. The selected Baseline/Candidate reports and comparison mode now remain visible while scrolling long comparison tables.
+- Compare custom report selectors remain above the pinned workspace and are not clipped when opened.
+- Database/frontend/Worker identity advances to 1.2.8 / `app.v1208.js` / `browser-compat.v1208.js` / cache key 1208. D1 schema, report payload/hash semantics, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 submission floor are unchanged.
+
 ## 1.2.7
 - Compare now uses a dedicated overflow-visible sticky shell so Baseline/Candidate controls follow the viewport correctly and report-selector menus are not clipped by the comparison workspace.
 - The authoritative DOM viewport rail now marks the lower endpoint gray/disabled using `document.scrollingElement` range metrics; the draggable thumb keeps the normal cursor instead of grab/grabbing cursors.
