@@ -1,10 +1,10 @@
-# VulkanScope Database 1.2.3 build / regression audit
+# VulkanScope Database 1.2.4 build / regression audit
 
-- Database/frontend/Worker release identity: **1.2.3**.
-- Immutable predecessor: VulkanScope Database 1.2.1 ZIP SHA-256 `8df3051f0c495a1c245792cbccf431660de906a1ab757129c140f197a1944107`.
-- Frontend identity: `assets/app.v1203.js`, cache key **1203**.
-- Release workflow keeps job-scoped `contents: write` only on the release job.
-- GitHub Release creation/upload uses bounded retry for transient HTTP 429/5xx failures and re-checks tag/release ownership against validated `GITHUB_SHA` before every mutating attempt.
-- Existing tags/releases that resolve to another commit fail closed and require a version bump; no published tag is retargeted.
-- D1 schema/migrations, stored payload bytes/hashes, report IDs, normalizer 16, Vulkan 1.4.362 and VulkanScope 1.2.5 producer floor are unchanged.
-- Mandatory gates: immutable 1.2.1→1.2.3 regression contract, 1.2.3 release-retry verifier + negative mutations, inherited 1.2.1 UI semantics, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition and deterministic strict ZIP construction.
+- Database/frontend/Worker release identity: **1.2.4**.
+- Immutable predecessor: **VulkanScope Database 1.2.3**, ZIP SHA-256 `e93a67fa86a0070b3aba5ba93b1695a60b83cdefc6d557ad7dff674c6607382e`.
+- Frontend identity: `assets/app.v1204.js`, browser gate `assets/browser-compat.v1204.js`, cache key **1204**.
+- CI fix: canonical Windows/build/release verification calls the current 1.2.4 verifier and negative suite; no 1.2.2 release-identity verifier is used against generated 1.2.4 metadata.
+- Bounded identity tables: Devices, Versions, Memory heaps/per-report types, Queues, Surface formats/presentation queues, Display & HDR, Portability and Statistics GPU models. Pagination is 10/25/50 and slices only rendered rows after complete filtering/aggregation.
+- Inherited protections: fail-closed GitHub Release tag ownership + bounded transient retry, browser floors Chromium 84+/Firefox 86+/Safari 14.1+, English UI locale, reduced-motion, endpoint scrollbar state, mobile overflow containment, live sync and VulkanScope 1.2.5 submission floor.
+- D1 schema/migrations, stored report payload bytes/hashes, report IDs, schema 2, technical report 3, normalizer 16 and Vulkan 1.4.362 registry baseline are unchanged.
+- Mandatory gates: current 1.2.4 verifier + negative mutations, immutable 1.2.3 regression contract, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition, clean-extract verification and deterministic byte-identical ZIP construction.

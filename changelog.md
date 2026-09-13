@@ -1,3 +1,11 @@
+## 1.2.4
+
+- Fix GitHub Actions generated-index re-verification so the current 1.2.4 verifier runs after `build_index.py`; predecessor 1.2.2 identity checks are no longer applied to a current release checkout.
+- Bound every GPU/device/report-identity table outside Reports to the same 10/25/50 per-page model, range indicator and Previous/Next semantics used by Reports.
+- Pagination slices only final presentation rows; full filtered sets continue to drive statistics, coverage and evidence semantics.
+- Retain the 1.2.2 GitHub Release retry/tag-immutability hardening and all 1.2.3 browser/English/motion/mobile protections.
+- Database/frontend/Worker identity advances to 1.2.4 / `app.v1204.js` / cache key 1204; D1 schema, payload hashes, normalizer, Vulkan registry baseline and VulkanScope 1.2.5 submission floor are unchanged.
+
 ## 1.2.3
 
 - Hardened the GitHub Release publication boundary against transient GitHub API `5xx` / `429` failures with bounded exponential retry and state re-checks between attempts.
