@@ -1,3 +1,10 @@
+## 1.2.7
+- Compare now uses a dedicated overflow-visible sticky shell so Baseline/Candidate controls follow the viewport correctly and report-selector menus are not clipped by the comparison workspace.
+- The authoritative DOM viewport rail now marks the lower endpoint gray/disabled using `document.scrollingElement` range metrics; the draggable thumb keeps the normal cursor instead of grab/grabbing cursors.
+- The persistent Vulkan Hardware Database hero is redesigned as a workspace-aware command deck for every primary tab while retaining global search, dataset metrics, repository/developer identity and report-backed evidence semantics.
+- Reports row hover is synchronized across every cell so the Submitted/date-time cell eases smoothly even when pointer entry begins over Report ID, Favorite or another distant column.
+- Database/frontend/Worker identity advances to 1.2.7 / `app.v1207.js` / `browser-compat.v1207.js` / cache key 1207. D1 schema, report payload/hash semantics, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 submission floor are unchanged.
+
 ## 1.2.6
 - Replace browser-specific viewport scrollbar-button endpoint painting with an accessible same-origin DOM viewport rail so endpoint arrow state is deterministic across supported Chromium, Firefox and Safari/WebKit families.
 - Keep the top UP arrow gray/disabled at absolute top and the bottom DOWN arrow Vulkan red at absolute bottom while preventing out-of-range movement.
