@@ -1,10 +1,11 @@
-# VulkanScope Database 1.2.4 build / regression audit
+# VulkanScope Database 1.2.5 build / regression audit
 
-- Database/frontend/Worker release identity: **1.2.4**.
-- Immutable predecessor: **VulkanScope Database 1.2.3**, ZIP SHA-256 `e93a67fa86a0070b3aba5ba93b1695a60b83cdefc6d557ad7dff674c6607382e`.
-- Frontend identity: `assets/app.v1204.js`, browser gate `assets/browser-compat.v1204.js`, cache key **1204**.
-- CI fix: canonical Windows/build/release verification calls the current 1.2.4 verifier and negative suite; no 1.2.2 release-identity verifier is used against generated 1.2.4 metadata.
-- Bounded identity tables: Devices, Versions, Memory heaps/per-report types, Queues, Surface formats/presentation queues, Display & HDR, Portability and Statistics GPU models. Pagination is 10/25/50 and slices only rendered rows after complete filtering/aggregation.
-- Inherited protections: fail-closed GitHub Release tag ownership + bounded transient retry, browser floors Chromium 84+/Firefox 86+/Safari 14.1+, English UI locale, reduced-motion, endpoint scrollbar state, mobile overflow containment, live sync and VulkanScope 1.2.5 submission floor.
-- D1 schema/migrations, stored report payload bytes/hashes, report IDs, schema 2, technical report 3, normalizer 16 and Vulkan 1.4.362 registry baseline are unchanged.
-- Mandatory gates: current 1.2.4 verifier + negative mutations, immutable 1.2.3 regression contract, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition, clean-extract verification and deterministic byte-identical ZIP construction.
+- Database/frontend/Worker release identity: **1.2.5**.
+- Immutable predecessor: **VulkanScope Database 1.2.4**, ZIP SHA-256 `123938b1b2517f7939b58350ab12963c6807cef7d0fbab38ba67e9c1e420a606`.
+- Frontend identity: `assets/app.v1205.js`, browser gate `assets/browser-compat.v1205.js`, cache key **1205**.
+- Fixed the far-right viewport scrollbar endpoint styling at the actual root-scrollbar layer. Endpoint state is mirrored to both `html` and `body`; at the document top the UP arrow is gray, while at the document bottom the DOWN arrow retains the requested Vulkan red presentation.
+- Repaired the 1.2.3 CSS serialization defect where literal `\n` tokens caused the endpoint/motion/mobile block to parse as an invalid qualified rule. The stylesheet now contains real newlines and is regression-guarded against recurrence.
+- Motion audit: primary navigation, tabs, buttons, links, options, cards, report rows, table controls, filters, Settings surfaces, modals, Compare, Surface, Encyclopedia, detail transitions and destructive confirmation close paths use the shared short opacity/transform/color/border/shadow language, with reduced-motion fallbacks.
+- 1.2.4 bounded identity-table paging remains unchanged.
+- D1 schema/migrations, stored report payload bytes/hashes, report IDs, schema 2, technical report 3, normalizer 16, Vulkan 1.4.362 baseline and VulkanScope 1.2.5 new-submission floor remain unchanged.
+- Mandatory gates: current 1.2.5 verifier + negative mutations, immutable 1.2.4 regression contract, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition, clean-extract verification and deterministic byte-identical ZIP construction.

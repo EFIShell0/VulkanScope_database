@@ -1,3 +1,12 @@
+## 1.2.5
+
+- Fix the Database-themed far-right viewport scrollbar so endpoint state is applied to the real root scrollbar across Chromium/WebKit ownership differences: the UP arrow becomes gray at the absolute top and the DOWN arrow remains Vulkan red at the absolute bottom as requested.
+- Repair accidental literal `\n` serialization in the 1.2.3 CSS append; this had prevented the endpoint-state, broad motion and mobile containment layer from parsing correctly in the browser.
+- Mirror page-top/page-bottom state to both `html` and `body` and keep application page-scroll controls independently boundary-aware.
+- Extend the shared smooth interaction language across all primary tabs/workspaces, table rows, controls, settings, filters, cards and dialogs, and add a smooth destructive-confirmation close transition while preserving `prefers-reduced-motion`.
+- Preserve 1.2.4 bounded report-identity table paging, GitHub Release retry/tag immutability, browser floors, English UI, mobile containment, D1/report semantics and the VulkanScope 1.2.5 submission floor.
+- Database/frontend/Worker identity advances to 1.2.5 / `app.v1205.js` / cache key 1205.
+
 ## 1.2.4
 
 - Fix GitHub Actions generated-index re-verification so the current 1.2.4 verifier runs after `build_index.py`; predecessor 1.2.2 identity checks are no longer applied to a current release checkout.

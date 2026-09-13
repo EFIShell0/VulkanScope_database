@@ -529,4 +529,87 @@ html::-webkit-scrollbar-thumb:hover,body::-webkit-scrollbar-thumb:hover{backgrou
 @media(prefers-reduced-motion:reduce){.compare-workspace,.compare-workspace-head,.compare-report-grid,.compare-report-card,.compare-report-label,.compare-identity-line,.compare-mode-panel,.compare-filter-panel,.destructive-confirm-backdrop,.destructive-confirm-dialog{transition:none!important;animation:none!important}}
 
 html::-webkit-scrollbar-button:single-button:vertical{display:block;height:14px;background-color:#171012;background-repeat:no-repeat;background-position:center;background-size:7px 5px;border:1px solid #2c1c1f}html::-webkit-scrollbar-button:single-button:vertical:decrement{background-image:linear-gradient(135deg,transparent 50%,#8e5960 50%),linear-gradient(225deg,transparent 50%,#8e5960 50%);background-position:4px 6px,8px 6px;background-size:4px 4px}html::-webkit-scrollbar-button:single-button:vertical:increment{background-image:linear-gradient(45deg,transparent 50%,#8e5960 50%),linear-gradient(315deg,transparent 50%,#8e5960 50%);background-position:4px 4px,8px 4px;background-size:4px 4px}html::-webkit-scrollbar-button:single-button:vertical:disabled{opacity:.28;background-color:#100c0d;filter:saturate(.45)}
-\n\n/* VulkanScope Database 1.2.3 — compatibility, English presentation, endpoint state, motion and mobile containment */\nhtml.at-page-top::-webkit-scrollbar-button:single-button:vertical:decrement,html.at-page-bottom::-webkit-scrollbar-button:single-button:vertical:increment{background-color:#0e0b0c!important;filter:saturate(.18) brightness(.72);opacity:.42}\nhtml.at-page-top::-webkit-scrollbar-button:single-button:vertical:decrement{background-image:linear-gradient(135deg,transparent 50%,#555057 50%),linear-gradient(225deg,transparent 50%,#555057 50%)}\nhtml.at-page-bottom::-webkit-scrollbar-button:single-button:vertical:increment{background-image:linear-gradient(45deg,transparent 50%,#555057 50%),linear-gradient(315deg,transparent 50%,#555057 50%)}\n.browser-compatibility-gate{min-height:100vh;display:grid;place-items:center;padding:clamp(18px,5vw,56px);background:radial-gradient(circle at 18% 10%,rgba(255,92,102,.10),transparent 34%),radial-gradient(circle at 84% 86%,rgba(96,85,210,.09),transparent 32%),#09090a}.browser-compatibility-gate[hidden]{display:none!important}.browser-compatibility-card{width:min(880px,100%);display:grid;grid-template-columns:72px minmax(0,1fr);gap:22px;padding:clamp(22px,4vw,38px);border:1px solid #3a3034;border-radius:28px;background:linear-gradient(145deg,rgba(30,18,21,.98),rgba(14,14,17,.98) 62%,rgba(20,18,29,.98));box-shadow:0 28px 90px rgba(0,0,0,.5)}.browser-compatibility-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:19px;background:rgba(255,215,107,.10);border:1px solid rgba(255,215,107,.26);color:var(--amber)}.browser-compatibility-icon svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.browser-compatibility-card h1{margin:7px 0 10px;font-size:clamp(30px,5vw,48px);line-height:1.03;letter-spacing:-.035em}.browser-compatibility-card>div>p{color:#c3c3ca;max-width:720px}.browser-compatibility-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}.browser-compatibility-grid>div{min-width:0;padding:14px 16px;border-radius:15px;border:1px solid #34343b;background:#121215;display:grid;gap:4px}.browser-compatibility-grid span{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#8f9098;font-weight:850}.browser-compatibility-grid strong{overflow-wrap:anywhere}.browser-compatibility-details{padding:16px;border-radius:17px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.07)}.browser-compatibility-details h2{font-size:15px;margin:0 0 7px}.browser-compatibility-details p{margin:6px 0;color:#aaaab2;font-size:13px}\nbutton,a,.card,.metric,.kv,.custom-select-option,.settings-category-button,.settings-toggle,.settings-info-row,.filter-family,.workspace-context,.workspace-context-stats>div,.repo-link,.report-action-button,.report-favorite-button,.compare-diff-toggle,.tab-button,.nav-button,.back-button,.filter-clear-button{transition-property:background-color,border-color,color,box-shadow,opacity,transform,filter;transition-duration:.18s;transition-timing-function:cubic-bezier(.2,.8,.2,1)}\nhtml,body{max-width:100%;overflow-x:hidden}.shell,.hero,.view,.section-heading,.filters,#content,.workspace-context,.compare-page,.compare-workspace,.surface-workspace,.encyclopedia-workspace,.settings-drawer-body,.settings-section{min-width:0}.hero-heading-row,.compare-report-grid,.settings-regional-grid,.workspace-context,.workspace-context-stats{min-width:0}.hero-heading-copy,.hero-side,.compare-report-card,.filter-family,.filter-family-controls,.settings-select-row,.settings-select-row>span{min-width:0}.section-description,.settings-preference-intro,.notice,.workspace-context-copy p,.compare-explainer,.settings-message span:last-child{overflow-wrap:anywhere}.custom-select,.custom-select-button,.custom-select-menu{max-width:100%}.table-scroll-shell,.table-wrap{max-width:100%}\n@media(max-width:760px){.shell{width:min(100% - 20px,1500px)}main{padding-top:18px}.hero{padding:20px 16px;border-radius:22px}.hero-heading-row{display:grid;grid-template-columns:1fr}.hero-side{width:100%;max-width:none}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.section-heading{align-items:stretch}.filters{width:100%}.custom-select{min-width:0!important;width:100%}.compare-workspace{max-width:100%}.compare-report-grid{grid-template-columns:minmax(0,1fr)}.compare-swap{justify-self:center}.compare-workspace.is-compact .compare-report-grid{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);overflow-x:auto;overscroll-behavior-inline:contain}.settings-regional-grid,.workspace-context-stats,.browser-compatibility-grid{grid-template-columns:1fr}.browser-compatibility-card{grid-template-columns:1fr;border-radius:22px}.browser-compatibility-icon{width:52px;height:52px}.detail-tabs{max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.detail-tabs::-webkit-scrollbar{display:none}.table-wrap{overflow-x:auto}.footer-inner{gap:10px;flex-wrap:wrap}}\n@media(max-width:430px){.metrics{grid-template-columns:1fr}.settings-drawer{width:100vw;max-width:100vw}.settings-category-nav{grid-template-columns:repeat(3,minmax(0,1fr))}.settings-category-button{min-width:0;padding-inline:7px}.settings-category-button span{font-size:11px}.compare-workspace.is-compact .compare-report-grid{grid-template-columns:minmax(190px,1fr) 40px minmax(190px,1fr)}}\n@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}\n
+
+
+/* VulkanScope Database 1.2.3 — compatibility, English presentation, endpoint state, motion and mobile containment */
+html.at-page-top::-webkit-scrollbar-button:single-button:vertical:decrement,html.at-page-bottom::-webkit-scrollbar-button:single-button:vertical:increment{background-color:#0e0b0c!important;filter:saturate(.18) brightness(.72);opacity:.42}
+html.at-page-top::-webkit-scrollbar-button:single-button:vertical:decrement{background-image:linear-gradient(135deg,transparent 50%,#555057 50%),linear-gradient(225deg,transparent 50%,#555057 50%)}
+html.at-page-bottom::-webkit-scrollbar-button:single-button:vertical:increment{background-image:linear-gradient(45deg,transparent 50%,#555057 50%),linear-gradient(315deg,transparent 50%,#555057 50%)}
+.browser-compatibility-gate{min-height:100vh;display:grid;place-items:center;padding:clamp(18px,5vw,56px);background:radial-gradient(circle at 18% 10%,rgba(255,92,102,.10),transparent 34%),radial-gradient(circle at 84% 86%,rgba(96,85,210,.09),transparent 32%),#09090a}.browser-compatibility-gate[hidden]{display:none!important}.browser-compatibility-card{width:min(880px,100%);display:grid;grid-template-columns:72px minmax(0,1fr);gap:22px;padding:clamp(22px,4vw,38px);border:1px solid #3a3034;border-radius:28px;background:linear-gradient(145deg,rgba(30,18,21,.98),rgba(14,14,17,.98) 62%,rgba(20,18,29,.98));box-shadow:0 28px 90px rgba(0,0,0,.5)}.browser-compatibility-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:19px;background:rgba(255,215,107,.10);border:1px solid rgba(255,215,107,.26);color:var(--amber)}.browser-compatibility-icon svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.browser-compatibility-card h1{margin:7px 0 10px;font-size:clamp(30px,5vw,48px);line-height:1.03;letter-spacing:-.035em}.browser-compatibility-card>div>p{color:#c3c3ca;max-width:720px}.browser-compatibility-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}.browser-compatibility-grid>div{min-width:0;padding:14px 16px;border-radius:15px;border:1px solid #34343b;background:#121215;display:grid;gap:4px}.browser-compatibility-grid span{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#8f9098;font-weight:850}.browser-compatibility-grid strong{overflow-wrap:anywhere}.browser-compatibility-details{padding:16px;border-radius:17px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.07)}.browser-compatibility-details h2{font-size:15px;margin:0 0 7px}.browser-compatibility-details p{margin:6px 0;color:#aaaab2;font-size:13px}
+button,a,.card,.metric,.kv,.custom-select-option,.settings-category-button,.settings-toggle,.settings-info-row,.filter-family,.workspace-context,.workspace-context-stats>div,.repo-link,.report-action-button,.report-favorite-button,.compare-diff-toggle,.tab-button,.nav-button,.back-button,.filter-clear-button{transition-property:background-color,border-color,color,box-shadow,opacity,transform,filter;transition-duration:.18s;transition-timing-function:cubic-bezier(.2,.8,.2,1)}
+html,body{max-width:100%;overflow-x:hidden}.shell,.hero,.view,.section-heading,.filters,#content,.workspace-context,.compare-page,.compare-workspace,.surface-workspace,.encyclopedia-workspace,.settings-drawer-body,.settings-section{min-width:0}.hero-heading-row,.compare-report-grid,.settings-regional-grid,.workspace-context,.workspace-context-stats{min-width:0}.hero-heading-copy,.hero-side,.compare-report-card,.filter-family,.filter-family-controls,.settings-select-row,.settings-select-row>span{min-width:0}.section-description,.settings-preference-intro,.notice,.workspace-context-copy p,.compare-explainer,.settings-message span:last-child{overflow-wrap:anywhere}.custom-select,.custom-select-button,.custom-select-menu{max-width:100%}.table-scroll-shell,.table-wrap{max-width:100%}
+@media(max-width:760px){.shell{width:min(100% - 20px,1500px)}main{padding-top:18px}.hero{padding:20px 16px;border-radius:22px}.hero-heading-row{display:grid;grid-template-columns:1fr}.hero-side{width:100%;max-width:none}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.section-heading{align-items:stretch}.filters{width:100%}.custom-select{min-width:0!important;width:100%}.compare-workspace{max-width:100%}.compare-report-grid{grid-template-columns:minmax(0,1fr)}.compare-swap{justify-self:center}.compare-workspace.is-compact .compare-report-grid{grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr);overflow-x:auto;overscroll-behavior-inline:contain}.settings-regional-grid,.workspace-context-stats,.browser-compatibility-grid{grid-template-columns:1fr}.browser-compatibility-card{grid-template-columns:1fr;border-radius:22px}.browser-compatibility-icon{width:52px;height:52px}.detail-tabs{max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.detail-tabs::-webkit-scrollbar{display:none}.table-wrap{overflow-x:auto}.footer-inner{gap:10px;flex-wrap:wrap}}
+@media(max-width:430px){.metrics{grid-template-columns:1fr}.settings-drawer{width:100vw;max-width:100vw}.settings-category-nav{grid-template-columns:repeat(3,minmax(0,1fr))}.settings-category-button{min-width:0;padding-inline:7px}.settings-category-button span{font-size:11px}.compare-workspace.is-compact .compare-report-grid{grid-template-columns:minmax(190px,1fr) 40px minmax(190px,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+
+/* VulkanScope Database 1.2.5 — root-scrollbar endpoint state + full interaction motion audit */
+/* The far-right viewport scrollbar is browser chrome themed by the Database. State classes are mirrored on html/body by app.v1205.js so Chromium/WebKit root-scrollbar ownership differences cannot leave the arrow stale. */
+html::-webkit-scrollbar-button:vertical:decrement,
+body::-webkit-scrollbar-button:vertical:decrement,
+html::-webkit-scrollbar-button:vertical:increment,
+body::-webkit-scrollbar-button:vertical:increment{
+  display:block;
+  height:14px;
+  background-color:#171012;
+  background-repeat:no-repeat;
+  border:1px solid #2c1c1f;
+  opacity:1;
+  filter:none;
+}
+html::-webkit-scrollbar-button:vertical:decrement,
+body::-webkit-scrollbar-button:vertical:decrement{
+  background-image:linear-gradient(135deg,transparent 50%,#ff5c66 50%),linear-gradient(225deg,transparent 50%,#ff5c66 50%);
+  background-position:4px 6px,8px 6px;
+  background-size:4px 4px;
+}
+html::-webkit-scrollbar-button:vertical:increment,
+body::-webkit-scrollbar-button:vertical:increment{
+  background-image:linear-gradient(45deg,transparent 50%,#ff5c66 50%),linear-gradient(315deg,transparent 50%,#ff5c66 50%);
+  background-position:4px 4px,8px 4px;
+  background-size:4px 4px;
+}
+/* At the absolute top the impossible UP arrow is visibly gray. Target both possible viewport owners. */
+html.at-page-top::-webkit-scrollbar-button:vertical:decrement,
+body.at-page-top::-webkit-scrollbar-button:vertical:decrement,
+html.at-page-top body::-webkit-scrollbar-button:vertical:decrement{
+  background-color:#0e0b0c!important;
+  background-image:linear-gradient(135deg,transparent 50%,#59565d 50%),linear-gradient(225deg,transparent 50%,#59565d 50%)!important;
+  opacity:.58!important;
+  filter:saturate(.12) brightness(.82)!important;
+}
+/* User-requested endpoint presentation: the bottom DOWN arrow remains Vulkan red at the document end. Native endpoint mechanics remain owned by the browser. */
+html.at-page-bottom::-webkit-scrollbar-button:vertical:increment,
+body.at-page-bottom::-webkit-scrollbar-button:vertical:increment,
+html.at-page-bottom body::-webkit-scrollbar-button:vertical:increment{
+  background-color:#241315!important;
+  background-image:linear-gradient(45deg,transparent 50%,#ff5c66 50%),linear-gradient(315deg,transparent 50%,#ff5c66 50%)!important;
+  opacity:1!important;
+  filter:none!important;
+}
+/* Non-scrollable pages do not advertise motion in either direction. */
+html.at-page-top.at-page-bottom::-webkit-scrollbar-button:vertical,
+body.at-page-top.at-page-bottom::-webkit-scrollbar-button:vertical{
+  background-color:#0e0b0c!important;
+  background-image:none!important;
+  opacity:.34!important;
+  filter:saturate(.1)!important;
+}
+
+/* Shared smooth interaction language. This deliberately covers every primary clickable/focusable surface used by every Database tab/workspace. */
+:where(button,a,[role="button"],[role="tab"],[role="option"],.click-row,.card,.metric,.kv,.section-card,.distribution-card,.version-stat-card,.version-statistics,.version-report-counts,.device-report-counts,.settings-info-row,.settings-favorite-item,.filter-family,.workspace-context,.workspace-context-stats>div,.coverage-report-row,.surface-data-section,.encyclopedia-card,.compare-report-card,.notice,.api-version-chip,.display-value-chip,.badge,.table-scroll-track,.table-scroll-thumb,.nav-edge,.table-edge){
+  transition-property:background-color,border-color,color,box-shadow,opacity,transform,filter;
+  transition-duration:.18s;
+  transition-timing-function:cubic-bezier(.2,.8,.2,1);
+}
+:where(button,a,[role="button"],[role="tab"],[role="option"]):not(:disabled):active{transform:scale(.975)}
+.table-wrap tbody tr,.table-wrap tbody td{transition:background-color .18s cubic-bezier(.2,.8,.2,1),color .18s ease,border-color .18s ease,box-shadow .18s ease}
+.settings-network-summary,.settings-clock,.settings-storage-status,.settings-regional-preview,.settings-message,.settings-empty,.settings-network-loading{transition:background-color .18s ease,border-color .18s ease,color .18s ease,opacity .18s ease,transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .18s ease}
+.database-loading{transition:opacity .2s ease,transform .2s cubic-bezier(.2,.8,.2,1),border-color .18s ease,box-shadow .18s ease}
+
+@media(prefers-reduced-motion:reduce){
+  :where(button,a,[role="button"],[role="tab"],[role="option"],.click-row,.card,.metric,.kv,.section-card,.distribution-card,.version-stat-card,.version-statistics,.version-report-counts,.device-report-counts,.settings-info-row,.settings-favorite-item,.filter-family,.workspace-context,.workspace-context-stats>div,.coverage-report-row,.surface-data-section,.encyclopedia-card,.compare-report-card,.notice,.api-version-chip,.display-value-chip,.badge,.table-scroll-track,.table-scroll-thumb,.nav-edge,.table-edge),
+  .table-wrap tbody tr,.table-wrap tbody td,.settings-network-summary,.settings-clock,.settings-storage-status,.settings-regional-preview,.settings-message,.settings-empty,.settings-network-loading,.database-loading{
+    transition:none!important;
+  }
+}
+
