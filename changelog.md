@@ -1,3 +1,10 @@
+## 1.2.9
+- The browser compatibility warning is hidden at parse time and is revealed only after the local compatibility check actually fails, removing the false unsupported-browser flash on supported browsers.
+- Reports global filters now use the same filter-family cards and custom-select hierarchy as the other workspaces; Sort/Per page use the same grouped control language, and narrow screens collapse filters to one non-overflowing column.
+- The pinned Compare shell gains a centered minimize/expand control. Minimized follow mode shows only A/B GPU identities in their baseline/candidate colors with a center divider; returning above the Compare sentinel restores the full workspace automatically. Pinned width no longer enforces a 260 px mobile minimum.
+- Settings, custom select menus (including Reports filters), coverage-dialog bodies and paged evidence lists use an in-panel scrollbar rail that reuses the authoritative viewport scrollbar arrow/track/thumb design and endpoint/keyboard/drag behavior.
+- Database/frontend/Worker identity advances to 1.2.9 / `app.v1209.js` / `browser-compat.v1209.js` / cache key 1209. D1 schema, report payload/hash semantics, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 submission floor are unchanged.
+
 ## 1.2.8
 
 - Fixed Compare follow behavior by replacing ancestor-sensitive CSS sticky ownership with a JS-synchronized viewport-fixed shell and a flow placeholder. The selected Baseline/Candidate reports and comparison mode now remain visible while scrolling long comparison tables.

@@ -697,3 +697,62 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
 /* 1.2.8 Compare viewport-follow hotfix: explicit fixed pin avoids ancestor overflow/sticky-container ambiguity. */
 .compare-sticky-shell.is-pinned .compare-workspace{max-height:calc(100vh - 16px);overflow:visible!important}.compare-sticky-shell.is-pinned .compare-report-card.select-open,.compare-sticky-shell.is-pinned .custom-select.open{z-index:420!important}.compare-sticky-shell.is-pinned .custom-select-menu{z-index:460!important;max-height:min(390px,calc(100vh - 118px))}
 @media(prefers-reduced-motion:reduce){.compare-sticky-placeholder,.compare-sticky-shell{transition:none!important}}
+
+
+/* VulkanScope Database 1.2.9 — Reports filter parity, responsive Compare minimization and in-panel scrollbar parity */
+#contentView[data-main-view="reports"] #filters{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;width:min(100%,920px);justify-content:flex-end}
+#contentView[data-main-view="reports"] .filter-clear-button{align-self:end;min-height:40px;border-radius:11px}
+.report-toolbar{align-items:stretch;margin-bottom:13px}
+.report-toolbar-family{min-width:min(100%,410px);max-width:100%;flex:0 1 600px}
+.report-toolbar-group{display:grid;grid-template-columns:minmax(0,2fr) minmax(118px,.7fr);width:100%;gap:6px}
+.report-toolbar-control{display:grid!important;grid-template-columns:1fr;align-items:stretch!important;gap:5px!important;min-width:0;color:var(--muted);font-size:10px!important;font-weight:850!important}
+.report-toolbar-control>span{padding-inline:3px;text-transform:uppercase;letter-spacing:.055em;font-size:8.5px;color:#888a93}
+.report-toolbar-control>.custom-select{min-width:0!important;max-width:none!important;width:100%!important;flex:none!important}
+.report-toolbar .report-toolbar-family .custom-select-button{min-height:38px;border-radius:10px;background:#121317;box-shadow:none;font-size:10.5px}
+.report-toolbar .report-range{align-self:center;padding:8px 10px;border:1px solid rgba(255,255,255,.07);border-radius:11px;background:#111216;white-space:nowrap}
+
+/* Reuse the exact viewport rail controls and thumb treatment inside scrollable UI surfaces. */
+.surface-scroll-owner-static{position:relative!important}
+.surface-scroll-host{scrollbar-width:none!important;-ms-overflow-style:none}
+.surface-scroll-host::-webkit-scrollbar{width:0!important;height:0!important;display:none!important}
+.surface-scrollbar{position:absolute;z-index:520;width:18px;display:grid;grid-template-rows:18px minmax(0,1fr) 18px;background:#100c0d;border-left:1px solid #2d1b1e;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,visibility 0s linear .18s;user-select:none;touch-action:none}
+.surface-scrollbar.is-scrollable{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .18s ease,visibility 0s}.surface-scrollbar.is-dragging{background:#130d0f}
+.surface-scrollbar.is-dragging .viewport-scrollbar-thumb{background:linear-gradient(180deg,#ad5a65,#7b4149);box-shadow:0 0 0 1px rgba(255,127,137,.22),0 7px 18px rgba(0,0,0,.36)}
+.custom-select:not(.open)>.surface-scrollbar{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.custom-select.open>.surface-scrollbar{z-index:500}
+.custom-select-menu.surface-scroll-host{padding-right:24px}
+.modal-paged-list.surface-scroll-host{padding-right:24px}
+.settings-drawer>.surface-scrollbar{z-index:230}
+.coverage-report-dialog>.surface-scrollbar{z-index:4}
+
+/* Compare manual minimization: the full pinned controls remain authoritative until the user minimizes them. */
+.compare-workspace{position:relative}
+.compare-minimize-dock{position:absolute;left:50%;bottom:-15px;z-index:470;display:flex;justify-content:center;transform:translateX(-50%);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .2s cubic-bezier(.2,.8,.2,1),visibility 0s linear .18s}
+.compare-sticky-shell.is-pinned .compare-minimize-dock{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .18s ease,transform .2s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.compare-minimize-toggle{min-width:106px;height:30px;padding:0 11px;border:1px solid rgba(255,255,255,.12);border-radius:0 0 12px 12px;background:linear-gradient(180deg,#1d181b,#120f11);color:#d9d9dd;display:flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-size:9.5px;font-weight:900;letter-spacing:.035em;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.32);transition:background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease}
+.compare-minimize-toggle svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+.compare-minimize-toggle:hover{background:#29171a;border-color:rgba(255,92,102,.33);color:#fff}.compare-minimize-toggle:active{transform:scale(.96)}.compare-minimize-toggle:focus-visible{outline:2px solid rgba(255,92,102,.78);outline-offset:2px}
+.compare-workspace.is-minimized .compare-minimize-toggle svg{transform:rotate(180deg)}
+.compare-mini-bar{display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);align-items:center;gap:15px;max-height:0;opacity:0;overflow:hidden;pointer-events:none;transform:translateY(-5px);transition:max-height .24s cubic-bezier(.2,.8,.2,1),opacity .18s ease,transform .2s cubic-bezier(.2,.8,.2,1),padding .22s ease}
+.compare-workspace.is-minimized .compare-mini-bar{max-height:74px;opacity:1;pointer-events:auto;transform:none;padding:10px 12px}
+.compare-mini-side{min-width:0;display:flex;align-items:center;gap:9px}.compare-mini-side strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:#fff;letter-spacing:-.012em}.compare-mini-letter{width:25px;height:25px;flex:0 0 25px;display:grid;place-items:center;border-radius:8px;font-size:10px;font-weight:950}
+.compare-mini-a{justify-content:flex-end;text-align:right}.compare-mini-a .compare-mini-letter{order:2;color:#ffb7bc;background:rgba(255,92,102,.14);border:1px solid rgba(255,92,102,.34)}.compare-mini-a strong{color:#ffd2d5}
+.compare-mini-b{justify-content:flex-start;text-align:left}.compare-mini-b .compare-mini-letter{color:#cfc4ff;background:rgba(168,143,255,.14);border:1px solid rgba(168,143,255,.34)}.compare-mini-b strong{color:#ded8ff}
+.compare-mini-divider{width:1px;height:30px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.28),transparent);box-shadow:-5px 0 14px rgba(255,92,102,.13),5px 0 14px rgba(168,143,255,.13)}
+.compare-workspace.is-minimized .compare-workspace-head,.compare-workspace.is-minimized .compare-report-grid,.compare-workspace.is-minimized .compare-mode-panel,.compare-workspace.is-minimized .compare-filter-panel{max-height:0!important;opacity:0!important;overflow:hidden!important;margin-top:0!important;margin-bottom:0!important;padding-top:0!important;padding-bottom:0!important;border-width:0!important;pointer-events:none!important;transform:translateY(-5px)}
+.compare-workspace-head,.compare-report-grid,.compare-mode-panel{transition:max-height .24s cubic-bezier(.2,.8,.2,1),opacity .18s ease,transform .2s cubic-bezier(.2,.8,.2,1),margin .22s ease,padding .22s ease,border-width .22s ease}
+.compare-workspace.is-minimized{padding:4px 8px 9px!important;border-radius:14px}
+
+@media(max-width:1100px){#contentView[data-main-view="reports"] #filters{width:100%;justify-content:stretch}.report-toolbar-family{flex:1 1 100%}}
+@media(max-width:760px){
+  #contentView[data-main-view="reports"] #filters{display:grid;grid-template-columns:minmax(0,1fr);width:100%;gap:8px}
+  #contentView[data-main-view="reports"] #filters>.filter-family,#contentView[data-main-view="reports"] #filters>.filter-clear-button{min-width:0;width:100%;max-width:100%}
+  #contentView[data-main-view="reports"] .filter-family-controls{display:grid;grid-template-columns:minmax(0,1fr)}
+  #contentView[data-main-view="reports"] .filter-family-controls>.custom-select,#contentView[data-main-view="reports"] .filter-family-controls>select{min-width:0!important;width:100%;max-width:100%}
+  .report-toolbar{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}.report-toolbar-family{min-width:0;width:100%}.report-toolbar-group{grid-template-columns:minmax(0,1fr)}.report-toolbar .report-range{width:100%;white-space:normal}
+  .compare-workspace.is-compact:not(.is-minimized) .compare-report-grid{grid-template-columns:minmax(0,1fr)!important;overflow:visible!important}.compare-workspace.is-compact:not(.is-minimized) .compare-swap{justify-self:stretch;width:100%;height:36px;border-radius:10px}.compare-workspace.is-compact:not(.is-minimized) .compare-swap svg{width:17px;height:17px}.compare-workspace.is-compact:not(.is-minimized) .compare-swap span{display:inline!important}
+  .compare-workspace.is-minimized .compare-mini-bar{gap:8px;padding-inline:7px}.compare-mini-side{gap:6px}.compare-mini-side strong{font-size:11px}.compare-mini-letter{width:22px;height:22px;flex-basis:22px;border-radius:7px}
+  .surface-scrollbar{width:16px;grid-template-rows:16px minmax(0,1fr) 16px}.surface-scrollbar .viewport-scrollbar-arrow{width:16px;height:16px}.surface-scrollbar .viewport-scrollbar-track{margin-inline:2px}
+}
+@media(max-width:430px){.compare-workspace.is-compact:not(.is-minimized) .compare-report-grid{grid-template-columns:minmax(0,1fr)!important}.compare-mini-side strong{font-size:10.5px}.compare-mini-bar{gap:5px}.compare-minimize-toggle{min-width:92px;padding-inline:8px}.compare-workspace.is-minimized{padding-inline:4px!important}}
+@media(prefers-reduced-motion:reduce){.surface-scrollbar,.surface-scrollbar .viewport-scrollbar-arrow,.surface-scrollbar .viewport-scrollbar-arrow svg,.surface-scrollbar .viewport-scrollbar-thumb,.compare-minimize-dock,.compare-minimize-toggle,.compare-minimize-toggle svg,.compare-mini-bar,.compare-workspace-head,.compare-report-grid,.compare-mode-panel{transition:none!important;animation:none!important}}
