@@ -1,5 +1,13 @@
 # VulkanScope Database changelog
 
+## 1.0.24
+- Removed the redundant right-side UNAVAILABLE chip from the Database-API-unavailable banner and fixed successful reconnect status so “Connection restored” remains visible for the full 3-second interval before smooth collapse.
+- Added regional presentation preferences for country/region, date layout, 12/24-hour clock, browser/UTC/GMT/IANA time zone, and automatic/standard/daylight seasonal offset handling.
+- Routed report submission dates, report detail, Compare metadata, Settings clock, and observed server time through one presentation formatter without changing stored timestamps, sorting instants, report hashes, or D1 data.
+- Expanded Internet country information from the request country code to a localized full country name plus country flag, with no third-party flag/CDN request.
+- Redesigned Compare as a distinct A/B workspace with baseline/candidate identity cards, Swap, grouped comparison modes, focused evidence filters, difference overview, section counts, and visually distinct A/B table columns.
+- Release identity advances to Database 1.0.24 / app.v1024 / cache 1024; report payload semantics, D1 schema/migrations, normalizer, Vulkan baseline, and VulkanScope submission floor are unchanged.
+
 ## 1.0.23
 - Added live network-state monitoring: browser offline/reconnect events update a layout-aware status banner immediately; offline/unreachable states stay visible and a restored state collapses smoothly after 3 seconds.
 - Preserved 3-second live report synchronization and 10-second published-release checks, with reconnect paths resuming both without requiring a manual page refresh.

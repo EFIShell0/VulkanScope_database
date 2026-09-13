@@ -19,7 +19,7 @@ out_dir.mkdir(parents=True, exist_ok=True)
 subprocess.run([sys.executable, str(root/'tools/repair_repository.py'), '--check'], cwd=root, check=True)
 subprocess.run([sys.executable, str(root/'tools/verify_regression_contract.py')], cwd=root, check=True)
 
-contract_path = root/'regression/1.0.22_to_1.0.23_contract.json'
+contract_path = root/'regression/1.0.23_to_1.0.24_contract.json'
 contract = json.loads(contract_path.read_text(encoding='utf-8'))
 manifest = json.loads((root/contract['baselineManifest']).read_text(encoding='utf-8'))
 paths = {x['path'] for x in manifest['files']}
@@ -32,7 +32,7 @@ missing = sorted(rel for rel in paths if not (root/rel).is_file())
 if missing:
     raise SystemExit('release package missing files: ' + ', '.join(missing))
 
-zip_path = out_dir / 'VulkanScope-Database-1.0.23.zip'
+zip_path = out_dir / 'VulkanScope-Database-1.0.24.zip'
 with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
     for rel in sorted(paths):
         data = (root/rel).read_bytes()
@@ -44,7 +44,7 @@ with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compressle
 
 # Strict-package verification happens against a clean extract, not the history-bearing
 # tagged checkout. This is the key source-overlay/package boundary.
-with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-1.0.23-') as td:
+with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-1.0.24-') as td:
     extracted = Path(td) / 'release'
     extracted.mkdir()
     with zipfile.ZipFile(zip_path) as zf:
@@ -73,11 +73,11 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-1.0.23-') as td:
         cwd=extracted, check=True
     )
     subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_1_0_23_connectivity_settings_motion.py')],
+        [sys.executable, str(extracted/'tools/verify_1_0_24_regional_compare_country.py')],
         cwd=extracted, check=True
     )
     subprocess.run(
-        [sys.executable, str(extracted/'tools/test_1_0_23_connectivity_settings_motion_negative_mutations.py')],
+        [sys.executable, str(extracted/'tools/test_1_0_24_regional_compare_country_negative_mutations.py')],
         cwd=extracted, check=True
     )
 

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.23",
+  "successor": "1.0.24",
+  "baselineZipSha256": "f3940d1e5fafc28bffb3690b40ffcd513d692e57077849e0655440a55968a66d",
+  "baselineManifest": "regression/1.0.23_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "data/release.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/mark_release_ready.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1023.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1024.js",
+    "regression/1.0.23_files.json",
+    "regression/1.0.23_to_1.0.24_contract.json",
+    "rules/1.0.24_REGIONAL_TIME_COMPARE_COUNTRY_AUDIT.md",
+    "tools/verify_1_0_24_regional_compare_country.py",
+    "tools/test_1_0_24_regional_compare_country_negative_mutations.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.23_to_1.0.24_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "1334b9bf1830276738024734b0a70e19da27a6f93c384520d06763113e1a0ff6",
+    "BUILD_AUDIT.md": "2c91ec41cc7985bed5899e5f424f3266c5c81e6af4c98814a65364960cc241a2",
+    "assets/site.v0390.css": "289b3e1283a2862e073a1e5d0e3ea6d31a9d33660ff24b3969f648850564de57",
+    "changelog.md": "868cfa8c06b92273e1344aeeb9ee56d733a05a0cf36c801dd4bcdb702c2aa1dd",
+    "data/release.json": "477337363cda98c56f806e27eba0db7004d9003868aa1088a4cce01dee0f2b9d",
+    "index.html": "277229a54c561a9b02a2c6cc84e646755f9a422f74c91ca8b5d57933078892c3",
+    "rules/PROJECT_RULES.md": "4d0394320422d544c42265692c606bbdc0ebef6ed88c6aa4aff0a63d816efd9a",
+    "tools/audit_database.py": "8005aea65d2ec3f386b92aafe9fc94ebb177a68523f81f269aa75b87a58b7602",
+    "tools/build_index.py": "1ee404b944c2bf649981a420135f22834678dd982fc9558fc92e217f6912a3e6",
+    "tools/build_pages_artifact.py": "10d787d40b2a414cbbf50d45a2f2549caf72f4503efb33b557e3010bcae7990d",
+    "tools/build_preload_snapshot.py": "d8d7bd962b1575bbf800cf8758e82d180e815736ba4b1c65c4b94a593bd3f78a",
+    "tools/mark_release_ready.py": "eb9142a29e0504e9cd6cad070854949e772fa79dd753554123518c074d599c42",
+    "tools/package_release.py": "fae4c2d4e501860b232d5e6cda2177ade32fea4fd0a37721ffc52b9acef173d0",
+    "tools/pages.workflow.yml": "1334b9bf1830276738024734b0a70e19da27a6f93c384520d06763113e1a0ff6",
+    "tools/quality_gate.py": "39551c5449127cf7b8d09f082d22596c60171596a05a31cfe11bc25c7fbbf1e8",
+    "tools/repair_repository.py": "05e5e443779d1b5f8fc09374948d1a8766de2abed46aa7ff0c536c8b67aee8da",
+    "tools/test_compare_contract.mjs": "75070ff712d66e3ea201fc6cc33661efd7a9af3f7d386753263c236afe1ce2e8",
+    "tools/test_routes.mjs": "b17212868bae78296e9fc94547b17416fb29c6caadbc7eb9fdeae786fc15dec5",
+    "tools/test_utf8_text_io.py": "82d2793929b9bead21fcacc795d3789fb0129f455c972bffc088b4a9e4c2a166",
+    "tools/verify_regression_contract.py": "d6376c556198e2e4b69d70b1579561015cd2e471e7f82cf30019f84046c29551",
+    "tools/verify_vulkanscope_04132.py": "673dc47c927ae40a6ccf36eca9ea522838ceace190c64c669c04b9d501c4bca8",
+    "worker/package.json": "fbb0db3627af8359ab9f594e3eb5350c9a3bc918e17d08080273c6b1fc390370",
+    "worker/src/index.js": "43e06c9ee70d2144d0ced2c4b59c6fefaa07395cdbe077d4a804dac3d0a20fa8",
+    "worker/tests/contract.mjs": "6f1b0b04cee6c12c46c02632bf6981dad834a42a2e8124488e6147d07702b63f",
+    "assets/app.v1024.js": "6117db92a74b7a66c6622ac2b7a630fe7a4ade3d4797df3bc1b02ca74054980d",
+    "regression/1.0.23_files.json": "2549b0593205ac6a575844a7e76102352470c37716cc670f941f34e8c6108b3f",
+    "rules/1.0.24_REGIONAL_TIME_COMPARE_COUNTRY_AUDIT.md": "f2a8fe47a9328b566dbecea06b51679953af7397a30fe6c8825da308e689f723",
+    "tools/verify_1_0_24_regional_compare_country.py": "dcc3d863ad925ccee004f22f5132bd63d77d6da347a4e53c8de098f655574a6c",
+    "tools/test_1_0_24_regional_compare_country_negative_mutations.py": "5818ac335c48a1dc64019dacefa3e651fe043877be35f2ab6489772f5afcc23a"
+  }
+}
