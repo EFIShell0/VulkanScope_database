@@ -756,3 +756,25 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
 }
 @media(max-width:430px){.compare-workspace.is-compact:not(.is-minimized) .compare-report-grid{grid-template-columns:minmax(0,1fr)!important}.compare-mini-side strong{font-size:10.5px}.compare-mini-bar{gap:5px}.compare-minimize-toggle{min-width:92px;padding-inline:8px}.compare-workspace.is-minimized{padding-inline:4px!important}}
 @media(prefers-reduced-motion:reduce){.surface-scrollbar,.surface-scrollbar .viewport-scrollbar-arrow,.surface-scrollbar .viewport-scrollbar-arrow svg,.surface-scrollbar .viewport-scrollbar-thumb,.compare-minimize-dock,.compare-minimize-toggle,.compare-minimize-toggle svg,.compare-mini-bar,.compare-workspace-head,.compare-report-grid,.compare-mode-panel{transition:none!important;animation:none!important}}
+
+/* VulkanScope Database 1.2.10 — non-Reports mobile filter containment + Compare version emphasis */
+.compare-warning .compare-version-token{color:#fff;font-weight:900}
+@media(max-width:900px){
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) #filters{display:grid!important;grid-template-columns:minmax(0,1fr)!important;align-items:stretch!important;justify-content:stretch!important;width:100%!important;max-width:100%!important;min-width:0!important;gap:8px}
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) #filters>.filter-family,
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) #filters>.filter-clear-button{min-width:0!important;width:100%!important;max-width:100%!important}
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) .filter-family-controls{display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-width:0!important;width:100%!important;max-width:100%!important}
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) .filter-family-controls>.custom-select,
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) .filter-family-controls>select{min-width:0!important;width:100%!important;max-width:100%!important;flex:none!important}
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) .filter-family-controls .custom-select-button{min-width:0!important;width:100%!important;max-width:100%!important}
+  #contentView[data-main-view]:not([data-main-view="reports"]):not([data-main-view="encyclopedia"]) .filter-family-controls .filter-choice-label{min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #contentView[data-main-view]:not([data-main-view="reports"]) .subfilters{display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-width:0!important;width:100%!important;max-width:100%!important}
+  #contentView[data-main-view]:not([data-main-view="reports"]) .subfilters>label,
+  #contentView[data-main-view]:not([data-main-view="reports"]) .subfilters>.filter-control,
+  #contentView[data-main-view]:not([data-main-view="reports"]) .subfilters>.custom-select{min-width:0!important;width:100%!important;max-width:100%!important}
+  #contentView[data-main-view="compare"] .compare-filter-controls{display:grid!important;grid-template-columns:minmax(0,1fr)!important;min-width:0!important;width:100%!important;max-width:100%!important}
+  #contentView[data-main-view="compare"] .compare-filter-controls>label,
+  #contentView[data-main-view="compare"] .compare-filter-controls>.filter-control,
+  #contentView[data-main-view="compare"] .compare-filter-controls>.custom-select{min-width:0!important;width:100%!important;max-width:100%!important}
+}
+

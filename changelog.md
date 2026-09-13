@@ -1,3 +1,8 @@
+## 1.2.10
+- Fixed mobile/portrait filter containment across every non-Reports Database workspace. Global filter families and view-specific subfilters now collapse to intrinsic single-column controls at <=900 px with `min-width:0`/100% containment, preventing the narrow multi-column squeeze shown on Compare and aggregate views. Reports keeps its already-correct 1.2.9 layout.
+- Cross-producer Compare warnings now render both VulkanScope version identities, including versionCode when present, in bold white while keeping the warning text and evidence semantics unchanged.
+- Database/frontend/Worker identity advances to 1.2.10 / `app.v1210.js` / `browser-compat.v1210.js` / cache key 1210. D1 schema, report payload/hash semantics, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 submission floor are unchanged.
+
 ## 1.2.9
 - The browser compatibility warning is hidden at parse time and is revealed only after the local compatibility check actually fails, removing the false unsupported-browser flash on supported browsers.
 - Reports global filters now use the same filter-family cards and custom-select hierarchy as the other workspaces; Sort/Per page use the same grouped control language, and narrow screens collapse filters to one non-overflowing column.
