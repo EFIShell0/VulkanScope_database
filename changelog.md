@@ -1,4 +1,14 @@
 # VulkanScope Database changelog
+
+## 1.0.23
+- Added live network-state monitoring: browser offline/reconnect events update a layout-aware status banner immediately; offline/unreachable states stay visible and a restored state collapses smoothly after 3 seconds.
+- Preserved 3-second live report synchronization and 10-second published-release checks, with reconnect paths resuming both without requiring a manual page refresh.
+- Reorganized Settings into Internet, Favorites and Preferences. Internet details remain request-scoped; IPv4 is orange, IPv6 is green, and unavailable address families/DNS are not inferred.
+- Made persistent Favorites and report-column defaults opt-in with “Remember on this device”, added clear-saved-data control and explicit local-storage/privacy disclosure.
+- Redesigned report-detail Favorite / Share / Copy link controls into one integrated action surface.
+- Smoothed report-row hover/press and report-detail open/close interactions while preserving drag-to-select click suppression and reduced-motion behavior.
+- Release identity advances to Database 1.0.23 / app.v1023 / cache 1023; report payload semantics, D1 schema/migrations, normalizer and Vulkan producer contract are unchanged.
+
 ## 1.0.22
 - Initial preload/live reconciliation now builds one authoritative current report set and commits it atomically; the UI no longer presents snapshot + incremental/new payload counts.
 - Added per-report Favorites with browser-local persistence and a Favorites list in Settings.
