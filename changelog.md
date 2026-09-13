@@ -1,5 +1,15 @@
 # VulkanScope Database changelog
 
+## 1.0.25
+- Replaced the Internet panel's manual Refresh action with automatic request-scoped network observations every 3 seconds while the Internet Settings category is open and online.
+- Made disconnect handling event-first and first-failure decisive: browser offline events surface immediately, live API reachability uses a bounded probe, and reconnect/network-interface changes force an immediate recheck.
+- Removed the recovered-state Online badge/text and extended the successful “Connection restored” status to a stable 5-second window before smooth collapse.
+- Replaced platform-dependent regional-indicator flag glyphs with bundled same-origin country flag images for all accepted country codes, while keeping the observed code/localized country name and avoiding runtime flag CDNs.
+- Applied Database-styled scrollbars and accessible enhanced select option menus across the site.
+- Redesigned Encyclopedia as a focused local Vulkan-reference workspace with registry summary, search/category navigation, structured reference cards and explicit reference-vs-evidence guidance.
+- Redesigned Surface as a WSI evidence workspace with canonical Surface/query summaries, focused explorer controls, clearer evidence sections and strict unavailable/unsupported/not-applicable/unknown semantics.
+- Release identity advances to Database 1.0.25 / app.v1025 / cache 1025; report payload semantics, D1 schema/migrations, normalizer, Vulkan baseline and report evidence remain unchanged.
+
 ## 1.0.24
 - Removed the redundant right-side UNAVAILABLE chip from the Database-API-unavailable banner and fixed successful reconnect status so “Connection restored” remains visible for the full 3-second interval before smooth collapse.
 - Added regional presentation preferences for country/region, date layout, 12/24-hour clock, browser/UTC/GMT/IANA time zone, and automatic/standard/daylight seasonal offset handling.

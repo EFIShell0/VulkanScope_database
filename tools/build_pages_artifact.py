@@ -16,7 +16,7 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v1024.js','assets/encyclopedia.v03924.js',
+    'assets/app.v1025.js','assets/encyclopedia.v03924.js',
     'assets/site.v0390.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',
@@ -42,6 +42,14 @@ for name in public_files + asset_files:
     src=root/name
     if not src.is_file(): raise SystemExit(f'missing required public file: {name}')
     out=dest/name
+    out.parent.mkdir(parents=True,exist_ok=True)
+    shutil.copy2(src,out)
+
+flag_dir=root/'assets/country-flags'
+flag_files=sorted(flag_dir.glob('*.png')) if flag_dir.is_dir() else []
+if len(flag_files)!=250: raise SystemExit(f'expected 250 bundled country flags, found {len(flag_files)}')
+for src in flag_files:
+    out=dest/'assets/country-flags'/src.name
     out.parent.mkdir(parents=True,exist_ok=True)
     shutil.copy2(src,out)
 

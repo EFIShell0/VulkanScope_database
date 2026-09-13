@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.0.24'
-DB_VERSION='1.0.24'
-APP_ASSET='app.v1024.js'
-CACHE_KEY='1024'
+AUDIT_VERSION='1.0.25'
+DB_VERSION='1.0.25'
+APP_ASSET='app.v1025.js'
+CACHE_KEY='1025'
 PRODUCER='VulkanScope 1.0.19 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -58,7 +58,7 @@ def audit_artifact(root:Path,require_release_ready=False):
         if pos!='.nojekyll' and any(part.startswith('.') for part in rel.parts): errors.append(f'forbidden hidden Pages path {pos}')
         if f.is_file() and rel.parts and rel.parts[0]=='assets':
             a=Path(*rel.parts[1:]).as_posix()
-            if a not in ASSET_ALLOW: errors.append(f'unexpected/stale Pages asset {pos}')
+            if a not in ASSET_ALLOW and not re.fullmatch(r'country-flags/[a-z]{2}\.png',a): errors.append(f'unexpected/stale Pages asset {pos}')
         if f.is_file() and rel.parts and rel.parts[0]=='data' and f.suffix.lower()!='.json': errors.append(f'non-JSON Pages data {pos}')
     idx=(root/'index.html').read_text(encoding='utf-8')
     for token in [f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}',f'VulkanScope Database <strong>{DB_VERSION}</strong>']:
@@ -85,7 +85,7 @@ def audit_source(root:Path):
     need(root.is_dir(),f'source tree missing: {root}')
     if not root.is_dir():
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_0_23_connectivity_settings_motion.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
+    required=['index.html','config.js','report.schema.json',f'assets/{APP_ASSET}','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_0_25_connectivity_surface_encyclopedia.py','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml']
     for rel in required: need((root/rel).is_file(),f'missing required source file {rel}')
     if errors:
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
@@ -101,12 +101,12 @@ def audit_source(root:Path):
     need(not (root/'fastlane').exists(),'Fastlane/store metadata is forbidden in source release')
     for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
         need(token in index,f'current index identity missing: {token}')
-    need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=3000,RELEASE_CHECK_INTERVAL_MS=10000;" in app,'frontend release/live-sync identity mismatch')
+    need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=3000,RELEASE_CHECK_INTERVAL_MS=10000" in app,'frontend release/live-sync identity mismatch')
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need("databaseVersion:" not in worker,'legacy Worker databaseVersion refresh signal must be absent')
-    need(worker.count("databaseReleaseVersion:'1.0.24'")>=3,'Worker databaseReleaseVersion mismatch')
-    need(worker.count("workerReleaseVersion:'1.0.24'")>=3,'Worker workerReleaseVersion mismatch')
+    need(worker.count("databaseReleaseVersion:'1.0.25'")>=3,'Worker databaseReleaseVersion mismatch')
+    need(worker.count("workerReleaseVersion:'1.0.25'")>=3,'Worker workerReleaseVersion mismatch')
     need(worker.count("frontendUpdateSignal:'same-origin-pages-marker'")>=2,'Worker frontendUpdateSignal metadata missing')
 
     # Current Vulkan/producer metadata and immutable evidence model.
@@ -122,7 +122,7 @@ def audit_source(root:Path):
     need('technicalReport' in schema.get('required',[]),'technicalReport must remain required')
     need(static.get('normalizerVersion')==16,'normalizer version changed unexpectedly')
 
-    # Requested 1.0.24 foreground live-sync behavior and preserved evidence semantics.
+    # Requested 1.0.25 connectivity/UI behavior plus preserved evidence semantics.
     for token in ["classList.add('modal-page-size-select','drop-up')",'fill="#3DDC84"',"donutChart('GPU / reports',chartItems,rs.length,'',state.deviceSliceLimit)",'GPU / REPORT DISTRIBUTION','device-report-counts','modal-value-list modal-paged-list','coverage-report-list modal-paged-list','--coverage-position:${ratio*100}%']:
         need(token in app,f'current frontend contract missing: {token}')
     need('fill="#E2676A"' not in app,'legacy red Android tint remains')
@@ -132,7 +132,7 @@ def audit_source(root:Path):
     need("const vendorId=r=>canonicalVendorId(r?.gpu?.vendorId??'Unknown');" in app,'raw GPU vendor-ID provenance changed')
     need("[/^HDR10\\+$/i,'hdr10_plus_v1014.png','hdr10plus']" in app,'audited HDR10+ asset mapping changed')
     need('window.setInterval(()=>void runLiveSync(false),LIVE_SYNC_INTERVAL_MS)' in app,'foreground live report synchronization timer missing')
-    need("new URL(`${api}/v1/sync`)" in app and "fetchJsonBounded(u,{cache:'no-store'})" in app,'lightweight no-store sync-head polling missing')
+    need("new URL(`${api}/v1/sync`)" in app and "fetchJsonBounded(u,{cache:'no-store',timeoutMs:NETWORK_PROBE_TIMEOUT_MS})" in app,'bounded no-store sync-head polling missing')
     need("if(!force&&head.syncToken===liveSyncToken)" in app,'sync-head unchanged-token shortcut missing')
     need("COUNT(*) OVER() AS report_count" in worker and "url.pathname==='/v1/sync'&&request.method==='GET'" in worker,'Worker sync-head endpoint/query missing')
     need("fetchJsonBounded(`./data/release.json?_=${Date.now()}`,{cache:'no-store'})" in app,'release-ready same-origin marker polling missing')
@@ -150,6 +150,19 @@ def audit_source(root:Path):
     need(workflow.find('  release:') < workflow.find('  deploy:'),'release job must precede deploy job')
     need('Create or refresh GitHub Release from validated main commit' in workflow,'main-commit GitHub Release step missing')
     need('Upload release-ready GitHub Pages artifact' in workflow and 'Deploy release-ready GitHub Pages artifact' in workflow,'release-ready upload/deploy steps missing')
+
+    flag_dir=root/'assets/country-flags'
+    flag_files=sorted(flag_dir.glob('*.png')) if flag_dir.is_dir() else []
+    need(len(flag_files)==250,f'exactly 250 bundled country flag PNGs required, found {len(flag_files)}')
+    need('countryFlagAsset' in app and 'assets/country-flags/${cc.toLowerCase()}.png' in app,'local country flag rendering path missing')
+    need('networkInfoRefresh' not in index and 'networkInfoRefresh' not in app,'manual network refresh control must be removed')
+    need('NETWORK_INFO_INTERVAL_MS=3000' in app and 'syncNetworkInfoAutoRefresh' in app,'automatic Internet-information refresh contract missing')
+    need("},5000);renderNetworkInfo()" in app,'five-second restored banner interval missing')
+    need("badge:''}};" in app and "restored:{title:'Connection restored'" in app,'restored banner must not expose Online badge text')
+    need("liveSyncFailures++;markNetworkFailure(true)" in app,'first failed live-sync probe must surface API-unavailable state immediately')
+    need("navigator.connection?.addEventListener?.('change',forceConnectivityRecheck)" in app,'connection-change reachability recheck missing')
+    need('.encyclopedia-workspace' in css and '.surface-workspace' in css,'redesigned Encyclopedia/Surface workspace CSS missing')
+    need('scrollbar-color:#684047 #100c0d' in css and '*::-webkit-scrollbar-thumb' in css,'site-wide design scrollbar contract missing')
 
     # Browser/Worker security and resource ceilings.
     for token in ["default-src 'self'","connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev","object-src 'none'","base-uri 'none'","form-action 'none'","frame-ancestors 'none'"]:
