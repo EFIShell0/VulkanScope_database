@@ -65,27 +65,39 @@ function fixture(){
  };
  p.reportText=reportText(p);return p;
 }
-async function call(path,{method='GET',body,origin,contentType='application/json'}={}){
- const headers={};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
+async function call(path,{method='GET',body,origin,contentType='application/json',extraHeaders={}}={}){
+ const headers={...extraHeaders};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
  return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
 }
 let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.0.21');
-assert.equal(j.workerReleaseVersion,'1.0.21');
+assert.equal(j.databaseReleaseVersion,'1.0.22');
+assert.equal(j.workerReleaseVersion,'1.0.22');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.362/);
 assert.match(j.producerQueryBaseline,/1\.0\.19/);
 assert.match(j.compatibleProducer,/1\.0\.19\+/);
 
+r=await call('/v1/network-info',{extraHeaders:{'cf-connecting-ip':'2001:db8::9','cf-connecting-ipv6':'2001:db8::9'}});
+assert.equal(r.status,200);
+j=await r.json();
+assert.equal(j.accessFamily,'IPv6');
+assert.equal(j.activeAddress,'2001:db8::9');
+assert.equal(j.ipv6.address,'2001:db8::9');
+assert.equal(j.ipv4.status,'not_observed');
+assert.equal(j.dns.status,'not_observable');
+assert.match(r.headers.get('cache-control')||'',/no-store/);
+r=await call('/v1/network-info',{method:'POST'});
+assert.equal(r.status,405);
+
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'1.0.21');
-assert.equal(j.workerReleaseVersion,'1.0.21');
+assert.equal(j.databaseReleaseVersion,'1.0.22');
+assert.equal(j.workerReleaseVersion,'1.0.22');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -96,8 +108,8 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.0.21');
-assert.equal(j.workerReleaseVersion,'1.0.21');
+assert.equal(j.databaseReleaseVersion,'1.0.22');
+assert.equal(j.workerReleaseVersion,'1.0.22');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.match(j.producerQueryBaseline,/1\.0\.19/);
 assert.match(j.compatibleProducer,/1\.0\.19\+/);
@@ -185,4 +197,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.0.21 transport contract: live sync head + VulkanScope 1.0.19 producer floor + historical reads + transport/security basics');
+console.log('PASS Worker 1.0.22 transport contract: live sync head + VulkanScope 1.0.19 producer floor + historical reads + transport/security basics');

@@ -1,4 +1,12 @@
 # VulkanScope Database changelog
+## 1.0.22
+- Initial preload/live reconciliation now builds one authoritative current report set and commits it atomically; the UI no longer presents snapshot + incremental/new payload counts.
+- Added per-report Favorites with browser-local persistence and a Favorites list in Settings.
+- Added a left-sliding Settings drawer beside the VulkanScope logo with local clock/time zone, current network observations, and persistent defaults for Submitted, GPU Vendor, and GPU Type column expansion.
+- Added GET-only/no-store `/v1/network-info`; observed IP family, Cloudflare country/region/city/ASN/edge and transport details are shown without D1 persistence. Unobserved IPv4/IPv6 and client DNS are explicitly not fabricated.
+- Fixed report navigation firing after primary-pointer drag text selection.
+- Release identity advances to Database 1.0.22 / app.v1022 / cache 1022; report schema, payload hashes, D1 schema, normalizer and Vulkan producer contract are unchanged.
+
 
 ## 1.0.21
 
