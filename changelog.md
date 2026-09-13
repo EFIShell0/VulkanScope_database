@@ -1,5 +1,14 @@
 # VulkanScope Database changelog
 
+## 1.2.0
+- New report submissions now require VulkanScope 1.2.5+ at the Worker/API boundary; historical stored reports remain readable.
+- Internet observation refreshes silently in the background after initial data, while errors remain explicit.
+- Regional country selection uses readable English names plus bundled same-origin flags for every supported country code.
+- Compare emphasizes VulkanScope producer versions in bold white to make cross-producer differences immediately visible.
+- Surface, Compare, Encyclopedia and every other non-Reports view receive purpose-specific workspace hierarchy and coherent applicable-filter grouping without changing evidence semantics.
+- Settings informational and warning messages use distinct icon-backed blue/amber semantic callouts.
+- Release identity advances to Database 1.2.0 / app.v1200 / cache 1200; D1 schema, stored payloads, report IDs/hashes, normalizer and Vulkan registry baseline remain unchanged.
+
 ## 1.0.25
 - Replaced the Internet panel's manual Refresh action with automatic request-scoped network observations every 3 seconds while the Internet Settings category is open and online.
 - Made disconnect handling event-first and first-failure decisive: browser offline events surface immediately, live API reachability uses a bounded probe, and reconnect/network-interface changes force an immediate recheck.

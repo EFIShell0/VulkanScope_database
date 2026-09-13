@@ -10,7 +10,7 @@ Unknown, unsupported and unavailable capability states remain distinct. Missing 
 
 ## 1.0.9 producer-floor and live-state integrity
 
-- New VulkanScope report POSTs require canonical producer version 1.0.19 or newer. The floor check happens before generic submission validation; versionCode identity, schema, registry/header, completeness, privacy-key and payload-size checks still apply afterward.
+- New VulkanScope report POSTs require canonical producer version 1.2.5 or newer. The floor check happens before generic submission validation; versionCode identity, schema, registry/header, completeness, privacy-key and payload-size checks still apply afterward.
 - Raising the POST floor does not revoke read access to historical stored reports and does not rewrite or rehash D1 rows.
 - Frontend live reconciliation is staged off-state and committed only when the complete live report set is available, avoiding partial statistics/report-list state.
 - Report ID clipboard actions validate the existing lowercase 64-hex identifier and do not introduce any external clipboard/library dependency or network endpoint.
