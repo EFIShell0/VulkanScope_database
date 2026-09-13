@@ -6,10 +6,11 @@ canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
 CURRENT_APP = 'app.v1209.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v1209.js'
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
-parser.add_argument('--apply', action='store_true', help='Replace workflow directory with canonical pages.yml, remove stale versioned app assets, and purge ignored legacy worker/package-lock.json workspace state')
+parser.add_argument('--apply', action='store_true', help='Replace workflow directory with canonical pages.yml, remove stale versioned app/browser-compat assets, and purge ignored legacy worker/package-lock.json workspace state')
 args = parser.parse_args()
 if not (args.check or args.apply):
     parser.error('choose --check or --apply')
@@ -32,6 +33,10 @@ def stale_apps():
     assets = root / 'assets'
     return sorted(p for p in assets.glob('app.v*.js') if p.name != CURRENT_APP)
 
+def stale_browser_compats():
+    assets = root / 'assets'
+    return sorted(p for p in assets.glob('browser-compat.v*.js') if p.name != CURRENT_BROWSER_COMPAT)
+
 optional_lock = root / 'worker' / 'package-lock.json'
 
 if args.apply:
@@ -44,12 +49,14 @@ if args.apply:
     shutil.copy2(canonical, workflow)
     for p in stale_apps():
         p.unlink()
+    for p in stale_browser_compats():
+        p.unlink()
     lock_removed = False
     if optional_lock.is_file():
         optional_lock.unlink()
         lock_removed = True
     suffix = '; ignored legacy worker/package-lock.json removed' if lock_removed else ''
-    print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned app JS removed' + suffix + '.')
+    print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned app/browser-compat JS removed' + suffix + '.')
 
 errors=[]
 if not workflow.is_file():
@@ -61,9 +68,14 @@ if extras:
     errors.append('stale workflow files: ' + ', '.join(str(p.relative_to(root)) for p in extras))
 apps=stale_apps()
 if apps:
-    errors.append('stale versioned frontend assets: ' + ', '.join(str(p.relative_to(root)) for p in apps))
+    errors.append('stale versioned frontend app assets: ' + ', '.join(str(p.relative_to(root)) for p in apps))
+compats=stale_browser_compats()
+if compats:
+    errors.append('stale versioned browser-compat assets: ' + ', '.join(str(p.relative_to(root)) for p in compats))
 if not (root/'assets'/CURRENT_APP).is_file():
     errors.append(f'missing assets/{CURRENT_APP}')
+if not (root/'assets'/CURRENT_BROWSER_COMPAT).is_file():
+    errors.append(f'missing assets/{CURRENT_BROWSER_COMPAT}')
 
 if errors:
     print('\n'.join(errors))

@@ -10,12 +10,15 @@ def text(rel):
     if not p.is_file(): errors.append(f'missing {rel}'); return ''
     return p.read_text(encoding='utf-8')
 app=text('assets/app.v1209.js'); compat=text('assets/browser-compat.v1209.js'); css=text('assets/site.v0390.css'); index=text('index.html'); rules=text('rules/PROJECT_RULES.md'); worker=text('worker/src/index.js'); contract=text('worker/tests/contract.mjs'); build_index=text('tools/build_index.py')
-workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
+workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml'); repair=text('tools/repair_repository.py')
 # Release/cache identity and stale-asset prevention.
 need("const DATABASE_VERSION='1.2.9'" in app,'frontend 1.2.9 identity missing')
 need('assets/app.v1209.js?v=1209' in index and 'browser-compat.v1209.js?v=1209' in index and 'site.v0390.css?v=1209' in index,'1.2.9 cache references missing')
 need('VulkanScope Database <strong>1.2.9</strong>' in index,'footer identity missing')
 need(not (root/'assets/app.v1208.js').exists() and not (root/'assets/browser-compat.v1208.js').exists(),'stale predecessor browser assets remain in successor tree')
+need("CURRENT_BROWSER_COMPAT = 'browser-compat.v1209.js'" in repair,'repository repair current browser-compat identity missing')
+need('def stale_browser_compats()' in repair and 'for p in stale_browser_compats():' in repair,'repository repair does not remove stale versioned browser-compat assets from overlay checkouts')
+need("compats=stale_browser_compats()" in repair and 'stale versioned browser-compat assets:' in repair,'repository repair check does not reject stale browser-compat assets')
 need('"databaseVersion":"1.2.9"' in text('data/release.json').replace(' ',''),'release marker version missing')
 need('"databaseVersion":"1.2.9"' in build_index.replace(' ',''),'build_index current version missing')
 for name,wf in [('.github/workflows/pages.yml',workflow),('tools/pages.workflow.yml',workflow_template)]:

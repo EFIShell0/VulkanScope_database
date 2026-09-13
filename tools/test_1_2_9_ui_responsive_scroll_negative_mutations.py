@@ -1,7 +1,7 @@
 from pathlib import Path
 import tempfile,shutil,subprocess,sys
 root=Path(__file__).resolve().parents[1]
-required=['assets/app.v1209.js','assets/browser-compat.v1209.js','assets/site.v0390.css','index.html','rules/PROJECT_RULES.md','data/release.json','tools/build_index.py','tools/pages.workflow.yml','.github/workflows/pages.yml','worker/src/index.js','worker/tests/contract.mjs']
+required=['assets/app.v1209.js','assets/browser-compat.v1209.js','assets/site.v0390.css','index.html','rules/PROJECT_RULES.md','data/release.json','tools/build_index.py','tools/pages.workflow.yml','.github/workflows/pages.yml','tools/repair_repository.py','worker/src/index.js','worker/tests/contract.mjs']
 verifier=root/'tools/verify_1_2_9_ui_responsive_scroll.py'
 def fixture(name,rel,old,new):
     with tempfile.TemporaryDirectory(prefix='vsdb-129-neg-') as td:
@@ -24,4 +24,5 @@ fixture('local-scroll-surfaces','assets/app.v1209.js',".settings-drawer-body,.cu
 fixture('local-scroll-host-state','assets/app.v1209.js','host?.scrollHeight','document.documentElement.scrollHeight')
 fixture('local-scroll-visual-parity','assets/app.v1209.js','viewport-scrollbar-thumb surface-scrollbar-thumb','surface-scrollbar-thumb')
 fixture('stale-workflow','tools/pages.workflow.yml','python tools/verify_1_2_9_ui_responsive_scroll.py','python tools/verify_1_2_8_compare_fixed_follow.py')
+fixture('overlay-browser-compat-cleanup','tools/repair_repository.py','for p in stale_browser_compats():','for p in []:')
 print('PASS 1.2.9 negative mutation suite')

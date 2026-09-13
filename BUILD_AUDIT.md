@@ -6,3 +6,4 @@
 - Release scope: compatibility-gate flash prevention, Reports filter-family/mobile parity, Compare pinned-shell manual minimization and narrow-width containment, and viewport-style scrollbar parity for scrollable Settings/listbox/evidence-dialog surfaces.
 - Technical evidence/data semantics, report IDs, D1 schema/migrations, normalizer 16, Vulkan 1.4.362 and VulkanScope 1.2.5 submission floor are unchanged.
 - Mandatory gates: current 1.2.9 verifier + negative mutations, immutable 1.2.8 regression contract, Worker transport contract, source audit, D1 migration replay, Pages release-ready transition, clean-extract verification and deterministic ZIP construction.
+- Overlay-repository repair now removes both stale `app.v*.js` and stale `browser-compat.v*.js`; this specifically prevents predecessor `assets/browser-compat.v1208.js` left behind by Windows ZIP-over-existing-folder updates from failing the Linux immutable-predecessor gate.
