@@ -246,3 +246,11 @@
 - Reworked regional date/time presentation into Automatic, Country, and Manual modes. Automatic uses browser/system locale and time zone; Country derives locale conventions and a representative IANA time zone from the selected country; Manual enables granular overrides. Stored/server timestamps remain unchanged.
 - Fixed custom-filter labels so long values wrap instead of being clipped, and made one-page page-jump controls completely non-interactive/focusable.
 - Added disabled-state synchronization between native selects and custom select controls so locked regional controls cannot be opened.
+
+## 1.3.9
+
+- Fixed Regional settings layout so long mode/date/time labels use the full settings width instead of breaking inside a narrow control column.
+- Changed Manual regional mode so Country / region remains locked to Browser / system region; Manual now controls only date format, clock format, IANA time zone and seasonal-offset override.
+- Added a detailed Country-mode presentation profile with country/region, representative locale, date pattern, clock format, representative IANA zone, current UTC offset, standard/winter offset, daylight/summer offset, seasonal clock-change status and current offset state.
+- Removed the empty custom-filter scrollbar gutter when a list does not overflow; overflowing lists reserve the rail only while it is needed, and long option labels wrap using all remaining width.
+- Preserved server timestamp ordering/filtering, report payload bytes/hashes, D1 schema/migrations, Vulkan evidence semantics, browser floors and the 1.3.8 text-only Browser information behavior.

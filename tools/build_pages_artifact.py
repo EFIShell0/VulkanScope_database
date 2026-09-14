@@ -16,9 +16,9 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v1307.js','assets/browser-compat.v1307.js','assets/release-bootstrap.v1307.js',
-    'assets/app.v1308.js','assets/browser-compat.v1308.js','assets/release-bootstrap.v1308.js','assets/encyclopedia.v03924.js',
-    'assets/site.v0390.css','assets/site.v1308.css',
+    'assets/app.v1308.js','assets/browser-compat.v1308.js','assets/release-bootstrap.v1308.js',
+    'assets/app.v1309.js','assets/browser-compat.v1309.js','assets/release-bootstrap.v1309.js','assets/encyclopedia.v03924.js',
+    'assets/site.v0390.css','assets/site.v1308.css','assets/site.v1309.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',
     'assets/favicon.ico','assets/favicon.png',
