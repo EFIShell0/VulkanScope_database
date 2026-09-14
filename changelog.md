@@ -254,3 +254,11 @@
 - Added a detailed Country-mode presentation profile with country/region, representative locale, date pattern, clock format, representative IANA zone, current UTC offset, standard/winter offset, daylight/summer offset, seasonal clock-change status and current offset state.
 - Removed the empty custom-filter scrollbar gutter when a list does not overflow; overflowing lists reserve the rail only while it is needed, and long option labels wrap using all remaining width.
 - Preserved server timestamp ordering/filtering, report payload bytes/hashes, D1 schema/migrations, Vulkan evidence semantics, browser floors and the 1.3.8 text-only Browser information behavior.
+
+## 1.3.10
+
+- Restored Search country / region plus deterministic 50-option pagination, Previous/Next controls and direct numeric page jump in the Settings Country / region selector.
+- Fixed the selected-country page trap: opening Country / region now begins at the first browse page instead of jumping to Türkiye's later page (which could make Solomon Islands appear as the first reachable item while earlier countries were inaccessible).
+- Search now filters the complete country/region option set before pagination and resets results to page 1; alphabetical English country-name ordering and two-letter country-code matching are preserved.
+- Applied the same searchable/paged large-selector path to Time zone so the complete time-zone list remains reachable without changing regional-mode ownership or timestamp semantics.
+- Preserved the 1.3.9 regional layout/profile behavior, D1 schema/migrations, stored report bytes/hashes, Vulkan evidence semantics, browser floors and producer floor.
