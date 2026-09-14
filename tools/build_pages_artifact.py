@@ -16,13 +16,17 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v1305.js','assets/browser-compat.v1305.js','assets/release-bootstrap.v1305.js',
-    'assets/app.v1306.js','assets/browser-compat.v1306.js','assets/release-bootstrap.v1306.js','assets/encyclopedia.v03924.js',
+    'assets/app.v1306.js','assets/browser-compat.v1306.js','assets/release-bootstrap.v1306.js',
+    'assets/app.v1307.js','assets/browser-compat.v1307.js','assets/release-bootstrap.v1307.js','assets/encyclopedia.v03924.js',
     'assets/site.v0390.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',
     'assets/favicon.ico','assets/favicon.png',
     'assets/vulkanscope_logo_horizontal.png',
+    'assets/browser-logos/google-chrome.v1307.svg','assets/browser-logos/chromium.v1307.png',
+    'assets/browser-logos/microsoft-edge.v1307.svg','assets/browser-logos/firefox.v1307.svg',
+    'assets/browser-logos/safari.v1307.svg','assets/browser-logos/opera.v1307.svg',
+    'assets/browser-logos/brave.v1307.svg','assets/browser-logos/vivaldi.v1307.svg','assets/browser-logos/samsung-browser.v1307.svg',
     'assets/gpu-vendors/gpu_vendor_amd.png',
     'assets/gpu-vendors/gpu_vendor_arm.png',
     'assets/gpu-vendors/gpu_vendor_broadcom.png',
@@ -46,7 +50,7 @@ for name in public_files + asset_files:
     out.parent.mkdir(parents=True,exist_ok=True)
     shutil.copy2(src,out)
 
-license_files=['wrangler.md','sharp.md','esbuild.md','workerd.md','nodejs.md','python.md']
+license_files=['wrangler.md','sharp.md','esbuild.md','workerd.md','nodejs.md','python.md','browser-marks.md']
 for name in license_files:
     src=root/'licenses'/name
     if not src.is_file(): raise SystemExit(f'missing required public license file: licenses/{name}')

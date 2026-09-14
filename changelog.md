@@ -232,3 +232,10 @@
 - Added confirmation dialogs for favorite removal and clearing saved browser data.
 - Restored report-detail tab synchronization and interaction.
 - Increased page scrollbar width and added disabled endpoint states to page scroll controls.
+
+## 1.3.7
+- Replaced the generic Browser information globe with local original-color browser marks for explicitly identified Chrome, Chromium, Edge, Firefox, Safari, Opera, Brave, Vivaldi and Samsung Browser sessions.
+- Updated the Samsung product label from Samsung Internet to Samsung Browser while preserving the existing `SamsungBrowser/` detection token.
+- Added best-effort Brave and Vivaldi identification without adding fingerprinting probes; ambiguous Chromium-family sessions intentionally retain the neutral browser icon instead of being misbranded.
+- Bundled browser marks locally with no logo CDN or third-party runtime request and added vendor provenance/trademark notes in `licenses/browser-marks.md`.
+- Preserved Database storage/report semantics, D1 schema/migrations, Vulkan evidence behavior, browser compatibility floors and all 1.3.6 report-detail/Raw-report behavior.
