@@ -1,3 +1,14 @@
+## 1.3.1
+
+- Keeps all first-party Database UI copy in English and replaces the Khronos independence disclosure with the English wording in both the footer and Settings → Information.
+- Disables direct-page **Go** whenever the entered page is already active, invalid/empty, or the result set has only one page.
+- Repairs enhanced filter menus by separating search, scrollable options and pagination into stable layout regions; every searchable filter keeps 50-option paging and direct numeric page entry, even for a single page.
+- Adds a bounded same-origin startup release-freshness bootstrap so stale cached frontend documents verify the published Pages marker/HTML/app asset before the UI is revealed, then navigate cache-busted only when a newer release is fully ready.
+- Opens bundled Markdown license documents inside a responsive in-site modal instead of a new browser tab.
+- Shows a green count-bearing popup when live synchronization actually adds new reports to the Database.
+- Fixes a stale schema-footer Database version literal and adds focused positive/negative gates for freshness, filter containment, inline licenses and live-report notifications.
+- Database/frontend/Worker identity advances to 1.3.1 / `app.v1301.js` / `browser-compat.v1301.js` / `release-bootstrap.v1301.js` / cache key 1301. No D1 migration, report payload/hash, normalizer or Vulkan evidence semantic change is introduced.
+
 ## 1.3.0
 
 - Presents every standalone user-facing **Vulkan** label as **Vulkan®** while keeping `VulkanScope` unchanged and preserving canonical/raw evidence, API/schema/token names, filenames and stored report bytes. Dynamic UI text and accessible labels are covered by the same presentation-only rule.

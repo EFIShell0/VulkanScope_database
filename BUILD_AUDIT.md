@@ -1,3 +1,16 @@
+# VulkanScope Database 1.3.1 build / regression audit
+
+- Database/frontend/Worker release identity: **1.3.1**.
+- Frontend identity: `assets/app.v1301.js`, browser gate `browser-compat.v1301.js`, startup freshness bootstrap `release-bootstrap.v1301.js`, cache key **1301**.
+- Immutable predecessor: Database **1.3.0**, SHA-256 `f49ebdc98d776de7792ceafc31c433c855bb87be1415b75191a6599c4f21ebe0`.
+- UI language: first-party Database UI copy remains English; the footer and Information disclosure reads “VulkanScope is not affiliated with the Khronos Group and is not an official Khronos Group project.”
+- Pagination: shared direct page entry keeps digit/range enforcement and now disables **Go** for the current page, invalid/empty values and single-page datasets. Every searchable filter retains 50-option pagination and direct page entry, including one-page result sets.
+- Filter repair: searchable selector menus now use separate fixed search/pager regions around a dedicated scrollable option region, with explicit filter-family stacking. This removes the mobile overlay/clipping failure seen in long filter lists.
+- Freshness: a same-origin no-store startup bootstrap verifies the release marker, current HTML and marker-named app asset before cache-busted navigation; the app stays concealed only during a bounded startup check. The schema footer now derives its Database version from the current release constant instead of the stale hard-coded 1.2.0 value.
+- Licensing: bundled Markdown license documents open in a same-origin in-site modal with bounded text size, Escape/backdrop/close handling and custom scrolling; no new tab or third-party fetch is used.
+- Live synchronization: atomic reconciliation emits a green accessible popup only when one or more previously unseen report IDs are actually added, with the number of reports shown.
+- Semantic invariants: schema 2, technical report 3, normalizer 16, Vulkan registry/spec baseline 1.4.362/header 362, VulkanScope 1.2.5 submission floor, canonical report IDs/hashes and D1 migrations are unchanged.
+
 # VulkanScope Database 1.3.0 build / regression audit
 
 - Database/frontend/Worker release identity: **1.3.0**.
