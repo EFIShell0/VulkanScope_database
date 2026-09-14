@@ -5,8 +5,10 @@ root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v1301.js'
-CURRENT_BROWSER_COMPAT = 'browser-compat.v1301.js'
+CURRENT_APP = 'app.v1302.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v1302.js'
+CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v1302.js'
+PREDECESSOR_BRIDGE = {'app.v1301.js','browser-compat.v1301.js','release-bootstrap.v1301.js'}
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
@@ -31,11 +33,15 @@ def stale_workflows():
 
 def stale_apps():
     assets = root / 'assets'
-    return sorted(p for p in assets.glob('app.v*.js') if p.name != CURRENT_APP)
+    return sorted(p for p in assets.glob('app.v*.js') if p.name not in {CURRENT_APP,*PREDECESSOR_BRIDGE})
 
 def stale_browser_compats():
     assets = root / 'assets'
-    return sorted(p for p in assets.glob('browser-compat.v*.js') if p.name != CURRENT_BROWSER_COMPAT)
+    return sorted(p for p in assets.glob('browser-compat.v*.js') if p.name not in {CURRENT_BROWSER_COMPAT,*PREDECESSOR_BRIDGE})
+
+def stale_release_bootstraps():
+    assets = root / 'assets'
+    return sorted(p for p in assets.glob('release-bootstrap.v*.js') if p.name not in {CURRENT_RELEASE_BOOTSTRAP,*PREDECESSOR_BRIDGE})
 
 optional_lock = root / 'worker' / 'package-lock.json'
 
@@ -51,12 +57,14 @@ if args.apply:
         p.unlink()
     for p in stale_browser_compats():
         p.unlink()
+    for p in stale_release_bootstraps():
+        p.unlink()
     lock_removed = False
     if optional_lock.is_file():
         optional_lock.unlink()
         lock_removed = True
     suffix = '; ignored legacy worker/package-lock.json removed' if lock_removed else ''
-    print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned app/browser-compat JS removed' + suffix + '.')
+    print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned frontend JS removed; immediate predecessor bridge retained' + suffix + '.')
 
 errors=[]
 if not workflow.is_file():
@@ -72,14 +80,21 @@ if apps:
 compats=stale_browser_compats()
 if compats:
     errors.append('stale versioned browser-compat assets: ' + ', '.join(str(p.relative_to(root)) for p in compats))
+boots=stale_release_bootstraps()
+if boots:
+    errors.append('stale versioned release-bootstrap assets: ' + ', '.join(str(p.relative_to(root)) for p in boots))
 if not (root/'assets'/CURRENT_APP).is_file():
     errors.append(f'missing assets/{CURRENT_APP}')
 if not (root/'assets'/CURRENT_BROWSER_COMPAT).is_file():
     errors.append(f'missing assets/{CURRENT_BROWSER_COMPAT}')
+if not (root/'assets'/CURRENT_RELEASE_BOOTSTRAP).is_file():
+    errors.append(f'missing assets/{CURRENT_RELEASE_BOOTSTRAP}')
+for bridge in sorted(PREDECESSOR_BRIDGE):
+    if not (root/'assets'/bridge).is_file(): errors.append(f'missing predecessor bridge asset assets/{bridge}')
 
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 1.3.1 repository state: PASS')
+print(f'VulkanScope Database 1.3.2 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')

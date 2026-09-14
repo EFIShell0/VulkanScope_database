@@ -101,6 +101,16 @@
 
 # VulkanScope Database changelog
 
+## 1.3.2
+
+- Reworks frontend release freshness around publication-generation convergence: startup and post-reveal no-store checks verify the release marker, index, app, compatibility gate and bootstrap together, then automatically navigate to the fully published release without requiring a Refresh button.
+- Retains the immutable 1.3.1 frontend triplet for one transition release so stale CDN HTML cannot reference removed assets while GitHub Pages edges converge.
+- Prevents blank custom-scrollbar rail/gutter regions from accepting pointer input; only the intended arrows, track and thumb remain interactive.
+- Prevents custom filter menus from closing when a scrollbar drag/click ends inside the menu.
+- Compacts filter Previous/Next pagination into fixed icon cells with a flexible bounded page-jump control so mobile and desktop layouts do not overflow.
+- Restyles the Khronos independence notice as a modern blue information card with an information icon while keeping the exact English wording unchanged.
+- Database/frontend/Worker identity advances to 1.3.2 / `app.v1302.js` / `browser-compat.v1302.js` / `release-bootstrap.v1302.js` / cache key 1302. No D1 migration, report payload/hash, normalizer, Vulkan baseline or browser-information-content change is introduced.
+
 ## 1.2.0
 - New report submissions now require VulkanScope 1.2.5+ at the Worker/API boundary; historical stored reports remain readable.
 - Internet observation refreshes silently in the background after initial data, while errors remain explicit.

@@ -1,3 +1,15 @@
+# VulkanScope Database 1.3.2 build / regression audit
+
+- Database/frontend/Worker release identity: **1.3.2**.
+- Frontend identity: `assets/app.v1302.js`, browser gate `browser-compat.v1302.js`, startup freshness bootstrap `release-bootstrap.v1302.js`, cache key **1302**.
+- Immutable predecessor: Database **1.3.1**, SHA-256 `ec60e0456f46427713db697e6bd0b8e7742dfad62843e9743befdc3576da84dc`; its versioned frontend triplet remains byte-identical and is retained as the CDN transition bridge.
+- Freshness: publication is treated as a generation, not a single marker. Marker/index/app/browser-gate/bootstrap are no-store probed and must agree before automatic cache-busted navigation; early convergence retries plus visibility/pageshow/online checks remove the manual-refresh dependency.
+- Pointer/filter repair: blank custom-scrollbar rail/gutter space is non-interactive; intended controls remain interactive; custom-select internal pointer/click completion no longer triggers the document outside-click closer.
+- Pagination: filter Previous/Next use compact fixed icon columns around a flexible bounded page-jump control so narrow mobile and desktop filter cards remain contained.
+- Independence notice: exact English Khronos independence wording is preserved and presented as a blue information note with an `i` icon in Settings and footer.
+- Browser information UI remains otherwise unchanged from 1.3.1; no browser-logo bundle is added.
+- Semantic invariants: schema 2, technical report 3, normalizer 16, Vulkan 1.4.362/header 362, VulkanScope 1.2.5 submission floor, report IDs/hashes and D1 migrations are unchanged.
+
 # VulkanScope Database 1.3.1 build / regression audit
 
 - Database/frontend/Worker release identity: **1.3.1**.
