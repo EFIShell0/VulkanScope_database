@@ -239,3 +239,10 @@
 - Added best-effort Brave and Vivaldi identification without adding fingerprinting probes; ambiguous Chromium-family sessions intentionally retain the neutral browser icon instead of being misbranded.
 - Bundled browser marks locally with no logo CDN or third-party runtime request and added vendor provenance/trademark notes in `licenses/browser-marks.md`.
 - Preserved Database storage/report semantics, D1 schema/migrations, Vulkan evidence behavior, browser compatibility floors and all 1.3.6 report-detail/Raw-report behavior.
+
+## 1.3.8
+
+- Removed browser logo/icon rendering and bundled browser-mark assets from Browser information; identity remains local text-only runtime information.
+- Reworked regional date/time presentation into Automatic, Country, and Manual modes. Automatic uses browser/system locale and time zone; Country derives locale conventions and a representative IANA time zone from the selected country; Manual enables granular overrides. Stored/server timestamps remain unchanged.
+- Fixed custom-filter labels so long values wrap instead of being clipped, and made one-page page-jump controls completely non-interactive/focusable.
+- Added disabled-state synchronization between native selects and custom select controls so locked regional controls cannot be opened.

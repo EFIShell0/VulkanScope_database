@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.3.7'
-DB_VERSION='1.3.7'
-APP_ASSET='app.v1307.js'
-CACHE_KEY='1307'
+AUDIT_VERSION='1.3.8'
+DB_VERSION='1.3.8'
+APP_ASSET='app.v1308.js'
+CACHE_KEY='1308'
 PRODUCER='VulkanScope 1.2.5 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -21,7 +21,7 @@ if args.version:
     raise SystemExit(0)
 
 ASSET_ALLOW={
-    'app.v1306.js','browser-compat.v1306.js','release-bootstrap.v1306.js',APP_ASSET,'browser-compat.v1307.js','release-bootstrap.v1307.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png','favicon.ico','favicon.png','vulkanscope_logo_horizontal.png','browser-logos/google-chrome.v1307.svg','browser-logos/chromium.v1307.png','browser-logos/microsoft-edge.v1307.svg','browser-logos/firefox.v1307.svg','browser-logos/safari.v1307.svg','browser-logos/opera.v1307.svg','browser-logos/brave.v1307.svg','browser-logos/vivaldi.v1307.svg','browser-logos/samsung-browser.v1307.svg',
+    'app.v1307.js','browser-compat.v1307.js','release-bootstrap.v1307.js',APP_ASSET,'browser-compat.v1308.js','release-bootstrap.v1308.js','encyclopedia.v03924.js','site.v0390.css','site.v1308.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png','favicon.ico','favicon.png','vulkanscope_logo_horizontal.png','browser-logos/google-chrome.v1307.svg','browser-logos/chromium.v1307.png','browser-logos/microsoft-edge.v1307.svg','browser-logos/firefox.v1307.svg','browser-logos/safari.v1307.svg','browser-logos/opera.v1307.svg','browser-logos/brave.v1307.svg','browser-logos/vivaldi.v1307.svg','browser-logos/samsung-browser.v1307.svg',
     'gpu-vendors/gpu_vendor_amd.png','gpu-vendors/gpu_vendor_arm.png','gpu-vendors/gpu_vendor_broadcom.png','gpu-vendors/gpu_vendor_huawei.png','gpu-vendors/gpu_vendor_imagination.png','gpu-vendors/gpu_vendor_intel.png','gpu-vendors/gpu_vendor_nvidia.png','gpu-vendors/gpu_vendor_qualcomm.png','gpu-vendors/gpu_vendor_samsung.png','gpu-vendors/gpu_vendor_unknown.png','gpu-vendors/gpu_vendor_vivante.png','gpu-vendors/gpu_vendor_vsi.png',
     'hdr/dolby_vision.png','hdr/dolby_vision_2.png','hdr/hdr10.svg','hdr/hdr10_plus.png','hdr/hdr10_plus_advanced.png','hdr/hdr10_plus_v1014.png','hdr/hdr_vivid.webp',
 }
@@ -62,7 +62,7 @@ def audit_artifact(root:Path,require_release_ready=False):
         if f.is_file() and rel.parts and rel.parts[0]=='data' and f.suffix.lower()!='.json': errors.append(f'non-JSON Pages data {pos}')
         if f.is_file() and rel.parts and rel.parts[0]=='licenses' and (f.suffix.lower()!='.md' or f.name not in {'wrangler.md','sharp.md','esbuild.md','workerd.md','nodejs.md','python.md','browser-marks.md'}): errors.append(f'unexpected Pages license document {pos}')
     idx=(root/'index.html').read_text(encoding='utf-8')
-    for token in [f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}',f'VulkanScope Database <strong>{DB_VERSION}</strong>']:
+    for token in [f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v1308.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}',f'VulkanScope Database <strong>{DB_VERSION}</strong>']:
         if token not in idx: errors.append(f'Pages current identity/reference missing: {token}')
     marker_path=root/'data/release.json'
     if not marker_path.is_file(): errors.append('Pages release marker missing')
@@ -86,11 +86,11 @@ def audit_source(root:Path):
     need(root.is_dir(),f'source tree missing: {root}')
     if not root.is_dir():
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    required=['index.html','config.js','report.schema.json','assets/app.v1306.js','assets/browser-compat.v1306.js','assets/release-bootstrap.v1306.js',f'assets/{APP_ASSET}','assets/browser-compat.v1307.js','assets/release-bootstrap.v1307.js','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/verify_1_2_11_compare_mobile_identity.py','tools/test_1_2_11_compare_mobile_identity_negative_mutations.py','tools/verify_1_2_12_filter_search_overlay.py','tools/test_1_2_12_filter_search_overlay_negative_mutations.py','tools/verify_1_2_13_filter_pagination_compare_audit.py','tools/test_1_2_13_filter_pagination_compare_negative_mutations.py','tools/verify_1_2_14_page_jump_browser_info.py','tools/test_1_2_14_page_jump_browser_info_negative_mutations.py','tools/verify_1_3_2_cache_pointer_browser_ui.py','tools/test_1_3_2_cache_pointer_browser_ui_negative_mutations.py','rules/1.3.2_CACHE_POINTER_BROWSER_UI_AUDIT.md','tools/verify_1_3_3_compare_direction_symmetric_motion.py','tools/test_1_3_3_compare_direction_symmetric_motion_negative_mutations.py','tools/verify_1_3_4_filter_scrollbar_compare_chevron.py','tools/test_1_3_4_filter_scrollbar_compare_chevron_negative_mutations.py','rules/1.3.4_FILTER_SCROLLBAR_COMPARE_CHEVRON_AUDIT.md','tools/verify_1_3_5_submitted_timezone_wrap.py','tools/test_1_3_5_submitted_timezone_wrap_negative_mutations.py','rules/1.3.5_SUBMITTED_TIMEZONE_WRAP_AUDIT.md','tools/verify_1_3_6_report_detail_workspace_raw_download.py','tools/test_1_3_6_report_detail_workspace_raw_download_negative_mutations.py','rules/1.3.6_REPORT_DETAIL_WORKSPACE_RAW_DOWNLOAD_AUDIT.md','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml','licenses/wrangler.md','licenses/sharp.md','licenses/esbuild.md','licenses/workerd.md','licenses/nodejs.md','licenses/python.md','licenses/browser-marks.md','tools/verify_1_3_7_browser_brand_marks.py','tools/test_1_3_7_browser_brand_marks_negative_mutations.py','rules/1.3.7_BROWSER_BRAND_MARKS_AUDIT.md']
+    required=['index.html','config.js','report.schema.json','assets/app.v1307.js','assets/browser-compat.v1307.js','assets/release-bootstrap.v1307.js',f'assets/{APP_ASSET}','assets/browser-compat.v1308.js','assets/release-bootstrap.v1308.js','assets/site.v0390.css','assets/site.v1308.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/verify_1_2_11_compare_mobile_identity.py','tools/test_1_2_11_compare_mobile_identity_negative_mutations.py','tools/verify_1_2_12_filter_search_overlay.py','tools/test_1_2_12_filter_search_overlay_negative_mutations.py','tools/verify_1_2_13_filter_pagination_compare_audit.py','tools/test_1_2_13_filter_pagination_compare_negative_mutations.py','tools/verify_1_2_14_page_jump_browser_info.py','tools/test_1_2_14_page_jump_browser_info_negative_mutations.py','tools/verify_1_3_2_cache_pointer_browser_ui.py','tools/test_1_3_2_cache_pointer_browser_ui_negative_mutations.py','rules/1.3.2_CACHE_POINTER_BROWSER_UI_AUDIT.md','tools/verify_1_3_3_compare_direction_symmetric_motion.py','tools/test_1_3_3_compare_direction_symmetric_motion_negative_mutations.py','tools/verify_1_3_4_filter_scrollbar_compare_chevron.py','tools/test_1_3_4_filter_scrollbar_compare_chevron_negative_mutations.py','rules/1.3.4_FILTER_SCROLLBAR_COMPARE_CHEVRON_AUDIT.md','tools/verify_1_3_5_submitted_timezone_wrap.py','tools/test_1_3_5_submitted_timezone_wrap_negative_mutations.py','rules/1.3.5_SUBMITTED_TIMEZONE_WRAP_AUDIT.md','tools/verify_1_3_6_report_detail_workspace_raw_download.py','tools/test_1_3_6_report_detail_workspace_raw_download_negative_mutations.py','rules/1.3.6_REPORT_DETAIL_WORKSPACE_RAW_DOWNLOAD_AUDIT.md','tools/pages.workflow.yml','.github/workflows/pages.yml','tools/verify_1_3_8_regional_filter_browser_cleanup.py','tools/test_1_3_8_regional_filter_browser_cleanup_negative_mutations.py','rules/1.3.8_FILTER_REGIONAL_BROWSER_CLEANUP_AUDIT.md','registry/registry_lock.json','registry/upstream/vk.xml','licenses/wrangler.md','licenses/sharp.md','licenses/esbuild.md','licenses/workerd.md','licenses/nodejs.md','licenses/python.md','licenses/browser-marks.md','tools/verify_1_3_7_browser_brand_marks.py','tools/test_1_3_7_browser_brand_marks_negative_mutations.py','rules/1.3.7_BROWSER_BRAND_MARKS_AUDIT.md']
     for rel in required: need((root/rel).is_file(),f'missing required source file {rel}')
     if errors:
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    index=text('index.html'); app=text(f'assets/{APP_ASSET}'); compat=text('assets/browser-compat.v1307.js'); css=text('assets/site.v0390.css'); worker=text('worker/src/index.js'); rules=text('rules/PROJECT_RULES.md'); workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
+    index=text('index.html'); app=text(f'assets/{APP_ASSET}'); compat=text('assets/browser-compat.v1308.js'); css=text('assets/site.v1308.css'); worker=text('worker/src/index.js'); rules=text('rules/PROJECT_RULES.md'); workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
     pkg=json.loads(text('worker/package.json')); schema=json.loads(text('report.schema.json')); static=json.loads(text('data/index.json')); lock=json.loads(text('registry/registry_lock.json')); wr=json.loads(text('worker/wrangler.jsonc'))
 
     # Release/cache identity and canonical workflow.
@@ -100,30 +100,30 @@ def audit_source(root:Path):
     need(not (root/'README.md').exists(),'root README.md is forbidden in source release')
     need(not (root/'release.md').exists(),'root release.md is forbidden in source release')
     need(not (root/'fastlane').exists(),'Fastlane/store metadata is forbidden in source release')
-    for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
+    for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v1308.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
         need(token in index,f'current index identity missing: {token}')
     need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=3000,RELEASE_CHECK_INTERVAL_MS=10000" in app,'frontend release/live-sync identity mismatch')
-    need('browser-compat.v1307.js?v=1307' in index and 'release-bootstrap.v1307.js?v=1307' in index and 'browserCompatibilityGate' in index,'browser compatibility/startup freshness references missing')
+    need('browser-compat.v1308.js?v=1308' in index and 'release-bootstrap.v1308.js?v=1308' in index and 'browserCompatibilityGate' in index,'browser compatibility/startup freshness references missing')
     need("chromium:84,firefox:86,safari:14.1" in compat and 'Element.prototype.getAnimations' in compat and 'window.ResizeObserver' in compat,'browser minimum/feature gate mismatch')
-    boot=text('assets/release-bootstrap.v1307.js')
+    boot=text('assets/release-bootstrap.v1308.js')
     notice='VulkanScope is not affiliated with the Khronos Group and is not an official Khronos Group project.'
     need(notice in index and notice in app,'English Khronos independence notice missing')
     need('VulkanScope projesinin Khronos Group' not in index+app,'non-English Khronos independence notice remains')
-    need("go.disabled=max<=1||target===value" in app and "go.disabled=max<=1||!valid||target===currentPage()" in app,'page Go current-state disabling missing')
+    need("go.disabled=single||target===value" in app and "go.disabled=max<=1||!valid||target===currentPage()" in app,'page Go current-state disabling missing')
     need("pager.hidden=!searchable" in app and "scrollArea.className='custom-select-scroll'" in app,'filter pagination/scroll region contract missing')
     need('openLicenseViewer' in app and 'data-license-file' in app and 'license-viewer-dialog' in css,'inline license modal missing')
     need("cache:'no-store'" in boot and 'data/release.json' in boot and 'location.replace' in boot,'startup no-store release bootstrap missing')
     need('showNewReportNotification(result.added)' in app and '.new-report-toast{' in css,'new-report notification missing')
     need("$('#schemaFooter').textContent=`Database ${DATABASE_VERSION}" in app,'schema footer release identity is hard-coded/stale')
-    need("const browserLanguage=()=> 'en-US'" in app and "new Intl.DisplayNames(['en'],{type:'region'})" in app,'English-only regional presentation contract missing')
+    need("const browserLanguage=()=>{const raw=String(navigator.languages?.[0]||navigator.language" in app and "new Intl.DisplayNames(['en'],{type:'region'})" in app,'browser/system regional presentation contract missing')
     need("classList.toggle('at-page-top',atTop)" in app and "classList.toggle('at-page-bottom',atBottom)" in app,'native scrollbar endpoint state classes missing')
     need('html.at-page-top::-webkit-scrollbar-button' in css and 'html.at-page-bottom::-webkit-scrollbar-button' in css,'native scrollbar endpoint visual states missing')
     need('@media(max-width:430px)' in css and 'overflow-x:hidden' in css,'mobile overflow containment contract missing')
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need("databaseVersion:" not in worker,'legacy Worker databaseVersion refresh signal must be absent')
-    need(worker.count("databaseReleaseVersion:'1.3.7'")>=3,'Worker databaseReleaseVersion mismatch')
-    need(worker.count("workerReleaseVersion:'1.3.7'")>=3,'Worker workerReleaseVersion mismatch')
+    need(worker.count("databaseReleaseVersion:'1.3.8'")>=3,'Worker databaseReleaseVersion mismatch')
+    need(worker.count("workerReleaseVersion:'1.3.8'")>=3,'Worker workerReleaseVersion mismatch')
     need(worker.count("frontendUpdateSignal:'same-origin-pages-marker'")>=2,'Worker frontendUpdateSignal metadata missing')
 
     # Current Vulkan/producer metadata and immutable evidence model.
@@ -191,13 +191,18 @@ def audit_source(root:Path):
     need("pageJumpMarkup(1,1,'custom-select-page-jump')" in app and "pageJumpMarkup(state.reportPage,pages,'report-page-jump')" in app and "pageJumpMarkup(page,pages,'bounded-table-page-jump')" in app and "pageJumpMarkup(page,1,'modal-page-jump')" in app,'direct page jump missing from one or more pagination families')
     need('id="settingsBrowserTitle">Browser information</h3>' in index and 'id="browserInfo"' in index and 'function renderBrowserInfo()' in app,'Browser information Settings section missing')
     need('canvas.toDataURL' not in app and 'WEBGL_debug_renderer_info' not in app,'browser fingerprinting primitive forbidden')
-    need('const BROWSER_LOGO_ASSETS={' in app and "'Brave':'./assets/browser-logos/brave.v1307.svg'" in app and "'Vivaldi':'./assets/browser-logos/vivaldi.v1307.svg'" in app and "'Samsung Browser':'./assets/browser-logos/samsung-browser.v1307.svg'" in app,'1.3.7 local browser mark map missing')
-    need('browserLogoAsset(b.name)' in app and 'class=\"settings-browser-logo\"' in app,'1.3.7 browser mark rendering missing')
-    need('Browser marks are bundled with VulkanScope Database and are never fetched from a third-party logo service.' in app,'1.3.7 browser-mark privacy disclosure missing')
-    need('.settings-browser-logo{display:block;width:32px;height:32px' in css and 'filter:none!important' in css,'1.3.7 original-color browser mark CSS missing')
+    need('const BROWSER_LOGO_ASSETS={' not in app and 'browserLogoAsset(' not in app and 'class=\"settings-browser-icon\"' not in app and 'class=\"settings-browser-logo\"' not in app,'1.3.8 current Browser information must be text-only')
+    need('settings-browser-summary settings-browser-summary-text' in app and 'No browser logo, icon, favicon service or browser-brand image is displayed or loaded.' in app,'1.3.8 browser text-only disclosure missing')
+    need('assets/browser-logos/' not in app and 'browser-logos' not in index,'1.3.8 current frontend unexpectedly references browser marks')
+    # 1.3.7 mark files remain only as immediate-predecessor cache dependencies for stale 1.3.7 pages.
     for rel in ['google-chrome.v1307.svg','chromium.v1307.png','microsoft-edge.v1307.svg','firefox.v1307.svg','safari.v1307.svg','opera.v1307.svg','brave.v1307.svg','vivaldi.v1307.svg','samsung-browser.v1307.svg']:
-        need((root/'assets/browser-logos'/rel).is_file(),f'missing browser mark asset {rel}')
-    need('## Release 1.3.7 browser brand-mark requirements' in rules,'1.3.7 rules section missing')
+        need((root/'assets/browser-logos'/rel).is_file(),f'missing 1.3.7 predecessor browser-mark bridge asset {rel}')
+    need('## Release 1.3.7 browser brand-mark requirements' in rules and '## Release 1.3.8 filter / regional-mode / browser-cleanup requirements' in rules,'1.3.7/1.3.8 rules sections missing')
+    need('id="settingsRegionalMode"' in index and "REGIONAL_MODES=new Set(['auto','country','manual'])" in app,'1.3.8 regional mode UI/state missing')
+    need("const enabled=mode==='manual'||(mode==='country'&&id==='settingsRegionalCountry')" in app,'1.3.8 regional mode control-lock matrix missing')
+    need('const COUNTRY_PRIMARY_TIME_ZONES=Object.freeze(' in app and "if(mode==='country')return countryPrimaryTimeZone(effectiveCountryCode())" in app,'1.3.8 country-derived timezone contract missing')
+    need('white-space:normal!important' in css and '.page-jump.is-single-page .page-jump-input' in css,'1.3.8 filter wrapping / one-page inert CSS missing')
+    need('input.disabled=single' in app and "const open=()=>{if(sel.disabled)return;" in app,'1.3.8 page-jump/custom-select disabled behavior missing')
     need(index.count('data-settings-category=')==4 and 'data-settings-category="information"' in index and 'data-settings-panel="information"' in index,'four-category Settings / Information surface missing')
     need('SETTINGS_DEPENDENCY_INVENTORY' in app and "{name:'Wrangler',version:'4.130.0',license:'MIT OR Apache-2.0'" in app and "{name:'sharp',version:'0.35.4',license:'Apache-2.0'" in app,'Information dependency/license inventory missing')
     need("{name:'esbuild',version:'Resolved by Wrangler 4.130.0'" in app and "{name:'workerd',version:'Resolved by Wrangler 4.130.0'" in app,'unpinned transitive tooling disclosure missing')
@@ -224,11 +229,11 @@ def audit_source(root:Path):
     need('## Release 1.3.6 report-detail evidence-workspace / Raw-report download requirements' in rules,'1.3.6 rules section missing')
     need('const submittedZoneMarkup=zone=>' in app and 'submitted-zone-season' in app,'Submitted seasonal time-zone line helper missing')
     need('.submitted-stack .submitted-zone-value{white-space:normal' in css and '.submitted-zone-season{display:block' in css,'Submitted time-zone wrapping CSS missing')
-    need("'assets/app.v1306.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1307.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1305.js'" not in text('tools/build_pages_artifact.py'),'Pages immediate-predecessor/current app bridge mismatch')
-    need("PREDECESSOR_BRIDGE = {'app.v1306.js','browser-compat.v1306.js','release-bootstrap.v1306.js'}" in text('tools/repair_repository.py'),'1.3.7 repository predecessor bridge mismatch')
+    need("'assets/app.v1307.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1308.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1306.js'" not in text('tools/build_pages_artifact.py'),'Pages immediate-predecessor/current app bridge mismatch')
+    need("PREDECESSOR_BRIDGE = {'app.v1307.js','browser-compat.v1307.js','release-bootstrap.v1307.js'}" in text('tools/repair_repository.py'),'1.3.8 repository predecessor bridge mismatch')
     for name,wf in [('.github/workflows/pages.yml',workflow),('tools/pages.workflow.yml',workflow_template)]:
-        need(wf.count('python tools/verify_1_3_7_browser_brand_marks.py')>=3,f'{name}: 1.3.7 verifier missing from release stages')
-        need(wf.count('python tools/test_1_3_7_browser_brand_marks_negative_mutations.py')>=3,f'{name}: 1.3.7 negative suite missing from release stages')
+        need(wf.count('python tools/verify_1_3_8_regional_filter_browser_cleanup.py')>=3,f'{name}: 1.3.8 verifier missing from release stages')
+        need(wf.count('python tools/test_1_3_8_regional_filter_browser_cleanup_negative_mutations.py')>=3,f'{name}: 1.3.8 negative suite missing from release stages')
 
     # 1.3.6 report-detail evidence workspace / Raw-report download contract.
     need('const DETAIL_TAB_META=' in app and 'const detailWorkspace=' in app and 'const detailPanel=' in app,'1.3.6 detail evidence-workspace primitives missing')
@@ -263,7 +268,7 @@ def audit_source(root:Path):
 
     # Source/package hygiene and local-resource integrity.
     versioned=sorted(p.name for p in (root/'assets').glob('app.v*.js') if p.is_file())
-    need(versioned==['app.v1306.js',APP_ASSET],f'exactly current + predecessor versioned frontend apps are permitted: {versioned}')
+    need(versioned==['app.v1307.js',APP_ASSET],f'exactly current + predecessor versioned frontend apps are permitted: {versioned}')
     forbidden_dirs={'.gradle','build','dist','__pycache__','.idea','node_modules','.wrangler','_site','.pytest_cache','.mypy_cache','.ruff_cache','coverage','.tmp','tmp'}
     bad_names={'.DS_Store','Thumbs.db','Desktop.ini','local.properties','.dev.vars','.env'}
     for current,dirs,names in os.walk(root,topdown=True,followlinks=False):
@@ -286,7 +291,7 @@ def audit_source(root:Path):
         except Exception as exc: errors.append(f'Python syntax {py.name}: {exc}')
     node=shutil.which('node')
     if node:
-        for rel in [f'assets/{APP_ASSET}','assets/browser-compat.v1307.js','assets/encyclopedia.v03924.js','worker/src/index.js','worker/tests/contract.mjs']:
+        for rel in [f'assets/{APP_ASSET}','assets/browser-compat.v1308.js','assets/encyclopedia.v03924.js','worker/src/index.js','worker/tests/contract.mjs']:
             r=subprocess.run([node,'--check',str(root/rel)],capture_output=True,text=True)
             if r.returncode: errors.append(f'node --check {rel}: {r.stderr.strip()}')
         for rel,cwd in [('tools/test_routes.mjs',root),('tools/test_compare_contract.mjs',root),('worker/tests/contract.mjs',root/'worker')]:
