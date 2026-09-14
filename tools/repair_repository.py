@@ -5,8 +5,8 @@ root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v1211.js'
-CURRENT_BROWSER_COMPAT = 'browser-compat.v1211.js'
+CURRENT_APP = 'app.v1300.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v1300.js'
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
@@ -80,6 +80,6 @@ if not (root/'assets'/CURRENT_BROWSER_COMPAT).is_file():
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 1.2.11 repository state: PASS')
+print(f'VulkanScope Database 1.3.0 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')

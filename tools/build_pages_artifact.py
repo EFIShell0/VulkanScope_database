@@ -16,7 +16,7 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v1211.js','assets/browser-compat.v1211.js','assets/encyclopedia.v03924.js',
+    'assets/app.v1300.js','assets/browser-compat.v1300.js','assets/encyclopedia.v03924.js',
     'assets/site.v0390.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',
@@ -42,6 +42,14 @@ for name in public_files + asset_files:
     src=root/name
     if not src.is_file(): raise SystemExit(f'missing required public file: {name}')
     out=dest/name
+    out.parent.mkdir(parents=True,exist_ok=True)
+    shutil.copy2(src,out)
+
+license_files=['wrangler.md','sharp.md','esbuild.md','workerd.md','nodejs.md','python.md']
+for name in license_files:
+    src=root/'licenses'/name
+    if not src.is_file(): raise SystemExit(f'missing required public license file: licenses/{name}')
+    out=dest/'licenses'/name
     out.parent.mkdir(parents=True,exist_ok=True)
     shutil.copy2(src,out)
 

@@ -1,3 +1,33 @@
+## 1.3.0
+
+- Presents every standalone user-facing **Vulkan** label as **Vulkan®** while keeping `VulkanScope` unchanged and preserving canonical/raw evidence, API/schema/token names, filenames and stored report bytes. Dynamic UI text and accessible labels are covered by the same presentation-only rule.
+- Adds the requested red Turkish Khronos independence notice below the footer brand and at the top of **Settings → Information**.
+- Extends **Information** with local **Read license (.md)** actions for the officially sourced Wrangler, sharp, esbuild, workerd, Node.js and Python license texts/notices; component purpose, version/resolution status, license and source remain visible in each card.
+- Keeps the 1.2.15 stored-report **Download JSON** action and the existing pagination, Compare, browser-information and Settings-overlay behavior intact.
+- Adds release-specific positive/negative checks for trademark presentation, canonical/raw preservation, disclosures, local license files, Pages staging and dependency truthfulness, plus a full source/Pages/Worker/D1/responsive regression audit.
+- Database/frontend/Worker identity advances to 1.3.0 / `app.v1300.js` / `browser-compat.v1300.js` / cache key 1300. No D1 migration, report payload/hash, normalizer or VulkanScope 1.2.5 submission-floor change is introduced.
+
+## 1.2.14
+
+- Added direct bounded page entry to every user-visible pagination family: searchable filter selectors, Reports, bounded aggregate tables and paged Coverage/Distinct/value dialogs. Previous/Next remain available; Enter/Go commit, Escape restores, Arrow Up/Down stays in range, and non-digit or out-of-range keyboard/paste/input values are rejected.
+- Searchable filter selectors retain complete-set local search and deterministic 50-option pagination; direct page entry automatically follows the filtered page count and new searches reset to page 1.
+- Added a dedicated Browser information section below My internet information with local best-effort browser/version/engine identity, Client Hints when exposed, UA/platform/language/privacy/runtime/display details and Web Platform capability availability. Browser details are not attached to VulkanScope reports, sent to the Database Worker or stored in D1.
+- Added responsive containment for the new page-jump and Browser information surfaces across desktop and mobile, plus focused positive/negative release gates.
+- Database/frontend/Worker identity advances to 1.2.14 / `app.v1214.js` / `browser-compat.v1214.js` / cache key 1214. D1 schema, report bytes/hashes, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 new-submission floor are unchanged.
+
+## 1.2.13
+
+- Searchable filters now paginate matching options in deterministic 50-item pages with Previous/Next and Page X of Y controls; local search still scans the complete authoritative native option set.
+- Compare Minimize/Expand chevrons now reflect state: down while full, up while minimized.
+- Full UI regression hardening caps enhanced selectors to their containers, removes the inherited mobile 190 px minimum, contains long option labels, and keeps pagination controls narrow-safe.
+- Database/frontend/Worker identity advances to 1.2.13 / `app.v1213.js` / `browser-compat.v1213.js` / cache key 1213. D1 schema, report bytes/hashes, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 new-submission floor are unchanged.
+
+## 1.2.12
+- Added local search to every main/detail workspace custom filter/select listbox on desktop and mobile. Search always runs against the complete authoritative native select option set while the enhanced DOM is bounded to at most 50 visible choices at once.
+- Fixed pinned Compare report selectors so the centered Minimize/Expand dock hides while a listbox is open instead of painting over or intercepting report options.
+- Fixed Settings overlay ownership: pinned Compare and viewport chrome now sit beneath the Settings backdrop, the full underlying page receives the dim/blur treatment, and destructive confirmation remains above Settings.
+- Database/frontend/Worker identity advances to 1.2.12 / `app.v1212.js` / `browser-compat.v1212.js` / cache key 1212. D1 schema, report bytes/hashes, normalizer 16, Vulkan 1.4.362 and the VulkanScope 1.2.5 new-submission floor are unchanged.
+
 ## 1.2.11
 - Fixed the narrow/mobile Compare report identity collision where a wrapped `System Vulkan driver …` identity row could overlap the Baseline/Candidate metadata chips. The full report-identity block now expands to its content in the normal workspace and narrow layouts stack GPU, vendor and driver identity rows intrinsically.
 - The compact pinned Compare state still collapses the identity rows to zero height and restores them when the full workspace returns; report selection, A/B identity, evidence filters and comparison semantics are unchanged.
