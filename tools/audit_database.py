@@ -3,10 +3,10 @@ from pathlib import Path
 import argparse, json, os, re, shutil, sqlite3, subprocess, sys
 from urllib.parse import urlsplit
 
-AUDIT_VERSION='1.3.3'
-DB_VERSION='1.3.3'
-APP_ASSET='app.v1303.js'
-CACHE_KEY='1303'
+AUDIT_VERSION='1.3.6'
+DB_VERSION='1.3.6'
+APP_ASSET='app.v1306.js'
+CACHE_KEY='1306'
 PRODUCER='VulkanScope 1.2.5 · Vulkan 1.4.362'
 SPEC='Vulkan 1.4.362 (2026-09-04)'
 
@@ -21,7 +21,7 @@ if args.version:
     raise SystemExit(0)
 
 ASSET_ALLOW={
-    'app.v1302.js','browser-compat.v1302.js','release-bootstrap.v1302.js',APP_ASSET,'browser-compat.v1303.js','release-bootstrap.v1303.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png','favicon.ico','favicon.png','vulkanscope_logo_horizontal.png',
+    'app.v1305.js','browser-compat.v1305.js','release-bootstrap.v1305.js',APP_ASSET,'browser-compat.v1306.js','release-bootstrap.v1306.js','encyclopedia.v03924.js','site.v0390.css','apple-touch-icon-v0311.png','favicon-v0311.ico','favicon-v0311.png','favicon.ico','favicon.png','vulkanscope_logo_horizontal.png',
     'gpu-vendors/gpu_vendor_amd.png','gpu-vendors/gpu_vendor_arm.png','gpu-vendors/gpu_vendor_broadcom.png','gpu-vendors/gpu_vendor_huawei.png','gpu-vendors/gpu_vendor_imagination.png','gpu-vendors/gpu_vendor_intel.png','gpu-vendors/gpu_vendor_nvidia.png','gpu-vendors/gpu_vendor_qualcomm.png','gpu-vendors/gpu_vendor_samsung.png','gpu-vendors/gpu_vendor_unknown.png','gpu-vendors/gpu_vendor_vivante.png','gpu-vendors/gpu_vendor_vsi.png',
     'hdr/dolby_vision.png','hdr/dolby_vision_2.png','hdr/hdr10.svg','hdr/hdr10_plus.png','hdr/hdr10_plus_advanced.png','hdr/hdr10_plus_v1014.png','hdr/hdr_vivid.webp',
 }
@@ -86,11 +86,11 @@ def audit_source(root:Path):
     need(root.is_dir(),f'source tree missing: {root}')
     if not root.is_dir():
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    required=['index.html','config.js','report.schema.json','assets/app.v1302.js','assets/browser-compat.v1302.js','assets/release-bootstrap.v1302.js',f'assets/{APP_ASSET}','assets/browser-compat.v1303.js','assets/release-bootstrap.v1303.js','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/verify_1_2_11_compare_mobile_identity.py','tools/test_1_2_11_compare_mobile_identity_negative_mutations.py','tools/verify_1_2_12_filter_search_overlay.py','tools/test_1_2_12_filter_search_overlay_negative_mutations.py','tools/verify_1_2_13_filter_pagination_compare_audit.py','tools/test_1_2_13_filter_pagination_compare_negative_mutations.py','tools/verify_1_2_14_page_jump_browser_info.py','tools/test_1_2_14_page_jump_browser_info_negative_mutations.py','tools/verify_1_3_2_cache_pointer_browser_ui.py','tools/test_1_3_2_cache_pointer_browser_ui_negative_mutations.py','rules/1.3.2_CACHE_POINTER_BROWSER_UI_AUDIT.md','tools/verify_1_3_3_compare_direction_symmetric_motion.py','tools/test_1_3_3_compare_direction_symmetric_motion_negative_mutations.py','rules/1.3.3_COMPARE_DIRECTION_SYMMETRIC_MOTION_AUDIT.md','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml','licenses/wrangler.md','licenses/sharp.md','licenses/esbuild.md','licenses/workerd.md','licenses/nodejs.md','licenses/python.md']
+    required=['index.html','config.js','report.schema.json','assets/app.v1305.js','assets/browser-compat.v1305.js','assets/release-bootstrap.v1305.js',f'assets/{APP_ASSET}','assets/browser-compat.v1306.js','assets/release-bootstrap.v1306.js','assets/site.v0390.css','assets/encyclopedia.v03924.js','worker/src/index.js','worker/package.json','worker/wrangler.jsonc','worker/tests/contract.mjs','rules/PROJECT_RULES.md','tools/quality_gate.py','tools/repair_repository.py','tools/mark_release_ready.py','tools/verify_1_2_1_compare_temporal_detail.py','tools/verify_1_2_11_compare_mobile_identity.py','tools/test_1_2_11_compare_mobile_identity_negative_mutations.py','tools/verify_1_2_12_filter_search_overlay.py','tools/test_1_2_12_filter_search_overlay_negative_mutations.py','tools/verify_1_2_13_filter_pagination_compare_audit.py','tools/test_1_2_13_filter_pagination_compare_negative_mutations.py','tools/verify_1_2_14_page_jump_browser_info.py','tools/test_1_2_14_page_jump_browser_info_negative_mutations.py','tools/verify_1_3_2_cache_pointer_browser_ui.py','tools/test_1_3_2_cache_pointer_browser_ui_negative_mutations.py','rules/1.3.2_CACHE_POINTER_BROWSER_UI_AUDIT.md','tools/verify_1_3_3_compare_direction_symmetric_motion.py','tools/test_1_3_3_compare_direction_symmetric_motion_negative_mutations.py','tools/verify_1_3_4_filter_scrollbar_compare_chevron.py','tools/test_1_3_4_filter_scrollbar_compare_chevron_negative_mutations.py','rules/1.3.4_FILTER_SCROLLBAR_COMPARE_CHEVRON_AUDIT.md','tools/verify_1_3_5_submitted_timezone_wrap.py','tools/test_1_3_5_submitted_timezone_wrap_negative_mutations.py','rules/1.3.5_SUBMITTED_TIMEZONE_WRAP_AUDIT.md','tools/verify_1_3_6_report_detail_workspace_raw_download.py','tools/test_1_3_6_report_detail_workspace_raw_download_negative_mutations.py','rules/1.3.6_REPORT_DETAIL_WORKSPACE_RAW_DOWNLOAD_AUDIT.md','tools/pages.workflow.yml','.github/workflows/pages.yml','registry/registry_lock.json','registry/upstream/vk.xml','licenses/wrangler.md','licenses/sharp.md','licenses/esbuild.md','licenses/workerd.md','licenses/nodejs.md','licenses/python.md']
     for rel in required: need((root/rel).is_file(),f'missing required source file {rel}')
     if errors:
         print('\n'.join('FAIL '+e for e in errors)); raise SystemExit(1)
-    index=text('index.html'); app=text(f'assets/{APP_ASSET}'); compat=text('assets/browser-compat.v1303.js'); css=text('assets/site.v0390.css'); worker=text('worker/src/index.js'); rules=text('rules/PROJECT_RULES.md'); workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
+    index=text('index.html'); app=text(f'assets/{APP_ASSET}'); compat=text('assets/browser-compat.v1306.js'); css=text('assets/site.v0390.css'); worker=text('worker/src/index.js'); rules=text('rules/PROJECT_RULES.md'); workflow=text('.github/workflows/pages.yml'); workflow_template=text('tools/pages.workflow.yml')
     pkg=json.loads(text('worker/package.json')); schema=json.loads(text('report.schema.json')); static=json.loads(text('data/index.json')); lock=json.loads(text('registry/registry_lock.json')); wr=json.loads(text('worker/wrangler.jsonc'))
 
     # Release/cache identity and canonical workflow.
@@ -103,9 +103,9 @@ def audit_source(root:Path):
     for token in [f'VulkanScope Database <strong>{DB_VERSION}</strong>',f'assets/{APP_ASSET}?v={CACHE_KEY}',f'site.v0390.css?v={CACHE_KEY}',f'config.js?v={CACHE_KEY}']:
         need(token in index,f'current index identity missing: {token}')
     need(f"const DATABASE_VERSION='{DB_VERSION}',LIVE_SYNC_INTERVAL_MS=3000,RELEASE_CHECK_INTERVAL_MS=10000" in app,'frontend release/live-sync identity mismatch')
-    need('browser-compat.v1303.js?v=1303' in index and 'release-bootstrap.v1303.js?v=1303' in index and 'browserCompatibilityGate' in index,'browser compatibility/startup freshness references missing')
+    need('browser-compat.v1306.js?v=1306' in index and 'release-bootstrap.v1306.js?v=1306' in index and 'browserCompatibilityGate' in index,'browser compatibility/startup freshness references missing')
     need("chromium:84,firefox:86,safari:14.1" in compat and 'Element.prototype.getAnimations' in compat and 'window.ResizeObserver' in compat,'browser minimum/feature gate mismatch')
-    boot=text('assets/release-bootstrap.v1303.js')
+    boot=text('assets/release-bootstrap.v1306.js')
     notice='VulkanScope is not affiliated with the Khronos Group and is not an official Khronos Group project.'
     need(notice in index and notice in app,'English Khronos independence notice missing')
     need('VulkanScope projesinin Khronos Group' not in index+app,'non-English Khronos independence notice remains')
@@ -122,8 +122,8 @@ def audit_source(root:Path):
     need(pkg.get('version')==DB_VERSION,'Worker package version mismatch')
     need(static.get('databaseVersion')==DB_VERSION,'static index database version mismatch')
     need("databaseVersion:" not in worker,'legacy Worker databaseVersion refresh signal must be absent')
-    need(worker.count("databaseReleaseVersion:'1.3.3'")>=3,'Worker databaseReleaseVersion mismatch')
-    need(worker.count("workerReleaseVersion:'1.3.3'")>=3,'Worker workerReleaseVersion mismatch')
+    need(worker.count("databaseReleaseVersion:'1.3.6'")>=3,'Worker databaseReleaseVersion mismatch')
+    need(worker.count("workerReleaseVersion:'1.3.6'")>=3,'Worker workerReleaseVersion mismatch')
     need(worker.count("frontendUpdateSignal:'same-origin-pages-marker'")>=2,'Worker frontendUpdateSignal metadata missing')
 
     # Current Vulkan/producer metadata and immutable evidence model.
@@ -198,8 +198,12 @@ def audit_source(root:Path):
     need("type:'application/json;charset=utf-8'" in app and 'URL.createObjectURL(blob)' in app,'local JSON download serialization missing')
     need('/v1/export' not in worker and '/v1/reports/export' not in worker,'unexpected JSON export Worker endpoint added')
 
-    # 1.3.3 Compare direction / symmetric motion contract.
-    need("function setCompareMinimizeControl(toggle,minimized)" in app and "minimized?'M6 15l6-6 6 6':'M6 9l6 6 6-6'" in app,'Compare state-specific chevron geometry missing')
+    # 1.3.4 filter scrollbar / Compare chevron contract.
+    need("scrollable=visible&&max>2" in app and "rail.classList.toggle('is-scrollable',scrollable)" in app,'surface scrollbar overflow-state owner missing')
+    need('.custom-select.open .custom-select-menu>.surface-scrollbar:not(.is-scrollable){opacity:0!important;visibility:hidden!important;pointer-events:none!important}' in css,'short filter rail hide rule missing')
+    need('.custom-select.open .custom-select-menu>.surface-scrollbar.is-scrollable{opacity:1;visibility:visible}' in css,'overflowing filter rail reveal rule missing')
+    need('.custom-select.open .custom-select-menu>.surface-scrollbar{opacity:1;visibility:visible}' not in css,'unconditional filter rail reveal remains')
+    need("function setCompareMinimizeControl(toggle,minimized)" in app and "minimized?'M6 9l6 6 6-6':'M6 15l6-6 6 6'" in app,'Compare state-specific chevron geometry missing')
     need('.compare-workspace.is-minimized .compare-minimize-toggle svg{transform:rotate(180deg)}' not in css,'Compare chevron is double-inverted by minimized CSS rotation')
     need('.compare-minimize-toggle svg{transform:none}' in css,'Compare chevron single-direction-source CSS guard missing')
     need('const animatePagedSurfaceIn=(host,direction=0)=>' in app and 'host.getAnimations?.().forEach' in app and "prefersReducedMotion()" in app,'shared reduced-motion-aware pagination motion primitive missing')
@@ -208,12 +212,28 @@ def audit_source(root:Path):
     need('licenseViewerMotionToken' in app and "dialog.classList.add('open')" in app and "dialog.classList.remove('open')" in app and "backdrop?.classList.add('open')" in app and "backdrop?.classList.remove('open')" in app,'symmetric License viewer state motion missing')
     need('.license-viewer-dialog.open' in css and '.license-viewer-backdrop.open' in css,'License viewer open-state CSS missing')
     need('@media(prefers-reduced-motion:reduce){.license-viewer-backdrop,.license-viewer-dialog{transition:none!important}' in css,'License viewer reduced-motion override missing')
-    need('## Release 1.3.3 Compare-direction / symmetric-motion requirements' in rules,'1.3.3 rules section missing')
-    need("'assets/app.v1302.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1303.js'" in text('tools/build_pages_artifact.py'),'Pages immediate-predecessor/current app bridge mismatch')
-    need("PREDECESSOR_BRIDGE = {'app.v1302.js','browser-compat.v1302.js','release-bootstrap.v1302.js'}" in text('tools/repair_repository.py'),'1.3.3 repository predecessor bridge mismatch')
+    need('## Release 1.3.4 filter-scrollbar / Compare-chevron requirements' in rules,'1.3.4 rules section missing')
+    need('## Release 1.3.5 Submitted time-zone wrapping requirements' in rules,'1.3.5 rules section missing')
+    need('## Release 1.3.6 report-detail evidence-workspace / Raw-report download requirements' in rules,'1.3.6 rules section missing')
+    need('const submittedZoneMarkup=zone=>' in app and 'submitted-zone-season' in app,'Submitted seasonal time-zone line helper missing')
+    need('.submitted-stack .submitted-zone-value{white-space:normal' in css and '.submitted-zone-season{display:block' in css,'Submitted time-zone wrapping CSS missing')
+    need("'assets/app.v1305.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1306.js'" in text('tools/build_pages_artifact.py') and "'assets/app.v1304.js'" not in text('tools/build_pages_artifact.py'),'Pages immediate-predecessor/current app bridge mismatch')
+    need("PREDECESSOR_BRIDGE = {'app.v1305.js','browser-compat.v1305.js','release-bootstrap.v1305.js'}" in text('tools/repair_repository.py'),'1.3.6 repository predecessor bridge mismatch')
     for name,wf in [('.github/workflows/pages.yml',workflow),('tools/pages.workflow.yml',workflow_template)]:
-        need(wf.count('python tools/verify_1_3_3_compare_direction_symmetric_motion.py')>=3,f'{name}: 1.3.3 verifier missing from release stages')
-        need(wf.count('python tools/test_1_3_3_compare_direction_symmetric_motion_negative_mutations.py')>=3,f'{name}: 1.3.3 negative suite missing from release stages')
+        need(wf.count('python tools/verify_1_3_6_report_detail_workspace_raw_download.py')>=3,f'{name}: 1.3.6 verifier missing from release stages')
+        need(wf.count('python tools/test_1_3_6_report_detail_workspace_raw_download_negative_mutations.py')>=3,f'{name}: 1.3.6 negative suite missing from release stages')
+
+    # 1.3.6 report-detail evidence workspace / Raw-report download contract.
+    need('const DETAIL_TAB_META=' in app and 'const detailWorkspace=' in app and 'const detailPanel=' in app,'1.3.6 detail evidence-workspace primitives missing')
+    need("if(t==='overview')" in app and 'detail-overview-grid' in app,'Overview preservation branch missing')
+    for tab in ('registry','properties','limits','features','formats','memory','queues','surface','display','extensions','instance','profiles','raw'):
+        need(f"detailWorkspace('{tab}'" in app,f'1.3.6 redesigned report tab missing: {tab}')
+    need("const SURFACE_SCROLL_SELECTOR='.settings-drawer-body,.custom-select-scroll,.coverage-report-dialog-body,.modal-paged-list,.license-viewer-body,.raw-report-scroll'" in app,'Raw-report shared surface-scrollbar registration missing')
+    need('id="downloadRawReport"' in app and 'downloadRawReport(r,button)' in app,'Raw-report download action missing')
+    need("new Blob([text],{type:'text/plain;charset=utf-8'})" in app and "function downloadRawReport(r,button){const text=String(r?.reportText??''),label=" in app,'Raw-report exact UTF-8 Blob download contract missing')
+    need('source text is never replaced or discarded' in app and 'without normalization or reformatting' in app,'Raw-report evidence explanation missing')
+    need('.detail-section-intro' in css and '.detail-evidence-panel' in css and '.raw-report-scroll' in css,'1.3.6 report-detail design CSS missing')
+    need('@media(prefers-reduced-motion:reduce){.detail-evidence-panel,.raw-report-scroll,.detail-section-stat,.detail-section-icon{transition:none!important}' in css,'1.3.6 detail-workspace reduced-motion override missing')
 
     # Browser/Worker security and resource ceilings.
     for token in ["default-src 'self'","connect-src 'self' https://vulkanscope-database-api.vulkanscope.workers.dev","object-src 'none'","base-uri 'none'","form-action 'none'","frame-ancestors 'none'"]:
@@ -236,7 +256,7 @@ def audit_source(root:Path):
 
     # Source/package hygiene and local-resource integrity.
     versioned=sorted(p.name for p in (root/'assets').glob('app.v*.js') if p.is_file())
-    need(versioned==['app.v1302.js',APP_ASSET],f'exactly current + predecessor versioned frontend apps are permitted: {versioned}')
+    need(versioned==['app.v1305.js',APP_ASSET],f'exactly current + predecessor versioned frontend apps are permitted: {versioned}')
     forbidden_dirs={'.gradle','build','dist','__pycache__','.idea','node_modules','.wrangler','_site','.pytest_cache','.mypy_cache','.ruff_cache','coverage','.tmp','tmp'}
     bad_names={'.DS_Store','Thumbs.db','Desktop.ini','local.properties','.dev.vars','.env'}
     for current,dirs,names in os.walk(root,topdown=True,followlinks=False):
@@ -259,7 +279,7 @@ def audit_source(root:Path):
         except Exception as exc: errors.append(f'Python syntax {py.name}: {exc}')
     node=shutil.which('node')
     if node:
-        for rel in [f'assets/{APP_ASSET}','assets/browser-compat.v1303.js','assets/encyclopedia.v03924.js','worker/src/index.js','worker/tests/contract.mjs']:
+        for rel in [f'assets/{APP_ASSET}','assets/browser-compat.v1306.js','assets/encyclopedia.v03924.js','worker/src/index.js','worker/tests/contract.mjs']:
             r=subprocess.run([node,'--check',str(root/rel)],capture_output=True,text=True)
             if r.returncode: errors.append(f'node --check {rel}: {r.stderr.strip()}')
         for rel,cwd in [('tools/test_routes.mjs',root),('tools/test_compare_contract.mjs',root),('worker/tests/contract.mjs',root/'worker')]:

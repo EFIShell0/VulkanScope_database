@@ -1,27 +1,31 @@
-# VulkanScope Database 1.3.3 build / regression audit
+# VulkanScope Database 1.3.6 build / regression audit
 
 ## Scope
 
-Database 1.3.3 is a presentation-only successor to the immutable 1.3.2 source release (SHA-256 `77c611aa89f26c6f3de3ed09046f7f54d3c99b35e47f93df0e5ebb88798afa73`). It fixes Compare minimize/expand direction ownership and adds symmetric UI motion to the local License viewer plus filter/modal page changes. D1 schema/migrations, stored report bytes/hashes, normalizer 16, Vulkan 1.4.362/header 362, producer floor and browser floors are unchanged.
+Database 1.3.6 is a presentation/export-only successor to immutable Database 1.3.5 (ZIP SHA-256 `92c86c9013f4bab4ea8376e5db07c965b035843313c893561b047957e5189e97`). D1 schema/migrations, stored report payload bytes/hashes, canonical report IDs, normalizer 16, Vulkan 1.4.362/header 362, VulkanScope 1.2.5 submission floor and validated browser floors are unchanged.
 
-## Root cause and fix
+## Report-detail workspace redesign
 
-The Compare helper already rewrote its SVG path according to state, but CSS also rotated the same SVG under `.is-minimized`. Those two state transformations cancelled each other, leaving a visually downward chevron in both states. 1.3.3 keeps JavaScript path geometry as the only direction owner: full/Minimize points down, minimized/Expand points up, and reset/unpin restores down.
+The established Overview tab is intentionally retained. Registry, Properties, Limits, Features, Formats, Memory, Queues, Surface, Display & HDR, Extensions, Instance, Profiles and Raw report now use a common evidence-workspace visual language with section identity surfaces, bounded summary metrics, clear evidence cards and explicit empty states. Each category still renders its own native evidence and canonical Vulkan/raw values; the redesign does not collapse query availability into returned values or infer unsupported state from missing evidence.
 
-License viewer visibility now uses symmetric opacity/transform transitions with a monotonic motion token so a stale close timer cannot hide a viewer that has already reopened. Searchable custom-selector pagination and bounded modal pagination use one short direction-aware compositor animation after state/DOM commit. Reduced-motion skips decorative motion while preserving final state, focus and keyboard/pointer semantics.
+Existing local table-scroll controls remain authoritative for wide technical tables. Responsive rules constrain the new headers, statistics, panel headings, raw values and controls on desktop/mobile without introducing document-level horizontal scrolling. Decorative transitions remain short and are disabled by `prefers-reduced-motion`.
+
+## Raw report
+
+Raw report now explains that `reportText` is the preserved human-readable source evidence beside normalized/structured data. **Download raw report** builds a local `text/plain;charset=utf-8` Blob directly from the stored `reportText` string and downloads it without newline insertion, line-ending normalization, network export, D1 mutation or report-identity changes.
+
+The Raw report text host is registered with the same first-party demand-driven surface-scrollbar system used by Settings, listboxes and dialogs. Native scrollbar chrome is hidden only after enhancement and the themed rail appears only for real overflow.
 
 ## Release identities
 
-- Database / frontend / Worker: 1.3.3
-- Current app: `assets/app.v1303.js`
-- Current browser gate: `assets/browser-compat.v1303.js`
-- Current release bootstrap: `assets/release-bootstrap.v1303.js`
-- Cache key: 1303
-- Immediate CDN transition bridge: 1.3.2 app/browser/bootstrap triplet only
-- Immutable predecessor ZIP: Database 1.3.2, SHA-256 `77c611aa89f26c6f3de3ed09046f7f54d3c99b35e47f93df0e5ebb88798afa73`
+- Database / frontend / Worker: 1.3.6
+- Current app: `assets/app.v1306.js`
+- Current browser gate: `assets/browser-compat.v1306.js`
+- Current release bootstrap: `assets/release-bootstrap.v1306.js`
+- Cache key: 1306
+- Immediate CDN transition bridge: immutable 1.3.5 app/browser/bootstrap triplet only
+- Immutable predecessor ZIP: Database 1.3.5, SHA-256 `92c86c9013f4bab4ea8376e5db07c965b035843313c893561b047957e5189e97`
 
 ## Mandatory release gates
 
-`tools/quality_gate.py` runs repository repair/check, immutable regression verification, the 1.3.3 contract verifier, negative mutations, source audit, JavaScript syntax/Worker contract checks, D1 migration replay, Pages allow-list staging, and the release-ready transition audit. The packaging tool builds a deterministic ZIP and re-runs strict regression/source/1.3.3 verification against a clean extraction.
-
-The 1.3.3 verifier specifically rejects double Compare chevron inversion, missing state-specific SVG geometry, absent filter/modal page motion, asymmetric License viewer state motion, missing reduced-motion handling, stale Pages predecessor bridging, release-identity drift and missing CI gates.
+`tools/quality_gate.py` runs repository repair/check, immutable 1.3.5 regression verification, the 1.3.6 focused verifier and negative mutations, source audit, JavaScript syntax/Worker contract checks, D1 migration replay, Pages allow-list staging and the release-ready transition audit. The packaging tool creates a deterministic ZIP and reruns strict regression/source/1.3.6 verification against a clean extraction.

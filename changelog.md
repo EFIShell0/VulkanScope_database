@@ -1,5 +1,31 @@
 # VulkanScope Database changelog
 
+## 1.3.6
+
+- Redesigns every per-report detail tab except **Overview**—Registry, Properties, Limits, Features, Formats, Memory, Queues, Surface, Display & HDR, Extensions, Instance, Profiles and Raw report—into a consistent evidence workspace with clearer section identity, compact summary metrics, separated evidence panels and explicit empty states.
+- Keeps canonical Vulkan tokens/raw values, query availability versus returned values, support/availability semantics and all existing technical evidence intact; the redesign is presentation-only and preserves the established Overview layout.
+- Keeps wide technical tables on the existing first-party horizontal table scroller and adds responsive containment for new detail headers/panels on desktop and mobile, including reduced-motion behavior.
+- Adds a Raw report explanation describing `reportText` versus normalized/structured evidence and a **Download raw report** action that saves the exact stored `reportText` locally as UTF-8 TXT without reformatting or a Worker export endpoint.
+- Replaces Raw report's old native scrollbar presentation with the same demand-driven custom surface scrollbar used elsewhere; the rail appears only when the raw text actually overflows.
+- Preserves the 1.3.5 Submitted time-zone wrapping and the 1.3.4 filter-scrollbar / Compare-chevron contracts.
+- Advances Database/frontend/Worker identity to 1.3.6 / `app.v1306.js` / `browser-compat.v1306.js` / `release-bootstrap.v1306.js` / cache key 1306. No D1 migration, report payload/hash, normalizer, Vulkan baseline, producer-floor or browser-floor change is introduced.
+
+## 1.3.5
+
+- Fixes the expanded Reports **Submitted → Time zone** value being kept on one line by an inherited `white-space: nowrap`, which could clip seasonal text at the Device-column boundary.
+- Keeps the IANA zone and GMT offset complete and wrap-safe; when a forced seasonal mode is present, **Daylight / summer offset** or **Standard / winter offset** is rendered on a dedicated second line.
+- Preserves Date and Time as single-line values, server-authored `submitted_at` semantics, sorting/age filters, Compare metadata, Submitted disclosure animation and table scrolling.
+- Preserves the 1.3.4 demand-driven filter scrollbar and Compare chevron behavior.
+- Advances Database/frontend/Worker identity to 1.3.5 / `app.v1305.js` / `browser-compat.v1305.js` / `release-bootstrap.v1305.js` / cache key 1305. No D1 migration, report payload/hash, normalizer, Vulkan baseline, producer-floor or browser-floor change is introduced.
+
+## 1.3.4
+
+- Fixes searchable filter menus showing the custom vertical scrollbar when the option list does not actually overflow. Opening a menu no longer forces the rail visible; the existing `is-scrollable` state derived from real `scrollHeight - clientHeight` overflow is now authoritative.
+- Keeps genuine long filter lists fully scrollable with the existing arrows, track, thumb, drag, wheel/touch, keyboard and reduced-motion behavior.
+- Reverses the Compare state chevrons to the requested semantics: expanded/full **Minimize** points up; minimized/closed **Expand** points down. Label, ARIA state and reset/unpin behavior remain synchronized through one JavaScript state owner.
+- Preserves the 1.3.3 License viewer and filter/modal pagination motion behavior, including `prefers-reduced-motion`.
+- Advances Database/frontend/Worker identity to 1.3.4 / `app.v1304.js` / `browser-compat.v1304.js` / `release-bootstrap.v1304.js` / cache key 1304. No D1 migration, report payload/hash, normalizer, Vulkan baseline, producer-floor or browser-floor change is introduced.
+
 ## 1.3.3
 
 - Fixes Compare Minimize/Expand chevron direction by removing the duplicate CSS rotation that cancelled the state-specific SVG path change. Full/Minimize now points down and minimized/Expand points up, including reset/unpin behavior.
