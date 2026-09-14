@@ -1,3 +1,14 @@
+# VulkanScope Database changelog
+
+## 1.3.3
+
+- Fixes Compare Minimize/Expand chevron direction by removing the duplicate CSS rotation that cancelled the state-specific SVG path change. Full/Minimize now points down and minimized/Expand points up, including reset/unpin behavior.
+- Keeps the upper Compare workspace on its existing smooth collapse/expand path while preserving A/B identity, evidence, filters and routing semantics.
+- Adds symmetric smooth open/close motion to the local License viewer with stale-close protection and correct focus restoration.
+- Adds short direction-aware page transitions to searchable filter pagination and bounded modal pagination for Previous, Next and direct page jumps.
+- Honors reduced-motion preferences by skipping decorative transitions while preserving the same authoritative state changes and accessibility behavior.
+- Advances Database/frontend/Worker identity to 1.3.3 / `app.v1303.js` / `browser-compat.v1303.js` / `release-bootstrap.v1303.js` / cache key 1303. No D1 migration, report payload/hash, normalizer, Vulkan baseline or browser-floor change is introduced.
+
 ## 1.3.1
 
 - Keeps all first-party Database UI copy in English and replaces the Khronos independence disclosure with the English wording in both the footer and Settings → Information.
