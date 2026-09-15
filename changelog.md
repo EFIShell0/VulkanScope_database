@@ -1,5 +1,14 @@
 # VulkanScope Database changelog
 
+## 1.4.0
+
+- Raises the Worker-enforced new-report submission floor to **VulkanScope 1.4.0**. VulkanScope 1.4.0 remains accepted at the floor; older stored reports remain readable and comparable.
+- Reorders Settings categories to **Favorites, Preferences, Internet, Information**, with Favorites as the initial category.
+- Masks observed IPv4/IPv6 address values with a reversible animated mosaic by default. Clicking an observed address reveals it; clicking again, leaving Internet, closing Settings, or receiving a changed address restores masking. Unobserved address families remain explicitly unobserved.
+- Prevents legacy/native filter controls from flashing during initial report loading by keeping the authoritative filter panel HTML-hidden until the first rendered workspace owns visibility.
+- Preserves the 1.3.10 searchable/paged Country / region and Time zone selector behavior and all existing evidence semantics.
+- Advances Database/frontend/Worker identity to 1.4.0 / `app.v1400.js` / `browser-compat.v1400.js` / `release-bootstrap.v1400.js` / `site.v1400.css` / cache key 1400. No D1 migration, stored-report rewrite, report-hash rewrite, normalizer change or Vulkan evidence-inference change is introduced.
+
 ## 1.3.6
 
 - Redesigns every per-report detail tab except **Overview**—Registry, Properties, Limits, Features, Formats, Memory, Queues, Surface, Display & HDR, Extensions, Instance, Profiles and Raw report—into a consistent evidence workspace with clearer section identity, compact summary metrics, separated evidence panels and explicit empty states.

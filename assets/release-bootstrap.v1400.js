@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const LOCAL='1.3.9',TIMEOUT=2400,html=document.documentElement,EARLY_RETRIES=[2500,6500,15000],STEADY_RETRY=30000;
+const LOCAL='1.4.0',TIMEOUT=2400,html=document.documentElement,EARLY_RETRIES=[2500,6500,15000],STEADY_RETRY=30000;
 html.classList.add('release-check-pending');
 let revealed=false,busy=false,navigating=false,steadyTimer=0;
 const reveal=()=>{if(revealed)return;revealed=true;html.classList.remove('release-check-pending')};
