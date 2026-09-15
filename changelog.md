@@ -1,3 +1,14 @@
+# Changelog
+
+## 1.4.1
+
+- Decouples Active address, IPv4, IPv6 and Pseudo IPv4 privacy controls so each Show/Hide action affects only its own row.
+- Replaces the coarse striped address mask with a compact glass-style control, opaque grid mosaic, blurred hidden value, eye icon and smoother reveal/remask motion.
+- Remasks all address controls when Settings closes or Internet is left; changed observations reset only their corresponding reveal slot.
+- Keeps the complete report-filter workspace hidden from initial parse through database/preload construction, then reveals only the finalized current custom-filter layout after the first committed render.
+- Advances Database/frontend/Worker identity to 1.4.1 / `app.v1401.js` / `browser-compat.v1401.js` / `release-bootstrap.v1401.js` / `site.v1401.css` / cache key 1401 while retaining the 1.4.0 bridge.
+- Keeps the VulkanScope 1.4.0+ new-submission floor and all D1/report/evidence semantics unchanged.
+
 # VulkanScope Database changelog
 
 ## 1.4.0

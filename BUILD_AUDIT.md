@@ -1,28 +1,25 @@
-# VulkanScope Database 1.4.0 build / regression audit
+# VulkanScope Database 1.4.1 build / regression audit
 
-Database 1.4.0 succeeds immutable Database 1.3.10 (ZIP SHA-256 `3f9932e9661ec93398c6a608234597c1c1fbf20ab2a97bf93dd87364ffdf3581`). D1 schema/migrations, stored report bytes/hashes, canonical report IDs, normalizer 16, Vulkan 1.4.362/header 362 and validated browser floors are unchanged. The new-report producer floor intentionally advances from VulkanScope 1.2.5 to VulkanScope 1.4.0.
+Database 1.4.1 succeeds immutable Database 1.4.0 (ZIP SHA-256 `c50af2d9597a86a81f6a24c6f1a9208be3bae325a7a9cf1d62894deaf94322ca`). D1 schema/migrations, stored report bytes/hashes, canonical report IDs, normalizer 16, Vulkan 1.4.362/header 362, validated browser floors and the VulkanScope 1.4.0 new-submission floor are unchanged.
 
-## Release focus
+## Release corrections
 
-- Enforce VulkanScope 1.4.0+ only for new POST submissions while retaining historical GET readability.
-- Order Settings as Favorites, Preferences, Internet, Information.
-- Start observed IPv4/IPv6 values mosaicked; reveal/remask smoothly and reset concealment when leaving Internet/closing Settings or when an observed value changes.
-- Keep unobserved address families unobserved rather than fabricating a second family.
-- Hide the native filter panel in initial HTML so old filter controls cannot flash during report-set loading; normal render ownership reveals the enhanced filters afterward.
-- Preserve the 1.3.10 searchable Country / region and Time zone 50-option paging contract.
+- Active address, IPv4, IPv6 and Pseudo IPv4 now own independent privacy reveal state; revealing one row cannot reveal a duplicate address row.
+- The address privacy control uses an opaque grid mosaic, blurred hidden text, local eye icon and compact Show/Hide action with smooth reveal/remask motion plus reduced-motion support.
+- Closing Settings, leaving Internet or changing an observed address remasks the relevant controls according to the 1.4.1 rules.
+- The report filter workspace is parse-time suppressed with `body.database-loading` and remains hidden until the first report-backed render completes, eliminating the old pre-grouped filter flash during preload/report construction.
+- VulkanScope 1.4.0+ remains the POST floor; historical lower-version reports remain GET-readable.
 
 ## Release identity
 
-- Database / frontend / Worker: 1.4.0
-- Current app: `assets/app.v1400.js`
-- Current browser gate: `assets/browser-compat.v1400.js`
-- Current release bootstrap: `assets/release-bootstrap.v1400.js`
-- Current stylesheet: `assets/site.v1400.css`
-- Cache key: 1400
-- Immediate JS cache bridge: immutable 1.3.10 triplet
-- Immediate stylesheet bridge: `assets/site.v1309.css`
-- New D1 migration: none
+- Database / frontend / Worker: 1.4.1
+- Current app: `assets/app.v1401.js`
+- Current browser gate: `assets/browser-compat.v1401.js`
+- Current release bootstrap: `assets/release-bootstrap.v1401.js`
+- Current stylesheet: `assets/site.v1401.css`
+- Cache key: 1401
+- Immediate bridge: v1400 JS triplet + `site.v1400.css`
 
-## Gates
+## Verification
 
-`tools/quality_gate.py` runs repository repair/check, immutable 1.3.10 regression verification, the 1.4.0 focused verifier and negative mutations, source audit, JavaScript/Worker checks, D1 replay, Pages allow-list staging and release-ready transition audit. Deterministic packaging repeats strict regression/source/release verification against a clean extraction.
+`tools/quality_gate.py` runs repository repair/check, immutable 1.4.0 regression verification, the 1.4.1 focused verifier and negative mutations, source audit, JavaScript/Worker checks, D1 replay, Pages allow-list staging and release-ready transition audit. Deterministic packaging repeats strict regression/source/release verification against a clean extraction.
