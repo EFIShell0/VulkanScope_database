@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.4.2
+
+- Prevents the application shell from painting incomplete navigation, hero, metrics, content and footer geometry while the report-backed first render is still being assembled; startup now shows only the stable centered Database loading surface until layout is ready.
+- Separates the parse-time `startup-layout-hold` from the existing `database-loading` filter hold so fatal startup can still reveal a useful error while normal startup releases only after the first committed `render()`.
+- Refines IP privacy controls with a compact shield/status tile, stronger opaque pixel mosaic, clearer eye Show/Hide action and IPv4/IPv6 family accents while keeping Active/IPv4/IPv6/Pseudo IPv4 reveal state independent.
+- Preserves automatic remasking when Internet is left, Settings closes or an observed address changes; unobserved address families remain plain explanatory text.
+- Honors reduced-motion for both the shell reveal and mosaic sheen without changing masking/privacy state.
+- Advances Database/frontend/Worker identity to 1.4.2 / `app.v1402.js` / `browser-compat.v1402.js` / `release-bootstrap.v1402.js` / `site.v1402.css` / cache key 1402 while retaining the 1.4.1 JavaScript bridge.
+- Keeps the VulkanScope 1.4.0+ new-submission floor and all D1/report/evidence semantics unchanged.
+
 ## 1.4.1
 
 - Decouples Active address, IPv4, IPv6 and Pseudo IPv4 privacy controls so each Show/Hide action affects only its own row.
