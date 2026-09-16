@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.5
+
+- Makes observed IP address privacy surfaces non-interactive; only the explicit Show/Hide button can reveal or remask each independent address slot.
+- Adds the shared animated X clear action to every enhanced searchable filter/listbox; it appears only for a non-empty query, clears the full query, resets filter pagination and keeps search focus.
+- Preserves the 1.4.4 viewport-fixed scrollbar/page-progress correction and all report/Worker/D1/Vulkan evidence semantics.
+- Advances Database/frontend/Worker identity to 1.4.5 / `app.v1405.js` / `browser-compat.v1405.js` / `release-bootstrap.v1405.js` / `site.v1405.css` / cache key 1405 while retaining the 1.4.4 JavaScript bridge.
+
 ## 1.4.4
 - Fixes the page scrollbar/thumb geometry regression caused by the startup reveal transform changing the containing block of fixed scroll UI.
 - Makes the startup app-root reveal opacity-only so the right viewport rail remains viewport-fixed on desktop and mobile.
