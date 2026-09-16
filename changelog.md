@@ -1,13 +1,20 @@
 # Changelog
 
-## 1.4.6
+## 1.4.7
+- Keeps the VulkanScope 1.4.3+ server-side new-submission floor.
+- Prevents an older deployed Worker from downgrading the visible Producer/query baseline and Compatible producers cards.
+- Pins deploy-time preload producer metadata to the release-authored VulkanScope 1.4.3 contract.
+- Advances frontend/Worker source release identity and cache-busted assets to 1.4.7 / v1407.
+- Keeps D1, stored payloads/hashes, normalizer 16 and Vulkan 1.4.362 evidence semantics unchanged.
+
+## 1.4.7
 
 - Raises the Worker-enforced new-report submission floor to **VulkanScope 1.4.3**.
 - Accepts VulkanScope 1.4.3 at the floor and rejects VulkanScope 1.4.2 and every lower producer before generic schema validation.
 - Keeps historical stored reports below 1.4.3 readable without deleting, rewriting, renormalizing or rehashing them.
 - Updates Worker/static producer metadata to VulkanScope 1.4.3 · Vulkan 1.4.362 and compatibility metadata to VulkanScope 1.4.3+.
 - Preserves the 1.4.5 action-only IP privacy controls, searchable-filter clear actions, viewport scroll fixes and all Vulkan® evidence semantics.
-- Advances Database/frontend/Worker identity to 1.4.6 / `app.v1406.js` / `browser-compat.v1406.js` / `release-bootstrap.v1406.js` / `site.v1406.css` / cache key 1406 while retaining the 1.4.5 JavaScript bridge.
+- Advances Database/frontend/Worker identity to 1.4.7 / `app.v1407.js` / `browser-compat.v1407.js` / `release-bootstrap.v1407.js` / `site.v1407.css` / cache key 1407 while retaining the 1.4.5 JavaScript bridge.
 
 ## 1.4.5
 
