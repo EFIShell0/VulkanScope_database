@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.4
+- Fixes the page scrollbar/thumb geometry regression caused by the startup reveal transform changing the containing block of fixed scroll UI.
+- Makes the startup app-root reveal opacity-only so the right viewport rail remains viewport-fixed on desktop and mobile.
+- Restores the fixed top page-progress line while scrolling and raises it above the sticky header.
+- Advances Database/frontend/Worker identity to 1.4.4 / `app.v1404.js` / `browser-compat.v1404.js` / `release-bootstrap.v1404.js` / `site.v1404.css` / cache key 1404 while retaining the 1.4.3 JavaScript bridge.
+
 ## 1.4.3
 
 - Fixes the startup loader layout bug seen during page reload: the runtime `database-loading` body-state class no longer collides with the loading panel's visual class, so the body is never styled as a small flex card.

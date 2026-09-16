@@ -1273,3 +1273,11 @@
 - Browser-visible current assets advance to `assets/app.v1403.js`, `assets/browser-compat.v1403.js`, `assets/release-bootstrap.v1403.js` and `assets/site.v1403.css`, cache key 1403. The immutable v1402 JavaScript triplet is the immediate predecessor bridge; older JavaScript triplets are not shipped in the strict package.
 - `tools/verify_1_4_3_startup_loader_address_fit.py`, its negative-mutation suite, immutable 1.4.2 regression verification, source/Pages audits, Worker transport contract, D1 migration replay and deterministic strict-package construction are mandatory release gates.
 - No D1 migration, report-payload rewrite, report-hash rewrite, normalizer increment, registry baseline change, Compare semantic change or producer-admission change is permitted for this presentation-only correction.
+
+## Release 1.4.4 viewport-scroll / page-progress containing-block requirements
+- Database 1.4.4 fixes the recorded page-scroll chrome regression without changing report, Worker, D1, Vulkan, producer-floor or privacy semantics.
+- The root cause is CSS containing-block creation: a `transform` on the startup-revealed `#appRoot` changes the containing block for descendant `position: fixed` UI. The viewport scrollbar and top page-progress indicator must remain fixed to the browser viewport, never to the full document box.
+- `#appRoot` startup reveal may animate opacity, but it must not animate or retain `transform`, `filter`, `perspective` or another containing-block-producing effect while it contains `#pageProgress` or `#viewportScrollbar`.
+- The authoritative viewport rail continues to derive thumb size and position from actual document `scrollHeight`, viewport height and `scrollTop`. Its track spans the viewport between the explicit up/down controls; the thumb must represent the visible fraction rather than filling the viewport for a multi-screen document.
+- The top page-progress line remains `position: fixed` at the viewport top and must remain visible as scroll progress increases instead of scrolling away with document content.
+- Desktop and mobile retain the same first-party scrollbar controls, endpoint disabled states, keyboard/pointer behavior, native-scroll authority and `prefers-reduced-motion` behavior.
