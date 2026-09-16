@@ -8,8 +8,8 @@ root=Path(args.artifact).resolve()
 marker=root/'data'/'release.json'
 if not marker.is_file(): raise SystemExit(f'missing staged release marker: {marker}')
 data=json.loads(marker.read_text(encoding='utf-8'))
-expected={'schemaVersion':2,'databaseVersion':'1.4.2','releaseReady':False,'appAsset':'assets/app.v1402.js','cacheKey':'1402'}
+expected={'schemaVersion':2,'databaseVersion':'1.4.3','releaseReady':False,'appAsset':'assets/app.v1403.js','cacheKey':'1403'}
 if data!=expected: raise SystemExit(f'unexpected source/staged release marker before ready transition: {data!r}')
 data['releaseReady']=True
 marker.write_text(json.dumps(data,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
-print(f'Marked staged VulkanScope Database 1.4.2 artifact release-ready: {marker}')
+print(f'Marked staged VulkanScope Database 1.4.3 artifact release-ready: {marker}')

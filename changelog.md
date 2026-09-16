@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.3
+
+- Fixes the startup loader layout bug seen during page reload: the runtime `database-loading` body-state class no longer collides with the loading panel's visual class, so the body is never styled as a small flex card.
+- Anchors the startup loading panel directly to the viewport center while `startup-layout-hold` is active, independent of shell width, report count, browser zoom and mobile/desktop breakpoints.
+- Makes Active address, IPv4, IPv6 and Pseudo IPv4 rows use the full Settings content width; revealed addresses are no longer ellipsized and wrap safely when a narrow mobile viewport cannot fit the complete value on one line.
+- Keeps the opaque mosaic, independent Show/Hide state, remasking rules and reduced-motion privacy behavior unchanged.
+- Advances Database/frontend/Worker identity to 1.4.3 / `app.v1403.js` / `browser-compat.v1403.js` / `release-bootstrap.v1403.js` / `site.v1403.css` / cache key 1403 while retaining the 1.4.2 JavaScript bridge.
+- Keeps the VulkanScope 1.4.0+ new-submission floor and all D1/report/evidence semantics unchanged.
+
 ## 1.4.2
 
 - Prevents the application shell from painting incomplete navigation, hero, metrics, content and footer geometry while the report-backed first render is still being assembled; startup now shows only the stable centered Database loading surface until layout is ready.
