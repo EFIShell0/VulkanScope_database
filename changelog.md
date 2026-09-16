@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.6
+
+- Raises the Worker-enforced new-report submission floor to **VulkanScope 1.4.3**.
+- Accepts VulkanScope 1.4.3 at the floor and rejects VulkanScope 1.4.2 and every lower producer before generic schema validation.
+- Keeps historical stored reports below 1.4.3 readable without deleting, rewriting, renormalizing or rehashing them.
+- Updates Worker/static producer metadata to VulkanScope 1.4.3 · Vulkan 1.4.362 and compatibility metadata to VulkanScope 1.4.3+.
+- Preserves the 1.4.5 action-only IP privacy controls, searchable-filter clear actions, viewport scroll fixes and all Vulkan® evidence semantics.
+- Advances Database/frontend/Worker identity to 1.4.6 / `app.v1406.js` / `browser-compat.v1406.js` / `release-bootstrap.v1406.js` / `site.v1406.css` / cache key 1406 while retaining the 1.4.5 JavaScript bridge.
+
 ## 1.4.5
 
 - Makes observed IP address privacy surfaces non-interactive; only the explicit Show/Hide button can reveal or remask each independent address slot.

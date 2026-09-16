@@ -1,1 +1,11 @@
-{"schemaVersion":1,"databaseVersion":"1.4.5","normalizerVersion":16,"publishedVulkanSpec":"Vulkan 1.4.362 (2026-09-04)","vulkanRegistryBaseline":"VulkanScope producer/query baseline 1.4.362","producerQueryBaseline":"VulkanScope 1.4.0 · Vulkan 1.4.362","compatibleProducer":"VulkanScope 1.4.0+ · schema 2 / technical report 3","generatedAt":"2026-09-16T07:28:12.924754+00:00","reports":[]}
+{
+  "schemaVersion": 1,
+  "databaseVersion": "1.4.6",
+  "normalizerVersion": 16,
+  "publishedVulkanSpec": "Vulkan 1.4.362 (2026-09-04)",
+  "vulkanRegistryBaseline": "VulkanScope producer/query baseline 1.4.362",
+  "producerQueryBaseline": "VulkanScope 1.4.3 · Vulkan 1.4.362",
+  "compatibleProducer": "VulkanScope 1.4.3+ · schema 2 / technical report 3",
+  "generatedAt": "2026-09-16T08:42:09.512978+00:00",
+  "reports": []
+}
