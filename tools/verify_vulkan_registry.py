@@ -22,7 +22,7 @@ by_name={e.get('name'):e for e in exts}
 e=by_name.get(lock['requiredCurrentExtension']);check(e is not None,'required current Vulkan extension missing')
 if e is not None:
     names={x.get('name') for req in e.findall('./require') for x in req if x.get('name')}
-    check(lock['requiredCurrentFeatureStruct'] in names,'required current feature struct not required by extension')
+    required_struct=lock.get('requiredCurrentStruct') or lock.get('requiredCurrentFeatureStruct');check(required_struct in names,'required current struct not required by extension')
 if errors:
     print('\n'.join('FAIL '+x for x in errors));sys.exit(1)
 print(f"PASS Vulkan registry lock api={lock['apiVersion']} header={lock['headerVersion']} extensions={len(exts)} sha256={lock['snapshotSha256']}")

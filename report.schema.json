@@ -36,13 +36,16 @@
         },
         "version": {
           "type": "string",
-          "maxLength": 64
+          "maxLength": 64,
+          "pattern": "^2\\.(?:0\\.(?:[6-9]|[1-9][0-9]+)|[1-9][0-9]*\\.[0-9]+)$",
+          "description": "New submissions require VulkanScope 2.0.6 or newer within the fail-closed 2.x versionCode identity scheme."
         },
         "versionCode": {
           "type": [
             "integer",
             "number"
-          ]
+          ],
+          "minimum": 2006
         },
         "applicationAbi": {
           "type": "string",
@@ -62,8 +65,21 @@
     "device": {
       "type": "object",
       "required": [
+        "platform",
+        "chromeOsArcRuntime",
+        "androidPcFormFactor",
+        "freeformWindowManagement",
+        "googlebookEnvironmentEvidence",
+        "googlebookOsVersion",
+        "hostOsVersion",
         "manufacturer",
-        "model"
+        "brand",
+        "model",
+        "device",
+        "product",
+        "androidRelease",
+        "sdk",
+        "securityPatch"
       ],
       "properties": {
         "manufacturer": {
@@ -98,7 +114,33 @@
         },
         "securityPatch": {
           "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
           "maxLength": 64
+        },
+        "platform": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "chromeOsArcRuntime": {
+          "type": "boolean"
+        },
+        "androidPcFormFactor": {
+          "type": "boolean"
+        },
+        "freeformWindowManagement": {
+          "type": "boolean"
+        },
+        "googlebookEnvironmentEvidence": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "googlebookOsVersion": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "hostOsVersion": {
+          "type": "string",
+          "maxLength": 256
         }
       },
       "additionalProperties": false

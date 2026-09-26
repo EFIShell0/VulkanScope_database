@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "appVersion": "0.80.10",
-  "registryBaseline": "Vulkan 1.4.362",
+  "appVersion": "2.0.6",
+  "registryBaseline": "Vulkan 1.4.364",
   "core": [
     {
       "title": "Supported",

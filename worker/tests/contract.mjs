@@ -56,7 +56,7 @@ function fixture(){
  const p={
   schemaVersion:2,
   application:{name:'VulkanScope',version:'0.80.9',versionCode:809,packageName:'com.efishell.vulkanscope',applicationAbi:'arm64-v8a',supportedDeviceAbis:['arm64-v8a']},
-  device:{manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
+  device:{platform:'Android',chromeOsArcRuntime:false,androidPcFormFactor:false,freeformWindowManagement:false,googlebookEnvironmentEvidence:'Googlebook identity is not exposed by a documented public Android API',googlebookOsVersion:'Unavailable through documented public Android APIs',hostOsVersion:'17',manufacturer:'Example',brand:'Example',model:'Phone',device:'phone',product:'phone',androidRelease:'17',sdk:37,securityPatch:'2026-08-01'},
   gpu:{name:'Adreno Fixture',vendorId:'0x5143',deviceId:'0x0001',deviceType:'VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU',summaryScope:'singlePhysicalDevice',physicalDeviceCount:1},
   driver:{mode:'System Vulkan driver',version:'512.1',rawVersion:'1',summaryScope:'singlePhysicalDevice'},
   vulkan:{loaderInstanceApiVersion:'1.4.0',loaderApiVersion:'1.4.0',instanceApiVersion:'1.4.0',deviceApiVersion:'1.4.0',deviceApiSummaryScope:'singlePhysicalDevice',registryBaseline:'Vulkan 1.4.361',headerBaseline:'Vulkan 1.4.361 compile headers; validated query catalog Vulkan 1.4.361',reportSchema:'4'},
@@ -73,13 +73,13 @@ let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.7');
-assert.equal(j.workerReleaseVersion,'1.4.7');
+assert.equal(j.databaseReleaseVersion,'1.4.8');
+assert.equal(j.workerReleaseVersion,'1.4.8');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
-assert.match(j.publishedVulkanSpec,/1\.4\.362/);
-assert.match(j.producerQueryBaseline,/1\.4\.3/);
-assert.match(j.compatibleProducer,/1\.4\.3\+/);
+assert.match(j.publishedVulkanSpec,/1\.4\.364/);
+assert.match(j.producerQueryBaseline,/2\.0\.6/);
+assert.match(j.compatibleProducer,/2\.0\.6\+/);
 
 r=await call('/v1/network-info',{extraHeaders:{'cf-connecting-ip':'2001:db8::9','cf-connecting-ipv6':'2001:db8::9'}});
 assert.equal(r.status,200);
@@ -96,8 +96,8 @@ assert.equal(r.status,405);
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'1.4.7');
-assert.equal(j.workerReleaseVersion,'1.4.7');
+assert.equal(j.databaseReleaseVersion,'1.4.8');
+assert.equal(j.workerReleaseVersion,'1.4.8');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -108,18 +108,18 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.7');
-assert.equal(j.workerReleaseVersion,'1.4.7');
+assert.equal(j.databaseReleaseVersion,'1.4.8');
+assert.equal(j.workerReleaseVersion,'1.4.8');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
-assert.match(j.producerQueryBaseline,/1\.4\.3/);
-assert.match(j.compatibleProducer,/1\.4\.3\+/);
+assert.match(j.producerQueryBaseline,/2\.0\.6/);
+assert.match(j.compatibleProducer,/2\.0\.6\+/);
 
 const current=fixture();
-current.application.version='1.4.3';
-current.application.versionCode=1403;
-current.vulkan.registryBaseline='Vulkan 1.4.362';
-current.vulkan.headerBaseline='Vulkan 1.4.362 compile headers; validated query catalog Vulkan 1.4.362';
-current.technicalReport.registryCoverage.baseline='Vulkan 1.4.362';
+current.application.version='2.0.6';
+current.application.versionCode=2006;
+current.vulkan.registryBaseline='Vulkan 1.4.364';
+current.vulkan.headerBaseline='Vulkan 1.4.364 compile headers; validated query catalog Vulkan 1.4.364';
+current.technicalReport.registryCoverage.baseline='Vulkan 1.4.364';
 current.technicalReport.registryCoverage.headerBaseline=current.vulkan.headerBaseline;
 current.reportText=reportText(current);
 r=await call('/v1/reports',{method:'POST',body:current});
@@ -138,29 +138,29 @@ assert.notEqual(j.syncToken,emptySyncToken);
 assert.equal(j.syncToken,`1:${j.latestSubmittedAt}:${accepted.id}`);
 
 const below=structuredClone(current);
-below.application.version='1.4.2';
-below.application.versionCode=1402;
+below.application.version='2.0.5';
+below.application.versionCode=2005;
 below.reportText=reportText(below);
 r=await call('/v1/reports',{method:'POST',body:below});
-assert.equal(r.status,400,'VulkanScope 1.4.2 must be rejected by the 1.4.3 floor');
-assert.match(await r.text(),/1\.4\.3 or newer/);
+assert.equal(r.status,400,'VulkanScope 2.0.5 must be rejected by the 2.0.6 floor');
+assert.match(await r.text(),/2\.0\.6 or newer/);
 
 const oldMajor=structuredClone(current);
-oldMajor.application.version='1.4.0';
-oldMajor.application.versionCode=1400;
+oldMajor.application.version='1.5.5';
+oldMajor.application.versionCode=1505;
 oldMajor.reportText=reportText(oldMajor);
 r=await call('/v1/reports',{method:'POST',body:oldMajor});
-assert.equal(r.status,400,'every producer below 1.4.3 must be rejected before generic validation');
-assert.match(await r.text(),/1\.4\.3 or newer/);
+assert.equal(r.status,400,'every producer below 2.0.6 must be rejected before generic validation');
+assert.match(await r.text(),/2\.0\.6 or newer/);
 
 const badIdentity=structuredClone(current);
-badIdentity.application.versionCode=1399;
+badIdentity.application.versionCode=2005;
 badIdentity.reportText=reportText(badIdentity);
 r=await call('/v1/reports',{method:'POST',body:badIdentity});
 assert.equal(r.status,400);
 assert.match(await r.text(),/producer_identity/);
 
-const malformedCurrent={application:{name:'VulkanScope',version:'1.4.3',versionCode:1403}};
+const malformedCurrent={application:{name:'VulkanScope',version:'2.0.6',versionCode:2006}};
 r=await call('/v1/reports',{method:'POST',body:malformedCurrent});
 assert.equal(r.status,400);
 assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema/);
@@ -168,9 +168,24 @@ assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema
 r=await call(`/v1/reports/${accepted.id}?compact=1`);
 assert.equal(r.status,200);
 const compact=await r.json();
-assert.equal(compact.application.version,'1.4.3');
+assert.equal(compact.application.version,'2.0.6');
 assert.equal(compact.id,accepted.id);
 assert.ok(compact.submittedAt);
+
+const future=structuredClone(current);
+future.application.version='2.0.7';
+future.application.versionCode=2007;
+future.reportText=reportText(future);
+r=await call('/v1/reports',{method:'POST',body:future});
+assert.equal(r.status,201,'2.0.7 with matching 2.x versionCode identity must remain admissible');
+
+const missingEnvironment=structuredClone(current);
+delete missingEnvironment.device.googlebookEnvironmentEvidence;
+missingEnvironment.reportText=reportText(missingEnvironment);
+r=await call('/v1/reports',{method:'POST',body:missingEnvironment});
+assert.equal(r.status,400,'2.0.6+ device-environment envelope must be complete');
+assert.match(await r.text(),/envelope_shape|device_environment/);
+
 
 // Historical stored rows remain readable even though their producer is below the new POST floor.
 const historicalId='a'.repeat(64);
@@ -197,4 +212,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.4.7 transport contract: live sync head + VulkanScope 1.4.3 producer floor + historical reads + transport/security basics');
+console.log('PASS Worker 1.4.8 transport contract: live sync head + VulkanScope 2.0.6 producer floor + 2.0.6 envelope/1.4.364 compatibility + historical reads + transport/security basics');

@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.8
+- Raises the server-side new-report submission floor to **VulkanScope 2.0.6** while keeping historical reports below the floor readable and unchanged.
+- Adds exact compatibility for the VulkanScope 2.0.6 device environment envelope, including Android PC/freeform/ChromeOS ARC/Googlebook evidence fields without inference.
+- Updates the locked Vulkan registry/header and local Encyclopedia baseline to **Vulkan 1.4.364 / header 364**, 477 registered extensions, including `VK_INTEL_device_info`.
+- Pins Pages, preload and Worker metadata to `VulkanScope 2.0.6 · Vulkan 1.4.364` and compatible submissions to `VulkanScope 2.0.6+ · schema 2 / technical report 3`.
+- Advances frontend/Worker identity to 1.4.8 / v1408 while retaining v1407 as the one-release JavaScript cache bridge.
+- Keeps D1 schema, normalizer 16, stored payloads/hashes, canonical report IDs, Compare evidence semantics and the 2 MiB submission ceiling unchanged; no D1 migration is required.
+
 ## 1.4.7
 - Keeps the VulkanScope 1.4.3+ server-side new-submission floor.
 - Prevents an older deployed Worker from downgrading the visible Producer/query baseline and Compatible producers cards.
