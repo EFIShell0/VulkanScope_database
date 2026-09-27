@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.10
+- Enlarges Profiles evaluator typography and spacing on desktop/mobile while preserving all VulkanScope 2.0.6 mapped/met/unmet/unknown and evidence fields.
+- Reworks startup into one clean VulkanScope-logo loader with the rotating activity circle restored, removes the loader's internal native scrollbar/arrows, and hides global scroll chrome while loading.
+- Keeps the release-check visibility gate so the predecessor loader is not painted before a newer ready release redirects.
+- Expands Reports > Submitted with Standard/winter, Daylight/summer, seasonal-change and at-submission offset-state information derived from the server-authored submission instant, including an explicit no-seasonal-change state for fixed-offset zones.
+- Replaces the snapping Submitted close with a measured width animation in both directions while retaining reduced-motion behavior.
+- Advances Database/frontend/Worker identity to 1.4.10 / v1410 while retaining v1409 as the immediate JavaScript cache bridge. No D1 migration, report rewrite, hash rewrite, normalizer change or producer-floor change is introduced.
+
 ## 1.4.9
 - Expands report-detail Profiles to show VulkanScope 2.0.6 evaluator details: mapped/met/unmet/unknown totals, per-family breakdowns, minimum API/coverage and reported failing/unknown evidence.
 - Moves the floating page Up/Down controls slightly left so they no longer touch the fixed viewport scrollbar on desktop or mobile.

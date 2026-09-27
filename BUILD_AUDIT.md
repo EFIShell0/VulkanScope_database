@@ -1,3 +1,14 @@
+# VulkanScope Database 1.4.10 build / UI audit
+
+- Immutable predecessor: VulkanScope Database 1.4.9, ZIP SHA-256 `6f06b29623a76389562e391dfc018311f672e31cbe07fa6f381c8152b41c1265`.
+- Release focus: readable Profiles evaluator detail, single-stage startup loader with restored rotating circle and no scrollbar chrome, complete report Submitted seasonal-time evidence, and animated open/close column geometry.
+- Database/frontend/Worker source: 1.4.10; current assets v1410; immediate JavaScript bridge v1409.
+- New-submission floor remains VulkanScope 2.0.6+ · schema 2 / technical report 3. Registry/header remains Vulkan 1.4.364 / 364.
+- Report-time presentation remains derived from server-authored `submitted_at`; D1 timestamps, stored payloads, hashes and IDs are unchanged.
+- Static preload + live index + `/v1/sync` delta behavior is retained; no per-report Pages deployment is required.
+- D1 migration: none. Normalizer: 16 unchanged. Stored payload/hash rewrite: forbidden.
+- Live Cloudflare Worker deployment remains a separate evidence class and is not implied by source/package verification.
+
 # VulkanScope Database 1.4.9 build / UI-startup audit
 
 - Immutable predecessor: VulkanScope Database 1.4.8, ZIP SHA-256 `ea6233a92cc5ec95951caef9d17eb11c0bdeb6c7a2794637b8ab07fd66af911e`.
