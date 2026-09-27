@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.9
+- Expands report-detail Profiles to show VulkanScope 2.0.6 evaluator details: mapped/met/unmet/unknown totals, per-family breakdowns, minimum API/coverage and reported failing/unknown evidence.
+- Moves the floating page Up/Down controls slightly left so they no longer touch the fixed viewport scrollbar on desktop or mobile.
+- Makes the regional date/time preview animate geometry changes and show UTC offset, standard/winter, daylight/summer and current seasonal state in Automatic, Country and Manual modes.
+- Starts the static preload snapshot and authoritative live report index in parallel; the snapshot remains fast-start/fallback while the existing `/v1/sync` delta path brings newly submitted reports into an open page without a per-report Pages rebuild.
+- Replaces the small startup spinner with a responsive VulkanScope-logo loader using local halo/accent animation inspired by the application opening animation, with reduced-motion equivalence.
+- Advances Database/frontend/Worker identity to 1.4.9 / v1409 while retaining v1408 as the immediate JavaScript cache bridge. No D1 migration, report rewrite, hash rewrite, normalizer change or producer-floor change is introduced.
+
 ## 1.4.8
 - Raises the server-side new-report submission floor to **VulkanScope 2.0.6** while keeping historical reports below the floor readable and unchanged.
 - Adds exact compatibility for the VulkanScope 2.0.6 device environment envelope, including Android PC/freeform/ChromeOS ARC/Googlebook evidence fields without inference.

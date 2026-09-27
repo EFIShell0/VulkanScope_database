@@ -88,7 +88,7 @@ def extension_rows(root):
     return sorted(rows,key=lambda x:x['name'])
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--registry',default='registry/upstream/vk.xml');ap.add_argument('--curated',default='registry/encyclopedia_curated.json');ap.add_argument('--output',default='assets/encyclopedia.v1408.js');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--registry',default='registry/upstream/vk.xml');ap.add_argument('--curated',default='registry/encyclopedia_curated.json');ap.add_argument('--output',default='assets/encyclopedia.v1409.js');args=ap.parse_args()
     root=ET.parse(args.registry).getroot();cur=json.loads(Path(args.curated).read_text(encoding='utf-8'))
     commands,tokens,types=symbols(root);extensions=extension_rows(root)
     data={'schemaVersion':1,'appVersion':cur['appVersion'],'registryBaseline':cur['registryBaseline'],'counts':{'commands':len(commands),'tokens':len(tokens),'types':len(types),'extensions':len(extensions),'vkResults':len(cur['vkResults'])},'core':cur['core'],'vkResults':cur['vkResults'],'commonCommands':cur['commonCommands'],'commands':commands,'tokens':tokens,'types':types,'extensions':extensions}

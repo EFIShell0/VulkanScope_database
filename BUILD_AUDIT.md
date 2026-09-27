@@ -1,3 +1,13 @@
+# VulkanScope Database 1.4.9 build / UI-startup audit
+
+- Immutable predecessor: VulkanScope Database 1.4.8, ZIP SHA-256 `ea6233a92cc5ec95951caef9d17eb11c0bdeb6c7a2794637b8ab07fd66af911e`.
+- Release focus: application-style Profile evaluator detail, non-touching page-scroll chrome, complete animated regional time preview, parallel live/snapshot startup, and responsive application-logo loading animation.
+- Database/frontend/Worker source: 1.4.9; current assets v1409; immediate JavaScript bridge v1408.
+- New-submission floor remains VulkanScope 2.0.6+ · schema 2 / technical report 3. Registry/header remains Vulkan 1.4.364 / 364.
+- Static preload remains deployment-time fast-start/fallback data; live `/v1/sync` delta ingestion is the automatic path for reports submitted after page load. No per-report Pages deployment is required.
+- D1 migration: none. Normalizer: 16 unchanged. Stored payload/hash rewrite: forbidden.
+- Live Cloudflare Worker deployment remains a separate evidence class and is not implied by source/package verification.
+
 # VulkanScope Database 1.4.8 build / compatibility audit
 
 - Release focus: VulkanScope 2.0.6+ POST admission, Vulkan 1.4.364 registry/header compatibility and exact 2.0.6 device-envelope acceptance.

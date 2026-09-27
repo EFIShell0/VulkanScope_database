@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "baseline": "1.4.8",
+  "successor": "1.4.9",
+  "baselineZipSha256": "ea6233a92cc5ec95951caef9d17eb11c0bdeb6c7a2794637b8ab07fd66af911e",
+  "baselineManifest": "regression/1.4.8_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "changelog.md",
+    "data/index.json",
+    "data/release.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/generate_encyclopedia_03924.py",
+    "tools/mark_release_ready.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/verify_regression_contract.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1407.js",
+    "assets/browser-compat.v1407.js",
+    "assets/encyclopedia.v1408.js",
+    "assets/release-bootstrap.v1407.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1409.js",
+    "assets/browser-compat.v1409.js",
+    "assets/encyclopedia.v1409.js",
+    "assets/release-bootstrap.v1409.js",
+    "assets/site.v1409.css",
+    "regression/1.4.8_files.json",
+    "regression/1.4.8_to_1.4.9_contract.json",
+    "rules/1.4.9_PROFILE_TIME_LOADER_STARTUP_AUDIT.md",
+    "tools/test_1_4_9_profile_time_loader_startup_negative_mutations.py",
+    "tools/verify_1_4_9_profile_time_loader_startup.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.4.8_to_1.4.9_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    "node_modules",
+    "dist",
+    "_site",
+    "__pycache__",
+    ".wrangler"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "ebcfbbd28e9c7276f154b96c1b6e81952864c14541f60b0cd91c60abe1d9352a",
+    "BUILD_AUDIT.md": "820a194bab125b8003a0d5e1cac979018e2fb022b13f2feab2cd75a5836e7fc0",
+    "assets/app.v1409.js": "029c237b7dde7f1517fe5c03394b430ee7a7c681fb878e34e74c809217d58fbc",
+    "assets/browser-compat.v1409.js": "29ca4cd46e8d91b9c7daec05abfbffddf79bf051969b19680676061901c6feb6",
+    "assets/encyclopedia.v1409.js": "21a14eb6ac3aef8ac792ad465ad5ecadbd39fe68edf5092777ab30a16b7b06b5",
+    "assets/release-bootstrap.v1409.js": "dceb69af0a6947007b01ef5b5c4216835e94b600995188a69c041be479b1bff9",
+    "assets/site.v1409.css": "c6d9f9861d70c642d2a2805b641bfa29650df25545e941c1cd8b22ed741e6188",
+    "changelog.md": "df5ac3e2cf37c0b40af4a3fdbc1d3daf9aa62bec30ee67b81573538628c729a7",
+    "data/release.json": "71a0c28c528bb5912b657b05c831cb2d99b9bf32769e7300a4febeb57f320a57",
+    "index.html": "1db79d3328da3c78d1122a9086bff1e962b03fa2b500f4ae1f196e8df61313f9",
+    "regression/1.4.8_files.json": "eb472a00ad49783e5ca333bc70b70834ce59f9bd85cda9c887fdff4cf35390ac",
+    "rules/1.4.9_PROFILE_TIME_LOADER_STARTUP_AUDIT.md": "03b0069b84ad72b68e95b52e313e1fcf95a809ad25d8ba9c6a07ac80b7672ace",
+    "rules/PROJECT_RULES.md": "58aca1f1eaa7bd63b0e908b064ce5fdd7e3c8874f611326059375b33c0e3ebfb",
+    "tools/audit_database.py": "c811821a77aa05ebaa3cbbc9c3db3d46e04052b76cda54ebfee403b3e33c5e65",
+    "tools/build_index.py": "4620df03a6a0b90bb4a663a80068e31fd003dc0f7b7c50c35a2b9ede1823539b",
+    "tools/build_pages_artifact.py": "7211e0252f5da7f89ddbbf62e5f765c645918222020b9b8cf7fb8d9df0ba62ee",
+    "tools/build_preload_snapshot.py": "16a0023462199326b8282a733d5c6c59d417103ea490c3eb1ecaf9245d16285a",
+    "tools/generate_encyclopedia_03924.py": "666fe1fd971d92b0d809c8c22e03d8de2d6b202c41732eab9cc5e761c36c5384",
+    "tools/mark_release_ready.py": "c91eca28341306e6f8829952583c2042c56e03e26bc3c93ec8ba7f0d70c6e704",
+    "tools/package_release.py": "78e1e5f73f120fb1e58698105839699989321dff18bc8964732b57be1d6ce806",
+    "tools/pages.workflow.yml": "ebcfbbd28e9c7276f154b96c1b6e81952864c14541f60b0cd91c60abe1d9352a",
+    "tools/quality_gate.py": "1424c4ee2bc651ad8173f12989a99fda02cdb7c7c5c00ddbfef25d2c5edebc79",
+    "tools/repair_repository.py": "de55200a291d36201e251564eb53687a1f973ffd92721f078827b932b28a042a",
+    "tools/test_1_4_9_profile_time_loader_startup_negative_mutations.py": "ae6a82a788c82420ac9dbb619df767fab162701f197b39b2ca4d76f644573b98",
+    "tools/verify_1_4_9_profile_time_loader_startup.py": "afffc6d861978c9b1c9e9eb53786d8f91ecc0d9ab3ee0b1f97f2a551b8f4227a",
+    "tools/verify_regression_contract.py": "dfee71d40f21ee62efcde8f37937c30e0cfb3f1b531a6c04b0b2a8733cc29e4f",
+    "worker/package.json": "cca7f3fbb6713f6e41dab801eff87e4db825a98150b9059d4f3c84aead16e53b",
+    "worker/src/index.js": "7fe002200819473d33f9ad0b60e693b3f002b48498b7c74edd2e87f97f43abf2",
+    "worker/tests/contract.mjs": "7f1036ecd831b1b8c360a7632367f41c0eada3493acc420063abafe76d5cf1f9"
+  }
+}
