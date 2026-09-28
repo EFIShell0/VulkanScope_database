@@ -16,9 +16,9 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
 ]
 asset_files=[
-    'assets/app.v1409.js','assets/browser-compat.v1409.js','assets/release-bootstrap.v1409.js',
-    'assets/app.v1410.js','assets/browser-compat.v1410.js','assets/release-bootstrap.v1410.js','assets/encyclopedia.v1410.js',
-    'assets/site.v0390.css','assets/site.v1308.css','assets/site.v1309.css','assets/site.v1400.css','assets/site.v1401.css','assets/site.v1402.css','assets/site.v1403.css','assets/site.v1404.css','assets/site.v1405.css','assets/site.v1406.css','assets/site.v1407.css','assets/site.v1408.css','assets/site.v1409.css','assets/site.v1410.css',
+    'assets/app.v1410.js','assets/browser-compat.v1410.js','assets/release-bootstrap.v1410.js',
+    'assets/app.v1411.js','assets/browser-compat.v1411.js','assets/release-bootstrap.v1411.js','assets/encyclopedia.v1411.js',
+    'assets/site.v0390.css','assets/site.v1308.css','assets/site.v1309.css','assets/site.v1400.css','assets/site.v1401.css','assets/site.v1402.css','assets/site.v1403.css','assets/site.v1404.css','assets/site.v1405.css','assets/site.v1406.css','assets/site.v1407.css','assets/site.v1408.css','assets/site.v1409.css','assets/site.v1410.css','assets/site.v1411.css',
     'assets/apple-touch-icon-v0311.png',
     'assets/favicon-v0311.ico','assets/favicon-v0311.png',
     'assets/favicon.ico','assets/favicon.png',

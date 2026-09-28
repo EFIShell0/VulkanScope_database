@@ -73,13 +73,13 @@ let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.10');
-assert.equal(j.workerReleaseVersion,'1.4.10');
+assert.equal(j.databaseReleaseVersion,'1.4.11');
+assert.equal(j.workerReleaseVersion,'1.4.11');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.364/);
-assert.match(j.producerQueryBaseline,/2\.0\.6/);
-assert.match(j.compatibleProducer,/2\.0\.6\+/);
+assert.match(j.producerQueryBaseline,/3\.0\.2/);
+assert.match(j.compatibleProducer,/3\.0\.2\+/);
 
 r=await call('/v1/network-info',{extraHeaders:{'cf-connecting-ip':'2001:db8::9','cf-connecting-ipv6':'2001:db8::9'}});
 assert.equal(r.status,200);
@@ -96,8 +96,8 @@ assert.equal(r.status,405);
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'1.4.10');
-assert.equal(j.workerReleaseVersion,'1.4.10');
+assert.equal(j.databaseReleaseVersion,'1.4.11');
+assert.equal(j.workerReleaseVersion,'1.4.11');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -108,15 +108,15 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.10');
-assert.equal(j.workerReleaseVersion,'1.4.10');
+assert.equal(j.databaseReleaseVersion,'1.4.11');
+assert.equal(j.workerReleaseVersion,'1.4.11');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
-assert.match(j.producerQueryBaseline,/2\.0\.6/);
-assert.match(j.compatibleProducer,/2\.0\.6\+/);
+assert.match(j.producerQueryBaseline,/3\.0\.2/);
+assert.match(j.compatibleProducer,/3\.0\.2\+/);
 
 const current=fixture();
-current.application.version='2.0.6';
-current.application.versionCode=2006;
+current.application.version='3.0.2';
+current.application.versionCode=3002;
 current.vulkan.registryBaseline='Vulkan 1.4.364';
 current.vulkan.headerBaseline='Vulkan 1.4.364 compile headers; validated query catalog Vulkan 1.4.364';
 current.technicalReport.registryCoverage.baseline='Vulkan 1.4.364';
@@ -138,29 +138,29 @@ assert.notEqual(j.syncToken,emptySyncToken);
 assert.equal(j.syncToken,`1:${j.latestSubmittedAt}:${accepted.id}`);
 
 const below=structuredClone(current);
-below.application.version='2.0.5';
-below.application.versionCode=2005;
+below.application.version='3.0.1';
+below.application.versionCode=3001;
 below.reportText=reportText(below);
 r=await call('/v1/reports',{method:'POST',body:below});
-assert.equal(r.status,400,'VulkanScope 2.0.5 must be rejected by the 2.0.6 floor');
-assert.match(await r.text(),/2\.0\.6 or newer/);
+assert.equal(r.status,400,'VulkanScope 3.0.1 must be rejected by the 3.0.2 floor');
+assert.match(await r.text(),/3\.0\.2 or newer/);
 
 const oldMajor=structuredClone(current);
-oldMajor.application.version='1.5.5';
-oldMajor.application.versionCode=1505;
+oldMajor.application.version='2.1.16';
+oldMajor.application.versionCode=2116;
 oldMajor.reportText=reportText(oldMajor);
 r=await call('/v1/reports',{method:'POST',body:oldMajor});
-assert.equal(r.status,400,'every producer below 2.0.6 must be rejected before generic validation');
-assert.match(await r.text(),/2\.0\.6 or newer/);
+assert.equal(r.status,400,'every producer below 3.0.2 must be rejected before generic validation');
+assert.match(await r.text(),/3\.0\.2 or newer/);
 
 const badIdentity=structuredClone(current);
-badIdentity.application.versionCode=2005;
+badIdentity.application.versionCode=3001;
 badIdentity.reportText=reportText(badIdentity);
 r=await call('/v1/reports',{method:'POST',body:badIdentity});
 assert.equal(r.status,400);
 assert.match(await r.text(),/producer_identity/);
 
-const malformedCurrent={application:{name:'VulkanScope',version:'2.0.6',versionCode:2006}};
+const malformedCurrent={application:{name:'VulkanScope',version:'3.0.2',versionCode:3002}};
 r=await call('/v1/reports',{method:'POST',body:malformedCurrent});
 assert.equal(r.status,400);
 assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema/);
@@ -168,22 +168,22 @@ assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema
 r=await call(`/v1/reports/${accepted.id}?compact=1`);
 assert.equal(r.status,200);
 const compact=await r.json();
-assert.equal(compact.application.version,'2.0.6');
+assert.equal(compact.application.version,'3.0.2');
 assert.equal(compact.id,accepted.id);
 assert.ok(compact.submittedAt);
 
 const future=structuredClone(current);
-future.application.version='2.0.7';
-future.application.versionCode=2007;
+future.application.version='3.0.3';
+future.application.versionCode=3003;
 future.reportText=reportText(future);
 r=await call('/v1/reports',{method:'POST',body:future});
-assert.equal(r.status,201,'2.0.7 with matching 2.x versionCode identity must remain admissible');
+assert.equal(r.status,201,'3.0.3 with matching 3.x versionCode identity must remain admissible');
 
 const missingEnvironment=structuredClone(current);
 delete missingEnvironment.device.googlebookEnvironmentEvidence;
 missingEnvironment.reportText=reportText(missingEnvironment);
 r=await call('/v1/reports',{method:'POST',body:missingEnvironment});
-assert.equal(r.status,400,'2.0.6+ device-environment envelope must be complete');
+assert.equal(r.status,400,'3.0.2+ device-environment envelope must be complete');
 assert.match(await r.text(),/envelope_shape|device_environment/);
 
 
@@ -212,4 +212,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.4.10 transport contract: live sync head + VulkanScope 2.0.6 producer floor + 2.0.6 envelope/1.4.364 compatibility + historical reads + transport/security basics');
+console.log('PASS Worker 1.4.11 transport contract: live sync head + VulkanScope 3.0.2 producer floor + 3.0.2 envelope/1.4.364 compatibility + historical reads + transport/security basics');

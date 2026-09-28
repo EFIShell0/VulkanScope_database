@@ -1,3 +1,21 @@
+# VulkanScope Database 1.4.11 build / VulkanScope 3.0.2 compatibility audit
+
+- Immutable predecessor: VulkanScope Database 1.4.10, ZIP SHA-256 `c52ff548c05745d6a9e4c439406afe42179bc7a430f9df78772e0a4eb29750d0`, 827 files.
+- Release focus: raise only the new-report producer floor to VulkanScope 3.0.2 / versionCode 3002 and advance release-authored compatibility metadata to the 3.0.2 producer contract.
+- Database/frontend/Worker source: 1.4.11; current assets v1411; immediate JavaScript bridge v1410; stale v1409 JavaScript excluded from the strict package.
+- New `POST /v1/reports` submissions below VulkanScope 3.0.2 are rejected before generic report validation. VulkanScope 3.0.2 / 3002 and a valid schema 2 / technicalReport 3 envelope are accepted by the Worker contract. VulkanScope 3.0.1 / 3001 and 2.x producers are rejected by the new floor.
+- Historical stored reports below the floor remain readable through existing GET/list/Compare paths; no stored payload, timestamp, canonical report ID or hash rewrite is introduced.
+- Vulkan registry/header remains Vulkan 1.4.364 / header 364 / 477 registered extensions. D1 migrations are unchanged, normalizer remains 16, and the 2 MiB submission ceiling is unchanged.
+- VulkanScope 3.x producer identity is fail-closed with `versionCode = 3000 + minor*100 + patch`; unknown future major versions are not inferred.
+- Failing-before-fix oracle: the 1.4.11 focused verifier was executed against an immutable 1.4.10 copy and failed non-zero because the predecessor lacks the v1411/current 3.0.2 release contract.
+- `tools/verify_1_4_11_vulkanscope_3_0_2_compatibility.py`: PASS.
+- `tools/test_1_4_11_vulkanscope_3_0_2_compatibility_negative_mutations.py`: PASS for nine contract mutations plus unrelated-documentation false-positive control.
+- `worker/tests/contract.mjs`: PASS, including 3.0.2 floor acceptance, 3.0.1 and 2.1.16 floor rejection, bad 3.0.2 versionCode rejection, future 3.0.3 acceptance, exact environment-envelope validation and historical stored-report readability.
+- `tools/audit_database.py --source-tree .`: PASS.
+- `tools/quality_gate.py`: PASS, including Vulkan registry lock, immutable predecessor regression, Worker contract, D1 migration replay, Pages allow-list staging and release-ready transition.
+- Deterministic strict package construction and clean-extract byte equality: PASS for the final release package; two independent package builds are required to be byte-identical before publication.
+- Live Cloudflare Worker deployment: NOT EXECUTED by this source/package build. The VulkanScope 3.0.2 production submission floor is not live until the intended Worker source is explicitly deployed successfully.
+
 # VulkanScope Database 1.4.10 build / UI audit
 
 - Immutable predecessor: VulkanScope Database 1.4.9, ZIP SHA-256 `6f06b29623a76389562e391dfc018311f672e31cbe07fa6f381c8152b41c1265`.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.11
+- Raises the server-side new-report submission floor to **VulkanScope 3.0.2** while keeping all historical reports below the floor readable and unchanged.
+- Adds fail-closed VulkanScope 3.x version/versionCode validation and accepts 3.0.2 / 3002 as the current producer identity.
+- Pins Pages, preload, Worker and Encyclopedia producer metadata to **VulkanScope 3.0.2 · Vulkan 1.4.364** with submission schema 2 / technicalReport 3 unchanged.
+- Advances Database/frontend/Worker identity to 1.4.11 / v1411 while retaining v1410 as the immediate JavaScript cache bridge.
+- Keeps D1 schema, normalizer 16, stored payloads/hashes, canonical report IDs, Vulkan 1.4.364 evidence semantics and the 2 MiB submission ceiling unchanged.
+
 ## 1.4.10
 - Enlarges Profiles evaluator typography and spacing on desktop/mobile while preserving all VulkanScope 2.0.6 mapped/met/unmet/unknown and evidence fields.
 - Reworks startup into one clean VulkanScope-logo loader with the rotating activity circle restored, removes the loader's internal native scrollbar/arrows, and hides global scroll chrome while loading.
