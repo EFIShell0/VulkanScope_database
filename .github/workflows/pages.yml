@@ -3,16 +3,36 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Release pipeline or asynchronous snapshot refresh
+        required: true
+        default: release
+        type: choice
+        options:
+          - release
+          - snapshot
+      report_id:
+        description: Fresh report ID required in snapshot mode
+        required: false
+        default: ""
+        type: string
+      submitted_at:
+        description: Server-authored submission time for audit context
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: vulkanscope-database-production
+  group: vulkanscope-database-${{ inputs.mode || 'release' }}
   cancel-in-progress: false
 
 jobs:
   windows-tooling:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'snapshot' }}
     runs-on: windows-latest
     timeout-minutes: 10
     permissions:
@@ -35,13 +55,13 @@ jobs:
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-      - name: Verify Database 1.4.11 VulkanScope 3.0.2 compatibility/submission floor
+      - name: Verify Database 1.4.12 VulkanScope 3.0.12 floor/snapshot automation
         run: |
           python tools/verify_regression_contract.py
-          python tools/verify_1_4_11_vulkanscope_3_0_2_compatibility.py
-          python tools/test_1_4_11_vulkanscope_3_0_2_compatibility_negative_mutations.py
+          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
+          python tools/test_1_4_12_vulkanscope_3_0_12_snapshot_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1411.js
+          node --check assets/app.v1412.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -51,6 +71,7 @@ jobs:
         run: npm run security:audit
 
   build:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'snapshot' }}
     needs: windows-tooling
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -72,20 +93,21 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Run Database 1.4.11 quality gate
+      - name: Run Database 1.4.12 quality gate
         run: python tools/quality_gate.py
       - name: Build static index
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_1_4_11_vulkanscope_3_0_2_compatibility.py
-          python tools/test_1_4_11_vulkanscope_3_0_2_compatibility_negative_mutations.py
+          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
+          python tools/test_1_4_12_vulkanscope_3_0_12_snapshot_negative_mutations.py
       - name: Stage non-release-ready Pages artifact for audit
         run: python tools/build_pages_artifact.py _site
       - name: Audit non-release-ready Pages artifact
         run: python tools/audit_database.py --artifact-tree _site
 
   release:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'snapshot' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: build
@@ -105,10 +127,10 @@ jobs:
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
           python tools/verify_regression_contract.py
-          python tools/verify_1_4_11_vulkanscope_3_0_2_compatibility.py
-          python tools/test_1_4_11_vulkanscope_3_0_2_compatibility_negative_mutations.py
+          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
+          python tools/test_1_4_12_vulkanscope_3_0_12_snapshot_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1411.js
+          node --check assets/app.v1412.js
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release from validated main commit
@@ -117,9 +139,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          TAG="v1.4.11"
-          ZIP="dist/VulkanScope-Database-1.4.11.zip"
-          SHA="dist/VulkanScope-Database-1.4.11.zip.sha256"
+          TAG="v1.4.12"
+          ZIP="dist/VulkanScope-Database-1.4.12.zip"
+          SHA="dist/VulkanScope-Database-1.4.12.zip.sha256"
 
           is_transient_github_error() {
             printf '%s' "$1" | grep -Eqi 'HTTP 429|HTTP 5[0-9][0-9]|rate limit|temporarily unavailable'
@@ -169,7 +191,7 @@ jobs:
                   CREATE_MODE=(--target "$GITHUB_SHA")
                 fi
                 set +e
-                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 1.4.11" --generate-notes 2>&1)"
+                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 1.4.12" --generate-notes 2>&1)"
                 RC=$?
                 set -e
                 if [ "$RC" -eq 0 ]; then
@@ -192,8 +214,13 @@ jobs:
           done
 
   deploy:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.mode != 'snapshot' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    concurrency:
+      group: vulkanscope-database-pages-deployment
+      cancel-in-progress: false
+      queue: max
     needs: [build, release]
     permissions:
       contents: read
@@ -235,3 +262,71 @@ jobs:
       - name: Deploy release-ready GitHub Pages artifact
         id: deployment
         uses: actions/deploy-pages@v4
+
+  snapshot-refresh:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.mode == 'snapshot' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: vulkanscope-database-pages-deployment
+      cancel-in-progress: false
+      queue: max
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.snapshot_deployment.outputs.page_url }}
+    steps:
+      - name: Validate snapshot trigger
+        shell: bash
+        env:
+          REPORT_ID: ${{ inputs.report_id }}
+        run: |
+          set -euo pipefail
+          [[ "$REPORT_ID" =~ ^[a-f0-9]{64}$ ]] || { echo "snapshot mode requires a lowercase 64-hex report_id" >&2; exit 1; }
+      - name: Checkout current main source
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Repair and verify snapshot source
+        run: |
+          python tools/repair_repository.py --apply
+          python tools/repair_repository.py --check
+          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
+          python tools/audit_database.py --source-tree .
+      - name: Build current static index
+        run: python tools/build_index.py
+      - name: Stage current Pages artifact
+        run: python tools/build_pages_artifact.py _site
+      - name: Build authoritative preload snapshot including triggering report
+        shell: bash
+        env:
+          REPORT_ID: ${{ inputs.report_id }}
+        run: python tools/build_preload_snapshot.py _site/data/preload --expect-report-id "$REPORT_ID" --expect-attempts 8 --expect-delay 2
+      - name: Mark snapshot artifact release-ready
+        run: python tools/mark_release_ready.py _site
+      - name: Audit snapshot artifact
+        run: python tools/audit_database.py --artifact-tree _site --require-release-ready
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload snapshot Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+          include-hidden-files: true
+      - name: Deploy refreshed snapshot
+        id: snapshot_deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify published snapshot contains triggering report
+        shell: bash
+        env:
+          PAGE_URL: ${{ steps.snapshot_deployment.outputs.page_url }}
+          REPORT_ID: ${{ inputs.report_id }}
+        run: python tools/verify_published_snapshot.py --base-url "$PAGE_URL" --report-id "$REPORT_ID" --attempts 12 --delay 3

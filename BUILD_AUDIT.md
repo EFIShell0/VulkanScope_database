@@ -1,3 +1,11 @@
+# VulkanScope Database 1.4.12 build audit
+
+- Immutable predecessor: 1.4.11 (`b2255293731e6a4b5dcb2b51466805b3a993378174446b7b0cd754395103a4eb`).
+- Submission floor: VulkanScope 3.0.12 / versionCode 3012, schema 2 / technicalReport 3, Vulkan 1.4.364.
+- Snapshot repair: D1 insert -> `ctx.waitUntil()` -> authenticated GitHub Actions workflow dispatch -> live-API snapshot rebuild -> Pages audit/deploy -> published-manifest report-ID verification.
+- Admission/snapshot failure domains are separated; duplicate rows do not dispatch. The GitHub token remains a Worker secret.
+- Release gates include focused verifier, negative mutations, Worker transport test, source/Pages audit, D1 replay, deterministic strict package and immutable predecessor regression contract.
+
 # VulkanScope Database 1.4.11 build / VulkanScope 3.0.2 compatibility audit
 
 - Immutable predecessor: VulkanScope Database 1.4.10, ZIP SHA-256 `c52ff548c05745d6a9e4c439406afe42179bc7a430f9df78772e0a4eb29750d0`, 827 files.

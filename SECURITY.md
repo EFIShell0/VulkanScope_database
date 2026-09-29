@@ -161,3 +161,10 @@ The registry/Encyclopedia update does not add endpoints, remote scripts, analyti
 - Release packaging uses an explicit predecessor-derived path set rather than recursively archiving the checkout. Historical stale assets and local deployment state are excluded unless they are explicitly part of the successor contract.
 - Strict-tree verification runs against a clean extract of the constructed deterministic ZIP. The extracted path set must exactly equal the expected package allow-list, and every extracted byte must equal the selected source byte before release publication.
 - Injecting an unexpected file into the clean release tree remains a fatal strict-package regression. This change does not relax Worker validation, payload limits, canonical hashing, D1 parameterization/chunking, CORS, privacy-key rejection, account isolation or production audit requirements.
+
+
+## 1.4.12 asynchronous snapshot publication boundary
+- `SNAPSHOT_GITHUB_TOKEN` is a Cloudflare Worker secret only. It must be a repository-scoped fine-grained credential with only the GitHub Actions permission required to dispatch the canonical workflow. It is never committed or exposed to Pages/API clients.
+- Report acceptance commits to D1 before snapshot dispatch. Snapshot dispatch uses the Worker background lifetime and therefore cannot alter the HTTP acceptance result after a valid report is stored.
+- Dispatch retries are bounded and limited to transport, HTTP 429 and 5xx classes. Configuration/authentication failures fail closed in the background task and are logged without exposing the token.
+- Snapshot mode validates the triggering lowercase 64-hex report ID, builds from the authoritative live API, audits the staged artifact and verifies publication after deploy.

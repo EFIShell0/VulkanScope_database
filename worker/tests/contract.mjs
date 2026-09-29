@@ -8,9 +8,9 @@ class DB {
     return {sql,args,
       bind(...next){return self.statement(sql,next)},
       async run(){
-        if(sql.startsWith('INSERT OR IGNORE INTO reports')){const [id,submittedAt,,,,,,,,,,payload]=args;if(!self.rows.has(id))self.rows.set(id,{id,submitted_at:submittedAt,payload_json:payload})}
+        if(sql.startsWith('INSERT OR IGNORE INTO reports')){const [id,submittedAt,,,,,,,,,,payload]=args;if(!self.rows.has(id)){self.rows.set(id,{id,submitted_at:submittedAt,payload_json:payload});return {success:true,meta:{changes:1}}}return {success:true,meta:{changes:0}}}
         if(sql.startsWith('INSERT OR IGNORE INTO report_payload_chunks')){const [id,index,chunk]=args;const key=`${id}:${index}`;if(!self.chunks.has(key))self.chunks.set(key,{report_id:id,chunk_index:index,payload_chunk:chunk})}
-        return {success:true}
+        return {success:true,meta:{changes:0}}
       },
       async first(){
         if(sql.includes('COUNT(*) OVER() AS report_count')){const rows=[...self.rows.values()].sort((a,b)=>String(b.submitted_at).localeCompare(String(a.submitted_at))||String(b.id).localeCompare(String(a.id))),latest=rows[0];return latest?{latest_id:latest.id,latest_submitted_at:latest.submitted_at,report_count:rows.length}:null}
@@ -25,9 +25,10 @@ class DB {
     }
   }
   prepare(sql){return this.statement(sql)}
-  async batch(statements){for(const statement of statements)await statement.run();return statements.map(()=>({success:true}))}
+  async batch(statements){const out=[];for(const statement of statements)out.push(await statement.run());return out}
 }
-const env={DB:new DB(),ALLOWED_ORIGIN:'https://efishell0.github.io'};
+const env={DB:new DB(),ALLOWED_ORIGIN:'https://efishell0.github.io',SNAPSHOT_GITHUB_TOKEN:'test-token',SNAPSHOT_GITHUB_OWNER:'EFIShell0',SNAPSHOT_GITHUB_REPO:'VulkanScope_database',SNAPSHOT_GITHUB_WORKFLOW:'pages.yml',SNAPSHOT_GITHUB_REF:'main'};
+const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
 const reportText=(p)=>{
   const imageResults=p.technicalReport?.devices?.[0]?.imageFormatQueryResults||[];
   const imageLines=imageResults.map(x=>`${x.name} | ${String(x.status).toUpperCase()} | VkResult=${x.vkResult===null?'null':x.vkResult}${x.reason?` | Reason=${x.reason}`:''}`);
@@ -67,19 +68,21 @@ function fixture(){
 }
 async function call(path,{method='GET',body,origin,contentType='application/json',extraHeaders={}}={}){
  const headers={...extraHeaders};if(origin)headers.origin=origin;if(body!==undefined)headers['content-type']=contentType;
- return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env);
+ return worker.fetch(new Request(`https://vulkanscope-database-api.vulkanscope.workers.dev${path}`,{method,headers,body:body===undefined?undefined:(typeof body==='string'?body:JSON.stringify(body))}),env,ctx);
 }
 let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.11');
-assert.equal(j.workerReleaseVersion,'1.4.11');
+assert.equal(j.databaseReleaseVersion,'1.4.12');
+assert.equal(j.workerReleaseVersion,'1.4.12');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.364/);
-assert.match(j.producerQueryBaseline,/3\.0\.2/);
-assert.match(j.compatibleProducer,/3\.0\.2\+/);
+assert.match(j.producerQueryBaseline,/3\.0\.12/);
+assert.match(j.compatibleProducer,/3\.0\.12\+/);
+assert.equal(j.snapshotAutomation?.configured,true);
+assert.equal(j.snapshotAutomation?.mode,'async-github-actions-workflow-dispatch');
 
 r=await call('/v1/network-info',{extraHeaders:{'cf-connecting-ip':'2001:db8::9','cf-connecting-ipv6':'2001:db8::9'}});
 assert.equal(r.status,200);
@@ -96,8 +99,8 @@ assert.equal(r.status,405);
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'1.4.11');
-assert.equal(j.workerReleaseVersion,'1.4.11');
+assert.equal(j.databaseReleaseVersion,'1.4.12');
+assert.equal(j.workerReleaseVersion,'1.4.12');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -108,15 +111,15 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.11');
-assert.equal(j.workerReleaseVersion,'1.4.11');
+assert.equal(j.databaseReleaseVersion,'1.4.12');
+assert.equal(j.workerReleaseVersion,'1.4.12');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
-assert.match(j.producerQueryBaseline,/3\.0\.2/);
-assert.match(j.compatibleProducer,/3\.0\.2\+/);
+assert.match(j.producerQueryBaseline,/3\.0\.12/);
+assert.match(j.compatibleProducer,/3\.0\.12\+/);
 
 const current=fixture();
-current.application.version='3.0.2';
-current.application.versionCode=3002;
+current.application.version='3.0.12';
+current.application.versionCode=3012;
 current.vulkan.registryBaseline='Vulkan 1.4.364';
 current.vulkan.headerBaseline='Vulkan 1.4.364 compile headers; validated query catalog Vulkan 1.4.364';
 current.technicalReport.registryCoverage.baseline='Vulkan 1.4.364';
@@ -127,6 +130,17 @@ assert.equal(r.status,201);
 const accepted=await r.json();
 assert.match(accepted.id,/^[a-f0-9]{64}$/);
 assert.equal(accepted.status,'accepted');
+await flushWaitUntil();
+assert.equal(snapshotDispatches.length,1,'a newly inserted report must schedule exactly one snapshot refresh');
+const dispatchBody=JSON.parse(snapshotDispatches[0].init.body);
+assert.equal(dispatchBody.ref,'main');
+assert.equal(dispatchBody.inputs.mode,'snapshot');
+assert.equal(dispatchBody.inputs.report_id,accepted.id);
+assert.ok(dispatchBody.inputs.submitted_at);
+r=await call('/v1/reports',{method:'POST',body:current});
+assert.equal(r.status,201);
+await flushWaitUntil();
+assert.equal(snapshotDispatches.length,1,'duplicate report submission must not dispatch a redundant snapshot refresh');
 
 r=await call('/v1/sync');
 assert.equal(r.status,200);
@@ -138,29 +152,29 @@ assert.notEqual(j.syncToken,emptySyncToken);
 assert.equal(j.syncToken,`1:${j.latestSubmittedAt}:${accepted.id}`);
 
 const below=structuredClone(current);
-below.application.version='3.0.1';
-below.application.versionCode=3001;
+below.application.version='3.0.11';
+below.application.versionCode=3011;
 below.reportText=reportText(below);
 r=await call('/v1/reports',{method:'POST',body:below});
-assert.equal(r.status,400,'VulkanScope 3.0.1 must be rejected by the 3.0.2 floor');
-assert.match(await r.text(),/3\.0\.2 or newer/);
+assert.equal(r.status,400,'VulkanScope 3.0.11 must be rejected by the 3.0.12 floor');
+assert.match(await r.text(),/3\.0\.12 or newer/);
 
 const oldMajor=structuredClone(current);
 oldMajor.application.version='2.1.16';
 oldMajor.application.versionCode=2116;
 oldMajor.reportText=reportText(oldMajor);
 r=await call('/v1/reports',{method:'POST',body:oldMajor});
-assert.equal(r.status,400,'every producer below 3.0.2 must be rejected before generic validation');
-assert.match(await r.text(),/3\.0\.2 or newer/);
+assert.equal(r.status,400,'every producer below 3.0.12 must be rejected before generic validation');
+assert.match(await r.text(),/3\.0\.12 or newer/);
 
 const badIdentity=structuredClone(current);
-badIdentity.application.versionCode=3001;
+badIdentity.application.versionCode=3011;
 badIdentity.reportText=reportText(badIdentity);
 r=await call('/v1/reports',{method:'POST',body:badIdentity});
 assert.equal(r.status,400);
 assert.match(await r.text(),/producer_identity/);
 
-const malformedCurrent={application:{name:'VulkanScope',version:'3.0.2',versionCode:3002}};
+const malformedCurrent={application:{name:'VulkanScope',version:'3.0.12',versionCode:3012}};
 r=await call('/v1/reports',{method:'POST',body:malformedCurrent});
 assert.equal(r.status,400);
 assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema/);
@@ -168,22 +182,22 @@ assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema
 r=await call(`/v1/reports/${accepted.id}?compact=1`);
 assert.equal(r.status,200);
 const compact=await r.json();
-assert.equal(compact.application.version,'3.0.2');
+assert.equal(compact.application.version,'3.0.12');
 assert.equal(compact.id,accepted.id);
 assert.ok(compact.submittedAt);
 
 const future=structuredClone(current);
-future.application.version='3.0.3';
-future.application.versionCode=3003;
+future.application.version='3.0.13';
+future.application.versionCode=3013;
 future.reportText=reportText(future);
 r=await call('/v1/reports',{method:'POST',body:future});
-assert.equal(r.status,201,'3.0.3 with matching 3.x versionCode identity must remain admissible');
+assert.equal(r.status,201,'3.0.13 with matching 3.x versionCode identity must remain admissible');
 
 const missingEnvironment=structuredClone(current);
 delete missingEnvironment.device.googlebookEnvironmentEvidence;
 missingEnvironment.reportText=reportText(missingEnvironment);
 r=await call('/v1/reports',{method:'POST',body:missingEnvironment});
-assert.equal(r.status,400,'3.0.2+ device-environment envelope must be complete');
+assert.equal(r.status,400,'3.0.12+ device-environment envelope must be complete');
 assert.match(await r.text(),/envelope_shape|device_environment/);
 
 
@@ -212,4 +226,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.4.11 transport contract: live sync head + VulkanScope 3.0.2 producer floor + 3.0.2 envelope/1.4.364 compatibility + historical reads + transport/security basics');
+console.log('PASS Worker 1.4.12 transport contract: live sync head + VulkanScope 3.0.12 producer floor + async snapshot dispatch + 3.0.12 envelope/1.4.364 compatibility + historical reads + transport/security basics');

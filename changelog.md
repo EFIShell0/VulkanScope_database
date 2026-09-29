@@ -1,3 +1,9 @@
+## 1.4.12
+- Raises the new-report submission floor to VulkanScope 3.0.12 / versionCode 3012 while preserving historical reads, schema 2 / technicalReport 3 and the Vulkan 1.4.364 evidence contract.
+- Adds asynchronous post-admission preload snapshot refresh: a newly inserted report dispatches a dedicated GitHub Actions snapshot workflow from the Worker background lifetime without delaying or coupling report acceptance to Pages deployment.
+- The snapshot workflow rebuilds from the authoritative live API, requires the triggering report ID, audits and deploys the Pages artifact, then verifies the published preload manifest contains the report; concurrent bursts coalesce through an isolated workflow concurrency group.
+- Keeps the GitHub dispatch credential as a Cloudflare Worker secret, never a source/frontend/report value; duplicate identical submissions do not trigger redundant snapshot deployments.
+
 # Changelog
 
 ## 1.4.11

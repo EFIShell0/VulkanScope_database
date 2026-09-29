@@ -102,6 +102,9 @@ def main():
     parser.add_argument('output', help='output data/preload directory')
     parser.add_argument('--api', default=DEFAULT_API)
     parser.add_argument('--workers', type=int, default=8)
+    parser.add_argument('--expect-report-id', default='', help='Require this freshly accepted report ID to be present before writing the snapshot')
+    parser.add_argument('--expect-attempts', type=int, default=6)
+    parser.add_argument('--expect-delay', type=float, default=2.0)
     args = parser.parse_args()
     api = args.api.rstrip('/')
     output = Path(args.output).resolve()
@@ -109,7 +112,20 @@ def main():
     for old in output.glob('*.json'):
         old.unlink()
 
-    meta, index = fetch_index(api)
+    expected = args.expect_report_id.strip().lower()
+    if expected and (len(expected) != 64 or any(c not in '0123456789abcdef' for c in expected)):
+        raise SystemExit('--expect-report-id must be a lowercase 64-hex report ID')
+    attempts = max(1, min(12, args.expect_attempts))
+    meta = {}
+    index = []
+    for attempt in range(attempts):
+        meta, index = fetch_index(api)
+        if not expected or any(item.get('id') == expected for item in index):
+            break
+        if attempt + 1 < attempts:
+            time.sleep(max(0.25, min(10.0, args.expect_delay)))
+    if expected and not any(item.get('id') == expected for item in index):
+        raise RuntimeError(f'fresh report {expected} was not visible in the live index after {attempts} attempt(s)')
     by_id = {item['id']: item for item in index}
     payload_by_id = {}
     workers = max(1, min(16, args.workers))
@@ -131,15 +147,17 @@ def main():
     generated = dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
     manifest = {
         'schemaVersion': 1,
-        'databaseVersion': '1.4.11',
+        'databaseVersion': '1.4.12',
         'sourceSchemaVersion': meta.get('schemaVersion'),
         'normalizerVersion': meta.get('normalizerVersion', 16),
         'publishedVulkanSpec': meta.get('publishedVulkanSpec', 'Vulkan 1.4.364 (2026-09-25)'),
         'vulkanRegistryBaseline': meta.get('vulkanRegistryBaseline', 'VulkanScope producer/query baseline 1.4.364'),
-        'producerQueryBaseline': 'VulkanScope 3.0.2 · Vulkan 1.4.364',
-        'compatibleProducer': 'VulkanScope 3.0.2+ · schema 2 / technical report 3',
+        'producerQueryBaseline': 'VulkanScope 3.0.12 · Vulkan 1.4.364',
+        'compatibleProducer': 'VulkanScope 3.0.12+ · schema 2 / technical report 3',
         'generatedAt': generated,
         'reportCount': len(index),
+        'generationMode': 'live-api-full-snapshot',
+        'triggerReportId': expected or None,
         'reports': index,
         'chunks': chunk_meta,
     }
