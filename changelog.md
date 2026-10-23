@@ -367,3 +367,8 @@
 - Search now filters the complete country/region option set before pagination and resets results to page 1; alphabetical English country-name ordering and two-letter country-code matching are preserved.
 - Applied the same searchable/paged large-selector path to Time zone so the complete time-zone list remains reachable without changing regional-mode ownership or timestamp semantics.
 - Preserved the 1.3.9 regional layout/profile behavior, D1 schema/migrations, stored report bytes/hashes, Vulkan evidence semantics, browser floors and producer floor.
+
+## 4.0.4 — Canonical-root recovery and protected release cleanup
+- Retire legacy root installers, correct v4004/v4003 bridge and regression checks.
+- Verify and recover into established VulkanScope_database directory, preserving complete prior checkout as a timestamped backup.
+- Add negative tests for legacy installer resurrection and nested root tree corruption.

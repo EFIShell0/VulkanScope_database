@@ -36,7 +36,7 @@ class DB {
   async batch(statements){const out=[];for(const statement of statements)out.push(await statement.run());return out}
 }
 const env={DB:new DB(),ALLOWED_ORIGIN:'https://efishell0.github.io',SNAPSHOT_GITHUB_TOKEN:'test-token',SNAPSHOT_GITHUB_OWNER:'EFIShell0',SNAPSHOT_GITHUB_REPO:'VulkanScope_database',SNAPSHOT_GITHUB_WORKFLOW:'pages.yml',SNAPSHOT_GITHUB_REF:'main',SNAPSHOT_PUBLIC_MANIFEST_URL:'https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json'};
-let mockSnapshotPublished=false;const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json')){if(!mockSnapshotPublished)return new Response('not yet published',{status:404});const reports=[...env.DB.rows.values()].map(r=>({id:r.id}));return new Response(JSON.stringify({databaseVersion:'4.0.3',reportCount:reports.length,reports}),{status:200,headers:{'content-type':'application/json'}})}if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
+let mockSnapshotPublished=false;const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json')){if(!mockSnapshotPublished)return new Response('not yet published',{status:404});const reports=[...env.DB.rows.values()].map(r=>({id:r.id}));return new Response(JSON.stringify({databaseVersion:'4.0.4',reportCount:reports.length,reports}),{status:200,headers:{'content-type':'application/json'}})}if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
 const reportText=(p)=>{
   const imageResults=p.technicalReport?.devices?.[0]?.imageFormatQueryResults||[];
   const imageLines=imageResults.map(x=>`${x.name} | ${String(x.status).toUpperCase()} | VkResult=${x.vkResult===null?'null':x.vkResult}${x.reason?` | Reason=${x.reason}`:''}`);
@@ -82,8 +82,8 @@ let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'4.0.3');
-assert.equal(j.workerReleaseVersion,'4.0.3');
+assert.equal(j.databaseReleaseVersion,'4.0.4');
+assert.equal(j.workerReleaseVersion,'4.0.4');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.364/);
@@ -108,8 +108,8 @@ assert.equal(r.status,405);
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'4.0.3');
-assert.equal(j.workerReleaseVersion,'4.0.3');
+assert.equal(j.databaseReleaseVersion,'4.0.4');
+assert.equal(j.workerReleaseVersion,'4.0.4');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -120,8 +120,8 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'4.0.3');
-assert.equal(j.workerReleaseVersion,'4.0.3');
+assert.equal(j.databaseReleaseVersion,'4.0.4');
+assert.equal(j.workerReleaseVersion,'4.0.4');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.match(j.producerQueryBaseline,/3\.0\.12/);
 assert.match(j.compatibleProducer,/3\.0\.12\+/);
@@ -248,4 +248,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 4.0.3 transport contract: live sync head + VulkanScope 3.0.12 producer floor + async snapshot dispatch + 3.0.12 envelope/1.4.364 compatibility + historical reads + transport/security basics');
+console.log('PASS Worker 4.0.4 transport contract: live sync head + VulkanScope 3.0.12 producer floor + async snapshot dispatch + 3.0.12 envelope/1.4.364 compatibility + historical reads + transport/security basics');

@@ -17,7 +17,7 @@ def get(path,limit):
     url=urllib.parse.urljoin(base,path)
     if not url.startswith(base):raise RuntimeError('snapshot path escapes Pages base URL')
     url+='?verify='+str(time.time_ns())
-    req=urllib.request.Request(url,headers={'Accept':'application/json','Cache-Control':'no-cache','User-Agent':'VulkanScope-Database-snapshot-verifier/4.0.3'})
+    req=urllib.request.Request(url,headers={'Accept':'application/json','Cache-Control':'no-cache','User-Agent':'VulkanScope-Database-snapshot-verifier/4.0.4'})
     with urllib.request.urlopen(req,timeout=25) as response:
         raw=response.read(limit+1)
         if len(raw)>limit:raise RuntimeError('response exceeds configured bound: '+path)
@@ -26,7 +26,7 @@ def get(path,limit):
 def verify():
     raw=get('data/preload/manifest.json',8*1024*1024)
     manifest=json.loads(raw.decode('utf-8'))
-    if manifest.get('databaseVersion')!='4.0.3':raise RuntimeError('wrong Database release version')
+    if manifest.get('databaseVersion')!='4.0.4':raise RuntimeError('wrong Database release version')
     reports=manifest.get('reports'); chunks=manifest.get('chunks')
     if not isinstance(reports,list) or not isinstance(chunks,list):raise RuntimeError('invalid manifest arrays')
     if manifest.get('reportCount')!=len(reports):raise RuntimeError('manifest reportCount mismatch')
@@ -50,7 +50,7 @@ def verify():
             if ident not in ids or ident in covered:raise RuntimeError('unexpected/duplicate report in chunk')
             covered.add(ident)
     if covered!=set(ids):raise RuntimeError('chunk coverage does not equal manifest report ids')
-    print(f'PASS published snapshot database=4.0.3 reports={len(reports)} chunks={len(chunks)} expected={rid or "none"}')
+    print(f'PASS published snapshot database=4.0.4 reports={len(reports)} chunks={len(chunks)} expected={rid or "none"}')
 
 last=None
 for attempt in range(max(1,min(30,a.attempts))):
