@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.10",
+  "successor": "1.0.11",
+  "baselineZipSha256": "6d18b5378235a5ff556576ff9d2d91ff5608dcea8076bc17ef0f32d12ec08aa4",
+  "baselineManifest": "regression/1.0.10_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1010.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1011.js",
+    "regression/1.0.10_files.json",
+    "regression/1.0.10_to_1.0.11_contract.json",
+    "rules/1.0.11_GITHUB_ACTIONS_COMMAND_BOUNDARY_HOTFIX_AUDIT.md",
+    "tools/test_1_0_11_workflow_command_boundary_negative_mutations.py",
+    "tools/verify_1_0_11_workflow_command_boundary.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.10_to_1.0.11_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "ab170518d319cb01bdac659431227733f0a7a83022126fe3cc38444ec8dc1219",
+    "BUILD_AUDIT.md": "2af98520cae77d312bbe9302f15f15e1edb9acf52b86c8b536bdcbd421433434",
+    "changelog.md": "13986b1a06ab74c8eab8f3f50c71c45ce85afa29e2a963f60603df73cd35f695",
+    "index.html": "9c8e72d4f38dbc891254ccc5118103d69e5221e0158789f8c6c3ac8244782947",
+    "rules/PROJECT_RULES.md": "08a48d73002cbddd478c10c0188956b5b4086997a44b2fd1a4d163b9a35e31f3",
+    "tools/build_index.py": "006a24937bf9d469fcf3e04f4df42bf506f2275890a1ac353525b108a7342955",
+    "tools/build_pages_artifact.py": "37416674748fc5385e6cbad308d79efa0cbdb474e1103132438194b9d56d2cf8",
+    "tools/build_preload_snapshot.py": "9bdf9643f5a65ce292daaa34f905ce812fa3755604645eae3911aa649ac00b72",
+    "tools/package_release.py": "bf2459ef2e1e092cfb46d9f4085e52b70740b9c2314d311e17c819601d625120",
+    "tools/pages.workflow.yml": "ab170518d319cb01bdac659431227733f0a7a83022126fe3cc38444ec8dc1219",
+    "tools/quality_gate.py": "ae906fb8c2d52f2cb08ca2319828e6540a4e3b6c44ce051f0fa4e1d8503dec9c",
+    "tools/repair_repository.py": "68ecb95e8eb8de1ffe794ff82b03916e59cc87f18ed6580adf735bd610c8974b",
+    "tools/test_utf8_text_io.py": "66362d0fe785194d19b5991d504af5026c9d63141f2073d901ba743de292ebaa",
+    "tools/verify_regression_contract.py": "c9bbc4b50d2b9d121da5a7ddaaf0a4e4e50a6bc0fae15088bd106d1d6102d6f9",
+    "tools/verify_vulkanscope_04132.py": "26a4ee5fde1506c25823578f03e6a115a0d6fe8c4fb0fc6a4717cb109e731c64",
+    "worker/package.json": "31065da4889717783e5644380f5b2812005880c79c03fd1b77a790495e489790",
+    "worker/tests/contract.mjs": "07012dd8aab5844e8f3788ba97f4c797a4f0b101108ec58b3d182fa01fb75150",
+    "assets/app.v1011.js": "69e9fb8f29b0847c2ec5185f55af7d38395775d55a99de35f070bcbeb77cbecb",
+    "regression/1.0.10_files.json": "ee86c718e005db3f3d0dd409630533ec675a44a039dbcefa0df7fe4249231b23",
+    "rules/1.0.11_GITHUB_ACTIONS_COMMAND_BOUNDARY_HOTFIX_AUDIT.md": "b7d9da256618903aa7a3bb0171354baddc61af02b50aeea11f082aa5ee895fc5",
+    "tools/test_1_0_11_workflow_command_boundary_negative_mutations.py": "530250aa2306af4fbee93ea9c5c00e98c206291d5d46b1cb96da44eaa9005fd4",
+    "tools/verify_1_0_11_workflow_command_boundary.py": "ddf8af4a795b6122456f07e48d020d32bb914b4f92053efe76d336eaeb4a16d9"
+  }
+}

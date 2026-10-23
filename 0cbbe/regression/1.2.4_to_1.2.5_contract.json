@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.2.4",
+  "successor": "1.2.5",
+  "baselineZipSha256": "123938b1b2517f7939b58350ab12963c6807cef7d0fbab38ba67e9c1e420a606",
+  "baselineManifest": "regression/1.2.4_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "data/release.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/mark_release_ready.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1204.js",
+    "assets/browser-compat.v1204.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1205.js",
+    "assets/browser-compat.v1205.js",
+    "regression/1.2.4_files.json",
+    "regression/1.2.4_to_1.2.5_contract.json",
+    "rules/1.2.5_SCROLLBAR_MOTION_AUDIT.md",
+    "tools/test_1_2_5_scrollbar_motion_negative_mutations.py",
+    "tools/verify_1_2_5_scrollbar_motion.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.2.4_to_1.2.5_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "1323b10a106ec916d27f85567bfd8f955fd8418a40c842dbcc56629f1558b055",
+    "BUILD_AUDIT.md": "e1060383fff3c1325e710440f15d35ee335f90190dd9c6e82d7dbed964d6db00",
+    "assets/site.v0390.css": "89e7ee56260f3d4b61f821391f8a321849b1035d6c7de158407383942ddc8af4",
+    "changelog.md": "1091cc88104ad6fff1c523101155f0acfcf3071610ccdb25be8f4a95238a1187",
+    "data/release.json": "ee241a3b510a3466ad8a1dbb0b30bddc0514b2d83349930fdb1644a77c94afdc",
+    "index.html": "2ad73a135f436ad43e09b836771537b82015e339ca3656b4e6b0a178f2b732ef",
+    "rules/PROJECT_RULES.md": "23922b8b3a398d1bfc3d209ac5677add3c7b8c0645bbcecb94637b4d260febf2",
+    "tools/audit_database.py": "c581ab01888de4b77478d4b2da06a010e87c4240a0746503d645c5095583547d",
+    "tools/build_index.py": "f3eb7dfa3d989e8ac982b16620e6474bb2c9ebbc4ae6573d96b7414a3cdfe26f",
+    "tools/build_pages_artifact.py": "269d6a104c1352da38909f64f8f71172e40e72b5d9179994faae31bc5e572f7c",
+    "tools/build_preload_snapshot.py": "5c804440f8335cefed5aec089223d7f7caf5e1aec39e6860edda210f38c2871f",
+    "tools/mark_release_ready.py": "f6270cd98d5c5832eafaf85d72de98eafe3c5ca22e2f94f2b1db5ef98020810e",
+    "tools/package_release.py": "c608218b78484af4d7d35a541ac8e3c6fe53e64021bc9e68e4e45eb5abe1389c",
+    "tools/pages.workflow.yml": "1323b10a106ec916d27f85567bfd8f955fd8418a40c842dbcc56629f1558b055",
+    "tools/quality_gate.py": "96ff5e1f3cffeb18c690e8b45e899e9721dab0bf921bef48967b7672134afa2a",
+    "tools/repair_repository.py": "bba0731e86cf7847676f9c0847c95ba14f74774e851eec38433c5580ead6da5c",
+    "tools/test_compare_contract.mjs": "03b0f41383c54059834a1355121b826be2525405d407a95ca86ebfabd866f01a",
+    "tools/test_routes.mjs": "fd11f58a5e706f5bed477f25c4b200aff34dbd6dd4c34ff1f73e2574317d50aa",
+    "tools/test_utf8_text_io.py": "b2604a1480d5264fce26617cc9fdb0f2c8f5f69766599535778ceb4bc2fb6ec3",
+    "tools/verify_regression_contract.py": "3706d413241346b2677c05bd97bc2a704ac71ed4af9cdd51c87570ff76ca9e45",
+    "tools/verify_vulkanscope_04132.py": "1fe5a2f1c582c3eea84db4fc0a71a554ba2b131aa87399d0a7dae1ae4efa4134",
+    "worker/package.json": "01351885c0bb215ffd7f4c733ca1e7187e599ec7049914ede6b7a72a740724eb",
+    "worker/src/index.js": "f9b68f8f610268f24a15ae499dc0464f7c00b42968a7a4a897c77d836729cd84",
+    "worker/tests/contract.mjs": "d74f8d5c5266d8f9504cc2f2fc05b047dad64c1a79919a7b042c920154ce60a5",
+    "assets/app.v1205.js": "f5b782e3d7c060b20fc77cdabf273a37f6acc7802f287b11005456f3b87542f8",
+    "assets/browser-compat.v1205.js": "45466e5a944908739d13e25f5972b69908e5d48f1fc5640f307e6a4240f8e6fa",
+    "regression/1.2.4_files.json": "29285968faeea41fecbe78f6a09ad578a7851e7a84fb5a55f29e0af1cc040642",
+    "rules/1.2.5_SCROLLBAR_MOTION_AUDIT.md": "d9c01465bca0a9c2638e301687b26bddc2fd7d8b092c11b8d142c9de57cecee2",
+    "tools/test_1_2_5_scrollbar_motion_negative_mutations.py": "8a8d7ffc2000aa4b286aeafe9c75e0a1d6442a807a7656b31cd9b822e8c42f7b",
+    "tools/verify_1_2_5_scrollbar_motion.py": "937052a1abbe45f876a00e2e34f6848fbebce5c596ef5a2b696ff7c30daeffe1"
+  }
+}

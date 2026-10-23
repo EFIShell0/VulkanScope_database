@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.11",
+  "successor": "1.0.12",
+  "baselineZipSha256": "cda8c117ae023f9d7abfdb532ad410f053a0a44140c4107bb7cfd78a957cf0dc",
+  "baselineManifest": "regression/1.0.11_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "assets/site.v0390.css",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1011.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1012.js",
+    "regression/1.0.11_files.json",
+    "regression/1.0.11_to_1.0.12_contract.json",
+    "rules/1.0.12_REPORTS_VISUAL_NAVIGATION_UI_AUDIT.md",
+    "tools/test_1_0_12_reports_visual_navigation_ui_negative_mutations.py",
+    "tools/verify_1_0_12_reports_visual_navigation_ui.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.11_to_1.0.12_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "d3dcaa5a2e1cf0a18341b146e1c3184b452dd4c4c54bf28de199443aa0119a05",
+    "BUILD_AUDIT.md": "1d27b3cce9e1d355962e4e95d2a49f1b8dde64dd8fd997c2d13d28a6a0fc9c2d",
+    "assets/site.v0390.css": "9bf48b1b74f9c97277e836bc51f023840418c463b5245abf2dc69faf7393b362",
+    "changelog.md": "5d45d01a3aa75e4d7045a304796203b363100b233d1e4fbc3551efa9b118f630",
+    "index.html": "49fb6d6293c17d647ca1d962155cd60f1ca5b1486292cbd23dee8b684c6b9a34",
+    "rules/PROJECT_RULES.md": "53daf4b1afeea46e348afc5b1cdb52b553b777ff949769b33036ab3dbb9dfe70",
+    "tools/build_index.py": "d7175e8f29db65704e97bd166b0618e521775fca5429ec15771b5d06624f20d5",
+    "tools/build_pages_artifact.py": "0e70016905928ac3153985f79c36bfab8391799649ef55cae8812221fc509c93",
+    "tools/build_preload_snapshot.py": "4a0606dd7167aaa8d4f02f77e6790116fa1ab2b10bd67fd453114b2c0a86f919",
+    "tools/package_release.py": "52ae9e8bb650e0b9c238a9ff50533bd74b8de68a139fb6a7d95d03a399c96ceb",
+    "tools/pages.workflow.yml": "d3dcaa5a2e1cf0a18341b146e1c3184b452dd4c4c54bf28de199443aa0119a05",
+    "tools/quality_gate.py": "703510e324d79ffcdcf9c432c88c64f514a46b46d3d3852a5e3304b518f4e816",
+    "tools/repair_repository.py": "41d8ddfeab081bf536c8542e698166c9ea6c6278942ee86fb2829824a0f5a87c",
+    "tools/test_utf8_text_io.py": "2e1814389abe7e7502322ee1517413e2261eb75f9cc9f2bb40a22a6a3a86c9ab",
+    "tools/verify_regression_contract.py": "14ae552f982e09d9aab151c28fb0b0339eb0bc33871385bde040a771a96f42cc",
+    "tools/verify_vulkanscope_04132.py": "e6980db5c807334545a8e769f990ccb25647b8bbd474860fcbb3c02adc4ce5ef",
+    "worker/package.json": "1a8211ef9d1cd7336f656657369efaee7ab3056fbe0476b7e830612280294532",
+    "worker/tests/contract.mjs": "ddd1d1cebb41c69721e150f9f72d06a9ac2ff76e771499f3195a34ae525dee3b",
+    "assets/app.v1012.js": "b1dc40472b3a832c484bafe348139fe972a8a5a0a85022376f7541e8380c94ea",
+    "regression/1.0.11_files.json": "9fd2a2f0fbf82ab7d96afab90acaf9d8c2abb503c282b7fd9729f25d4e37cf8f",
+    "rules/1.0.12_REPORTS_VISUAL_NAVIGATION_UI_AUDIT.md": "418ed3ae5a6c0b2299113960c52868dc9e3f63c0b3c4e9016ba7d9e0ce6084b6",
+    "tools/test_1_0_12_reports_visual_navigation_ui_negative_mutations.py": "3391ca5dec5d9254d4e5b272623e3fd7e5175e32dd11579bcf30f1c9ac319819",
+    "tools/verify_1_0_12_reports_visual_navigation_ui.py": "459acf3e9955314fbee72eea587d9fce35ef0aa5aa597abbab758d0ab3f62ef3"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.20",
+  "successor": "1.0.21",
+  "baselineZipSha256": "b5dbe8ed37bc8ce7ec4ccc1a236bd7b2a7007911cdb58c79b56108e60cd75aed",
+  "baselineManifest": "regression/1.0.20_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "changelog.md",
+    "data/index.json",
+    "data/release.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/mark_release_ready.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1020.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1021.js",
+    "regression/1.0.20_files.json",
+    "regression/1.0.20_to_1.0.21_contract.json",
+    "rules/1.0.21_LIVE_REPORT_SYNC_AUDIT.md",
+    "tools/test_1_0_21_live_report_sync_negative_mutations.py",
+    "tools/verify_1_0_21_live_report_sync.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.20_to_1.0.21_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "a7c41b656f99ab5113ed841c8bdb14e6fcf11253792f883ff9b94828f80e5b52",
+    "BUILD_AUDIT.md": "33e264b9dbb5d3486deaf5233f9c1c966dc8bed38101100049e8b59c24ca3a67",
+    "assets/app.v1021.js": "3915c7fcf2fa095cc258fe65b82f1f246ad5804e839191d8f99287d9961135f5",
+    "changelog.md": "2d6af5e8e6a8738a13b4065bbd171a8e9e1eadf915e90c3bfa9bfaf660eb6620",
+    "data/release.json": "175842cee619892816e9dd1f35fca7b18ed6eb67defc27bb67af3c2fb0bdd216",
+    "index.html": "9584efb2849191465cdec634c0b3349c631015e3aac8685246618013ac6f9f5f",
+    "regression/1.0.20_files.json": "e580e032db24075c863a9781ac0dd09a417efa42543512dbe4ea41dc697c8c3f",
+    "rules/1.0.21_LIVE_REPORT_SYNC_AUDIT.md": "47c7f4e5a611914cc0f2fb0f308e219142fe91de301edaa722271456b9084c65",
+    "rules/PROJECT_RULES.md": "0914c81743c095154054e708f77a595156d583741630079ecf5da98e9e796c61",
+    "tools/audit_database.py": "3d0657ffcc91b945280989bf08ace29b3721b784a62fe04bd231851c35707c9e",
+    "tools/build_index.py": "b72d1cb62fedf94b4f50bd012a5469d3ffaa357003c233a99878dc62689afd7f",
+    "tools/build_pages_artifact.py": "c70cae5ed9e42a5c289102aeb7bbf22b10a5e01ebe7c14321150bfb42a3c5b7d",
+    "tools/build_preload_snapshot.py": "f11c0726dac8f309cf720e3a4490f9f9357feba0049de5719dbf07eadd8c28d4",
+    "tools/mark_release_ready.py": "0ce8a60172c5a9b0737900f313c48988e68c878bb46befb5c71a0a648db88440",
+    "tools/package_release.py": "2e9c08dff6b9d22824f93243d02763e8f83b791f7fa7e076b22ec39b522d25f8",
+    "tools/pages.workflow.yml": "a7c41b656f99ab5113ed841c8bdb14e6fcf11253792f883ff9b94828f80e5b52",
+    "tools/quality_gate.py": "90c1cf10c640b3c4c3a0099fc3b408ec7c119d0aeed87f994988557b2643dfde",
+    "tools/repair_repository.py": "a3e122c4d398e8e0b86aa5df77fff50844bc20c1bc3a1d8483e42bfd7e4abf99",
+    "tools/test_1_0_21_live_report_sync_negative_mutations.py": "dcfd2bff8a2032df1571adc4e92eaaaa2e21a768966c3100a0d71412d3fd12ef",
+    "tools/test_compare_contract.mjs": "f76698413121dd7b94f73730c79430e633181d5222fb451baa35c32e0e7a88bf",
+    "tools/test_routes.mjs": "951c2c16581a38b88b5859ff30ddbb699b87807e059266c9d0837d2d5754a432",
+    "tools/test_utf8_text_io.py": "add815d8d54e8d63a0d1b2e35c14e5fea65047cd3f6062b5fc11285a70fc60d0",
+    "tools/verify_1_0_21_live_report_sync.py": "4833b42f999c691554244b5a52918e1da300bee355c2d160b82409b685d2c3a1",
+    "tools/verify_regression_contract.py": "43a9391ba9badf0bd6d8974dd4a9ce7243d95d9e68e6eaebdd73f918aec8769b",
+    "tools/verify_vulkanscope_04132.py": "2391626c5bb814ebfd734215a2efcab1fe4ac166497d8bd035416be7816f1be5",
+    "worker/package.json": "2ecedd4580eedfe459e2eda44eb1d7137c84518bb375a4d6fe3b90850015b405",
+    "worker/src/index.js": "df504cd98f2b92119be66f48a01d5cadeca4211e321a750ca3515e78087471e2",
+    "worker/tests/contract.mjs": "dc927fda1a2f225e21996383839a10fcce5cf104a1c6b7ed4d9152e673885de4"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.0.18",
+  "successor": "1.0.19",
+  "baselineZipSha256": "0b2bc5175a285ff15db76cd2bbfdb70d707251f19045e2d8cfa72cbf840bdbbf",
+  "baselineManifest": "regression/1.0.18_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "changelog.md",
+    "data/index.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1018.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1019.js",
+    "data/release.json",
+    "regression/1.0.18_files.json",
+    "regression/1.0.18_to_1.0.19_contract.json",
+    "rules/1.0.19_DOMINANT_GLOW_RELEASE_READY_AUDIT.md",
+    "tools/test_1_0_19_dominant_glow_release_ready_negative_mutations.py",
+    "tools/verify_1_0_19_dominant_glow_release_ready.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.0.18_to_1.0.19_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "e540cc9f8fed5e318acb57f3662e3595fca84fcb0aebc9aca3743b4de0f2ce7e",
+    "BUILD_AUDIT.md": "538ec5aecc017db2cfa9bb32308012f395611df6f87a1237f172f644f2da79f3",
+    "changelog.md": "a909147715bcc2a5727b91295a8e8253560a66f4d6e7021e42549268975fac2b",
+    "index.html": "151c463070f3c16aba823589f85a61e40211893b49636278d9a0a8daa48398c0",
+    "rules/PROJECT_RULES.md": "dd0ad70475477fc8a26c94f97b1e10c390d53ed074bf4d48903c4a0543f5f06d",
+    "tools/audit_database.py": "018fae845e6b44974190edcafb5a171f1bde9d1184b4ad74a0e2a434c8c4b85b",
+    "tools/build_index.py": "72f1b6800d06b3fa09644d78f575aa20fb9f0d53c86a268981e0adfcd04b3ac6",
+    "tools/build_pages_artifact.py": "133f5d2c04fcd97ffa6e157e92a29d5227a444133db6e3b7779d635457dc1ae3",
+    "tools/build_preload_snapshot.py": "8472a4de2f0baa670e2d42ea916bdb5c12058c1dfd0c61b359f82167059e63a4",
+    "tools/package_release.py": "ee7382225a0a256bc3ea7837061948c4b95804d5598b9f28383b25f835ae3349",
+    "tools/pages.workflow.yml": "e540cc9f8fed5e318acb57f3662e3595fca84fcb0aebc9aca3743b4de0f2ce7e",
+    "tools/quality_gate.py": "2975731efb591004386f692d0cbcd9441b7c311bd1f7581141085b2f077daefb",
+    "tools/repair_repository.py": "9b5e08e1f3221453717d42c92295d3236a13217588f81579595799f7ba3c759e",
+    "tools/test_compare_contract.mjs": "b682bfb5a2e5972700506d71d40dd36f786c415d9d2d3f4348ad6c5be6c19951",
+    "tools/test_routes.mjs": "e78964e08bc29ff91ed2abad3b342722a88e102b401483406c87b64a550bcc49",
+    "tools/test_utf8_text_io.py": "98ccf1efb6e139cb9af3bedde40bc84b9d3b49d21d4e81da96d4532e34393d95",
+    "tools/verify_regression_contract.py": "b34152c3e6ddf1c1ebf859228d85676104aec5346853949679871e3650215509",
+    "tools/verify_vulkanscope_04132.py": "439ff19571e1c9146b5692351be9bfec5b7886f9715b8a892c4ec9f429ede54e",
+    "worker/package.json": "444d9ed89c4232af1b36327ff3a6d59c258b7e61e5c5365f7cf473b8ee79e053",
+    "worker/src/index.js": "174e051348259a74bfa175e9b92835c22e246478b898961619cc2f03c679612e",
+    "worker/tests/contract.mjs": "ab59bfb373f15c0992b4ad8d73d55b50cf7cedf79e210395e0faa03bb0884bac",
+    "assets/app.v1019.js": "82b1b24c7695da8a858e6573d7db75f30537ab9b228ac5fef9c76a08570770e8",
+    "data/release.json": "4cbbcd3c749a6e9bf35e6826ce20b1097608b8615976a03a437df5777cc0f0a4",
+    "regression/1.0.18_files.json": "df6dcf2cc851f3471d5fd280e8bc3e6054013b41fc48141ecc55c6e6e926e779",
+    "rules/1.0.19_DOMINANT_GLOW_RELEASE_READY_AUDIT.md": "8e936f443ed1c697fd10b098dead8c541a88c53fbf0bb16166d2e2ae02b95f2d",
+    "tools/test_1_0_19_dominant_glow_release_ready_negative_mutations.py": "bb4eb541b02bea83b8adc82e2a8fb843f11fc64563911d7ac32f6a69f0dd296a",
+    "tools/verify_1_0_19_dominant_glow_release_ready.py": "c81b698baf2816358c992e96b3eef190dd35df173be2e3f282d4f6aaf5787a85"
+  }
+}

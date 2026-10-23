@@ -1,0 +1,170 @@
+# Security and data policy
+
+The public database contains technical Vulkan capability information only.
+
+Do not publish IMEI, Android ID, device serial numbers, MAC addresses, user/account identifiers, private file paths, authentication tokens or IP addresses as report fields.
+
+The site has no third-party JavaScript, analytics, remote fonts or advertising dependencies. Its Content Security Policy permits same-origin resources and the configured VulkanScope Worker API only.
+
+Unknown, unsupported and unavailable capability states remain distinct. Missing query data is never inferred as unsupported without direct evidence.
+
+## 1.0.9 producer-floor and live-state integrity
+
+- New VulkanScope report POSTs require canonical producer version 1.2.5 or newer. The floor check happens before generic submission validation; versionCode identity, schema, registry/header, completeness, privacy-key and payload-size checks still apply afterward.
+- Raising the POST floor does not revoke read access to historical stored reports and does not rewrite or rehash D1 rows.
+- Frontend live reconciliation is staged off-state and committed only when the complete live report set is available, avoiding partial statistics/report-list state.
+- Report ID clipboard actions validate the existing lowercase 64-hex identifier and do not introduce any external clipboard/library dependency or network endpoint.
+
+## 0.33.8 submission hardening
+
+The Worker accepts report submissions only as `application/json`. The outer schema must identify the producer as VulkanScope (`com.efishell.vulkanscope`) and `collection.status` must be `available`; incomplete collection submissions are rejected. Existing payload-size, forbidden-field, D1 parameter binding and no-request-IP-storage controls remain in force.
+
+## 0.34.0 audit
+
+No new network permission or third-party dependency was added. The UI-only transition and GPU-name styling changes retain the existing CSP, JSON submission validation, D1 parameterization, payload limits and no-IP-storage rules.
+
+## 0.35.2 audit hardening
+
+- POST media type is matched exactly as `application/json` (parameters such as `charset` are allowed); prefix lookalikes such as `application/jsonp` are rejected.
+- Request bodies remain byte-bounded while streaming before JSON materialization.
+- Sensitive personal/account/authentication field names are rejected recursively from parsed JSON. The validator deliberately operates on field names rather than scanning harmless technical report prose.
+- Stored malformed JSON is converted to a generic JSON 500 response; stack details are not exposed.
+- Report-list cursor parameters are validated and D1 queries remain parameter-bound.
+- A composite `(submitted_at, id)` index supports stable report cursor pagination.
+
+The submission endpoint intentionally remains unauthenticated so the VulkanScope Android application can submit reports without user accounts. Schema checks, size limits and Cloudflare deployment controls reduce abuse, but they are not a cryptographic proof that a caller is the official APK. Production operators should additionally use Cloudflare edge/rate-limiting controls appropriate to their deployment if public-write abuse becomes a concern; request IP addresses remain outside stored report data.
+
+## Structured property/limit authority
+
+For schema-v3 VulkanScope reports, `technicalReport.devices[].detailedProperties` and `technicalReport.devices[].limits` are separate authoritative datasets. Human-readable TXT normalization is a legacy compatibility fallback and must not cause DEVICE, Surface, feature or other metadata to be presented as a Vulkan property or limit. Existing stored payloads are interpreted on read; the correction does not mutate D1 rows.
+
+## 0.38.0 routing, statistics and current-producer hardening
+
+- Canonical public navigation is hash-based. Report routes accept only already-loaded lowercase 64-hex report IDs and allow-listed section names; compare routes require exactly two valid loaded IDs.
+- Legacy query-string routes are accepted only for migration and are canonicalized to the validated hash representation.
+- Distribution charts are rendered locally with first-party SVG/CSS. No chart CDN, remote script, analytics endpoint, remote font, ad service or chart-generation service is introduced.
+- Statistics describe loaded submissions only and are not represented as market or global Vulkan ecosystem share.
+- VulkanScope 0.41.4+ producer validation is fail-closed for queue/video null-vs-zero semantics and for device-extension, extended-query and Vulkan 1.4 query status tokens; 0.41.5 cannot bypass these checks by using a newer compatible version string.
+- Static HTTP error pages use the current cache-busted local stylesheet and their local resource references are release-audited.
+- The public write endpoint remains intentionally unauthenticated; deployment-level Cloudflare abuse/rate-limiting policy remains an operator control and must not store request IP addresses in report data.
+
+## 0.39.0 filter/statistics integrity
+
+- Filtering is client-side presentation only and does not modify canonical payloads, report hashes or D1 rows.
+- Exact extension filters match only enumerated extension evidence; missing tokens are not inferred unsupported.
+- Statistics slice actions assign only option values generated from already-normalized loaded reports.
+- Donut labels and filter values continue through existing HTML escaping; route/report identifiers remain separately validated by the canonical router.
+- No third-party chart JavaScript, analytics, remote font, ad or chart-generation endpoint was added.
+- Worker request, CORS, bounded-body, privacy-key and prepared D1 protections are unchanged.
+
+## 0.39.12 VulkanScope 0.41.32 / resource hardening
+
+- The current producer baseline is VulkanScope 0.41.32 and the packaged canonical registry snapshot is Vulkan 1.4.361. Current-producer summary provenance and complete-report markers are cross-checked rather than trusted independently.
+- Request bodies remain capped at 2,097,152 bytes and are never truncated. Incremental `TextDecoder(..., { fatal: true })` processing bounds raw-body memory and rejects malformed UTF-8.
+- D1's documented 2,000,000-byte single string/BLOB/row ceiling is below the producer transport ceiling. Migration `0003_payload_chunks.sql` therefore stores larger canonical payloads in bounded child rows while preserving one canonical SHA-256 report identity. D1 batch writes are transactional; partial parent/chunk commits are not accepted as a successful write.
+- Compact detail reads avoid Worker-side creation of a second normalized representation of the complete technical report. Legacy expanded detail remains an explicit compatibility path.
+- Request-scoped payloads are not stored in module-level mutable state. Reused Worker isolates therefore do not intentionally retain prior report objects.
+- Concurrent identical submissions remain idempotent through canonical SHA-256 IDs, `INSERT OR IGNORE`, and `(report_id, chunk_index)` primary keys.
+- The public write API remains intentionally unauthenticated. Cloudflare rate limiting / WAF remains an operator-level abuse control and must not be represented as application authentication.
+
+## 0.39.13 Windows/locale deterministic release tooling
+
+- Release verification no longer depends on the Windows active code page or Python's default locale encoding. Repository JSON, JavaScript and SQL inputs used by Python gates are decoded explicitly as UTF-8.
+- The exact frontend byte stream that triggered CP1252 failure is retained as a regression fixture; a future implicit `Path.read_text()` / `Path.write_text()` call causes the quality gate to fail.
+- This is a release-tooling hardening change only. Worker request validation, D1 storage, report identity, submission privacy controls, payload limits, CORS and public-write policy are unchanged from 0.39.12.
+
+
+## 0.39.15 release-tree / repository-overlay separation
+
+- Regression checks distinguish a long-lived source checkout from a distributable release tree. Historical source files that predate the packaged predecessor are not treated as newly introduced release content in source-overlay mode.
+- Predecessor-owned paths remain SHA-256 protected. This tolerance cannot hide a modification to an immutable predecessor file.
+- Release ZIP validation uses strict-package mode, where unexpected files remain fatal. Pages staging remains separately allow-listed and audited.
+- Stale versioned frontend app JavaScript is removed only through the explicit repository-repair command; the quality gate checks but does not silently mutate the checkout.
+- Generated `data/index.json` is semantic state, not a fixed release hash. Its schema/version/Vulkan producer metadata and structural types are validated after regeneration.
+- No Worker runtime, D1, request-body, privacy, CORS, report-hash or authentication policy changes are made in this release.
+
+## 0.39.17 Surface Compare evidence-state integrity
+
+Surface Compare normalization now preserves the producer's query status/reason so a failed, incomplete, not-applicable or unknown Surface probe cannot be turned into fabricated Unsupported presentation evidence. Generic Surface diagnostic/property `false` values use availability semantics, while a negative presentation capability is labeled Unsupported only when its owning query completed successfully. This is a presentation/normalization correction only: stored payloads, canonical report hashes, D1 rows, submission validation, CORS, privacy-key rejection, authentication policy, request limits and Worker storage behavior are unchanged. The producer-bounded historical property-as-feature canonicalization introduced in 0.39.16 remains unchanged.
+
+## 0.39.18 producer metadata update
+
+0.39.18 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.
+
+## 0.39.19 producer metadata update
+
+0.39.19 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.
+
+## 0.39.20 producer metadata update
+
+0.39.20 changes only release/current-producer metadata and the cache-busted local frontend asset identity. Worker validation, payload size limits, UTF-8 bounds, forbidden identifier checks, report hashing, D1 storage, CORS policy, privacy policy and public-write behavior remain unchanged. No D1 migration or stored report rewrite is introduced.
+## 0.39.22 producer floor and read-path presentation hardening
+
+0.39.22 requires VulkanScope 0.80.1 or newer for new POST submissions and returns an explicit floor error before generic schema validation. Existing stored historical reports remain readable; no migration, payload rewrite or report-hash rewrite is performed. Historical physical-device-type canonicalization is read/presentation-only. Existing payload size limits, strict UTF-8 decoding, forbidden identifier checks, canonical hashing, D1 storage/chunking, fixed CORS origin, no-redirect application submission policy and privacy boundaries remain unchanged.
+
+## 0.39.23 producer floor and Encyclopedia reference surface
+
+0.39.23 requires VulkanScope 0.80.3 or newer for new POST submissions. Historical stored reports remain readable and no migration, stored-payload rewrite or report-hash rewrite is performed. The Encyclopedia is a checked-in offline/static reference generated from the locked Vulkan 1.4.361 registry and does not add a documentation/network endpoint. Registry entries are never treated as runtime support evidence. Existing bounded API reads, payload limits, canonical hashing, fixed origins, D1 chunking and privacy boundaries remain unchanged.
+
+## 0.39.25 Vulkan 1.4.362 registry update
+
+The registry/Encyclopedia update does not add endpoints, remote scripts, analytics, credentials, D1 migrations, stored-report rewrites or report-hash rewrites. The VulkanScope 0.80.3 server-side new-submission floor and existing bounded request/payload/privacy controls remain unchanged.
+
+
+## 0.39.26
+- Preserves fail-closed report validation while making current 0.80.12 rejection classes precise; no submitted report contents are echoed in errors.
+## 1.0.0 producer-version and registry-contract validation
+
+1.0.0 extends the fail-closed producer parser across the VulkanScope 1.0.0 major-version boundary without weakening report validation or the VulkanScope 0.80.3 submission floor. VulkanScope 1.0.0 requires versionCode 1000 and remains subject to the exact Vulkan-prefixed 1.4.362 registry/header contract. Alternate unprefixed registry spellings remain invalid. Existing payload-size bounds, strict UTF-8 decoding, forbidden identifier checks, canonical report hashing, D1 parameter binding/chunking, CORS/privacy policy and bounded validation-class feedback remain unchanged. No D1 migration, stored-report rewrite or report-hash rewrite is introduced.
+
+
+## 1.0.1 Surface evidence-state integrity
+
+1.0.1 preserves Surface query status as authoritative evidence when normalizing and rendering report details. A false presentation Boolean is classified as Unsupported only after an `available` Surface query; incomplete, unavailable, not-applicable and unknown queries retain those evidence states. Report-text line order cannot alter this classification. This correction does not change D1 storage, hashes, report schemas, upload limits, CORS, privacy rejection, payload chunking or deployment permissions.
+
+## Database 1.0.4 release-toolchain controls
+
+- Production Worker deployment uses exactly pinned Wrangler 4.130.0 and is blocked by `npm audit --audit-level=high` after the fail-closed Cloudflare account identity check.
+- Do not use `npm audit fix --force` to silence deployment advisories; a dependency/toolchain update must be reviewed and pinned instead.
+- npm install scripts are not blanket-approved. The project `allowScripts` policy permits only the reviewed Wrangler toolchain installers `esbuild`, `sharp`, and `workerd`.
+- Node ESM repository-path conversion uses `fileURLToPath(import.meta.url)` so Windows drive-letter paths are not reinterpreted as URL path text.
+- A mandatory Windows GitHub Actions job exercises the path-sensitive Compare/Surface tests before Linux build/deploy/release jobs.
+- Tag release publication occurs in GitHub Actions with job-scoped `contents: write`; local GitHub CLI presence is not a security or release prerequisite.
+
+
+## Database 1.0.5 optional lock hygiene
+
+- `worker/package-lock.json` remains optional ignored local state and is not a release artifact. Because `.gitignore` cannot untrack a file already committed by an older release, canonical repository repair explicitly removes an existing legacy lock before release verification.
+- This cleanup does not weaken supply-chain checks: `worker/package.json` remains exactly pinned to Wrangler 4.130.0, and any optional lock that is deliberately retained in another workspace must resolve exactly Wrangler 4.130.0 with integrity metadata.
+- Stale 4.125.x lock state is rejected before repair and never accepted as equivalent to the reviewed 4.130.0 toolchain.
+
+
+## Database 1.0.6 lock-backed deployment audit
+
+- `npm audit` is never called without a lock. The deployment audit helper creates/refreshes an ignored package lock from the exact direct pins, validates Wrangler 4.130.0 plus patched sharp 0.35.4 and integrity metadata, then runs `npm audit --audit-level=high`.
+- The sharp advisory class reported by the 1.0.5 workspace is addressed with an exact `overrides.sharp=0.35.4`; `npm audit fix --force` remains forbidden.
+- Cloudflare account verification still precedes the security audit and any failure remains deployment-blocking.
+- Release ZIPs continue to exclude local `worker/package-lock.json`; the lock is deployment-workspace evidence, not source-release state.
+
+## Database 1.0.7 Windows subprocess and deterministic-checkout controls
+
+- Repository text is canonical LF through root `.gitattributes`; the generated Encyclopedia fixture is not permitted to depend on Windows `core.autocrlf` behavior. Binary artwork remains excluded from text conversion.
+- The strict Encyclopedia byte-regeneration check is retained. A CRLF checkout is rejected and diagnosed rather than normalized away.
+- Worker security audit never executes `npm.cmd` directly. npm's CLI JavaScript entry point is launched with the current Node executable, avoiding Windows command-shim spawn behavior while preserving shell-free argument boundaries.
+- Existing deployment workspace locks are reused. If a lock is absent, only the ignored local lock is bootstrapped before exact Wrangler 4.130.0 / sharp 0.35.4 resolution and integrity checks, followed by `npm audit --audit-level=high`.
+- Windows GitHub Actions now performs `npm install` and the actual `npm run security:audit` before the Linux build is eligible to deploy. High/critical findings remain blocking; `npm audit fix --force` remains prohibited.
+- These changes do not modify API authentication/public-write policy, CORS, payload bounds, privacy rejection, D1 schema, report hashing, stored payloads, migrations or capability evidence semantics.
+
+## Database 1.0.8 tagged-checkout / release-package boundary controls
+
+- A Git checkout may contain legitimate historical tracked source files that were not shipped in the immutable predecessor ZIP; those files are source-history state and are not automatically trusted as release content.
+- Release packaging uses an explicit predecessor-derived path set rather than recursively archiving the checkout. Historical stale assets and local deployment state are excluded unless they are explicitly part of the successor contract.
+- Strict-tree verification runs against a clean extract of the constructed deterministic ZIP. The extracted path set must exactly equal the expected package allow-list, and every extracted byte must equal the selected source byte before release publication.
+- Injecting an unexpected file into the clean release tree remains a fatal strict-package regression. This change does not relax Worker validation, payload limits, canonical hashing, D1 parameterization/chunking, CORS, privacy-key rejection, account isolation or production audit requirements.
+
+
+## 1.4.12 asynchronous snapshot publication boundary
+- `SNAPSHOT_GITHUB_TOKEN` is a Cloudflare Worker secret only. It must be a repository-scoped fine-grained credential with only the GitHub Actions permission required to dispatch the canonical workflow. It is never committed or exposed to Pages/API clients.
+- Report acceptance commits to D1 before snapshot dispatch. Snapshot dispatch uses the Worker background lifetime and therefore cannot alter the HTTP acceptance result after a valid report is stored.
+- Dispatch retries are bounded and limited to transport, HTTP 429 and 5xx classes. Configuration/authentication failures fail closed in the background task and are logged without exposing the token.
+- Snapshot mode validates the triggering lowercase 64-hex report ID, builds from the authoritative live API, audits the staged artifact and verifies publication after deploy.

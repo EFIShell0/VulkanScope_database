@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "baseline": "1.2.3",
+  "successor": "1.2.4",
+  "baselineZipSha256": "e93a67fa86a0070b3aba5ba93b1695a60b83cdefc6d557ad7dff674c6607382e",
+  "baselineManifest": "regression/1.2.3_files.json",
+  "allowedChanged": [
+    ".github/workflows/pages.yml",
+    "BUILD_AUDIT.md",
+    "changelog.md",
+    "data/index.json",
+    "data/release.json",
+    "index.html",
+    "rules/PROJECT_RULES.md",
+    "tools/audit_database.py",
+    "tools/build_index.py",
+    "tools/build_pages_artifact.py",
+    "tools/build_preload_snapshot.py",
+    "tools/mark_release_ready.py",
+    "tools/package_release.py",
+    "tools/pages.workflow.yml",
+    "tools/quality_gate.py",
+    "tools/repair_repository.py",
+    "tools/test_compare_contract.mjs",
+    "tools/test_routes.mjs",
+    "tools/test_utf8_text_io.py",
+    "tools/verify_regression_contract.py",
+    "tools/verify_vulkanscope_04132.py",
+    "worker/package.json",
+    "worker/src/index.js",
+    "worker/tests/contract.mjs"
+  ],
+  "allowedRemoved": [
+    "assets/app.v1203.js",
+    "assets/browser-compat.v1203.js"
+  ],
+  "allowedNew": [
+    "assets/app.v1204.js",
+    "assets/browser-compat.v1204.js",
+    "regression/1.2.3_files.json",
+    "regression/1.2.3_to_1.2.4_contract.json",
+    "rules/1.2.4_CI_BOUNDED_TABLES_AUDIT.md",
+    "tools/test_1_2_4_ci_bounded_tables_negative_mutations.py",
+    "tools/verify_1_2_4_ci_bounded_tables.py"
+  ],
+  "generatedSemanticPaths": [
+    "data/index.json"
+  ],
+  "selfHashExcluded": [
+    "regression/1.2.3_to_1.2.4_contract.json"
+  ],
+  "ignoredLocalPaths": [
+    "worker/package-lock.json"
+  ],
+  "ignoredLocalDirs": [
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".tmp",
+    ".wrangler",
+    "__pycache__",
+    "_site",
+    "build",
+    "dist",
+    "node_modules",
+    "tmp"
+  ],
+  "successorSha256": {
+    ".github/workflows/pages.yml": "916cea15160de63e1275cd81845ed842ab1ab01814b838be7f339fb40bae5d8c",
+    "BUILD_AUDIT.md": "157e08290ee8308b1f11f153f5c7302af577e26510e00b3a8fe01b8242266b71",
+    "assets/app.v1204.js": "4886a7c956b7b69b1b0be221dbe4daef885156fdb28d9f473fb550c482553f20",
+    "assets/browser-compat.v1204.js": "45466e5a944908739d13e25f5972b69908e5d48f1fc5640f307e6a4240f8e6fa",
+    "changelog.md": "32bb73147394d7f3565f9c3608be68d3589350f2de802608a1609a3fae998e80",
+    "data/release.json": "ae8c89ea5f38d433b0ffac246c969c32371b2a5f81b4cda5bde650683511be7b",
+    "index.html": "82fc44cdb9a2b0945033302b0a98601f9988e94d664c71aa2e8c28516107ccb0",
+    "regression/1.2.3_files.json": "650e4c16efc7ce042788c4e790367e1af57fdaca498fdfe9854c7633fb2ce63c",
+    "rules/1.2.4_CI_BOUNDED_TABLES_AUDIT.md": "2339bc935a7f8c74894299d4d1efb252f84c68e08f09c58a02f36c9640c5d4b7",
+    "rules/PROJECT_RULES.md": "a33f939cd72966972bb41b7b240b730c0beff285850253c77350c1bba073be67",
+    "tools/audit_database.py": "1ef5fd091e53e4fe69042b203aacbe256adb1353a340b153866ea97740b937aa",
+    "tools/build_index.py": "f2c02afccf081125360c51c4c4735e1ad38955d48c22c8004df8540dfa5e851d",
+    "tools/build_pages_artifact.py": "d4556ca8aa1716991e662e5b7bf40ac729bbc22143fe29ad02f5142e1b3288fc",
+    "tools/build_preload_snapshot.py": "79f77c674dc18b808146f3745bad8709c9ea48be12d758d3f2d90aa83676f337",
+    "tools/mark_release_ready.py": "75196b824ed067bf3a6e8a292109a94126d9b671e0821e70e49044f5feb9bc42",
+    "tools/package_release.py": "9bf69572fdaac618611254e6eb443e0741c632812e34120a980105433d674458",
+    "tools/pages.workflow.yml": "916cea15160de63e1275cd81845ed842ab1ab01814b838be7f339fb40bae5d8c",
+    "tools/quality_gate.py": "4e999faa16d6bc6278cb2698f6bd94d8c31952a8f18507dcf64c5be5e6b33bfe",
+    "tools/repair_repository.py": "8028f990f25449a0ba3721d4bdb610490137afa5ceb05c44a9b9be7cd72c944f",
+    "tools/test_1_2_4_ci_bounded_tables_negative_mutations.py": "67ce7d780fb1e037356a761ca9258772bce59796cd70d7c4b4bceed494e5d27d",
+    "tools/test_compare_contract.mjs": "21ae82a7b491436e90f7ff1270f837ffc858d5e91785c78309dc2ae7409a338e",
+    "tools/test_routes.mjs": "1f5f2efca2d04ae81ca5d3c6e33d41b219630e054daadbc2e2f092d2b5c715f4",
+    "tools/test_utf8_text_io.py": "1aa6a40050df818f8eb64dd72d64952767c11ee9b966109d22e642dbceae03fa",
+    "tools/verify_1_2_4_ci_bounded_tables.py": "3d1de8e23cb903e1dcb9ce217c5668db1b91a0cc0f74d6ad8b22a0b36bfb6ea2",
+    "tools/verify_regression_contract.py": "031d25daaf71626c21993977e75aac021dc98c56dc4398e5bce75a91dfcefce9",
+    "tools/verify_vulkanscope_04132.py": "fb29993bae16217d3cafe15c06d51e959949946f7d897f680321db1979b8a74c",
+    "worker/package.json": "b4d676361d4401effd36847f2182a69c79d67ae8643888d8178308f3ba358b2d",
+    "worker/src/index.js": "6568639d6b642092dda89c06caee0016e75635b0d74921eddf8f9abf4ab80810",
+    "worker/tests/contract.mjs": "f9685a867feb49c1b8b4e38bf25445ec4e2b707efdd6ee98a13d2a1549c16883"
+  }
+}

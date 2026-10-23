@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "databaseRelease": "1.0.3",
+  "producer": {
+    "name": "VulkanScope",
+    "versionName": "1.0.15",
+    "versionCode": 1015,
+    "zipSha256": "d53f0ff01ab6163a5520a2b7f3a3e5a7dba05bf04039f257bc00d1ba6b316703"
+  },
+  "comparisonProducer": {
+    "versionName": "1.0.2",
+    "versionCode": 1002,
+    "zipSha256": "986ff50b41e6a13ecc08778ef55205dcb66d9c428f552415e3933ba0010c1e48"
+  },
+  "submissionEnvelopeSchemaVersion": 2,
+  "technicalReportSchemaVersion": 3,
+  "normalizerVersion": 16,
+  "vulkanRegistryBaseline": "Vulkan 1.4.362",
+  "sourceEvidence": {
+    "technicalReportJson": {
+      "sha256": "899f0e6ef1546c7be47f7f089fadc25b9386b5f0c2f012810b2691008718a42d",
+      "byteEquivalentToVulkanScope1_0_2": true
+    },
+    "databaseSubmissionJson": {
+      "sha256": "5006924686ff40b58aca67a87472a92ecdbb8df05c4823716d1ca9b24fd872e2",
+      "byteEquivalentToVulkanScope1_0_2": true
+    },
+    "submitDatabaseReport": {
+      "sha256": "7bbea51d6f3fac82623ed06ae0b8dc2ed56973324beae2084ebfb7664fc6f499",
+      "payloadContractChanged": false,
+      "observedChange": "adds a validated-internet guard before submission; serialization remains unchanged"
+    }
+  },
+  "compatibilityConclusion": "compatible without submission schema, technicalReport schema, normalizer, D1 schema, stored-payload or report-hash changes"
+}
