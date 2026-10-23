@@ -5,8 +5,9 @@ import {fileURLToPath} from 'node:url';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
 const workerRoot=path.resolve(here,'..');
-const wantWrangler='4.130.0';
-const wantSharp='0.35.4';
+const wantWrangler='4.152.0';
+const wantSharp='0.35.5';
+const wantUndici='7.30.1';
 
 function fail(message){
   console.error(`FAIL security audit preflight: ${message}`);
@@ -40,6 +41,7 @@ function jsonFile(name){
 const pkg=jsonFile('package.json');
 if(pkg?.devDependencies?.wrangler!==wantWrangler) fail(`worker/package.json must pin wrangler exactly ${wantWrangler}`);
 if(pkg?.overrides?.sharp!==wantSharp) fail(`worker/package.json must override sharp exactly ${wantSharp}`);
+if(pkg?.overrides?.undici!==wantUndici) fail(`worker/package.json must override undici exactly ${wantUndici}`);
 
 const lockPath=path.join(workerRoot,'package-lock.json');
 if(!fs.existsSync(lockPath)){
@@ -54,6 +56,8 @@ const wr=packages['node_modules/wrangler']||{};
 if(wr.version!==wantWrangler || !wr.integrity) fail(`audit lock must resolve wrangler ${wantWrangler} with integrity metadata`);
 const sharp=packages['node_modules/sharp']||{};
 if(sharp.version!==wantSharp || !sharp.integrity) fail(`audit lock must resolve patched sharp ${wantSharp} with integrity metadata`);
+const undici=packages['node_modules/undici']||{};
+if(undici.version!==wantUndici || !undici.integrity) fail(`audit lock must resolve patched undici ${wantUndici} with integrity metadata`);
 
 console.log(`PASS security audit lock: wrangler=${wantWrangler} sharp=${wantSharp} lockfileVersion=${lock.lockfileVersion}`);
 runNpm(['audit','--audit-level=high']);

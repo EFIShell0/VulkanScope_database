@@ -1,7 +1,7 @@
 {
   "name": "vulkanscope-database-worker",
   "private": true,
-  "version": "4.0.0",
+  "version": "4.0.1",
   "scripts": {
     "auth:create": "wrangler auth create vulkanscope",
     "auth:activate": "wrangler auth activate vulkanscope .",
@@ -20,7 +20,7 @@
     "security:audit": "node scripts/security-audit.mjs"
   },
   "devDependencies": {
-    "wrangler": "4.130.0"
+    "wrangler": "4.152.0"
   },
   "type": "module",
   "allowScripts": {
@@ -29,6 +29,7 @@
     "workerd": true
   },
   "overrides": {
-    "sharp": "0.35.4"
+    "sharp": "0.35.5",
+    "undici": "7.30.1"
   }
 }

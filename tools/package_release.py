@@ -17,9 +17,9 @@ out_dir.mkdir(parents=True, exist_ok=True)
 # that were never part of the immutable predecessor release ZIP. Validate predecessor
 # ownership in source-overlay mode here; strict-tree applies only to the actual package.
 subprocess.run([sys.executable, str(root/'tools/repair_repository.py'), '--check'], cwd=root, check=True)
-subprocess.run([sys.executable, str(root/'tools/verify_regression_contract.py')], cwd=root, check=True)
+subprocess.run([sys.executable, str(root/'tools/verify_4_0_1_regression_contract.py')], cwd=root, check=True)
 
-contract_path = root/'regression/1.4.13_to_4.0.0_contract.json'
+contract_path = root/'regression/4.0.0_to_4.0.1_contract.json'
 contract = json.loads(contract_path.read_text(encoding='utf-8'))
 manifest = json.loads((root/contract['baselineManifest']).read_text(encoding='utf-8'))
 paths = {x['path'] for x in manifest['files']}
@@ -32,7 +32,7 @@ missing = sorted(rel for rel in paths if not (root/rel).is_file())
 if missing:
     raise SystemExit('release package missing files: ' + ', '.join(missing))
 
-zip_path = out_dir / 'VulkanScope-Database-4.0.0.zip'
+zip_path = out_dir / 'VulkanScope-Database-4.0.1.zip'
 with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
     for rel in sorted(paths):
         data = (root/rel).read_bytes()
@@ -44,7 +44,7 @@ with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compressle
 
 # Strict-package verification happens against a clean extract, not the history-bearing
 # tagged checkout. This is the key source-overlay/package boundary.
-with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.0-') as td:
+with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.1-') as td:
     extracted = Path(td) / 'release'
     extracted.mkdir()
     with zipfile.ZipFile(zip_path) as zf:
@@ -65,7 +65,7 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.0-') as td:
             raise SystemExit(f'clean-extract/source byte mismatch: {rel}')
 
     subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_regression_contract.py'), '--strict-tree'],
+        [sys.executable, str(extracted/'tools/verify_4_0_1_regression_contract.py'), '--strict-tree'],
         cwd=extracted, check=True
     )
     subprocess.run(
@@ -73,11 +73,11 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.0-') as td:
         cwd=extracted, check=True
     )
     subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_4_0_0_snapshot_jxl.py')],
+        [sys.executable, str(extracted/'tools/verify_4_0_1_snapshot_jxl.py')],
         cwd=extracted, check=True
     )
     subprocess.run(
-        [sys.executable, str(extracted/'tools/test_4_0_0_snapshot_jxl_negative_mutations.py')],
+        [sys.executable, str(extracted/'tools/test_4_0_1_snapshot_jxl_negative_mutations.py')],
         cwd=extracted, check=True
     )
 

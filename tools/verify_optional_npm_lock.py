@@ -4,8 +4,9 @@ import json, sys
 root = Path(__file__).resolve().parents[1]
 pkg_path = root / 'worker' / 'package.json'
 lock = root / 'worker' / 'package-lock.json'
-want = '4.130.0'
-want_sharp = '0.35.4'
+want = '4.152.0'
+want_sharp = '0.35.5'
+want_undici = '7.30.1'
 errors=[]
 
 try:
@@ -16,13 +17,15 @@ except Exception as exc:
 root_pin=(pkg.get('devDependencies') or {}).get('wrangler')
 if root_pin != want:
     errors.append(f'worker/package.json wrangler pin {root_pin!r} != {want}')
+if (pkg.get('overrides') or {}).get('undici') != want_undici:
+    errors.append('worker/package.json undici override does not match pinned safe 7.30.1')
 if (pkg.get('overrides') or {}).get('sharp') != want_sharp:
     errors.append(f"worker/package.json sharp override {(pkg.get('overrides') or {}).get('sharp')!r} != {want_sharp}")
 
 if not lock.is_file():
     if errors:
         print('\n'.join('FAIL '+x for x in errors)); raise SystemExit(1)
-    print(f'PASS optional npm lock absent; canonical worker/package.json wrangler={want} sharpOverride={want_sharp}')
+    print(f'PASS optional npm lock absent; canonical worker/package.json wrangler={want} sharpOverride={want_sharp} undiciOverride={want_undici}')
     raise SystemExit(0)
 
 try:
@@ -49,6 +52,9 @@ if sharp.get('version') != want_sharp:
     errors.append(f"resolved sharp version {sharp.get('version')!r} != {want_sharp}")
 if not sharp.get('integrity'):
     errors.append('resolved sharp package missing integrity hash')
+undici=packages.get('node_modules/undici') or {}
+if undici.get('version') != want_undici or not undici.get('integrity'):
+    errors.append('resolved undici missing, old or without integrity')
 if errors:
     print('\n'.join('FAIL '+x for x in errors))
     print('FAIL stale optional lock: run `python tools/repair_repository.py --apply` before the release quality gate, then run `npm install` in worker to create a fresh audited workspace lock.')
