@@ -1,5 +1,5 @@
 from pathlib import Path
-import shutil, sys
+import shutil, sys, json
 
 root=Path(__file__).resolve().parents[1]
 dest=Path(sys.argv[1]) if len(sys.argv)>1 else root/'_site'
@@ -13,36 +13,18 @@ dest.mkdir(parents=True)
 public_files=[
     '.nojekyll','index.html','config.js','report.schema.json',
     '400.html','401.html','403.html','404.html','405.html','408.html','409.html',
-    '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html',
+    '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html','jxl-unsupported.html',
 ]
 asset_files=[
-    'assets/app.v1411.js','assets/browser-compat.v1411.js','assets/release-bootstrap.v1411.js',
-    'assets/app.v1412.js','assets/browser-compat.v1412.js','assets/release-bootstrap.v1412.js','assets/encyclopedia.v1412.js',
-    'assets/site.v0390.css','assets/site.v1308.css','assets/site.v1309.css','assets/site.v1400.css','assets/site.v1401.css','assets/site.v1402.css','assets/site.v1403.css','assets/site.v1404.css','assets/site.v1405.css','assets/site.v1406.css','assets/site.v1407.css','assets/site.v1408.css','assets/site.v1409.css','assets/site.v1410.css','assets/site.v1411.css','assets/site.v1412.css',
-    'assets/apple-touch-icon-v0311.png',
-    'assets/favicon-v0311.ico','assets/favicon-v0311.png',
-    'assets/favicon.ico','assets/favicon.png',
-    'assets/vulkanscope_logo_horizontal.png',
-    'assets/browser-logos/google-chrome.v1307.svg','assets/browser-logos/chromium.v1307.png',
-    'assets/browser-logos/microsoft-edge.v1307.svg','assets/browser-logos/firefox.v1307.svg',
-    'assets/browser-logos/safari.v1307.svg','assets/browser-logos/opera.v1307.svg',
-    'assets/browser-logos/brave.v1307.svg','assets/browser-logos/vivaldi.v1307.svg','assets/browser-logos/samsung-browser.v1307.svg',
-    'assets/gpu-vendors/gpu_vendor_amd.png',
-    'assets/gpu-vendors/gpu_vendor_arm.png',
-    'assets/gpu-vendors/gpu_vendor_broadcom.png',
-    'assets/gpu-vendors/gpu_vendor_huawei.png',
-    'assets/gpu-vendors/gpu_vendor_imagination.png',
-    'assets/gpu-vendors/gpu_vendor_intel.png',
-    'assets/gpu-vendors/gpu_vendor_nvidia.png',
-    'assets/gpu-vendors/gpu_vendor_qualcomm.png',
-    'assets/gpu-vendors/gpu_vendor_samsung.png',
-    'assets/gpu-vendors/gpu_vendor_unknown.png',
-    'assets/gpu-vendors/gpu_vendor_vivante.png',
-    'assets/gpu-vendors/gpu_vendor_vsi.png',
-    'assets/hdr/dolby_vision.png','assets/hdr/dolby_vision_2.png',
-    'assets/hdr/hdr10.svg','assets/hdr/hdr10_plus.png','assets/hdr/hdr10_plus_v1014.png',
-    'assets/hdr/hdr10_plus_advanced.png','assets/hdr/hdr_vivid.webp',
+    'assets/app.v1413.js','assets/browser-compat.v1413.js','assets/release-bootstrap.v1413.js',
+    'assets/app.v4000.js','assets/browser-compat.v4000.js','assets/release-bootstrap.v4000.js','assets/encyclopedia.v4000.js',
+    'assets/site.v0390.css','assets/site.v1308.css','assets/site.v1309.css','assets/site.v1400.css','assets/site.v1401.css','assets/site.v1402.css','assets/site.v1403.css','assets/site.v1404.css','assets/site.v1405.css','assets/site.v1406.css','assets/site.v1407.css','assets/site.v1408.css','assets/site.v1409.css','assets/site.v1410.css','assets/site.v1411.css','assets/site.v1412.css','assets/site.v1413.css','assets/site.v4000.css',
+    'assets/jxl-probe.v4000.jxl',
 ]
+# Checked-in inventory is the sole source of deployable JPEG XL assets.
+inventory=json.loads((root/'tools/jxl_asset_manifest.json').read_text(encoding='utf-8'))
+if inventory.get('assetCount') != len(inventory.get('assets',[])): raise SystemExit('JPEG XL inventory count mismatch')
+asset_files += [r['to'] for r in inventory['assets']]
 for name in public_files + asset_files:
     src=root/name
     if not src.is_file(): raise SystemExit(f'missing required public file: {name}')
@@ -59,8 +41,8 @@ for name in license_files:
     shutil.copy2(src,out)
 
 flag_dir=root/'assets/country-flags'
-flag_files=sorted(flag_dir.glob('*.png')) if flag_dir.is_dir() else []
-if len(flag_files)!=250: raise SystemExit(f'expected 250 bundled country flags, found {len(flag_files)}')
+flag_files=sorted(flag_dir.glob('*.jxl')) if flag_dir.is_dir() else []
+if len(flag_files)!=250: raise SystemExit(f'expected 250 bundled JPEG XL country flags, found {len(flag_files)}')
 for src in flag_files:
     out=dest/'assets/country-flags'/src.name
     out.parent.mkdir(parents=True,exist_ok=True)

@@ -55,13 +55,14 @@ jobs:
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-      - name: Verify Database 1.4.12 VulkanScope 3.0.12 floor/snapshot automation
+      - name: Verify Database 4.0.0 durable snapshot/JXL and build hygiene
         run: |
           python tools/verify_regression_contract.py
-          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
-          python tools/test_1_4_12_vulkanscope_3_0_12_snapshot_negative_mutations.py
+          python tools/verify_4_0_0_snapshot_jxl.py
+          python tools/test_4_0_0_snapshot_jxl_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1412.js
+          node --check assets/app.v4000.js
+          node --check assets/browser-compat.v4000.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -93,14 +94,14 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: python tools/repair_repository.py --apply
-      - name: Run Database 1.4.12 quality gate
+      - name: Run Database 4.0.0 quality gate
         run: python tools/quality_gate.py
       - name: Build static index
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
-          python tools/test_1_4_12_vulkanscope_3_0_12_snapshot_negative_mutations.py
+          python tools/verify_4_0_0_snapshot_jxl.py
+          python tools/test_4_0_0_snapshot_jxl_negative_mutations.py
       - name: Stage non-release-ready Pages artifact for audit
         run: python tools/build_pages_artifact.py _site
       - name: Audit non-release-ready Pages artifact
@@ -127,10 +128,11 @@ jobs:
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
           python tools/verify_regression_contract.py
-          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
-          python tools/test_1_4_12_vulkanscope_3_0_12_snapshot_negative_mutations.py
+          python tools/verify_4_0_0_snapshot_jxl.py
+          python tools/test_4_0_0_snapshot_jxl_negative_mutations.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v1412.js
+          node --check assets/app.v4000.js
+          node --check assets/browser-compat.v4000.js
       - name: Build deterministic release assets
         run: python tools/package_release.py dist
       - name: Create or refresh GitHub Release from validated main commit
@@ -139,9 +141,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          TAG="v1.4.12"
-          ZIP="dist/VulkanScope-Database-1.4.12.zip"
-          SHA="dist/VulkanScope-Database-1.4.12.zip.sha256"
+          TAG="v4.0.0"
+          ZIP="dist/VulkanScope-Database-4.0.0.zip"
+          SHA="dist/VulkanScope-Database-4.0.0.zip.sha256"
 
           is_transient_github_error() {
             printf '%s' "$1" | grep -Eqi 'HTTP 429|HTTP 5[0-9][0-9]|rate limit|temporarily unavailable'
@@ -191,7 +193,7 @@ jobs:
                   CREATE_MODE=(--target "$GITHUB_SHA")
                 fi
                 set +e
-                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 1.4.12" --generate-notes 2>&1)"
+                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 4.0.0" --generate-notes 2>&1)"
                 RC=$?
                 set -e
                 if [ "$RC" -eq 0 ]; then
@@ -299,7 +301,7 @@ jobs:
         run: |
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-          python tools/verify_1_4_12_vulkanscope_3_0_12_snapshot.py
+          python tools/verify_4_0_0_snapshot_jxl.py
           python tools/audit_database.py --source-tree .
       - name: Build current static index
         run: python tools/build_index.py

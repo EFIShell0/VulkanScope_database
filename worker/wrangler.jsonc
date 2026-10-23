@@ -11,12 +11,14 @@
       "migrations_dir": "migrations"
     }
   ],
+  "triggers": {"crons": ["*/5 * * * *"]},
   "vars": {
     "ALLOWED_ORIGIN": "https://efishell0.github.io",
     "SNAPSHOT_GITHUB_OWNER": "EFIShell0",
     "SNAPSHOT_GITHUB_REPO": "VulkanScope_database",
     "SNAPSHOT_GITHUB_WORKFLOW": "pages.yml",
-    "SNAPSHOT_GITHUB_REF": "main"
+    "SNAPSHOT_GITHUB_REF": "main",
+    "SNAPSHOT_PUBLIC_MANIFEST_URL": "https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json"
   },
   "observability": {
     "enabled": true,

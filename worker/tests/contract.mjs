@@ -2,19 +2,27 @@ import worker, { normalizeReport } from '../src/index.js';
 import assert from 'node:assert/strict';
 
 class DB {
-  constructor(){this.rows=new Map();this.chunks=new Map()}
+  constructor(){this.rows=new Map();this.chunks=new Map();this.snapshot={queued_report_id:"",queued_at:"",last_dispatched_report_id:"",last_dispatched_at:"",last_published_report_id:"",last_published_at:"",last_error_code:""}}
   statement(sql,args=[]){
     const self=this;
     return {sql,args,
       bind(...next){return self.statement(sql,next)},
       async run(){
         if(sql.startsWith('INSERT OR IGNORE INTO reports')){const [id,submittedAt,,,,,,,,,,payload]=args;if(!self.rows.has(id)){self.rows.set(id,{id,submitted_at:submittedAt,payload_json:payload});return {success:true,meta:{changes:1}}}return {success:true,meta:{changes:0}}}
+        if(sql.startsWith('INSERT INTO snapshot_refresh_control')){const [id,at]=args;const row=self.rows.get(id);if(row&&row.submitted_at===at&&at>=self.snapshot.queued_at){self.snapshot.queued_report_id=id;self.snapshot.queued_at=at;return {success:true,meta:{changes:1}}}return {success:true,meta:{changes:0}}}
+        if(sql.startsWith('UPDATE snapshot_refresh_control SET last_dispatched_report_id')){const [id,now,queued,same,cutoff]=args;if(self.snapshot.queued_report_id===queued&&(self.snapshot.last_dispatched_report_id!==same||self.snapshot.last_dispatched_at<cutoff)){self.snapshot.last_dispatched_report_id=id;self.snapshot.last_dispatched_at=now;return {success:true,meta:{changes:1}}}return {success:true,meta:{changes:0}}}
+        if(sql.startsWith('UPDATE snapshot_refresh_control SET last_dispatched_at')){self.snapshot.last_dispatched_at='';self.snapshot.last_error_code='dispatch_failed';return {success:true,meta:{changes:1}}}
+        if(sql.startsWith('UPDATE snapshot_refresh_control SET last_published_report_id')){self.snapshot.last_published_report_id=args[0];self.snapshot.last_published_at=args[1];self.snapshot.last_error_code='';return {success:true,meta:{changes:1}}}
+        if(sql.startsWith('UPDATE snapshot_refresh_control SET queued_report_id')){const [id,at,cutoff]=args;if(!self.snapshot.queued_report_id||self.snapshot.queued_at<cutoff){self.snapshot.queued_report_id=id;self.snapshot.queued_at=at}return {success:true,meta:{changes:1}}}
         if(sql.startsWith('INSERT OR IGNORE INTO report_payload_chunks')){const [id,index,chunk]=args;const key=`${id}:${index}`;if(!self.chunks.has(key))self.chunks.set(key,{report_id:id,chunk_index:index,payload_chunk:chunk})}
         return {success:true,meta:{changes:0}}
       },
       async first(){
         if(sql.includes('COUNT(*) OVER() AS report_count')){const rows=[...self.rows.values()].sort((a,b)=>String(b.submitted_at).localeCompare(String(a.submitted_at))||String(b.id).localeCompare(String(a.id))),latest=rows[0];return latest?{latest_id:latest.id,latest_submitted_at:latest.submitted_at,report_count:rows.length}:null}
         if(sql.includes('SELECT submitted_at FROM reports WHERE id=?')){const row=self.rows.get(args[0]);return row?{submitted_at:row.submitted_at}:null}
+        if(sql.includes('SELECT queued_report_id,queued_at,last_dispatched_report_id'))return self.snapshot;
+        if(sql.includes('SELECT COUNT(*) AS total FROM reports'))return {total:self.rows.size};
+        if(sql.includes('SELECT id,submitted_at FROM reports ORDER BY'))return [...self.rows.values()].sort((a,b)=>b.submitted_at.localeCompare(a.submitted_at)||b.id.localeCompare(a.id))[0]||null;
         if(sql.includes('SELECT payload_json,submitted_at,id FROM reports WHERE id=?'))return self.rows.get(args[0])||null;
         return null
       },
@@ -27,8 +35,8 @@ class DB {
   prepare(sql){return this.statement(sql)}
   async batch(statements){const out=[];for(const statement of statements)out.push(await statement.run());return out}
 }
-const env={DB:new DB(),ALLOWED_ORIGIN:'https://efishell0.github.io',SNAPSHOT_GITHUB_TOKEN:'test-token',SNAPSHOT_GITHUB_OWNER:'EFIShell0',SNAPSHOT_GITHUB_REPO:'VulkanScope_database',SNAPSHOT_GITHUB_WORKFLOW:'pages.yml',SNAPSHOT_GITHUB_REF:'main'};
-const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
+const env={DB:new DB(),ALLOWED_ORIGIN:'https://efishell0.github.io',SNAPSHOT_GITHUB_TOKEN:'test-token',SNAPSHOT_GITHUB_OWNER:'EFIShell0',SNAPSHOT_GITHUB_REPO:'VulkanScope_database',SNAPSHOT_GITHUB_WORKFLOW:'pages.yml',SNAPSHOT_GITHUB_REF:'main',SNAPSHOT_PUBLIC_MANIFEST_URL:'https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json'};
+let mockSnapshotPublished=false;const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json')){if(!mockSnapshotPublished)return new Response('not yet published',{status:404});const reports=[...env.DB.rows.values()].map(r=>({id:r.id}));return new Response(JSON.stringify({databaseVersion:'4.0.0',reportCount:reports.length,reports}),{status:200,headers:{'content-type':'application/json'}})}if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
 const reportText=(p)=>{
   const imageResults=p.technicalReport?.devices?.[0]?.imageFormatQueryResults||[];
   const imageLines=imageResults.map(x=>`${x.name} | ${String(x.status).toUpperCase()} | VkResult=${x.vkResult===null?'null':x.vkResult}${x.reason?` | Reason=${x.reason}`:''}`);
@@ -74,16 +82,17 @@ let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.12');
-assert.equal(j.workerReleaseVersion,'1.4.12');
+assert.equal(j.databaseReleaseVersion,'4.0.0');
+assert.equal(j.workerReleaseVersion,'4.0.0');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
 assert.match(j.publishedVulkanSpec,/1\.4\.364/);
 assert.match(j.producerQueryBaseline,/3\.0\.12/);
 assert.match(j.compatibleProducer,/3\.0\.12\+/);
 assert.equal(j.snapshotAutomation?.configured,true);
-assert.equal(j.snapshotAutomation?.mode,'async-github-actions-workflow-dispatch');
+assert.equal(j.snapshotAutomation?.mode,'durable-d1-cron-reconciliation');
 
+r=await call('/v1/snapshot-status');assert.equal(r.status,200);assert.equal((await r.json()).configured,true);
 r=await call('/v1/network-info',{extraHeaders:{'cf-connecting-ip':'2001:db8::9','cf-connecting-ipv6':'2001:db8::9'}});
 assert.equal(r.status,200);
 j=await r.json();
@@ -99,8 +108,8 @@ assert.equal(r.status,405);
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'1.4.12');
-assert.equal(j.workerReleaseVersion,'1.4.12');
+assert.equal(j.databaseReleaseVersion,'4.0.0');
+assert.equal(j.workerReleaseVersion,'4.0.0');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -111,8 +120,8 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'1.4.12');
-assert.equal(j.workerReleaseVersion,'1.4.12');
+assert.equal(j.databaseReleaseVersion,'4.0.0');
+assert.equal(j.workerReleaseVersion,'4.0.0');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.match(j.producerQueryBaseline,/3\.0\.12/);
 assert.match(j.compatibleProducer,/3\.0\.12\+/);
@@ -131,6 +140,8 @@ const accepted=await r.json();
 assert.match(accepted.id,/^[a-f0-9]{64}$/);
 assert.equal(accepted.status,'accepted');
 await flushWaitUntil();
+assert.equal(env.DB.snapshot.queued_report_id,accepted.id,'accepted report must persist snapshot refresh cursor');
+assert.ok(env.DB.snapshot.last_dispatched_at,'successful dispatch must be tracked');
 assert.equal(snapshotDispatches.length,1,'a newly inserted report must schedule exactly one snapshot refresh');
 const dispatchBody=JSON.parse(snapshotDispatches[0].init.body);
 assert.equal(dispatchBody.ref,'main');
@@ -193,6 +204,17 @@ future.reportText=reportText(future);
 r=await call('/v1/reports',{method:'POST',body:future});
 assert.equal(r.status,201,'3.0.13 with matching 3.x versionCode identity must remain admissible');
 
+// Cron retries an unpublished snapshot even with no new HTTP submissions.
+const beforeCron=snapshotDispatches.length;
+env.DB.snapshot.last_dispatched_at='';
+await worker.scheduled({cron:'*/5 * * * *'},env,ctx);await flushWaitUntil();
+assert.equal(snapshotDispatches.length,beforeCron+1,'Cron must retry the outstanding snapshot cursor');
+mockSnapshotPublished=true;
+await worker.scheduled({cron:'*/5 * * * *'},env,ctx);await flushWaitUntil();
+assert.equal(snapshotDispatches.length,beforeCron+1,'published snapshot must not dispatch again');
+assert.equal(env.DB.snapshot.last_published_report_id,env.DB.snapshot.queued_report_id,'Cron must store confirmed public snapshot identity');
+mockSnapshotPublished=false;
+
 const missingEnvironment=structuredClone(current);
 delete missingEnvironment.device.googlebookEnvironmentEvidence;
 missingEnvironment.reportText=reportText(missingEnvironment);
@@ -226,4 +248,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 1.4.12 transport contract: live sync head + VulkanScope 3.0.12 producer floor + async snapshot dispatch + 3.0.12 envelope/1.4.364 compatibility + historical reads + transport/security basics');
+console.log('PASS Worker 4.0.0 transport contract: live sync head + VulkanScope 3.0.12 producer floor + async snapshot dispatch + 3.0.12 envelope/1.4.364 compatibility + historical reads + transport/security basics');

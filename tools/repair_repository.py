@@ -1,14 +1,14 @@
 from pathlib import Path
-import argparse, hashlib, shutil, sys
+import argparse, hashlib, shutil, sys, subprocess
 
 root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v1412.js'
-CURRENT_BROWSER_COMPAT = 'browser-compat.v1412.js'
-CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v1412.js'
-PREDECESSOR_BRIDGE = {'app.v1411.js','browser-compat.v1411.js','release-bootstrap.v1411.js'}
+CURRENT_APP = 'app.v4000.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v4000.js'
+CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4000.js'
+PREDECESSOR_BRIDGE = {'app.v1413.js','browser-compat.v1413.js','release-bootstrap.v1413.js'}
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
@@ -46,6 +46,8 @@ def stale_release_bootstraps():
 optional_lock = root / 'worker' / 'package-lock.json'
 
 if args.apply:
+    # Repair ignored local build output before strict source scans; preserve it outside checkout.
+    subprocess.run([sys.executable,str(root/'tools/clean_local_build_artifacts.py'),'--apply'],cwd=root,check=True)
     workflow_dir.mkdir(parents=True, exist_ok=True)
     for p in list(workflow_dir.iterdir()):
         if p.is_dir():
@@ -67,6 +69,9 @@ if args.apply:
     print('Repository repair applied: canonical pages.yml installed; stale workflows/versioned frontend JS removed; immediate predecessor bridge retained' + suffix + '.')
 
 errors=[]
+if args.check:
+    candidate=subprocess.run([sys.executable,str(root/'tools/clean_local_build_artifacts.py'),'--check'],cwd=root)
+    if candidate.returncode: errors.append('ignored generated build output remains under source root')
 if not workflow.is_file():
     errors.append('missing .github/workflows/pages.yml')
 elif workflow.read_bytes() != canonical.read_bytes():
@@ -95,6 +100,6 @@ for bridge in sorted(PREDECESSOR_BRIDGE):
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 1.4.12 repository state: PASS')
+print(f'VulkanScope Database 4.0.0 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')
