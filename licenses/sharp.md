@@ -1,6 +1,6 @@
 # sharp license
 
-Component: sharp 0.35.4
+Component: sharp 0.35.5
 SPDX identifier: `Apache-2.0`
 Official upstream source: https://github.com/lovell/sharp/blob/main/LICENSE
 

@@ -1,6 +1,6 @@
 # esbuild license
 
-Component: esbuild (transitive version resolved by Wrangler 4.130.0)
+Component: esbuild (transitive version resolved by Wrangler 4.152.0)
 SPDX identifier: `MIT`
 Official upstream source: https://github.com/evanw/esbuild/blob/master/LICENSE.md
 

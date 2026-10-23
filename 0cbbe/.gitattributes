@@ -1,8 +1,0 @@
-# Canonical repository text is LF-only on every platform. This keeps generated
-# byte-for-byte fixtures deterministic on Windows even when core.autocrlf=true.
-* text=auto eol=lf
-
-# Binary artwork/assets must never be line-ending transformed.
-*.png -text
-*.ico -text
-*.webp -text

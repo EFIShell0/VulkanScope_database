@@ -5,10 +5,10 @@ root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v4000.js'
-CURRENT_BROWSER_COMPAT = 'browser-compat.v4000.js'
-CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4000.js'
-PREDECESSOR_BRIDGE = {'app.v1413.js','browser-compat.v1413.js','release-bootstrap.v1413.js'}
+CURRENT_APP = 'app.v4003.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v4003.js'
+CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4003.js'
+PREDECESSOR_BRIDGE = {'app.v4002.js','browser-compat.v4002.js','release-bootstrap.v4002.js'}
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
@@ -100,6 +100,6 @@ for bridge in sorted(PREDECESSOR_BRIDGE):
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 4.0.0 repository state: PASS')
+print(f'VulkanScope Database 4.0.3 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')

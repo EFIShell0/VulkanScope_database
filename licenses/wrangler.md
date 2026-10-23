@@ -1,6 +1,6 @@
 # Wrangler license
 
-Component: Wrangler 4.130.0
+Component: Wrangler 4.152.0
 SPDX expression: `MIT OR Apache-2.0`
 Official upstream sources:
 - https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT

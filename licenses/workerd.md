@@ -1,6 +1,6 @@
 # workerd license
 
-Component: workerd (transitive version resolved by Wrangler 4.130.0)
+Component: workerd (transitive version resolved by Wrangler 4.152.0)
 SPDX identifier: `Apache-2.0`
 Official upstream source: https://github.com/cloudflare/workerd/blob/main/LICENSE
 
