@@ -37,15 +37,17 @@
         "version": {
           "type": "string",
           "maxLength": 64,
-          "pattern": "^3\\.(?:0\\.(?:1[2-9]|[2-9][0-9]+|[1-9][0-9]{2,})|[1-9][0-9]*\\.[0-9]+)$",
-          "description": "New submissions require VulkanScope 3.0.12 or newer within the fail-closed 3.x versionCode identity scheme."
+          "pattern": "^4\\.0\\.15$",
+          "description": "Only VulkanScope 4.0.15 is accepted for new report submissions.",
+          "const": "4.0.15"
         },
         "versionCode": {
           "type": [
             "integer",
             "number"
           ],
-          "minimum": 3012
+          "minimum": 4015,
+          "const": 4015
         },
         "applicationAbi": {
           "type": "string",

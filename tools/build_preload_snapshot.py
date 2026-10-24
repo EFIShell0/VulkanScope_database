@@ -147,13 +147,13 @@ def main():
     generated = dt.datetime.now(dt.timezone.utc).isoformat().replace('+00:00', 'Z')
     manifest = {
         'schemaVersion': 1,
-        'databaseVersion': '4.0.5',
+        'databaseVersion': '4.0.6',
         'sourceSchemaVersion': meta.get('schemaVersion'),
         'normalizerVersion': meta.get('normalizerVersion', 16),
-        'publishedVulkanSpec': meta.get('publishedVulkanSpec', 'Vulkan 1.4.364 (2026-09-25)'),
-        'vulkanRegistryBaseline': meta.get('vulkanRegistryBaseline', 'VulkanScope producer/query baseline 1.4.364'),
-        'producerQueryBaseline': 'VulkanScope 3.0.12 · Vulkan 1.4.364',
-        'compatibleProducer': 'VulkanScope 3.0.12+ · schema 2 / technical report 3',
+        'publishedVulkanSpec': meta.get('publishedVulkanSpec', 'Vulkan 1.4.366'),
+        'vulkanRegistryBaseline': meta.get('vulkanRegistryBaseline', 'VulkanScope producer/query baseline 1.4.366'),
+        'producerQueryBaseline': 'VulkanScope 4.0.15 · Vulkan 1.4.366',
+        'compatibleProducer': 'VulkanScope 4.0.15 only · schema 2 / technical report 3',
         'generatedAt': generated,
         'reportCount': len(index),
         'generationMode': 'live-api-full-snapshot',

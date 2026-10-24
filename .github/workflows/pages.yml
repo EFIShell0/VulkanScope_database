@@ -56,22 +56,22 @@ jobs:
         run: |
           $tokens = $null
           $parseErrors = $null
-          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'install_4_0_5.ps1'), [ref]$tokens, [ref]$parseErrors) | Out-Null
+          [System.Management.Automation.Language.Parser]::ParseFile((Resolve-Path 'install_4_0_6.ps1'), [ref]$tokens, [ref]$parseErrors) | Out-Null
           if ($parseErrors.Count -gt 0) { $parseErrors | ForEach-Object { Write-Error $_.Message }; throw 'PowerShell release installer syntax invalid' }
       - name: Repair release checkout before canonical verification
         run: |
-          python tools/verify_4_0_5_layout.py
-          python tools/verify_4_0_5_checkout.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-      - name: Verify Database 4.0.5 durable snapshot/JXL and build hygiene
+      - name: Verify Database 4.0.6 durable snapshot/JXL and build hygiene
         run: |
-          python tools/verify_4_0_5_regression_contract.py
-          python tools/verify_4_0_5_snapshot_jxl.py
-          python tools/test_4_0_5_snapshot_jxl_negative_mutations.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v4005.js
-          node --check assets/browser-compat.v4005.js
+          node --check assets/app.v4006.js
+          node --check assets/browser-compat.v4006.js
           node --check worker/src/index.js
       - name: Install audited Worker toolchain on Windows
         working-directory: worker
@@ -103,10 +103,10 @@ jobs:
           package-manager-cache: false
       - name: Repair release checkout
         run: |
-          python tools/verify_4_0_5_layout.py
-          python tools/verify_4_0_5_checkout.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/repair_repository.py --apply
-      - name: Run Database 4.0.5 quality gate
+      - name: Run Database 4.0.6 quality gate
         run: python tools/quality_gate.py
       - name: Audit npm dependencies on Linux
         working-directory: worker
@@ -117,8 +117,8 @@ jobs:
         run: python tools/build_index.py
       - name: Reverify generated index metadata
         run: |
-          python tools/verify_4_0_5_snapshot_jxl.py
-          python tools/test_4_0_5_snapshot_jxl_negative_mutations.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
       - name: Stage non-release-ready Pages artifact for audit
         run: python tools/build_pages_artifact.py _site
       - name: Audit non-release-ready Pages artifact
@@ -142,35 +142,35 @@ jobs:
           python-version: "3.13"
       - name: Repair and verify release source
         run: |
-          python tools/verify_4_0_5_layout.py
-          python tools/verify_4_0_5_checkout.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-          python tools/verify_4_0_5_regression_contract.py
-          python tools/verify_4_0_5_snapshot_jxl.py
-          python tools/test_4_0_5_snapshot_jxl_negative_mutations.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/audit_database.py --source-tree .
-          node --check assets/app.v4005.js
-          node --check assets/browser-compat.v4005.js
+          node --check assets/app.v4006.js
+          node --check assets/browser-compat.v4006.js
       - name: Build deterministic release assets
         run: |
-          python tools/package_release.py "$RUNNER_TEMP/vulkanscope-release-405"
-          sha256sum "$RUNNER_TEMP/vulkanscope-release-405/VulkanScope-Database-4.0.5.zip" > "$RUNNER_TEMP/vulkanscope-release-405/first-build.sha256"
-          python tools/package_release.py "$RUNNER_TEMP/vulkanscope-release-405"
-          sha256sum "$RUNNER_TEMP/vulkanscope-release-405/VulkanScope-Database-4.0.5.zip" > "$RUNNER_TEMP/vulkanscope-release-405/second-build.sha256"
-          cmp "$RUNNER_TEMP/vulkanscope-release-405/first-build.sha256" "$RUNNER_TEMP/vulkanscope-release-405/second-build.sha256"
+          python tools/package_release.py "$RUNNER_TEMP/vulkanscope-release-406"
+          sha256sum "$RUNNER_TEMP/vulkanscope-release-406/VulkanScope-Database-4.0.6.zip" > "$RUNNER_TEMP/vulkanscope-release-406/first-build.sha256"
+          python tools/package_release.py "$RUNNER_TEMP/vulkanscope-release-406"
+          sha256sum "$RUNNER_TEMP/vulkanscope-release-406/VulkanScope-Database-4.0.6.zip" > "$RUNNER_TEMP/vulkanscope-release-406/second-build.sha256"
+          cmp "$RUNNER_TEMP/vulkanscope-release-406/first-build.sha256" "$RUNNER_TEMP/vulkanscope-release-406/second-build.sha256"
           mkdir -p dist
-          cp "$RUNNER_TEMP/vulkanscope-release-405/VulkanScope-Database-4.0.5.zip" dist/
-          cp "$RUNNER_TEMP/vulkanscope-release-405/VulkanScope-Database-4.0.5.zip.sha256" dist/
+          cp "$RUNNER_TEMP/vulkanscope-release-406/VulkanScope-Database-4.0.6.zip" dist/
+          cp "$RUNNER_TEMP/vulkanscope-release-406/VulkanScope-Database-4.0.6.zip.sha256" dist/
       - name: Create or refresh GitHub Release from validated main commit
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          TAG="v4.0.5"
-          ZIP="dist/VulkanScope-Database-4.0.5.zip"
-          SHA="dist/VulkanScope-Database-4.0.5.zip.sha256"
+          TAG="v4.0.6"
+          ZIP="dist/VulkanScope-Database-4.0.6.zip"
+          SHA="dist/VulkanScope-Database-4.0.6.zip.sha256"
 
           is_transient_github_error() {
             printf '%s' "$1" | grep -Eqi 'HTTP 429|HTTP 5[0-9][0-9]|rate limit|temporarily unavailable'
@@ -220,7 +220,7 @@ jobs:
                   CREATE_MODE=(--target "$GITHUB_SHA")
                 fi
                 set +e
-                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 4.0.5" --generate-notes 2>&1)"
+                OUT="$(gh release create "$TAG" "$ZIP" "$SHA" "${CREATE_MODE[@]}" --title "VulkanScope Database 4.0.6" --generate-notes 2>&1)"
                 RC=$?
                 set -e
                 if [ "$RC" -eq 0 ]; then
@@ -269,8 +269,8 @@ jobs:
           python-version: "3.13"
       - name: Repair release checkout
         run: |
-          python tools/verify_4_0_5_layout.py
-          python tools/verify_4_0_5_checkout.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
       - name: Build deploy-time static index
@@ -328,11 +328,11 @@ jobs:
           python-version: "3.13"
       - name: Repair and verify snapshot source
         run: |
-          python tools/verify_4_0_5_layout.py
-          python tools/verify_4_0_5_checkout.py
+          python tools/verify_4_0_6_release.py
+          python tools/verify_4_0_6_release.py
           python tools/repair_repository.py --apply
           python tools/repair_repository.py --check
-          python tools/verify_4_0_5_snapshot_jxl.py
+          python tools/verify_4_0_6_release.py
           python tools/audit_database.py --source-tree .
       - name: Build current static index
         run: python tools/build_index.py

@@ -36,7 +36,7 @@ class DB {
   async batch(statements){const out=[];for(const statement of statements)out.push(await statement.run());return out}
 }
 const env={DB:new DB(),ALLOWED_ORIGIN:'https://efishell0.github.io',SNAPSHOT_GITHUB_TOKEN:'test-token',SNAPSHOT_GITHUB_OWNER:'EFIShell0',SNAPSHOT_GITHUB_REPO:'VulkanScope_database',SNAPSHOT_GITHUB_WORKFLOW:'pages.yml',SNAPSHOT_GITHUB_REF:'main',SNAPSHOT_PUBLIC_MANIFEST_URL:'https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json'};
-let mockSnapshotPublished=false;const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json')){if(!mockSnapshotPublished)return new Response('not yet published',{status:404});const reports=[...env.DB.rows.values()].map(r=>({id:r.id}));return new Response(JSON.stringify({databaseVersion:'4.0.5',reportCount:reports.length,reports}),{status:200,headers:{'content-type':'application/json'}})}if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
+let mockSnapshotPublished=false;const snapshotDispatches=[];const realFetch=globalThis.fetch;globalThis.fetch=async(input,init={})=>{const url=String(input);if(url.startsWith('https://efishell0.github.io/VulkanScope_database/data/preload/manifest.json')){if(!mockSnapshotPublished)return new Response('not yet published',{status:404});const reports=[...env.DB.rows.values()].map(r=>({id:r.id}));return new Response(JSON.stringify({databaseVersion:'4.0.6',reportCount:reports.length,reports}),{status:200,headers:{'content-type':'application/json'}})}if(url.startsWith('https://api.github.com/repos/EFIShell0/VulkanScope_database/actions/workflows/pages.yml/dispatches')){snapshotDispatches.push({url,init});return new Response(JSON.stringify({workflow_run_id:1}),{status:200,headers:{'content-type':'application/json'}})}return realFetch(input,init)};const waitUntilTasks=[];const ctx={waitUntil(promise){waitUntilTasks.push(Promise.resolve(promise))}};async function flushWaitUntil(){const tasks=waitUntilTasks.splice(0);await Promise.all(tasks)}
 const reportText=(p)=>{
   const imageResults=p.technicalReport?.devices?.[0]?.imageFormatQueryResults||[];
   const imageLines=imageResults.map(x=>`${x.name} | ${String(x.status).toUpperCase()} | VkResult=${x.vkResult===null?'null':x.vkResult}${x.reason?` | Reason=${x.reason}`:''}`);
@@ -82,13 +82,13 @@ let r=await call('/v1/health');
 assert.equal(r.status,200);
 let j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'4.0.5');
-assert.equal(j.workerReleaseVersion,'4.0.5');
+assert.equal(j.databaseReleaseVersion,'4.0.6');
+assert.equal(j.workerReleaseVersion,'4.0.6');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
 assert.equal(j.normalizerVersion,16);
-assert.match(j.publishedVulkanSpec,/1\.4\.364/);
-assert.match(j.producerQueryBaseline,/3\.0\.12/);
-assert.match(j.compatibleProducer,/3\.0\.12\+/);
+assert.match(j.publishedVulkanSpec,/1\.4\.366/);
+assert.match(j.producerQueryBaseline,/4\.0\.15/);
+assert.match(j.compatibleProducer,/4\.0\.15 only/);
 assert.equal(j.snapshotAutomation?.configured,true);
 assert.equal(j.snapshotAutomation?.mode,'durable-d1-cron-reconciliation');
 
@@ -108,8 +108,8 @@ assert.equal(r.status,405);
 r=await call('/v1/sync');
 assert.equal(r.status,200);
 j=await r.json();
-assert.equal(j.databaseReleaseVersion,'4.0.5');
-assert.equal(j.workerReleaseVersion,'4.0.5');
+assert.equal(j.databaseReleaseVersion,'4.0.6');
+assert.equal(j.workerReleaseVersion,'4.0.6');
 assert.equal(j.reportCount,0);
 assert.equal(j.latestReportId,'');
 assert.equal(j.latestSubmittedAt,'');
@@ -120,21 +120,22 @@ r=await call('/v1/reports');
 assert.equal(r.status,200);
 j=await r.json();
 assert.equal(j.databaseVersion,undefined);
-assert.equal(j.databaseReleaseVersion,'4.0.5');
-assert.equal(j.workerReleaseVersion,'4.0.5');
+assert.equal(j.databaseReleaseVersion,'4.0.6');
+assert.equal(j.workerReleaseVersion,'4.0.6');
 assert.equal(j.frontendUpdateSignal,'same-origin-pages-marker');
-assert.match(j.producerQueryBaseline,/3\.0\.12/);
-assert.match(j.compatibleProducer,/3\.0\.12\+/);
+assert.match(j.producerQueryBaseline,/4\.0\.15/);
+assert.match(j.compatibleProducer,/4\.0\.15 only/);
 
 const current=fixture();
-current.application.version='3.0.12';
-current.application.versionCode=3012;
-current.vulkan.registryBaseline='Vulkan 1.4.364';
-current.vulkan.headerBaseline='Vulkan 1.4.364 compile headers; validated query catalog Vulkan 1.4.364';
-current.technicalReport.registryCoverage.baseline='Vulkan 1.4.364';
+current.application.version='4.0.15';
+current.application.versionCode=4015;
+current.vulkan.registryBaseline='Vulkan 1.4.366';
+current.vulkan.headerBaseline='Vulkan 1.4.366 compile headers; validated query catalog Vulkan 1.4.366';
+current.technicalReport.registryCoverage.baseline='Vulkan 1.4.366';
 current.technicalReport.registryCoverage.headerBaseline=current.vulkan.headerBaseline;
 current.reportText=reportText(current);
 r=await call('/v1/reports',{method:'POST',body:current});
+if(r.status!==201) console.error('DEBUG rejected:', r.status, await r.clone().text());
 assert.equal(r.status,201);
 const accepted=await r.json();
 assert.match(accepted.id,/^[a-f0-9]{64}$/);
@@ -163,29 +164,29 @@ assert.notEqual(j.syncToken,emptySyncToken);
 assert.equal(j.syncToken,`1:${j.latestSubmittedAt}:${accepted.id}`);
 
 const below=structuredClone(current);
-below.application.version='3.0.11';
-below.application.versionCode=3011;
+below.application.version='4.0.14';
+below.application.versionCode=4014;
 below.reportText=reportText(below);
 r=await call('/v1/reports',{method:'POST',body:below});
-assert.equal(r.status,400,'VulkanScope 3.0.11 must be rejected by the 3.0.12 floor');
-assert.match(await r.text(),/3\.0\.12 or newer/);
+assert.equal(r.status,400,'VulkanScope 4.0.14 must be rejected by the exact 4.0.15 allowlist');
+assert.match(await r.text(),/Only VulkanScope 4\.0\.15/);
 
 const oldMajor=structuredClone(current);
 oldMajor.application.version='2.1.16';
 oldMajor.application.versionCode=2116;
 oldMajor.reportText=reportText(oldMajor);
 r=await call('/v1/reports',{method:'POST',body:oldMajor});
-assert.equal(r.status,400,'every producer below 3.0.12 must be rejected before generic validation');
-assert.match(await r.text(),/3\.0\.12 or newer/);
+assert.equal(r.status,400,'older producer must be rejected before generic validation');
+assert.match(await r.text(),/Only VulkanScope 4\.0\.15/);
 
 const badIdentity=structuredClone(current);
-badIdentity.application.versionCode=3011;
+badIdentity.application.versionCode=4014;
 badIdentity.reportText=reportText(badIdentity);
 r=await call('/v1/reports',{method:'POST',body:badIdentity});
 assert.equal(r.status,400);
-assert.match(await r.text(),/producer_identity/);
+assert.match(await r.text(),/Only VulkanScope 4\.0\.15/);
 
-const malformedCurrent={application:{name:'VulkanScope',version:'3.0.12',versionCode:3012}};
+const malformedCurrent={application:{name:'VulkanScope',version:'4.0.15',versionCode:4015}};
 r=await call('/v1/reports',{method:'POST',body:malformedCurrent});
 assert.equal(r.status,400);
 assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema/);
@@ -193,16 +194,16 @@ assert.match(await r.text(),/Incomplete or invalid VulkanScope submission schema
 r=await call(`/v1/reports/${accepted.id}?compact=1`);
 assert.equal(r.status,200);
 const compact=await r.json();
-assert.equal(compact.application.version,'3.0.12');
+assert.equal(compact.application.version,'4.0.15');
 assert.equal(compact.id,accepted.id);
 assert.ok(compact.submittedAt);
 
 const future=structuredClone(current);
-future.application.version='3.0.13';
-future.application.versionCode=3013;
+future.application.version='4.0.16';
+future.application.versionCode=4016;
 future.reportText=reportText(future);
 r=await call('/v1/reports',{method:'POST',body:future});
-assert.equal(r.status,201,'3.0.13 with matching 3.x versionCode identity must remain admissible');
+assert.equal(r.status,400,'4.0.16 is rejected: only 4.0.15 is allowed');
 
 // Cron retries an unpublished snapshot even with no new HTTP submissions.
 const beforeCron=snapshotDispatches.length;
@@ -219,7 +220,7 @@ const missingEnvironment=structuredClone(current);
 delete missingEnvironment.device.googlebookEnvironmentEvidence;
 missingEnvironment.reportText=reportText(missingEnvironment);
 r=await call('/v1/reports',{method:'POST',body:missingEnvironment});
-assert.equal(r.status,400,'3.0.12+ device-environment envelope must be complete');
+assert.equal(r.status,400,'4.0.15 device-environment envelope must be complete');
 assert.match(await r.text(),/envelope_shape|device_environment/);
 
 
@@ -248,4 +249,4 @@ const huge='{"x":"'+'a'.repeat(2*1024*1024+64)+'"}';
 r=await call('/v1/reports',{method:'POST',body:huge});
 assert.equal(r.status,413);
 
-console.log('PASS Worker 4.0.5 transport contract: live sync head + VulkanScope 3.0.12 producer floor + async snapshot dispatch + 3.0.12 envelope/1.4.364 compatibility + historical reads + transport/security basics');
+console.log('PASS Worker 4.0.6: exact-only VulkanScope 4.0.15/4015 POST policy, snapshot dispatch and historical GET compatibility');

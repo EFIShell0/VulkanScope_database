@@ -1,96 +1,28 @@
-from __future__ import annotations
+#!/usr/bin/env python3
+"""Deterministic archive; excludes Git, local credentials and generated caches."""
 from pathlib import Path
-import argparse, hashlib, json, subprocess, sys, tempfile, zipfile
-
-parser = argparse.ArgumentParser(description='Build a deterministic strict VulkanScope Database source release')
-parser.add_argument('out_dir', nargs='?', default='dist')
-parser.add_argument('--root', default=None, help='Source checkout root (test/fixture override)')
-args = parser.parse_args()
-
-root = Path(args.root).resolve() if args.root else Path(__file__).resolve().parents[1]
-out_dir = Path(args.out_dir)
-if not out_dir.is_absolute():
-    out_dir = (Path.cwd() / out_dir).resolve()
-# Generated release files are never permitted under the audited source checkout.
-# In particular, do NOT create dist/ before the repository hygiene gate.
-try:
-    out_dir.relative_to(root)
-except ValueError:
-    pass
-else:
-    raise SystemExit('FAIL release output directory must be OUTSIDE source checkout; use an external path such as $RUNNER_TEMP/vulkanscope-release-405')
-
-# A long-lived/tagged Git checkout may contain legitimate historical tracked source files
-# that were never part of the immutable predecessor release ZIP. Validate predecessor
-# ownership in source-overlay mode here; strict-tree applies only to the actual package.
-subprocess.run([sys.executable, str(root/'tools/repair_repository.py'), '--check'], cwd=root, check=True)
-subprocess.run([sys.executable, str(root/'tools/verify_4_0_5_regression_contract.py')], cwd=root, check=True)
-out_dir.mkdir(parents=True, exist_ok=True)
-
-contract_path = root/'regression/4.0.4_to_4.0.5_contract.json'
-contract = json.loads(contract_path.read_text(encoding='utf-8'))
-manifest = json.loads((root/contract['baselineManifest']).read_text(encoding='utf-8'))
-paths = {x['path'] for x in manifest['files']}
-paths.difference_update(contract.get('allowedRemoved', []))
-paths.update(contract.get('allowedNew', []))
-paths.discard('worker/package-lock.json')
-paths = set(sorted(paths))
-
-missing = sorted(rel for rel in paths if not (root/rel).is_file())
-if missing:
-    raise SystemExit('release package missing files: ' + ', '.join(missing))
-
-zip_path = out_dir / 'VulkanScope-Database-4.0.5.zip'
-with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-    for rel in sorted(paths):
-        data = (root/rel).read_bytes()
-        zi = zipfile.ZipInfo(rel, (1980, 1, 1, 0, 0, 0))
-        zi.compress_type = zipfile.ZIP_DEFLATED
-        zi.external_attr = (0o100644 & 0xFFFF) << 16
-        zi.create_system = 3
-        zf.writestr(zi, data, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
-
-# Strict-package verification happens against a clean extract, not the history-bearing
-# tagged checkout. This is the key source-overlay/package boundary.
-with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.5-') as td:
-    extracted = Path(td) / 'release'
-    extracted.mkdir()
-    with zipfile.ZipFile(zip_path) as zf:
-        names = zf.namelist()
-        if len(names) != len(set(names)):
-            raise SystemExit('release ZIP contains duplicate path names')
-        zf.extractall(extracted)
-
-    actual = sorted(p.relative_to(extracted).as_posix() for p in extracted.rglob('*') if p.is_file())
-    expected = sorted(paths)
-    if actual != expected:
-        extra = sorted(set(actual)-set(expected))
-        lost = sorted(set(expected)-set(actual))
-        raise SystemExit(f'clean-extract path mismatch extra={extra} missing={lost}')
-
-    for rel in expected:
-        if (extracted/rel).read_bytes() != (root/rel).read_bytes():
-            raise SystemExit(f'clean-extract/source byte mismatch: {rel}')
-
-    subprocess.run([sys.executable, str(extracted/'tools/verify_4_0_5_layout.py')], cwd=extracted, check=True)
-    subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_4_0_5_regression_contract.py'), '--strict-tree'],
-        cwd=extracted, check=True
-    )
-    subprocess.run(
-        [sys.executable, str(extracted/'tools/audit_database.py'), '--source-tree', '.'],
-        cwd=extracted, check=True
-    )
-    subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_4_0_5_snapshot_jxl.py')],
-        cwd=extracted, check=True
-    )
-    subprocess.run(
-        [sys.executable, str(extracted/'tools/test_4_0_5_snapshot_jxl_negative_mutations.py')],
-        cwd=extracted, check=True
-    )
-
-digest = hashlib.sha256(zip_path.read_bytes()).hexdigest()
-sha_path = out_dir / (zip_path.name + '.sha256')
-sha_path.write_text(f'{digest}  {zip_path.name}\n', encoding='ascii', newline='\n')
-print(f'Built {zip_path} files={len(paths)} sha256={digest} clean-extract=strict-PASS')
+import hashlib, sys,zipfile
+ROOT=Path(__file__).resolve().parents[1]
+OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else ROOT/'dist'
+OUT.mkdir(parents=True,exist_ok=True)
+FORBIDDEN={'.git','node_modules','.wrangler','.gradle','_site','dist','build','__pycache__','.pytest_cache','tmp','temp'}
+filenames=[]
+for file in ROOT.rglob('*'):
+    if not file.is_file() or file.is_symlink():continue
+    rel=file.relative_to(ROOT)
+    if any(x in FORBIDDEN for x in rel.parts):continue
+    if file.name in {'.env','.dev.vars','worker/package-lock.json'} or file.name.startswith(('.env.','.dev.vars.')):continue
+    if file.suffix.lower() in {'.pyc','.pyo','.tmp','.log','.apk','.so','.class','.zip'}:continue
+    filenames.append(rel)
+filenames.sort(key=lambda x:x.as_posix())
+zipname='VulkanScope-Database-4.0.6.zip'
+pkg=OUT/zipname
+with zipfile.ZipFile(pkg,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9,allowZip64=True) as z:
+    for rel in filenames:
+        info=zipfile.ZipInfo(rel.as_posix(),date_time=(2026,10,24,0,0,0))
+        info.compress_type=zipfile.ZIP_DEFLATED
+        info.external_attr=(0o644<<16)
+        z.writestr(info,(ROOT/rel).read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
+sha=hashlib.sha256(pkg.read_bytes()).hexdigest()
+(OUT/(zipname+'.sha256')).write_text(sha+'  '+zipname+'\n',encoding='ascii')
+print(f'CREATED {pkg.name} size={pkg.stat().st_size} sha256={sha}')

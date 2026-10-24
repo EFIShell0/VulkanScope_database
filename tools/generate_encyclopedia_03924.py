@@ -92,7 +92,7 @@ def main():
     root=ET.parse(args.registry).getroot();cur=json.loads(Path(args.curated).read_text(encoding='utf-8'))
     commands,tokens,types=symbols(root);extensions=extension_rows(root)
     data={'schemaVersion':1,'appVersion':cur['appVersion'],'registryBaseline':cur['registryBaseline'],'counts':{'commands':len(commands),'tokens':len(tokens),'types':len(types),'extensions':len(extensions),'vkResults':len(cur['vkResults'])},'core':cur['core'],'vkResults':cur['vkResults'],'commonCommands':cur['commonCommands'],'commands':commands,'tokens':tokens,'types':types,'extensions':extensions}
-    expected={'commands':842,'tokens':6257,'types':2462,'extensions':477,'vkResults':50}
+    expected={'commands':842,'tokens':6274,'types':2467,'extensions':479,'vkResults':50}
     if data['counts']!=expected:raise SystemExit(f'encyclopedia census mismatch {data["counts"]} != {expected}')
     payload=json.dumps(data,ensure_ascii=False,separators=(',',':'))
     Path(args.output).write_bytes(('window.VULKANSCOPE_ENCYCLOPEDIA='+payload+';\n').encode('utf-8'))
