@@ -372,3 +372,8 @@
 - Retire legacy root installers, correct v4004/v4003 bridge and regression checks.
 - Verify and recover into established VulkanScope_database directory, preserving complete prior checkout as a timestamped backup.
 - Add negative tests for legacy installer resurrection and nested root tree corruption.
+
+## 4.0.5 — Safe release staging and original-path updates
+- Fix release job self-invalidating source audit by using an external temporary ZIP output until packaging verification finishes.
+- Reject in-checkout package output; add deterministic repeat-build regression and preserve strict hygiene.
+- Replace locked-folder promotion with verified Git fast-forward updating only the original `VulkanScope_database` directory.

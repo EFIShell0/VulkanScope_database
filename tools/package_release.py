@@ -11,15 +11,23 @@ root = Path(args.root).resolve() if args.root else Path(__file__).resolve().pare
 out_dir = Path(args.out_dir)
 if not out_dir.is_absolute():
     out_dir = (Path.cwd() / out_dir).resolve()
-out_dir.mkdir(parents=True, exist_ok=True)
+# Generated release files are never permitted under the audited source checkout.
+# In particular, do NOT create dist/ before the repository hygiene gate.
+try:
+    out_dir.relative_to(root)
+except ValueError:
+    pass
+else:
+    raise SystemExit('FAIL release output directory must be OUTSIDE source checkout; use an external path such as $RUNNER_TEMP/vulkanscope-release-405')
 
 # A long-lived/tagged Git checkout may contain legitimate historical tracked source files
 # that were never part of the immutable predecessor release ZIP. Validate predecessor
 # ownership in source-overlay mode here; strict-tree applies only to the actual package.
 subprocess.run([sys.executable, str(root/'tools/repair_repository.py'), '--check'], cwd=root, check=True)
-subprocess.run([sys.executable, str(root/'tools/verify_4_0_4_regression_contract.py')], cwd=root, check=True)
+subprocess.run([sys.executable, str(root/'tools/verify_4_0_5_regression_contract.py')], cwd=root, check=True)
+out_dir.mkdir(parents=True, exist_ok=True)
 
-contract_path = root/'regression/4.0.3_to_4.0.4_contract.json'
+contract_path = root/'regression/4.0.4_to_4.0.5_contract.json'
 contract = json.loads(contract_path.read_text(encoding='utf-8'))
 manifest = json.loads((root/contract['baselineManifest']).read_text(encoding='utf-8'))
 paths = {x['path'] for x in manifest['files']}
@@ -32,7 +40,7 @@ missing = sorted(rel for rel in paths if not (root/rel).is_file())
 if missing:
     raise SystemExit('release package missing files: ' + ', '.join(missing))
 
-zip_path = out_dir / 'VulkanScope-Database-4.0.4.zip'
+zip_path = out_dir / 'VulkanScope-Database-4.0.5.zip'
 with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
     for rel in sorted(paths):
         data = (root/rel).read_bytes()
@@ -44,7 +52,7 @@ with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED, compressle
 
 # Strict-package verification happens against a clean extract, not the history-bearing
 # tagged checkout. This is the key source-overlay/package boundary.
-with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.4-') as td:
+with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.5-') as td:
     extracted = Path(td) / 'release'
     extracted.mkdir()
     with zipfile.ZipFile(zip_path) as zf:
@@ -64,9 +72,9 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.4-') as td:
         if (extracted/rel).read_bytes() != (root/rel).read_bytes():
             raise SystemExit(f'clean-extract/source byte mismatch: {rel}')
 
-    subprocess.run([sys.executable, str(extracted/'tools/verify_4_0_4_layout.py')], cwd=extracted, check=True)
+    subprocess.run([sys.executable, str(extracted/'tools/verify_4_0_5_layout.py')], cwd=extracted, check=True)
     subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_4_0_4_regression_contract.py'), '--strict-tree'],
+        [sys.executable, str(extracted/'tools/verify_4_0_5_regression_contract.py'), '--strict-tree'],
         cwd=extracted, check=True
     )
     subprocess.run(
@@ -74,11 +82,11 @@ with tempfile.TemporaryDirectory(prefix='vulkanscope-db-release-4.0.4-') as td:
         cwd=extracted, check=True
     )
     subprocess.run(
-        [sys.executable, str(extracted/'tools/verify_4_0_4_snapshot_jxl.py')],
+        [sys.executable, str(extracted/'tools/verify_4_0_5_snapshot_jxl.py')],
         cwd=extracted, check=True
     )
     subprocess.run(
-        [sys.executable, str(extracted/'tools/test_4_0_4_snapshot_jxl_negative_mutations.py')],
+        [sys.executable, str(extracted/'tools/test_4_0_5_snapshot_jxl_negative_mutations.py')],
         cwd=extracted, check=True
     )
 
