@@ -1121,7 +1121,7 @@ body.startup-layout-hold #databaseLoading{width:min(640px,calc(100vw - 32px));ma
 @media(max-width:760px){.reports-table.submitted-expanded{--submitted-column-size:286px}.reports-table.submitted-expanded .submitted-head,.reports-table.submitted-expanded .submitted-reveal{width:262px!important;max-width:262px!important}.submitted-stack{width:262px!important;min-width:262px!important}.submitted-stack>span{grid-template-columns:70px minmax(0,1fr)!important;gap:8px!important}.submitted-stack .submitted-value{font-size:10.5px}}
 @media(prefers-reduced-motion:reduce){body.startup-layout-hold #databaseLoading,.database-loading-logo,.database-loading-halo,.database-loading-spinner span{animation:none!important}.reports-table th:first-child,.reports-table td.submitted-cell{transition:none!important}}
 
-/* 4.0.7 browser compatibility: local, responsive guidance and keyboard focus. */
+/* 4.0.8 browser compatibility: local, responsive guidance and keyboard focus. */
 .browser-compatibility-details[hidden]{display:none!important}
 .browser-edge-help{margin-top:12px;border-color:rgba(255,215,107,.23);background:rgba(255,215,107,.045)}
 .browser-compatibility-details+.browser-compatibility-details{margin-top:12px}
@@ -1130,3 +1130,8 @@ body.startup-layout-hold #databaseLoading{width:min(640px,calc(100vw - 32px));ma
 .browser-extension-links a:hover{background:rgba(255,215,107,.18);border-color:rgba(255,215,107,.58)}
 .browser-extension-links a:focus-visible,.browser-compatibility-details a:focus-visible{outline:2px solid #ffe7a7;outline-offset:3px}
 @media(max-width:560px){.browser-extension-links{flex-direction:column}.browser-extension-links a{width:100%}}
+
+/* 4.0.9: visible local test image: JXL-RS Edge positions its decoded canvas relative to the IMG. */
+.browser-jxl-probe-box{display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(255,255,255,.12);border-radius:14px;margin:10px 0;color:#bbc4d2;font-size:12px;min-height:66px;}
+.browser-jxl-probe-box img{display:block;width:48px;height:48px;flex:0 0 48px;object-fit:contain;max-width:none;max-height:none;}
+.browser-jxl-probe-box span{order:1;}

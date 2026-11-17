@@ -1130,3 +1130,11 @@ body.startup-layout-hold #databaseLoading{width:min(640px,calc(100vw - 32px));ma
 .browser-extension-links a:hover{background:rgba(255,215,107,.18);border-color:rgba(255,215,107,.58)}
 .browser-extension-links a:focus-visible,.browser-compatibility-details a:focus-visible{outline:2px solid #ffe7a7;outline-offset:3px}
 @media(max-width:560px){.browser-extension-links{flex-direction:column}.browser-extension-links a{width:100%}}
+
+/* 4.0.9: visible local test image: JXL-RS Edge positions its decoded canvas relative to the IMG. */
+.browser-jxl-probe-box{display:flex;align-items:center;gap:14px;padding:9px 12px;border:1px solid rgba(255,255,255,.12);border-radius:14px;margin:10px 0;color:#bbc4d2;font-size:12px;min-height:66px;}
+.browser-jxl-probe-box img{display:block;width:48px;height:48px;flex:0 0 48px;object-fit:contain;max-width:none;max-height:none;}
+.browser-jxl-probe-box span{order:1;}
+
+/* 4.0.10: clear, responsive per-engine JPEG XL recovery instructions */
+.browser-compatibility-details ol{margin:10px 0 12px;padding-left:22px;color:#c9c8d0;font-size:13px;line-height:1.7}.browser-compatibility-details li+li{margin-top:6px}.browser-compatibility-details code{padding:2px 5px;overflow-wrap:anywhere;word-break:break-word;border:1px solid rgba(255,255,255,.12);border-radius:5px;background:rgba(255,255,255,.07);color:#fff0cf;font-size:12px}.browser-compatibility-details h2:not(:first-child){margin-top:17px}.browser-compatibility-details p{line-height:1.6}.browser-compatibility-details strong{color:#f0f0f2}

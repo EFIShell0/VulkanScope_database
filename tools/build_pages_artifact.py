@@ -16,9 +16,9 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html','jxl-unsupported.html',
 ]
 asset_files=[
-    'assets/app.v4007.js','assets/browser-compat.v4007.js','assets/release-bootstrap.v4007.js',
-    'assets/app.v4008.js','assets/browser-compat.v4008.js','assets/release-bootstrap.v4008.js','assets/encyclopedia.v4008.js',
-    'assets/site.v4007.css','assets/site.v4008.css','assets/jxl-probe.v4008.jxl',
+    'assets/app.v4009.js','assets/browser-compat.v4009.js','assets/release-bootstrap.v4009.js',
+    'assets/app.v4010.js','assets/browser-compat.v4010.js','assets/release-bootstrap.v4010.js','assets/encyclopedia.v4010.js',
+    'assets/site.v4009.css','assets/site.v4010.css','assets/jxl-probe.v4010.jxl',
 ]
 
 # Checked-in inventory is the sole source of deployable JPEG XL assets.

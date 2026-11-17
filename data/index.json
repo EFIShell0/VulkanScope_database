@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "databaseVersion": "4.0.8",
+  "databaseVersion": "4.0.10",
   "normalizerVersion": 16,
   "publishedVulkanSpec": "Vulkan 1.4.366",
   "vulkanRegistryBaseline": "VulkanScope producer/query baseline 1.4.366",
