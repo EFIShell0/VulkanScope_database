@@ -16,11 +16,11 @@ public_files=[
     '413.html','415.html','429.html','500.html','502.html','503.html','504.html','error.html','jxl-unsupported.html',
 ]
 asset_files=[
-    'assets/app.v4006.js','assets/browser-compat.v4006.js','assets/release-bootstrap.v4006.js',
-    'assets/app.v4007.js','assets/browser-compat.v4007.js','assets/release-bootstrap.v4007.js','assets/encyclopedia.v4007.js',
-    'assets/site.v0390.css','assets/site.v1308.css','assets/site.v1309.css','assets/site.v1400.css','assets/site.v1401.css','assets/site.v1402.css','assets/site.v1403.css','assets/site.v1404.css','assets/site.v1405.css','assets/site.v1406.css','assets/site.v1407.css','assets/site.v1408.css','assets/site.v1409.css','assets/site.v1410.css','assets/site.v1411.css','assets/site.v1412.css','assets/site.v1413.css','assets/site.v4007.css',
-    'assets/jxl-probe.v4007.jxl',
+    'assets/app.v4007.js','assets/browser-compat.v4007.js','assets/release-bootstrap.v4007.js',
+    'assets/app.v4008.js','assets/browser-compat.v4008.js','assets/release-bootstrap.v4008.js','assets/encyclopedia.v4008.js',
+    'assets/site.v4007.css','assets/site.v4008.css','assets/jxl-probe.v4008.jxl',
 ]
+
 # Checked-in inventory is the sole source of deployable JPEG XL assets.
 inventory=json.loads((root/'tools/jxl_asset_manifest.json').read_text(encoding='utf-8'))
 if inventory.get('assetCount') != len(inventory.get('assets',[])): raise SystemExit('JPEG XL inventory count mismatch')

@@ -5,10 +5,10 @@ root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v4007.js'
-CURRENT_BROWSER_COMPAT = 'browser-compat.v4007.js'
-CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4007.js'
-PREDECESSOR_BRIDGE = {'app.v4006.js','browser-compat.v4006.js','release-bootstrap.v4006.js'}
+CURRENT_APP = 'app.v4008.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v4008.js'
+CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4008.js'
+PREDECESSOR_BRIDGE = {'app.v4007.js','browser-compat.v4007.js','release-bootstrap.v4007.js'}
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
@@ -43,6 +43,13 @@ def stale_release_bootstraps():
     assets = root / 'assets'
     return sorted(p for p in assets.glob('release-bootstrap.v*.js') if p.name not in {CURRENT_RELEASE_BOOTSTRAP,*PREDECESSOR_BRIDGE})
 
+def stale_styles():
+    return sorted(p for p in (root/'assets').glob('site.v*.css') if p.name not in {'site.v4007.css','site.v4008.css'})
+def stale_encyclopedias():
+    return sorted(p for p in (root/'assets').glob('encyclopedia.v*.js') if p.name != 'encyclopedia.v4008.js')
+def stale_probes():
+    return sorted(p for p in (root/'assets').glob('jxl-probe.v*.jxl') if p.name not in {'jxl-probe.v4007.jxl','jxl-probe.v4008.jxl'})
+
 optional_lock = root / 'worker' / 'package-lock.json'
 
 if args.apply:
@@ -60,6 +67,8 @@ if args.apply:
     for p in stale_browser_compats():
         p.unlink()
     for p in stale_release_bootstraps():
+        p.unlink()
+    for p in stale_styles()+stale_encyclopedias()+stale_probes():
         p.unlink()
     lock_removed = False
     if optional_lock.is_file():
@@ -85,6 +94,9 @@ if apps:
 compats=stale_browser_compats()
 if compats:
     errors.append('stale versioned browser-compat assets: ' + ', '.join(str(p.relative_to(root)) for p in compats))
+extras_assets=stale_styles()+stale_encyclopedias()+stale_probes()
+if extras_assets:
+    errors.append('obsolete generated assets: '+', '.join(str(p.relative_to(root)) for p in extras_assets))
 boots=stale_release_bootstraps()
 if boots:
     errors.append('stale versioned release-bootstrap assets: ' + ', '.join(str(p.relative_to(root)) for p in boots))
@@ -100,6 +112,6 @@ for bridge in sorted(PREDECESSOR_BRIDGE):
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 4.0.7 repository state: PASS')
+print(f'VulkanScope Database 4.0.8 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')

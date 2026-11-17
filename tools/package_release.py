@@ -3,7 +3,9 @@
 from pathlib import Path
 import hashlib, sys,zipfile
 ROOT=Path(__file__).resolve().parents[1]
-OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else ROOT/'dist'
+OUT=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else ROOT.parent/(ROOT.name+'-release-dist')
+if OUT==ROOT or OUT.is_relative_to(ROOT):
+    raise SystemExit('FAIL release output directory must be OUTSIDE the source checkout; no files created')
 OUT.mkdir(parents=True,exist_ok=True)
 FORBIDDEN={'.git','node_modules','.wrangler','.gradle','_site','dist','build','__pycache__','.pytest_cache','tmp','temp'}
 filenames=[]
@@ -11,11 +13,11 @@ for file in ROOT.rglob('*'):
     if not file.is_file() or file.is_symlink():continue
     rel=file.relative_to(ROOT)
     if any(x in FORBIDDEN for x in rel.parts):continue
-    if file.name in {'.env','.dev.vars','worker/package-lock.json'} or file.name.startswith(('.env.','.dev.vars.')):continue
+    if rel.as_posix()=='worker/package-lock.json' or file.name in {'.env','.dev.vars'} or file.name.startswith(('.env.','.dev.vars.')):continue
     if file.suffix.lower() in {'.pyc','.pyo','.tmp','.log','.apk','.so','.class','.zip'}:continue
     filenames.append(rel)
 filenames.sort(key=lambda x:x.as_posix())
-zipname='VulkanScope-Database-4.0.7.zip'
+zipname='VulkanScope-Database-4.0.8.zip'
 pkg=OUT/zipname
 with zipfile.ZipFile(pkg,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9,allowZip64=True) as z:
     for rel in filenames:
