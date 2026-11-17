@@ -5,10 +5,10 @@ root = Path(__file__).resolve().parents[1]
 canonical = root / 'tools' / 'pages.workflow.yml'
 workflow_dir = root / '.github' / 'workflows'
 workflow = workflow_dir / 'pages.yml'
-CURRENT_APP = 'app.v4010.js'
-CURRENT_BROWSER_COMPAT = 'browser-compat.v4010.js'
-CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4010.js'
-PREDECESSOR_BRIDGE = {'app.v4009.js','browser-compat.v4009.js','release-bootstrap.v4009.js'}
+CURRENT_APP = 'app.v4011.js'
+CURRENT_BROWSER_COMPAT = 'browser-compat.v4011.js'
+CURRENT_RELEASE_BOOTSTRAP = 'release-bootstrap.v4011.js'
+PREDECESSOR_BRIDGE = {'app.v4010.js','browser-compat.v4010.js','release-bootstrap.v4010.js'}
 
 parser = argparse.ArgumentParser(description='Verify or repair VulkanScope Database repository update-critical files')
 parser.add_argument('--check', action='store_true', help='Verify canonical workflow and stale versioned assets only')
@@ -44,11 +44,11 @@ def stale_release_bootstraps():
     return sorted(p for p in assets.glob('release-bootstrap.v*.js') if p.name not in {CURRENT_RELEASE_BOOTSTRAP,*PREDECESSOR_BRIDGE})
 
 def stale_styles():
-    return sorted(p for p in (root/'assets').glob('site.v*.css') if p.name not in {'site.v4009.css','site.v4010.css'})
+    return sorted(p for p in (root/'assets').glob('site.v*.css') if p.name not in {'site.v4010.css','site.v4011.css'})
 def stale_encyclopedias():
-    return sorted(p for p in (root/'assets').glob('encyclopedia.v*.js') if p.name != 'encyclopedia.v4010.js')
+    return sorted(p for p in (root/'assets').glob('encyclopedia.v*.js') if p.name != 'encyclopedia.v4011.js')
 def stale_probes():
-    return sorted(p for p in (root/'assets').glob('jxl-probe.v*.jxl') if p.name not in {'jxl-probe.v4009.jxl','jxl-probe.v4010.jxl'})
+    return sorted(p for p in (root/'assets').glob('jxl-probe.v*.jxl') if p.name not in {'jxl-probe.v4010.jxl','jxl-probe.v4011.jxl'})
 
 optional_lock = root / 'worker' / 'package-lock.json'
 
@@ -112,6 +112,6 @@ for bridge in sorted(PREDECESSOR_BRIDGE):
 if errors:
     print('\n'.join(errors))
     sys.exit(1)
-print(f'VulkanScope Database 4.0.10 repository state: PASS')
+print(f'VulkanScope Database 4.0.11 repository state: PASS')
 print(f'pages.yml sha256={digest(workflow)}')
 print(f'audit.py sha256={digest(root / "tools" / "audit_database.py")}')
