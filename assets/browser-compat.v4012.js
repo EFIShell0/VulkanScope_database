@@ -3,7 +3,7 @@
 // Browser brands are informational. The engine version is taken from the
 // corresponding engine token; SamsungBrowser/24 is NOT Chromium/24.
 var MIN={chromium:84,firefox:86,safari:14.1};
-var JXL_PROBE='./assets/jxl-probe.v4010.jxl?v=4010';
+var JXL_PROBE='./assets/jxl-probe.v4012.jxl?v=4012';
 function num(v){var n=parseFloat(v);return isFinite(n)?n:0;}
 function token(ua,re){var m=ua.match(re);return m?num(m[1]):0;}
 function detect(ua){
@@ -62,7 +62,7 @@ window.__VULKANSCOPE_JXL_METHOD__='none';
 function element(id){return document.getElementById(id);}
 function launchApp(){
   if(window.__VULKANSCOPE_COMPATIBLE__!==true)return;
-  var script=document.createElement('script');script.src='./assets/app.v4010.js?v=4010';script.async=false;
+  var script=document.createElement('script');script.src='./assets/app.v4012.js?v=4012';script.async=false;
   script.onerror=function(){var why=element('browserCompatibilityReason');if(why)why.textContent='The application bundle could not be downloaded. Check your connection and retry.';var gate=element('browserCompatibilityGate');if(gate)gate.hidden=false;};
   document.body.appendChild(script);
 }
@@ -84,17 +84,17 @@ function jxlRsEdgePainted(img){
   return imgRect.width>0&&imgRect.height>0;
 }
 function jxlProbe(){return new Promise(function(resolve){
-  var host=element('browserJxlProbeHost'),img=document.createElement('img'),settled=false,timer=0,observer=null;
+  var host=element('browserJxlProbeHost'),img=document.createElement('img'),settled=false,timer=0,earlyTimer=0,observer=null,nativeFailed=false,diagnosis=null;
   if(!host){resolve('probe_unavailable');return;}
   function removeProbe(){
     if(observer)observer.disconnect();
     if(img.parentNode)img.parentNode.removeChild(img);
     // The extension places the canvas immediately before the image. Removing
     // its own test container's children is safe; the extension also cleans up.
-    while(host.firstChild&&host.firstChild.localName!=='span')host.removeChild(host.firstChild);
+    while(host.firstChild)host.removeChild(host.firstChild);
   }
   function finish(value,method){
-    if(settled)return;settled=true;clearTimeout(timer);
+    if(settled)return;settled=true;clearTimeout(timer);clearTimeout(earlyTimer);
     window.__VULKANSCOPE_JXL_METHOD__=method||'none';
     img.onload=null;img.onerror=null;removeProbe();resolve(value);
   }
@@ -103,16 +103,31 @@ function jxlProbe(){return new Promise(function(resolve){
     if(img.complete&&img.naturalWidth===2&&img.naturalHeight===2){finish('supported','native');return;}
     if(jxlRsEdgePainted(img)){finish('supported','jxl-rs-edge-canvas');}
   }
-  async function inspectFailure(){
+  // Start the server diagnosis on the native error, overlapping the extension grace period.
+  function diagnose(){
+    if(diagnosis)return diagnosis;
+    diagnosis=(async function(){
+      var status='decoder_failed',controller=new AbortController();
+      var diagnosticTimer=setTimeout(function(){controller.abort();},600);
+      try{
+        var response=await fetch(JXL_PROBE,{cache:'no-store',credentials:'same-origin',signal:controller.signal});
+        if(!response.ok)status='probe_unavailable';
+        else if(!/^image\/jxl(?:\s*;|\s*$)/i.test(response.headers.get('content-type')||''))status='incorrect_mime';
+      }catch(e){status=controller.signal.aborted?'probe_timeout':'probe_unavailable';}
+      finally{clearTimeout(diagnosticTimer);}
+      return status;
+    })();return diagnosis;
+  }
+  function extensionWorking(){
+    var marker=img.getAttribute('data-jxl-rs-edge-060');
+    var canvas=img.previousElementSibling;
+    return marker==='pending'||marker==='released'||!!(canvas&&canvas.localName==='canvas'&&canvas.hasAttribute('data-jxl-rs-edge-canvas'));
+  }
+  async function inspectFailure(early){
     if(settled)return;
-    // A fetch/MIME result is diagnostic only; it never establishes decode support.
-    var status='decoder_failed';
-    try{
-      var response=await fetch(JXL_PROBE,{cache:'no-store',credentials:'same-origin'});
-      if(!response.ok)status='probe_unavailable';
-      else if(!/^image\/jxl(?:\s*;|\s*$)/i.test(response.headers.get('content-type')||''))status='incorrect_mime';
-    }catch(e){status='probe_unavailable';}
-    if(!settled){check();if(!settled)finish(status);}
+    check();if(settled||early&&(!nativeFailed||extensionWorking()))return;
+    var status=await diagnose();
+    check();if(!settled&&(!early||!extensionWorking()))finish(status);
   }
   img.alt='';img.setAttribute('aria-hidden','true');
   img.width=48;img.height=48;
@@ -126,8 +141,9 @@ function jxlProbe(){return new Promise(function(resolve){
       attributeFilter:['data-jxl-rs-edge-060','data-jxl-rs-edge-canvas','style','width','height']});
   }
   img.onload=check;
-  img.onerror=check; // A native IMG error may precede a successful extension canvas.
-  timer=setTimeout(function(){check();if(!settled)void inspectFailure();},22000);
+  img.onerror=function(){nativeFailed=true;check();if(!settled)void diagnose();}; // Native failure is not extension failure.
+  earlyTimer=setTimeout(function(){void inspectFailure(true);},1800);
+  timer=setTimeout(function(){void inspectFailure(false);},4800);
   img.src=JXL_PROBE;
   check();
 });}
@@ -152,14 +168,16 @@ function showJxlWarning(verdict){
 async function apply(){
   var gate=element('browserCompatibilityGate'),app=element('appRoot'),det=element('browserDetected'),req=element('browserRequirement'),why=element('browserCompatibilityReason');
   if(det)det.textContent=b.name+(b.version?' '+b.version:'')+(b.engineVersion?' · '+b.family+' '+b.engineVersion:'');
-  if(!baseOK){if(why)why.textContent='This browser is missing one or more required Web Platform features, or its rendering engine is too old.';
+  if(!baseOK){if(why)why.textContent='This browser is missing one or more required Web Platform features, or its rendering engine is too old (Chromium 84+, Firefox 86+, Safari 14.1+).';
     if(gate)gate.hidden=false;if(app)app.hidden=true;document.title='Browser not supported - VulkanScope Database';return;}
-  if(gate)gate.hidden=false;if(app)app.hidden=true;
+  // Probe is silent: never flash the incompatible-browser card while a valid
+  // Chromium engine and web-platform API set are being verified.
+  if(gate)gate.hidden=true;if(app)app.hidden=false; // Existing normal loading shell; app logic still gated by real proof.
   if(req)req.textContent='JPEG XL image decoding';
-  if(why)why.textContent='Checking JPEG XL rendering, including first-frame canvas output from JXL-RS Edge…';
   var verdict=await jxlProbe();window.__VULKANSCOPE_JXL_STATUS__=verdict;
   if(verdict!=='supported'){
-    window.__VULKANSCOPE_COMPATIBLE__=false;showJxlWarning(verdict);return;
+    window.__VULKANSCOPE_COMPATIBLE__=false;
+    if(app)app.hidden=true;if(gate)gate.hidden=false;showJxlWarning(verdict);return;
   }
   window.__VULKANSCOPE_COMPATIBLE__=true;
   document.documentElement.classList.add('browser-compatible');

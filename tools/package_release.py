@@ -17,11 +17,11 @@ for file in ROOT.rglob('*'):
     if file.suffix.lower() in {'.pyc','.pyo','.tmp','.log','.apk','.so','.class','.zip'}:continue
     filenames.append(rel)
 filenames.sort(key=lambda x:x.as_posix())
-zipname='VulkanScope-Database-4.0.11.zip'
+zipname='VulkanScope-Database-4.0.12.zip'
 pkg=OUT/zipname
 with zipfile.ZipFile(pkg,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9,allowZip64=True) as z:
     for rel in filenames:
-        info=zipfile.ZipInfo(rel.as_posix(),date_time=(2026,11,17,0,0,0))
+        info=zipfile.ZipInfo(rel.as_posix(),date_time=(2026,11,18,0,0,0))
         info.compress_type=zipfile.ZIP_DEFLATED
         info.external_attr=(0o644<<16)
         z.writestr(info,(ROOT/rel).read_bytes(),compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
