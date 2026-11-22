@@ -17,7 +17,7 @@ for file in ROOT.rglob('*'):
     if file.suffix.lower() in {'.pyc','.pyo','.tmp','.log','.apk','.so','.class','.zip'}:continue
     filenames.append(rel)
 filenames.sort(key=lambda x:x.as_posix())
-zipname='VulkanScope-Database-4.0.12.zip'
+zipname='VulkanScope-Database-4.0.13.zip'
 pkg=OUT/zipname
 with zipfile.ZipFile(pkg,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=9,allowZip64=True) as z:
     for rel in filenames:

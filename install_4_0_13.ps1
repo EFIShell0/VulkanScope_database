@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 <#
-VulkanScope Database 4.0.12 - safe in-place source upgrade.
+VulkanScope Database 4.0.13 - safe in-place source upgrade.
 Source archive and checksum must both be in Downloads (or explicit -Archive).
 - Verifies ZIP digest and entries before extraction.
 - Requires clean main checkout; tests package before touching source.
@@ -10,7 +10,7 @@ Source archive and checksum must both be in Downloads (or explicit -Archive).
 #>
 [CmdletBinding()]
 param(
-    [string]$Archive = (Join-Path $env:USERPROFILE 'Downloads\VulkanScope-Database-4.0.12.zip'),
+    [string]$Archive = (Join-Path $env:USERPROFILE 'Downloads\VulkanScope-Database-4.0.13.zip'),
     [string]$ProjectRoot = (Join-Path $env:USERPROFILE 'Desktop\VulkanScope_database')
 )
 Set-StrictMode -Version Latest
@@ -24,7 +24,7 @@ if (-not (Test-Path -LiteralPath $Archive -PathType Leaf)) { throw "Missing ZIP:
 $checksumPath = "$Archive.sha256"
 if (-not (Test-Path -LiteralPath $checksumPath -PathType Leaf)) { throw "Missing SHA256 file: $checksumPath" }
 $checksumText = [IO.File]::ReadAllText($checksumPath).Trim()
-if ($checksumText -cnotmatch '^([A-Fa-f0-9]{64})\s+VulkanScope-Database-4\.0\.12\.zip$') { throw 'Invalid companion ZIP checksum format.' }
+if ($checksumText -cnotmatch '^([A-Fa-f0-9]{64})\s+VulkanScope-Database-4\.0\.13\.zip$') { throw 'Invalid companion ZIP checksum format.' }
 $expectedHash = $Matches[1]
 $actualHash = (Get-FileHash -LiteralPath $Archive -Algorithm SHA256).Hash
 if ($actualHash -ine $expectedHash) { throw 'SHA256 mismatch. No files have been changed.' }
@@ -52,7 +52,7 @@ try {
         $unixMode = ($entry.ExternalAttributes -shr 16) -band 61440
         if ($unixMode -eq 41060) { throw "ZIP symlink entry is forbidden: $name" }
     }
-    foreach ($required in @('rules/PROJECT_RULES.md','tools/quality_gate.py','install_4_0_12.ps1','assets/app.v4012.js','assets/browser-compat.v4012.js')) {
+    foreach ($required in @('rules/PROJECT_RULES.md','tools/quality_gate.py','install_4_0_13.ps1','assets/app.v4013.js','assets/browser-compat.v4013.js')) {
         if (-not $names.Contains($required)) { throw "ZIP missing required release file: $required" }
     }
 } finally { $zip.Dispose() }
@@ -60,6 +60,13 @@ try {
 $retire = @(
     'assets\encyclopedia.v4007.js'
     'assets\site.v1409.css'
+    'UPDATE_4.0.12.md'
+    'install_4_0_12.ps1'
+    'assets\app.v4011.js'
+    'assets\browser-compat.v4011.js'
+    'assets\release-bootstrap.v4011.js'
+    'assets\site.v4011.css'
+    'assets\jxl-probe.v4011.jxl'
     'UPDATE_4.0.11.md'
     'install_4_0_11.ps1'
     'assets\app.v4010.js'
@@ -148,7 +155,7 @@ $retire = @(
     'assets\site.v4007.css'
     'assets\jxl-probe.v4007.jxl'
 )
-$staging = Join-Path ([IO.Path]::GetTempPath()) ('VulkanScope_DB_412_'+[Guid]::NewGuid().ToString('N'))
+$staging = Join-Path ([IO.Path]::GetTempPath()) ('VulkanScope_DB_413_'+[Guid]::NewGuid().ToString('N'))
 $backupRoot = Join-Path (Split-Path -Parent $ProjectRoot) 'VulkanScope_database-backups'
 $backup = Join-Path $backupRoot ((Get-Date -Format 'yyyyMMdd_HHmmss')+'_'+[Guid]::NewGuid().ToString('N').Substring(0,6))
 $created = New-Object 'System.Collections.Generic.List[string]'
@@ -214,7 +221,7 @@ try {
         if ($LASTEXITCODE -ne 0) { throw 'Git whitespace validation failed.' }
     } finally { Pop-Location }
     $changed = $false
-    Write-Host 'PASS: VulkanScope Database 4.0.12 installed in the original checkout.' -ForegroundColor Green
+    Write-Host 'PASS: VulkanScope Database 4.0.13 installed in the original checkout.' -ForegroundColor Green
     Write-Host "Originals backed up in: $backup"
     Write-Host 'Next: git add/commit/push; GitHub Actions; explicit Cloudflare Worker deployment.'
 } catch {

@@ -1,3 +1,9 @@
+## 4.0.13 — Microsoft Edge Add-ons installer guidance (2026-11-22)
+- Replace the project-owner ZIP/Drive route with the official Microsoft Edge Add-ons listing for JXL-RS Edge in both JPEG XL setup pages.
+- Show direct Get → Add extension steps on desktop; Android displays conditional in-app catalog instructions without claiming device compatibility.
+- Preserve the fail-closed JPEG XL native/canvas proof, startup diagnostics, VulkanScope 4.0.15 admission rule, 284 protected images and all D1/Worker data contracts.
+- Advance the current v4013 release and retain the immutable v4012 frontend compatibility bridge; regenerate tests, Pages manifest, workflow and transactional Windows installer.
+
 ## 1.4.12
 - Raises the new-report submission floor to VulkanScope 3.0.12 / versionCode 3012 while preserving historical reads, schema 2 / technicalReport 3 and the Vulkan 1.4.364 evidence contract.
 - Adds asynchronous post-admission preload snapshot refresh: a newly inserted report dispatches a dedicated GitHub Actions snapshot workflow from the Worker background lifetime without delaying or coupling report acceptance to Pages deployment.

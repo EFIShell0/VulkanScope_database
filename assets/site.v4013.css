@@ -843,7 +843,7 @@ html.viewport-scrollbar-mounted::-webkit-scrollbar,html.viewport-scrollbar-mount
 @media(max-width:760px){.footer-inner{align-items:flex-start;flex-direction:column;justify-content:center}.footer-brand-stack{width:100%}.footer-independence-notice{max-width:100%}.settings-license-read{width:100%}}
 
 /* VulkanScope Database 1.3.1 — resilient filter menus, inline license viewer and live-report notice */
-html.release-check-pending body{visibility:hidden}
+/* Release discovery runs in the background; normal startup shell remains visible. */
 .custom-select-menu.is-searchable{display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden!important;padding:6px!important;max-height:min(390px,56vh)}
 .custom-select-menu.is-searchable[hidden]{display:none!important}
 .custom-select-search-shell{position:relative!important;top:auto!important;z-index:3;margin:0 0 6px!important;padding:2px 2px 7px!important;background:rgba(18,18,21,.985)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
@@ -1136,7 +1136,7 @@ body.startup-layout-hold #databaseLoading{width:min(640px,calc(100vw - 32px));ma
 /* 4.0.10: clear, responsive per-engine JPEG XL recovery instructions */
 .browser-compatibility-details ol{margin:10px 0 12px;padding-left:22px;color:#c9c8d0;font-size:13px;line-height:1.7}.browser-compatibility-details li+li{margin-top:6px}.browser-compatibility-details code{padding:2px 5px;overflow-wrap:anywhere;word-break:break-word;border:1px solid rgba(255,255,255,.12);border-radius:5px;background:rgba(255,255,255,.07);color:#fff0cf;font-size:12px}.browser-compatibility-details h2:not(:first-child){margin-top:17px}.browser-compatibility-details p{line-height:1.6}.browser-compatibility-details strong{color:#f0f0f2}
 
-/* 4.0.11: silent actual JPEG XL render probe. No user-facing test section. */
+/* 4.0.13: silent actual JPEG XL render probe. No user-facing test section. */
 #browserJxlProbeHost{position:fixed;right:0;bottom:0;width:2px;height:2px;overflow:hidden;pointer-events:none;z-index:0;visibility:visible!important}
 #browserJxlProbeHost[hidden]{display:none!important}
 #browserJxlProbeHost img{display:block;width:48px!important;height:48px!important;max-width:none!important;max-height:none!important;object-fit:contain!important}
